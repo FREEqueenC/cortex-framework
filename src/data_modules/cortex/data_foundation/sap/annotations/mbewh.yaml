@@ -1,0 +1,46 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Material Valuation: History"
+fields:
+  - name: "bklas"
+    description: "Valuation Class"
+  - name: "bwkey"
+    description: "Valuation Area"
+  - name: "bwtar"
+    description: "Valuation Type"
+  - name: "lbkum"
+    description: "Total Stock"
+  - name: "lfgja"
+    description: "Year current period"
+  - name: "lfmon"
+    description: "Current period"
+  - name: "mandt"
+    description: "Client (Mandant)"
+  - name: "matnr"
+    description: "Material"
+  - name: "peinh"
+    description: "Price unit"
+  - name: "salk3"
+    description: "Total Value"
+  - name: "salkv"
+    description: "Value/mov. av. price"
+  - name: "stprs"
+    description: "Standard price"
+  - name: "verpr"
+    description: "Moving price"
+  - name: "vksal"
+    description: "Total value at SP"
+  - name: "vprsv"
+    description: "Price control"

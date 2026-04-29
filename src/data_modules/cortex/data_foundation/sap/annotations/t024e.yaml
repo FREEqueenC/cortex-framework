@@ -1,0 +1,40 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Purchasing Organizations"
+fields:
+  - name: "bpeff"
+    description: "Effective Price"
+  - name: "bukrs"
+    description: "Company Code"
+  - name: "bukrs_ntr"
+    description: "CoCdSubsStlmt"
+  - name: "ekorg"
+    description: "Purch. Organization"
+  - name: "ekotx"
+    description: "Description"
+  - name: "kalse"
+    description: "PurOrg. Schema Group"
+  - name: "mandt"
+    description: "Client (Mandant)"
+  - name: "mkals"
+    description: "Market Price Schema"
+  - name: "txadr"
+    description: "Text Name: Sender"
+  - name: "txfus"
+    description: "Text Name: Footer"
+  - name: "txgru"
+    description: "Text: Compl. Close"
+  - name: "txkop"
+    description: "Text: Letter Heading"

@@ -1,0 +1,59 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Set Header and Directory"
+fields:
+  - name: "authgr"
+    description: "Authorization group"
+  - name: "credate"
+    description: "Creation date"
+  - name: "cretime"
+    description: "Time"
+  - name: "creuser"
+    description: "Created By"
+  - name: "fieldname"
+    description: "Field Name"
+  - name: "mandt"
+    description: "Client (Mandant)"
+  - name: "no_rwsheader"
+  - name: "no_rwsline"
+  - name: "no_setlinet"
+  - name: "rollname"
+    description: "Repr. data element"
+  - name: "rvalue"
+    description: "Representative value"
+  - name: "saprl"
+    description: "SAP Release"
+  - name: "setclass"
+    description: "Set class"
+  - name: "setname"
+    description: "Set Name"
+  - name: "settype"
+    description: "Set type"
+  - name: "set_olangu"
+    description: "Original Language"
+  - name: "subclass"
+    description: "Organizational Unit"
+  - name: "tabname"
+    description: "Table Name"
+  - name: "upddate"
+    description: "Last Changed On"
+  - name: "updtime"
+    description: "Time"
+  - name: "upduser"
+    description: "Last Changed By"
+  - name: "xdynamic"
+    description: "Dynamic set"
+  - name: "xuniq"
+    description: "Must be unique"

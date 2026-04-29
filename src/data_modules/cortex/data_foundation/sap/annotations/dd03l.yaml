@@ -1,0 +1,75 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Table Fields"
+fields:
+  - name: "adminfield"
+    description: "Admin. field"
+  - name: "anonymous"
+  - name: "as4local"
+    description: "Activation Status"
+  - name: "as4vers"
+    description: "Version"
+  - name: "checktable"
+    description: "Check table"
+  - name: "comptype"
+    description: "Component Type"
+  - name: "conrout"
+    description: "Check module"
+  - name: "datatype"
+    description: "Data Type"
+  - name: "dbposition"
+    description: "Table position"
+  - name: "decimals"
+    description: "Decimal Places"
+  - name: "depth"
+    description: "Depth"
+  - name: "domname"
+    description: "Domain name"
+  - name: "fieldname"
+    description: "Field Name"
+  - name: "intlen"
+    description: "Internal Length"
+  - name: "inttype"
+    description: "ABAP type"
+  - name: "keyflag"
+    description: "Key field"
+  - name: "languflag"
+    description: "Text Lang."
+  - name: "leng"
+    description: "No. of Characters"
+  - name: "mandatory"
+    description: "Required Field"
+  - name: "notnull"
+    description: "NOT NULL forced"
+  - name: "outputstyle"
+    description: "Output"
+  - name: "position"
+    description: "Table position"
+  - name: "precfield"
+    description: "Name of include"
+  - name: "reffield"
+    description: "Ref. field"
+  - name: "reftable"
+    description: "Reference table"
+  - name: "reftype"
+    description: "Type of Object Referenced"
+  - name: "rollname"
+    description: "Data element"
+  - name: "shlporigin"
+    description: "Origin"
+  - name: "tabletype"
+    description: "Table"
+  - name: "tabname"
+    description: "Table Name"

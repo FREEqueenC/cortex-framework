@@ -1,0 +1,74 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Domains"
+fields:
+  - name: "actflag"
+    description: "Activation flag"
+  - name: "ampmformat"
+    description: "AM/PM time format supported"
+  - name: "appendname"
+    description: "Domain name"
+  - name: "appexist"
+    description: "AppendExists"
+  - name: "applclass"
+    description: "Application Class"
+  - name: "as4date"
+    description: "Date"
+  - name: "as4local"
+    description: "Activation Status"
+  - name: "as4time"
+    description: "Time"
+  - name: "as4user"
+    description: "Last Changed By"
+  - name: "as4vers"
+    description: "Version"
+  - name: "authclass"
+    description: "Activation type"
+  - name: "convexit"
+    description: "Conversion Routine"
+  - name: "datatype"
+    description: "Data Type"
+  - name: "decimals"
+    description: "Decimal Places"
+  - name: "domglobal"
+    description: "Object not global"
+  - name: "dommaster"
+    description: "Original Language"
+  - name: "domname"
+    description: "Domain name"
+  - name: "entitytab"
+    description: "Value table"
+  - name: "langflag"
+    description: "Lang.-dep. values"
+  - name: "leng"
+    description: "No. of Characters"
+  - name: "lowercase"
+    description: "Lowercase Letters"
+  - name: "mask"
+    description: "Template"
+  - name: "masklen"
+    description: "Template length"
+  - name: "outputlen"
+    description: "Output Length"
+  - name: "outputstyle"
+    description: "Output"
+  - name: "proxytype"
+    description: "Proxy Usage"
+  - name: "reservedom"
+    description: "ReserveFlag"
+  - name: "signflag"
+    description: "Sign"
+  - name: "valexi"
+    description: "Fixed values exist"

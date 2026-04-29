@@ -1,0 +1,190 @@
+# Configuration for the build environment.
+buildEnvironment:
+  # Project ID where build artifacts and operations happen.
+  buildProjectId: YOUR_BUILD_PROJECT_ID
+# Data layer configuration.
+data:
+  # Geographic location for BigQuery datasets (e.g., US, EU, us-central1).
+  bigQueryLocation: US
+  # List of namespaces for data foundation and product modules.
+  namespaces:
+    - name: cortex
+      path: cortex
+  # List of source datasets.
+  sources:
+    # Unique identifier for the source.
+    - id: sap_raw
+      # Google Cloud Project ID for the source dataset.
+      projectId: YOUR_SOURCE_PROJECT_ID
+      # BigQuery dataset ID for the source.
+      datasetId: cortex_sap_raw
+  # List of target datasets.
+  targets:
+    # Unique identifier for the target.
+    - id: sap_foundation
+      # Google Cloud Project ID for the target dataset.
+      projectId: YOUR_TARGET_PROJECT_ID
+      # BigQuery dataset ID for the target.
+      datasetId: cortex7_sap_data_foundation
+    - id: product_target
+      projectId: YOUR_TARGET_PROJECT_ID
+      datasetId: cortex7_data_products
+  # Configuration for data foundation and product modules.
+  modules:
+    # List of foundation modules.
+    foundation:
+      # Unique identifier for the module instance.
+      - moduleId: erp
+        # Type of the module (namespaced, e.g., cortex.sap).
+        type: cortex.sap
+        # Reference to the source dataset ID.
+        dataSourceId: sap_raw
+        # Reference to the target dataset ID.
+        dataTargetId: sap_foundation
+        # Module-specific configuration settings.
+        moduleSettings:
+          # SAP version (e.g., ecc, s4).
+          sapVersion: ecc
+          # SAP client number.
+          mandt: "100"
+        # Whether the module is enabled. Defaults to true
+        # enabled: true
+        # Whether the foundation is external (does not create target dataset). Defaults to false
+        # external: false
+        # Path to the table settings configuration file.
+        tableSettings: "config/cortex/data_foundation/sap/table_settings.yaml"
+    # List of data product modules.
+    product:
+      # Unique identifier for the data product instance.
+      - moduleId: sap_purchasing_organizations
+        # Type of the data product (namespaced).
+        type: cortex.purchasing_organizations
+        # Map of module dependencies.
+        dependsOn:
+          sapModule: erp
+        # Reference to the target dataset ID.
+        dataTargetId: product_target
+        # Whether the module is enabled. Defaults to true
+        # enabled: true
+        # Path to the table settings configuration file.
+        tableSettings: "config/cortex/data_product/purchasing_organizations/table_settings.yaml"
+      - moduleId: sap_purchasing_documents
+        type: cortex.purchasing_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/purchasing_documents/table_settings.yaml"
+      - moduleId: sap_vendors
+        type: cortex.vendors
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/vendors/table_settings.yaml"
+      - moduleId: sap_customers
+        type: cortex.customers
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/customers/table_settings.yaml"
+      - moduleId: sap_sales_documents
+        type: cortex.sales_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/sales_documents/table_settings.yaml"
+      - moduleId: sap_sales_organizations
+        type: cortex.sales_organizations
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/sales_organizations/table_settings.yaml"
+      - moduleId: sap_delivery_blocking_reasons
+        type: cortex.delivery_blocking_reasons
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/delivery_blocking_reasons/table_settings.yaml"
+      - moduleId: sap_delivery_documents
+        type: cortex.delivery_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/delivery_documents/table_settings.yaml"
+      - moduleId: sap_material_groups
+        type: cortex.material_groups
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/material_groups/table_settings.yaml"
+      - moduleId: sap_material_types
+        type: cortex.material_types
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/material_types/table_settings.yaml"
+      - moduleId: sap_materials
+        type: cortex.materials
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/materials/table_settings.yaml"
+      - moduleId: sap_material_plants
+        type: cortex.material_plants
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/material_plants/table_settings.yaml"
+      - moduleId: sap_material_movement_types
+        type: cortex.material_movement_types
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/material_movement_types/table_settings.yaml"
+      - moduleId: sap_material_cross_plant_batches
+        type: cortex.material_cross_plant_batches
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/material_cross_plant_batches/table_settings.yaml"
+      - moduleId: sap_materials_movement
+        type: cortex.materials_movement
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+        tableSettings: "config/cortex/data_product/materials_movement/table_settings.yaml"
+# Deployment configuration.
+deployment:
+  # Whether to create target datasets during deployment.
+  createTargetDatasets: true
+  # List of deployment targets.
+  targets:
+    # Type of deployment target (e.g., dataform).
+    - type: dataform
+      # Whether this deployment target is enabled.
+      enabled: true
+      # Settings specific to the deployment target.
+      targetSettings:
+        # Project ID for the Dataform repository.
+        repositoryProjectId: YOUR_REPO_PROJECT_ID
+        # Region for the Dataform repository.
+        repositoryRegion: us-central1
+        # Name of the Dataform repository.
+        repositoryName: cortex-repository
+        # Name of the Dataform workspace.
+        workspaceName: dev
+        # Optional default service account for Dataform repository.
+        # serviceAccount: "example@example.com"

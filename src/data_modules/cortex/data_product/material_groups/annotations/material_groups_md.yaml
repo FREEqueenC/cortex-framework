@@ -1,0 +1,56 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Information about material groups at the granularity of Client(System), Material Group and Language Key."
+fields:
+  - name: "client_mandt"
+    description: "Client (Mandant), PK"
+  - name: "material_group_matkl"
+    description: "Material Group, PK"
+  - name: "language_spras"
+    description: "Language Key, PK"
+  - name: "material_group_name_wgbez"
+    description: "Material Group Description"
+  - name: "material_group_name_long_wgbez60"
+    description: "Material Group Description (Long)"
+  - name: "division_spart"
+    description: "Division"
+  - name: "department_abtnr"
+    description: "Department Number"
+  - name: "asset_class_anlkl"
+    description: "Asset Class"
+  - name: "authorization_group_begru"
+    description: "Authorization Group"
+  - name: "valuation_class_bklas"
+    description: "Valuation Class"
+  - name: "purchasing_value_key_ekwsl"
+    description: "Purchasing Value Key"
+  - name: "default_unit_of_weight_gewei"
+    description: "Default Unit of Weight"
+  - name: "price_level_group_price_group"
+    description: "Price Level Group"
+  - name: "scenario_def_schdsc"
+    description: "Scenario"
+  - name: "ncm_code_j_1bnbm"
+    description: "NCM Code"
+  - name: "logist_reference_lref3"
+    description: "Logistic Reference"
+  - name: "reference_group_ref_material_wwgda"
+    description: "Reference Material Group"
+  - name: "group_material_wwgpa"
+    description: "Material Group Material"
+  - name: "source_last_updated_at"
+    description: "Source last updated at"
+  - name: "bq_loaded_at"
+    description: "BigQuery loaded at"

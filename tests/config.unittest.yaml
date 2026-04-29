@@ -1,0 +1,126 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+buildEnvironment:
+  buildProjectId: cortex-connector-test
+data:
+  bigQueryLocation: US
+  sources:
+    - id: sap_raw
+      projectId: cortex-connector-test
+      datasetId: CORTEX_SAP_RAW
+  targets:
+    - id: sap_foundation
+      projectId: cortex-connector-test
+      datasetId: CORTEX7_SAP_DATA_FOUNDATION
+    - id: product_target
+      projectId: cortex-connector-test
+      datasetId: CORTEX7_DEVELOPMENT_PRODUCT
+  namespaces:
+    - name: cortex
+      path: cortex
+  modules:
+    foundation:
+      - moduleId: erp
+        type: cortex.sap
+        dataSourceId: sap_raw
+        dataTargetId: sap_foundation
+        moduleSettings:
+          sapVersion: ecc
+          mandt: "100"
+    product:
+      - moduleId: sap_purchasing_organizations
+        type: cortex.purchasing_organizations
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_purchasing_documents
+        type: cortex.purchasing_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_vendors
+        type: cortex.vendors
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_types
+        type: cortex.material_types
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_delivery_documents
+        type: cortex.delivery_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_customers
+        type: cortex.customers
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_sales_documents
+        type: cortex.sales_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_groups
+        type: cortex.material_groups
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_materials
+        type: cortex.materials
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_plants
+        type: cortex.material_plants
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_movement_types
+        type: cortex.material_movement_types
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_cross_plant_batches
+        type: cortex.material_cross_plant_batches
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_materials_movement
+        type: cortex.materials_movement
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_delivery_blocking_reasons
+        type: cortex.delivery_blocking_reasons
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_sales_organizations
+        type: cortex.sales_organizations
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+deployment:
+  createTargetDatasets: true
+  targets:
+    - type: dataform
+      targetSettings:
+        repositoryProjectId: cortex-connector-test
+        repositoryRegion: us-central1
+        repositoryName: cortexSeven
+        workspaceName: demo

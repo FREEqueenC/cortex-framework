@@ -1,0 +1,78 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Special Stocks with Customer"
+fields:
+  - name: "charg"
+    description: "Batch"
+  - name: "ersda"
+    description: "Created On"
+  - name: "fsh_collection"
+    description: "Collection"
+  - name: "fsh_salloc_qty"
+    description: "Allocated Stock Quantity"
+  - name: "fsh_season"
+    description: "Season"
+  - name: "fsh_season_year"
+    description: "Season Year"
+  - name: "fsh_theme"
+    description: "Theme"
+  - name: "kudll"
+    description: "Date of Last Count"
+  - name: "kuein"
+    description: "Restricted-Use Stock"
+  - name: "kufll"
+    description: "Warehouse stock FY"
+  - name: "kuflq"
+    description: "QualInspectStock FY"
+  - name: "kuill"
+    description: "Warehouse stock CY"
+  - name: "kuilq"
+    description: "Qual. insp. stock CY"
+  - name: "kuins"
+    description: "In Quality Insp."
+  - name: "kujin"
+  - name: "kulab"
+    description: "Unrestricted"
+  - name: "kunnr"
+    description: "Customer"
+  - name: "kurue"
+  - name: "kuspr"
+    description: "Phys. Inv. Block"
+  - name: "kuuml"
+    description: "In Transfer (Plant)"
+  - name: "kuvei"
+    description: "Restricted-use stock"
+  - name: "kuvin"
+    description: "In quality insp."
+  - name: "kuvla"
+    description: "Unrestr.-use stock"
+  - name: "kuvll"
+    description: "Warehouse stock PY"
+  - name: "kuvlq"
+    description: "QualInspStock prv.pd"
+  - name: "lfgja"
+    description: "Year current period"
+  - name: "lfmon"
+    description: "Current period"
+  - name: "mandt"
+    description: "Client (Mandant)"
+  - name: "matnr"
+    description: "Material"
+  - name: "sgt_scat"
+    description: "Stock Segment"
+  - name: "sobkz"
+    description: "Special Stock"
+  - name: "werks"
+    description: "Plant"
