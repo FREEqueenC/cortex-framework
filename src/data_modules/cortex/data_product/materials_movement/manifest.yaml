@@ -26,4 +26,6 @@ dependencies:
       - mseg
       common:
       - tcurx
+      - t156
+      - t156t
 builder: sap_product

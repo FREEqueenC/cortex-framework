@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about purchasing documents at the header level, at the granularity of Client(System) and Purchasing document number."
+description: "Tracks administrative and commercial terms of SAP purchase orders, scheduling agreements, and contracts from EKKO, maintaining transaction dates, vendors, currencies, and payment terms."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"
@@ -266,3 +266,7 @@ fields:
     description: "Quarter of Purchasing Order Date"
   - name: "week_of_purchasing_document_date_bedat"
     description: "Week of Purchasing Order Date"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BigQuery Loaded At"

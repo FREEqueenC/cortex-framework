@@ -205,3 +205,41 @@ class BigQueryManager:
         except Exception as e:
             logger.warning("Failed to delete dataset %s:%s: %s", project_id, dataset_id, e)
             return False
+
+    def load_table_from_parquet(
+        self,
+        *,
+        project_id: str,
+        dataset_id: str,
+        table_id: str,
+        gcs_uris: list[str],
+        write_disposition: str = "WRITE_TRUNCATE",
+    ) -> bool:
+        """Loads GCS Parquet files directly into a BigQuery table with schema auto-detection.
+
+        Args:
+            project_id: Target GCP Project ID.
+            dataset_id: Target Dataset ID.
+            table_id: Target Table ID.
+            gcs_uris: List of GCS URIs containing the Parquet files.
+            write_disposition: BigQuery WriteDisposition.
+
+        Returns:
+            bool: True if the load job finished successfully, False otherwise.
+        """
+        dest_table_ref = f"{project_id}.{dataset_id}.{table_id}"
+        logger.info("Loading parquet data from %s into %s...", gcs_uris, dest_table_ref)
+        try:
+            client = self._get_client(project_id)
+            job_config = bigquery.LoadJobConfig(
+                source_format=bigquery.SourceFormat.PARQUET,
+                write_disposition=write_disposition,
+                autodetect=True,
+            )
+            load_job = client.load_table_from_uri(gcs_uris, dest_table_ref, job_config=job_config)
+            load_job.result()  # Wait for the job to complete
+            logger.info("Loaded table %s successfully.", dest_table_ref)
+            return True
+        except Exception as e:
+            logger.error("Failed to load table %s from Parquet: %s", dest_table_ref, e)
+            return False

@@ -19,7 +19,7 @@ description = "Cortex Framework"
 requires-python = ">=3.13,<3.14"
 dependencies = [
     "google-cloud-bigquery==3.40.1",
-    "pydantic==2.13.0b2",
+    "pydantic==2.13.3",
     "pyyaml==6.0.3",
     "google-cloud-dataform==0.9.0",
     "google-cloud-resource-manager==1.16.0",
@@ -27,6 +27,7 @@ dependencies = [
     "jinja2==3.1.6",
     "google-auth==2.48.0",
     "keyrings-google-artifactregistry-auth>=1.1.2",
+    "google-cloud-storage>=3.10.1",
 ]
 
 [project.scripts]
@@ -81,8 +82,8 @@ plugins = ["pydantic.mypy"]
 mypy_path = "src"
 explicit_package_bases = true
 
-# default index for pypi
 [[tool.uv.index]]
 name = "pypi"
 url = "https://pypi.org/simple"
 default = true
+

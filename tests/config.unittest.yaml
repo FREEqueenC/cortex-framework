@@ -20,10 +20,16 @@ data:
     - id: sap_raw
       projectId: cortex-connector-test
       datasetId: CORTEX_SAP_RAW
+    - id: sap_raw_s4
+      projectId: cortex-connector-test
+      datasetId: CORTEX_SAP_RAW_S4
   targets:
     - id: sap_foundation
       projectId: cortex-connector-test
       datasetId: CORTEX7_SAP_DATA_FOUNDATION
+    - id: sap_foundation_s4
+      projectId: cortex-connector-test
+      datasetId: CORTEX7_SAP_DATA_FOUNDATION_S4
     - id: product_target
       projectId: cortex-connector-test
       datasetId: CORTEX7_DEVELOPMENT_PRODUCT
@@ -39,9 +45,21 @@ data:
         moduleSettings:
           sapVersion: ecc
           mandt: "100"
+      - moduleId: erp_s4
+        type: cortex.sap
+        dataSourceId: sap_raw_s4
+        dataTargetId: sap_foundation_s4
+        moduleSettings:
+          sapVersion: s4
+          mandt: "250"
     product:
-      - moduleId: sap_purchasing_organizations
-        type: cortex.purchasing_organizations
+      - moduleId: sap_plants_and_storage
+        type: cortex.plants_and_storage
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_purchasing_organizational_structure
+        type: cortex.purchasing_organizational_structure
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
@@ -50,18 +68,23 @@ data:
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
+      - moduleId: sap_vendor_invoices
+        type: cortex.vendor_invoices
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
       - moduleId: sap_vendors
         type: cortex.vendors
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_material_types
-        type: cortex.material_types
+      - moduleId: sap_delivery_documents
+        type: cortex.delivery_documents
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_delivery_documents
-        type: cortex.delivery_documents
+      - moduleId: sap_billing_documents
+        type: cortex.billing_documents
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
@@ -75,28 +98,13 @@ data:
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_material_groups
-        type: cortex.material_groups
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
       - moduleId: sap_materials
         type: cortex.materials
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_material_plants
-        type: cortex.material_plants
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_material_movement_types
-        type: cortex.material_movement_types
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_material_cross_plant_batches
-        type: cortex.material_cross_plant_batches
+      - moduleId: sap_material_batches
+        type: cortex.material_batches
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
@@ -105,18 +113,88 @@ data:
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_delivery_blocking_reasons
-        type: cortex.delivery_blocking_reasons
+      - moduleId: sap_sales_organizational_structure
+        type: cortex.sales_organizational_structure
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_sales_organizations
-        type: cortex.sales_organizations
+
+      - moduleId: sap_global_settings
+        type: cortex.global_settings
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_business_partners
+        type: cortex.business_partners
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_universal_journal
+        type: cortex.universal_journal
+        dependsOn:
+          sapModule: erp_s4
+        dataTargetId: product_target
+      - moduleId: sap_currency_conversion
+        type: cortex.currency_conversion
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_units_of_measurement
+        type: cortex.units_of_measurement
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_accounting_documents
+        type: cortex.accounting_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_fiscal_year_variants
+        type: cortex.fiscal_year_variants
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_project_structure
+        type: cortex.project_structure
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_fixed_assets
+        type: cortex.fixed_assets
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_controlling_areas_and_cost_elements
+        type: cortex.controlling_areas_and_cost_elements
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_general_ledger_accounts
+        type: cortex.general_ledger_accounts
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_cost_and_profit_centers
+        type: cortex.cost_and_profit_centers
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target        
+      - moduleId: sap_agency_settlement_documents
+        type: cortex.agency_settlement_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_condition_contracts
+        type: cortex.condition_contracts
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_financial_statement_structure_versions
+        type: cortex.financial_statement_structure_versions
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
 deployment:
-  createTargetDatasets: true
   targets:
     - type: dataform
       targetSettings:

@@ -29,11 +29,11 @@ def test_naming_conventions(repo_root: pathlib.Path):
     src/data_modules/cortex/data_product, and src/data_modules/cortex/includes
     follow snake_case naming conventions to avoid cross-OS file system case sensitivity bugs.
     """
-    src_dir = repo_root / "src"
+    src_dir = repo_root / "src" / "data_modules" / "cortex"
     target_dirs = [
-        src_dir / "data_modules" / "cortex" / "data_foundation",
-        src_dir / "data_modules" / "cortex" / "data_product",
-        src_dir / "data_modules" / "cortex" / "includes",
+        src_dir / "data_foundation",
+        src_dir / "data_product",
+        src_dir / "includes",
     ]
 
     # regex for snake_case: lowercase letters, numbers, and underscores.
@@ -49,6 +49,10 @@ def test_naming_conventions(repo_root: pathlib.Path):
         for path in t_dir.rglob("*"):
             # skip hidden files/dirs like .DS_Store or __pycache__
             if path.name.startswith(".") or "__" in path.name or path.parts[-2] == "__pycache__":
+                continue
+
+            # allow README.md
+            if path.name == "README.md":
                 continue
 
             if not snake_case_pattern.match(path.name):
@@ -386,29 +390,29 @@ def test_dataform_target_settings_optional_service_account():
 
     # Succeeds when missing
     settings = DataformTargetSettings(
-        repository_project_id="p",
-        repository_region="r",
-        repository_name="n",
-        workspace_name="w",
+        repositoryProjectId="p",
+        repositoryRegion="r",
+        repositoryName="n",
+        workspaceName="w",
     )
     assert settings.service_account is None
 
     # Succeeds when empty string
     settings_empty = DataformTargetSettings(
-        repository_project_id="p",
-        repository_region="r",
-        repository_name="n",
-        workspace_name="w",
-        service_account="",
+        repositoryProjectId="p",
+        repositoryRegion="r",
+        repositoryName="n",
+        workspaceName="w",
+        serviceAccount="",
     )
     assert settings_empty.service_account is None
 
     # Succeeds when present
     settings_present = DataformTargetSettings(
-        repository_project_id="p",
-        repository_region="r",
-        repository_name="n",
-        workspace_name="w",
-        service_account="foo@bar.iam.gserviceaccount.com",
+        repositoryProjectId="p",
+        repositoryRegion="r",
+        repositoryName="n",
+        workspaceName="w",
+        serviceAccount="foo@bar.iam.gserviceaccount.com",
     )
     assert settings_present.service_account == "foo@bar.iam.gserviceaccount.com"

@@ -38,9 +38,34 @@ class PartitionDetails(BaseSchemaModel):
     range_end: int | None = None
     range_interval: int | None = None
 
+    @pydantic.field_validator("column")
+    @classmethod
+    def validate_column(cls, v: str) -> str:
+        import re
+
+        if not re.match(r"^[a-zA-Z0-9_]+$", v):
+            raise ValueError(
+                f"Invalid column name in partition details: {v}. "
+                "Must be alphanumeric and underscores only."
+            )
+        return v
+
 
 class ClusterDetails(BaseSchemaModel):
     columns: list[str]
+
+    @pydantic.field_validator("columns")
+    @classmethod
+    def validate_columns(cls, v: list[str]) -> list[str]:
+        import re
+
+        for col in v:
+            if not re.match(r"^[a-zA-Z0-9_]+$", col):
+                raise ValueError(
+                    f"Invalid column name in cluster details: {col}. "
+                    "Must be alphanumeric and underscores only."
+                )
+        return v
 
 
 # --- Data Product Style ---
@@ -71,6 +96,7 @@ class ProductTableSettings(BaseSchemaModel):
 # --- Data Foundation Style ---
 class FoundationSource(BaseSchemaModel):
     table_name: str
+    is_cdc: bool = True
 
 
 class FoundationTarget(BaseSchemaModel):

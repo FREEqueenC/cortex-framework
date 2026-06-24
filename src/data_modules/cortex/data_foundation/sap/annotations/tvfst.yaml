@@ -14,11 +14,11 @@
 
 description: "Billing : Blocking Reason Texts"
 fields:
-  - name: "faksp"
-    description: "Block"
   - name: "mandt"
     description: "Client (Mandant)"
   - name: "spras"
     description: "Language Key"
+  - name: "faksp"
+    description: "Block"
   - name: "vtext"
     description: "Billing block desc."

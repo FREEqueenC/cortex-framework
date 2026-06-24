@@ -22,5 +22,13 @@ dependencies:
     tables:
       common:
       - mara
+      - marc
+      - mard
+      - t001l
+      - t001w      
       - makt
+      - t134
+      - t134t
+      - t023
+      - t023t
 builder: sap_product

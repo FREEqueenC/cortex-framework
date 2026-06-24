@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Company Code settings for Depreciation Area"
+fields:
+  - name: "mandt"
+    description: "Client"
+  - name: "bukrs"
+    description: "Company Code"
+  - name: "afabe"
+    description: "Depreciation area"
+  - name: "waers"
+    description: "Currency"
+  - name: "runden"
+    description: "No.of Places for Rounding NBV"
+  - name: "erwert"
+    description: "Memo Value"
+  - name: "gwgwrt"
+    description: "Max.LVA Amount: for Posting"
+  - name: "umrwrt"
+    description: "Net Book Value for Dep.Change"
+  - name: "gwgbst"
+    description: "Max.LVA Amount: for Purch.Ord."
+  - name: "filler"
+    description: "Ind.:Calc.Dep.in Half Periods"
+  - name: "rndahk"
+    description: "No. of Places for Rounding RV"
+  - name: "abgja"
+    description: "Closed Fiscal Year"
+  - name: "afrhy"
+    description: "Dep. Posting Cycle"
+  - name: "xanzum"
+    description: "Capitalize AuC w/o downpayment"
+  - name: "versn_011"
+    description: "FS Version"
+  - name: "x445r"
+    description: "Dist. depreciation by weeks"
+  - name: "xakpl"
+    description: "Manage group assets"
+  - name: "basrnd"
+    description: "Rounding Basis"
+  - name: "metrnd"
+    description: "Rounding Method"
+  - name: "periv"
+    description: "Fiscal Year Variant"
+  - name: "toleranz"
+    description: "Tolerance Amount in Deprec. Calculation"
+  - name: "kzrbwb_afabe"
+    description: "Area Posts Net Book Value for Retirement"

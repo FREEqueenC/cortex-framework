@@ -18,13 +18,12 @@
 // ___TABLE_CONFIG___
 
 const moduleConfig = config.product[moduleContext.moduleId];
-
 const materializationType = tableConfig.materializationType || "incremental";
-
 const currency = require("includes/cortex/currency.js");
 const date = require("includes/cortex/date.js");
 const incremental = require("includes/cortex/incremental.js");
 const publish_config = require("includes/cortex/publish_config.js");
+const sql_helper = require("includes/cortex/sql_helper.js");
 
 const publishConfig = publish_config.getPublishConfig(
   materializationType,
@@ -340,6 +339,8 @@ LEFT JOIN date_dimension AS dimensional_date_podat
   ON likp.podat = dimensional_date_podat.date
 LEFT JOIN date_dimension AS dimensional_date_bldat
   ON likp.bldat = dimensional_date_bldat.date
-${incremental.getWhere(ctx, "likp.recordstamp")}
-`,
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["likp"])
+])}
+`
 );

@@ -24,4 +24,5 @@ dependencies:
       - likp
       - lips
       - tcurx
+      - tvlst
 builder: sap_product

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about sales documents at the header level, at the granularity of Client(System) and Sales document number."
+description: "Provides sales document header-level details from SAP VBAK, tracking customer accounts, net value, document categories, and dates."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"

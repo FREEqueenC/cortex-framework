@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about purchasing documents at the schedule line level, at the granularity of Client(System), Purchasing Document Number, Item Number of Purchasing Document and Delivery Schedule Line Counter."
+description: "Captures logistical delivery schedules from SAP EKET, specifying delivery dates, scheduled quantities, and received/issued quantities for each item line."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"
@@ -118,3 +118,7 @@ fields:
     description: "Open Quantity multiplied by Unit Price in the document currency"
   - name: "in_transit_quantity"
     description: "Difference between issued quantity and quantity of goods received"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BigQuery Loaded At"

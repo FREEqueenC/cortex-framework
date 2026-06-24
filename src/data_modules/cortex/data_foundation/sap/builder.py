@@ -150,16 +150,6 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
                 source_project_id, source_dataset_id, base_table
             )
 
-            if any(col.startswith("_") for col in columns):
-                invalid_cols = [col for col in columns if col.startswith("_")]
-                logger.error(
-                    "Invalid columns found for base table %s: %s", base_table, invalid_cols
-                )
-                raise ValueError(
-                    "Column names should not begin with underscore. "
-                    f"Invalid columns: {invalid_cols}. Check documentation."
-                )
-
             # Read descriptions from YAML annotations (Mirroring Product Builder logic)
             yaml_path = annotations_dir / sap_version / f"{base_table.lower()}.yaml"
             if not yaml_path.exists():
@@ -218,6 +208,7 @@ js {
 {{ merger_macro }}(ctx, {
   keys: {{ keys | tojson(indent=2) }},
   columns: {{ columns | tojson(indent=2) }},
+  is_cdc: {{ is_cdc | tojson }},
   table_description: {{ table_description | tojson }},
   column_descriptions: {{ column_descriptions | tojson(indent=2) }},
   target_ref: self(),
@@ -300,6 +291,7 @@ def _render_data_foundation_sqlx(
         merger_macro="${sap_cdc.generateIncrementalMergeScript",
         keys=keys,
         columns=columns,
+        is_cdc=table_config.source.is_cdc,
         table_description=table_desc,
         column_descriptions=col_desc_dict,
         base_table=base_table,

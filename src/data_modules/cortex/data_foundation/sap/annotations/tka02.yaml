@@ -14,11 +14,11 @@
 
 description: "Controlling area assignment"
 fields:
+  - name: "mandt"
+    description: "Client (Mandant)"
   - name: "bukrs"
     description: "Company Code"
   - name: "gsber"
     description: "Business Area"
   - name: "kokrs"
     description: "Controlling Area"
-  - name: "mandt"
-    description: "Client (Mandant)"

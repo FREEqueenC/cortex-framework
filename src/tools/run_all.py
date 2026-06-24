@@ -20,6 +20,7 @@ import pathlib
 import sys
 
 from common.schemas.config_schema import GlobalConfig
+from common.services.config_validator import ConfigValidator
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
 from common.utils.file_utils import load_yaml
 from common.utils.logging import setup_logging
@@ -54,12 +55,24 @@ def main(args=None):
         action="store_true",
         help="Create missing datasets without prompting",
     )
+    parser.add_argument(
+        "--assertions",
+        type=pathlib.Path,
+        help="Path to a Dataform assertions file (assertions.sqlx)",
+    )
     args = parser.parse_args(args)
 
     config_file = args.config
 
     if not config_file.exists():
         logger.error("Config file not found at %s", config_file)
+        sys.exit(1)
+
+    is_valid, validation_errors = ConfigValidator.validate(config_file)
+    if not is_valid:
+        logger.error("Configuration validation failed with the following errors:")
+        for err in validation_errors:
+            logger.error("  - %s", err)
         sys.exit(1)
 
     global_config_dict = load_yaml(config_file)
@@ -80,7 +93,9 @@ def main(args=None):
 
     # Build Dataform
     logger.info("Running Dataform build...")
-    builder = DataformBuilder(global_config=global_config, output_dir=output_dir)
+    builder = DataformBuilder(
+        global_config=global_config, output_dir=output_dir, assertions_path=args.assertions
+    )
     if not builder.build():
         logger.error("Dataform build failed.")
         sys.exit(1)

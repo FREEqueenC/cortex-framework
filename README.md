@@ -30,40 +30,14 @@ Please refer to the [public documentation](https://docs.cloud.google.com/cortex/
 
 Cortex Framework v7 comes packaged with a comprehensive set of BigQuery data models for both SAP ECC and SAP S/4HANA source systems. 
 
-* Data foundation modules:  
-  * SAP ECC   
-  * SAP S/4HANA
+### Data foundation modules:
 
-* Data products:  
-  * The following table outlines the catalog of data products available for SAP ERP (ECC and S/4HANA) within Cortex Framework, detailing their functional descriptions, source tables, and supported source systems. 
+* SAP ECC 
+* SAP S/4HANA
 
-| Data Product | Data Asset | Description | Source tables | Source Systems |  |
-| :---- | :---- | :---- | :---- | ----- | ----- |
-|  |  |  |  | SAP ECC | SAP S/4HANA |
-| Customers | Customers | Customer master data, customer number, name of customer, location, address, and similar information at the granularity of Client(System) and Customer number, Version ID for International Addresses and Valid from date. | `kna1, adrc` | ✅ | ✅ |
-| Delivery Blocking Reasons | Delivery Blocking Reasons | Delivery blocking reasons at the granularity of Client(System) and Language Key. | `tvlst` | ✅ | ✅ |
-| Delivery Documents | Delivery Document Headers | Delivery documents at the header level at the granularity of Client(System) and Delivery document number. | `tcurx, likp` | ✅ | ✅ |
-|  | Delivery Document Items | Delivery document items at the granularity of Client(System), Delivery document number and Item number of delivery document. | `tcurx, likp, lips` | ✅ | ✅ |
-| Material Batches | Material Cross Plant Batches | Material cross-plant batches at the granularity of Client(System), Material Number and Batch Number. | `mch1` | ✅ | ✅ |
-| Material Groups | Material Groups | Material groups at the granularity of Client(System), Material Group, and Language Key. | `t023, t023t` | ✅ | ✅ |
-| Material Plants | Material Plants | Material plants at the granularity of Client(System), Material Number and Plant. | `marc` | ✅ | ✅ |
-| Material Types | Material Types | Material types at the granularity of Client(System), Material Type and Language Key. | `t134, t134t` | ✅ | ✅ |
-| Materials | Materials\_MD | Materials at the granularity of Client(System) and Material Number. | `mara, makt` | ✅ | ✅ |
-| Materials Movements | Material Documents | Material documents at the granularity of Client(System), Document Number, Document Year and Document Item. | `tcurx, mseg` | ✅ |  |
-|  | Material Movement Types | Material movement types at the granularity of Client(System), Language Key, Movement Type, Special Stock Indicator, Movement Indicator, Receipt Indicator and Consumption Related Movement Type. | `t156, t156t` | ✅ |  |
-| Materials Movements | Material Documents | Material documents at the granularity of Client(System), Document Number, Document Year and Document Item. | `tcurx, matdoc` |  | ✅ |
-|  | Material Movement Types | Material movement types at the granularity of Client(System), Language Key, Movement Type, Special Stock Indicator, Movement Indicator, Receipt Indicator and Consumption Related Movement Type. | `t156, t156t` |  | ✅ |
-| Purchasing Documents | Purchasing Document Headers | Provides details about purchase orders at the header level. This view is at the granularity of Client(System) and Purchasing document number. | `ekko` | ✅ | ✅ |
-|  | Purchasing Document Items | Details about purchase order items. This view is at the granularity of Client(System), Purchasing document number and Item number of purchasing document. | `tcurx, ekpo, ekko` | ✅ | ✅ |
-|  | Purchasing Document Schedule Lines | Details about purchase documents at schedule line level, including KPIs such as Open Quantity.. The granularity of this view is Client(System), Purchasing Document Number, Item Number of Purchasing Document and Delivery Schedule Line Counter. | `tcurx, ekpo, ekko, eket` | ✅ | ✅ |
-| Purchasing Organizations | Purchasing Organizations | Purchasing organization master data at the granularity of Client(System) and purchasing organization. | `t024e` | ✅ | ✅ |
-| Sales Documents | Sales Document Headers | Sales documents at the header level, at the granularity of Client(System), and Sales document number. | `vbak` | ✅ | ✅ |
-|  | Sales Document Items | Sales document items, at the granularity of Client(System), Sales document number and Item number of sales document. | `tcurx, vbap` | ✅ | ✅ |
-|  | Sales Document Schedule Lines | Sales documents at schedule line level, including KPIs such as Open Quantity and In-Transit Quantity. The granularity of this view is Client(System), Sales Document Number, Item Number of Sales Document and Delivery Schedule Line Counter. | `tcurx, vbep` | ✅ | ✅ |
-| Sales Organizations | Sales Organizations | Sales organizations at the granularity of Client(System), Sales Organization and Language Key. | `tvko, tvkot` | ✅ | ✅ |
-|  | Distribution Channel | Distribution channels at the granularity of Client(System), Distribution Channel and Language Key. | `tvtw, tvtwt` | ✅ | ✅ |
-|  | Divisions | Divisions at the granularity of Client(System), Division and Language Key. | `tspa, tspat` | ✅ | ✅ |
-| Vendors | Vendors | Vendor master data, vendor number, name of vendor, location, address, and similar at the granularity of Client(System) and Vendor number, Version ID for International Addresses and Valid from date. | `lfa1, adrc` | ✅ | ✅ |
+### Data products:
+
+* Find all available data products and their corresponding data assets on the [public documentation](https://docs.cloud.google.com/cortex/docs/data-product) site.
 
 Please refer to the [public documentation](https://docs.cloud.google.com/cortex/docs/overview) for more information. 
 

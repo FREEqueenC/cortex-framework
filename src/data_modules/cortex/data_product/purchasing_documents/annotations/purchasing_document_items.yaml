@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about purchasing documents at the item level, at the granularity of Client(System), Purchasing document number and Item number of purchasing document."
+description: "Manages detailed transactional item lines from SAP EKPO, representing ordered materials, quantities, pricing components, plants, and account assignment references."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"
@@ -22,8 +22,6 @@ fields:
     description: "Item Number of Purchasing Document, PK"
   - name: "deletion_flag_loekz"
     description: "Deletion Indicator in Purchasing Document"
-  - name: "currency_key_waers"
-    description: "Currency Key"
   - name: "rfq_status_statu"
     description: "RFQ status"
   - name: "change_date_aedat"
@@ -536,6 +534,8 @@ fields:
     description: "Order List Item Number"
   - name: "purchase_order_for_consignment_cons_order"
     description: "Purchase Order for Consignment"
+  - name: "currency_key_waers"
+    description: "Currency Key"
   - name: "net_price_netpr"
     description: "Net Price in Purchasing Document (in Document Currency)"
   - name: "net_order_value_in_po_currency_netwr"
@@ -548,8 +548,7 @@ fields:
     description: "Effective value of item"
   - name: "rebate_basis1_bonba"
     description: "Rebate basis 1"
-  - name: "bq_loaded_at"
-    description: "BigQuery Loaded At"
   - name: "source_last_updated_at"
     description: "Source Last Updated At"
-
+  - name: "bq_loaded_at"
+    description: "BigQuery Loaded At"

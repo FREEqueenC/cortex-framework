@@ -50,6 +50,10 @@ class GcpEnvironmentChecker:
             if not self.validate_datasets():
                 logger.error("Dataset validation failed. Aborting.")
                 return False
+            logger.info("Step 3: Validating dataset locations...")
+            if not self.validate_dataset_location():
+                logger.error("Dataset location validation failed. Aborting.")
+                return False
             logger.info("All GCP Environment validations passed.")
             return True
         except Exception as e:
@@ -84,6 +88,11 @@ class GcpEnvironmentChecker:
         for proj in source_projects | target_projects:
             required_apis.setdefault(proj, set()).add("bigquery.googleapis.com")
 
+        # Storage APIs (only if seeder is enabled)
+        if self.seeder_enabled:
+            for proj in source_projects:
+                required_apis.setdefault(proj, set()).add("storage.googleapis.com")
+
         # Dataform APIs
         if self.config.deployment and self.config.deployment.targets:
             for target in self.config.deployment.targets:
@@ -110,8 +119,17 @@ class GcpEnvironmentChecker:
         for project_id, apis in required_apis.items():
             missing = []
             for api in apis:
-                if not self.service_usage_client.is_api_enabled(project_id, api):
-                    missing.append(api)
+                try:
+                    if not self.service_usage_client.is_api_enabled(project_id, api):
+                        missing.append(api)
+                except Exception as e:
+                    logger.error(
+                        "Unable to check API %s on project %s due to error: %s",
+                        api,
+                        project_id,
+                        e,
+                    )
+                    return False
 
             if missing:
                 logger.warning("Missing APIs on project %s: %s", project_id, missing)
@@ -135,15 +153,7 @@ class GcpEnvironmentChecker:
 
         return True
 
-    def validate_datasets(self) -> bool:
-        """Validates that all datasets defined in the config exist.
-
-        Prompts before creating unless self.create_datasets is True.
-        """
-        logger.info("Validating datasets...")
-        default_location = self.config.data.big_query_location
-        bq_client = BigQueryManager()
-
+    def _get_target_datasets(self) -> set[tuple[str, str]]:
         target_datasets = set()
         foundation_modules = self.config.data.modules.foundation
         for f_mod in foundation_modules:
@@ -159,15 +169,30 @@ class GcpEnvironmentChecker:
                 if target:
                     target_datasets.add((target.project_id, target.dataset_id))
 
-        # Source datasets
-        source_datasets = set()
-        for source in self.config.data.sources:
-            if self.seeder_enabled:
-                # Considered a target dataset as it is not required for it to exist
-                # if synthetic data generation is enabled.
+        if self.seeder_enabled:
+            for source in self.config.data.sources:
                 target_datasets.add((source.project_id, source.dataset_id))
-            else:
+
+        return target_datasets
+
+    def _get_source_datasets(self) -> set[tuple[str, str]]:
+        source_datasets = set()
+        if not self.seeder_enabled:
+            for source in self.config.data.sources:
                 source_datasets.add((source.project_id, source.dataset_id))
+        return source_datasets
+
+    def validate_datasets(self) -> bool:
+        """Validates that all datasets defined in the config exist.
+
+        Prompts before creating unless self.create_datasets is True.
+        """
+        logger.info("Validating datasets...")
+        default_location = self.config.data.big_query_location
+        bq_client = BigQueryManager()
+
+        target_datasets = self._get_target_datasets()
+        source_datasets = self._get_source_datasets()
 
         missing_sources = []
         for proj, ds in source_datasets:
@@ -206,3 +231,52 @@ class GcpEnvironmentChecker:
             f"The following datasets are missing:\n{formatted_targets}\nCreate them? [Y/n]: "
         )
         return self._prompt_and_act(missing_targets, self.create_datasets, prompt_msg, action)
+
+    def validate_dataset_location(self) -> bool:
+        """Validates that all source and existing target datasets are in the expected location."""
+        logger.info("Validating dataset locations...")
+        expected_location = self.config.data.big_query_location
+        bq_client = BigQueryManager()
+
+        all_valid = True
+
+        # Validate source datasets (must exist and be in the correct location)
+        source_datasets = self._get_source_datasets()
+        for project_id, dataset_id in source_datasets:
+            dataset = bq_client.get_dataset(project_id, dataset_id)
+            if dataset:
+                actual_location = dataset.location
+                if actual_location.upper() != expected_location.upper():
+                    logger.error(
+                        "Source dataset '%s.%s' is in location '%s', but '%s' was expected.",
+                        project_id,
+                        dataset_id,
+                        actual_location,
+                        expected_location,
+                    )
+                    all_valid = False
+            else:
+                logger.error(
+                    "Source dataset '%s.%s' does not exist.",
+                    project_id,
+                    dataset_id,
+                )
+                all_valid = False
+
+        # Validate target datasets (if they exist, must be in the correct location)
+        target_datasets = self._get_target_datasets()
+        for project_id, dataset_id in target_datasets:
+            dataset = bq_client.get_dataset(project_id, dataset_id)
+            if dataset:
+                actual_location = dataset.location
+                if actual_location.upper() != expected_location.upper():
+                    logger.error(
+                        "Target dataset '%s.%s' is in location '%s', but '%s' was expected.",
+                        project_id,
+                        dataset_id,
+                        actual_location,
+                        expected_location,
+                    )
+                    all_valid = False
+
+        return all_valid

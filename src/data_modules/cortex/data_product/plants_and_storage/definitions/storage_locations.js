@@ -1,0 +1,52 @@
+/**
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// ___MODULE_CONTEXT___
+// ___TABLE_CONFIG___
+
+const moduleConfig = config.product[moduleContext.moduleId];
+const materializationType = tableConfig.materializationType || "incremental";
+const incremental = require("includes/cortex/incremental.js");
+const publish_config = require("includes/cortex/publish_config.js");
+const sql_helper = require("includes/cortex/sql_helper.js");
+
+const publishConfig = publish_config.getPublishConfig(
+  materializationType,
+  tableConfig,
+  moduleConfig,
+  [
+    "client_mandt",
+    "plant_werks",
+    "storage_location_lgort"
+  ]
+);
+
+publish("storage_locations", publishConfig).query(
+  (ctx) => `
+SELECT
+  t001l.mandt AS client_mandt,
+  t001l.werks AS plant_werks,
+  t001l.lgort AS storage_location_lgort,
+  t001l.lgobe AS storage_location_text_lgobe,
+  IFNULL(t001l.recordstamp, TIMESTAMP('1900-01-01 00:00:00+00')) AS source_last_updated_at,
+  CURRENT_TIMESTAMP() AS bq_loaded_at
+FROM
+  ${ctx.ref(moduleConfig.sources.sapModule.datasetId, "t001l")} AS t001l
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["t001l"])
+])}
+  `
+);

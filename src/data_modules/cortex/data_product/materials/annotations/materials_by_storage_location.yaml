@@ -1,0 +1,68 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Exposes material inventory levels, multilingual material descriptions, plant names, and storage location names at the storage location level from SAP MARD, MAKT, T001W, and T001L."
+fields:
+  - name: "client_mandt"
+    description: "Client (Mandant), PK"
+  - name: "material_number_matnr"
+    description: "Material Number, PK"
+  - name: "language_key_spras"
+    description: "Language Key, PK"
+  - name: "material_text_maktx"
+    description: "Material Description"
+  - name: "plant_werks"
+    description: "Plant, PK"
+  - name: "plant_name_name1"
+    description: "Plant Name"
+  - name: "storage_location_lgort"
+    description: "Storage Location, PK"
+  - name: "storage_location_text_lgobe"
+    description: "Storage Location Description"
+  - name: "maintenance_status_pstat"
+    description: "Maintenance Status"
+  - name: "flag_material_for_deletion_at_storage_location_level_lvorm"
+    description: "Flag Material for Deletion at Storage Location Level"
+  - name: "fiscal_year_of_current_period_lfgja"
+    description: "Fiscal Year of Current Period"
+  - name: "current_period_lfmon"
+    description: "Current Period"
+  - name: "physical_inventory_blocking_indicator_sperr"
+    description: "Physical Inventory Blocking Indicator"
+  - name: "valuated_unrestricted_use_stock_labst"
+    description: "Valuated Unrestricted-Use Stock"
+  - name: "stock_in_transfer_umlme"
+    description: "Stock in Transfer"
+  - name: "stock_in_quality_inspection_insme"
+    description: "Stock in Quality Inspection"
+  - name: "restricted_use_stock_einme"
+    description: "Restricted-Use Stock"
+  - name: "blocked_stock_speme"
+    description: "Blocked Stock"
+  - name: "stock_in_returns_retme"
+    description: "Stock in Returns"
+  - name: "unrestricted_use_stock_in_previous_period_vmlab"
+    description: "Unrestricted-Use Stock in Previous Period"
+  - name: "stock_in_transfer_in_previous_period_vmuml"
+    description: "Stock in Transfer in Previous Period"
+  - name: "stock_in_quality_inspection_in_previous_period_vmins"
+    description: "Stock in Quality Inspection in Previous Period"
+  - name: "restricted_use_stock_in_previous_period_vmein"
+    description: "Restricted-Use Stock in Previous Period"
+  - name: "blocked_stock_in_previous_period_vmspe"
+    description: "Blocked Stock in Previous Period"
+  - name: "stock_in_returns_in_previous_period_vmret"
+    description: "Stock in Returns in Previous Period"
+  - name: "created_on_ersda"
+    description: "Created On"

@@ -1,0 +1,80 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Company Code settings for Asset Accounting"
+fields:
+  - name: "mandt"
+    description: "Client"
+  - name: "bukrs"
+    description: "Company Code"
+  - name: "bukrsn"
+    description: "CoCode No. Alloc."
+  - name: "periv"
+    description: "Fiscal Year Variant"
+  - name: "monmit"
+    description: "Start 2nd Half Month"
+  - name: "xrumpf"
+    description: "Shortened Fiscal Yr."
+  - name: "datum"
+    description: "Transfer Date"
+  - name: "afapl"
+    description: "Chart of dep."
+  - name: "vrmafb"
+    description: "Net Worth Tax"
+  - name: "bkrakt"
+    description: "Across Co.Codes"
+  - name: "xrebuw"
+    description: "Enter Net Book Value"
+  - name: "xanueb"
+    description: "Status Company Code"
+  - name: "lgjahr"
+    description: "Highest Open F.Year"
+  - name: "afblrt"
+    description: "Doc. Type Dep. Pstng"
+  - name: "vxrsku"
+    description: "Calculate cumulative insurance value"
+  - name: "mwskzva"
+    description: "Input Tax Code - Input Tax Exempt"
+  - name: "mwskzaa"
+    description: "Output Tax Code - Tax-Exempt"
+  - name: "kzrbwb"
+    description: "Post Net Book Value"
+  - name: "aprof"
+    description: "Settlement Profile"
+  - name: "ttech"
+    description: "Ret.per. (technical)"
+  - name: "tkund"
+    description: "Retent.per. (cust.spec.)"
+  - name: "xanle"
+    description: "Proof of origin with original LI"
+  - name: "varbzd"
+    description: "Var. for Detrm. Val. Date"
+  - name: "j_1aaoffcl"
+    description: "Official Document Class"
+  - name: "xzorg"
+    description: "Time-Independent Organiz. Units"
+  - name: "aperblrt"
+    description: "Doc.Type APC Posting"
+  - name: "xnoskonto"
+    description: "No Cash Discount"
+  - name: "xdfyv"
+    description: "Different Fiscal Year Variants"
+  - name: "revdmeth"
+    description: "Revenue Dist."
+  - name: "ldtblrt"
+    description: "Document Type"
+  - name: "ldt_wo_afa"
+    description: "Suppress Depreciation Calculation"
+  - name: "xlocked"
+    description: "Company Code Locked"

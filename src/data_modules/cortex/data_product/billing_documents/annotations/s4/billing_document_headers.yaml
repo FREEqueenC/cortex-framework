@@ -1,0 +1,272 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Captures billing document header-level transaction metadata from SAP VBRK (e.g., company code, billing type, net value, tax amount, and billing dates), enriched with calendar date dimensions to support revenue recognition forecasting and margin analysis."
+fields:
+- name: client_mandt
+  description: Client (Mandant), PK
+- name: billing_document_vbeln
+  description: Billing Document, PK
+- name: billing_type_fkart
+  description: Billing Type
+- name: billing_category_fktyp
+  description: Billing category
+- name: sd_document_categ_vbtyp
+  description: SD document categ.
+- name: document_currency_waerk
+  description: Document Currency
+- name: sales_organization_vkorg
+  description: Sales Organization
+- name: distribution_channel_vtweg
+  description: Distribution Channel
+- name: pricing_procedure_kalsm
+  description: Pricing procedure
+- name: doc_condition_no_knumv
+  description: Doc. condition no.
+- name: shipping_conditions_vsbed
+  description: Shipping Conditions
+- name: billing_date_fkdat
+  description: Billing Date
+- name: document_number_belnr
+  description: Document Number
+- name: fiscal_year_gjahr
+  description: Fiscal Year
+- name: posting_period_poper
+  description: Posting Period
+- name: price_group_konda
+  description: Price group
+- name: customer_group_kdgrp
+  description: Customer group
+- name: sales_district_bzirk
+  description: Sales district
+- name: price_list_pltyp
+  description: Price List
+- name: incoterms_inco1
+  description: Incoterms
+- name: incoterms_part_2_inco2
+  description: Incoterms (Part 2)
+- name: export_expkz
+  description: Export
+- name: posting_status_rfbsk
+  description: Posting Status
+- name: man_invoice_mainten_mrnkz
+  description: Man.invoice mainten.
+- name: exchange_rate_accntg_kurrf
+  description: Exchange rate-accntg
+- name: set_exchange_rate_cpkur
+  description: Set exchange rate
+- name: addit_value_days_valtg
+  description: Addit.value days
+- name: fixed_value_date_valdt
+  description: Fixed value date
+- name: terms_of_payment_zterm
+  description: Terms of Payment
+- name: payment_method_zlsch
+  description: Payment Method
+- name: acct_assmt_grp_cust_ktgrd
+  description: Acct Assmt Grp Cust.
+- name: destination_country_land1
+  description: Destination Country
+- name: region_regio
+  description: Region
+- name: county_code_counc
+  description: County code
+- name: city_code_cityc
+  description: City code
+- name: company_code_bukrs
+  description: Company Code
+- name: taxclass1_cust_taxk1
+  description: TaxClass1-Cust.
+- name: taxclass2_cust_taxk2
+  description: TaxClass2-Cust.
+- name: taxclass3_cust_taxk3
+  description: TaxClass3-Cust.
+- name: taxclass4_cust_taxk4
+  description: TaxClass4-Cust.
+- name: taxclass5_cust_taxk5
+  description: TaxClass5-Cust.
+- name: taxclass6_cust_taxk6
+  description: TaxClass6-Cust.
+- name: taxclass7_cust_taxk7
+  description: TaxClass7-Cust.
+- name: taxclass8_cust_taxk8
+  description: TaxClass8-Cust.
+- name: taxclass9_cust_taxk9
+  description: TaxClass9-Cust.
+- name: net_value_netwr
+  description: Net Value
+- name: combination_criteria_zukri
+  description: Combination criteria
+- name: created_by_ernam
+  description: Created By
+- name: time_erzet
+  description: Time
+- name: created_on_erdat
+  description: Created On
+- name: update_group_stats_stafo
+  description: Update group (stats)
+- name: payer_kunrg
+  description: Payer
+- name: sold_to_party_kunag
+  description: Sold-To Party
+- name: dunning_area_maber
+  description: Dunning Area
+- name: statistics_currency_stwae
+  description: Statistics currency
+- name: number_of_foreign_trade_data_exnum
+  description: Number of foreign trade data
+- name: vat_registration_no_stceg
+  description: VAT Registration No.
+- name: changed_on_aedat
+  description: Changed On
+- name: cancelled_bill_doc_sfakn
+  description: Cancelled/Reversed Reference Billing Document Number
+- name: agreement_knuma
+  description: Agreement
+- name: invoice_list_type_fkart_rl
+  description: Invoice list type
+- name: billing_date_fkdat_rl
+  description: Billing date
+- name: exchange_rate_type_kurst
+  description: Exchange Rate Type
+- name: dunning_key_mschl
+  description: Dunning Key
+- name: dunning_block_mansp
+  description: Dunning Block
+- name: division_spart
+  description: Division
+- name: credit_control_area_kkber
+  description: Credit control area
+- name: credit_account_knkli
+  description: Credit account
+- name: currency_cmwae
+  description: Currency
+- name: cred_data_exch_rate_cmkuf
+  description: Cred.data exch.rate
+- name: hierarchytypepricing_hityp_pr
+  description: HierarchyTypePricing
+- name: po_number_bstnk_vf
+  description: PO Number
+- name: trading_partner_vbund
+  description: Trading partner
+- name: accrual_billing_type_fkart_ab
+  description: Accrual billing type
+- name: application_kappl
+  description: Application
+- name: tax_depart_country_landtx
+  description: Tax depart. country
+- name: origin_sls_tax_no_stceg_h
+  description: Origin sls.tax no.
+- name: country_sls_tax_no_stceg_l
+  description: Country sls.tax no.
+- name: reference_xblnr
+  description: Reference
+- name: assignment_zuonr
+  description: Assignment
+- name: tax_amount_mwsbk
+  description: Tax amount
+- name: logical_system_logsys
+  description: Logical System
+- name: cancelled_fksto
+  description: Cancelled/Reversed Billing Document Indicator
+- name: eu_triangular_deal_xegdr
+  description: EU triangular deal
+- name: paym_card_plan_no_rplnr
+  description: Paym.card plan no.
+- name: financial_doc_no_lcnum
+  description: Financial doc. no.
+- name: tax_type_j_1afitp
+  description: Tax type
+- name: translation_date_kurrf_dat
+  description: Translation date
+- name: lett_of_credit_crcy_akwae
+  description: Lett.-of-credit crcy
+- name: ex_rate_lettofcredit_akkur
+  description: Ex.rate-LettOfCredit
+- name: payment_reference_kidno
+  description: Payment reference
+- name: part_bank_type_bvtyp
+  description: Part.bank type
+- name: number_of_pages_numpg
+  description: Number of Pages
+- name: business_place_bupla
+  description: Business place
+- name: contract_account_vkont
+  description: Contract Account
+- name: add_fin_acc_status_fkk_docstat
+  description: Add. Fin. Acc.Status
+- name: nrzas_nrzas
+  description: 
+- name: ewm_billing_indicator_spe_billing_ind
+  description: EWM Billing Indicator
+- name: contract_vtref
+  description: Contract
+- name: source_system_fk_source_sys
+  description: Source System
+- name: crm_billing_categ_fktyp_crm
+  description: CRM Billing Categ.
+- name: reversal_reason_stgrd
+  description: Reversal Reason
+- name: branch_code_j_1tpbupl
+  description: Branch Code
+- name: incoterms_version_incov
+  description: Incoterms Version
+- name: incoterms_location_1_inco2_l
+  description: Incoterms Location 1
+- name: incoterms_location_2_inco3_l
+  description: Incoterms Location 2
+- name: country_specific_reference_1_glo_log_ref1_hd
+  description: Country Specific Reference 1
+- name: dpc_relevant_dpc_rel
+  description: DPC relevant
+- name: mandate_reference_mndid
+  description: Mandate Reference
+- name: payment_type_pay_type
+  description: Payment Type
+- name: sepa_relevant_sepon
+  description: SEPA-Relevant
+- name: sepa_relevant_mndvg
+  description: SEPA-Relevant
+- name: payment_method_sppaym
+  description: Payment Method
+- name: sales_order_sppord
+  description: Sales Order
+- name: year_of_creation_date_erdat
+  description: Year of Creation Date
+- name: month_of_creation_date_erdat
+  description: Month of Creation Date
+- name: quarter_of_creation_date_erdat
+  description: Quarter of Creation Date
+- name: week_of_creation_date_erdat
+  description: Week of Creation Date
+- name: year_of_billing_date_fkdat
+  description: Year of Billing Date
+- name: month_of_billing_date_fkdat
+  description: Month of Billing Date
+- name: quarter_of_billing_date_fkdat
+  description: Quarter of Billing Date
+- name: week_of_billing_date_fkdat
+  description: Week of Billing Date
+- name: year_of_changed_on_aedat
+  description: Year of Last Change Date
+- name: month_of_changed_on_aedat
+  description: Month of Last Change Date
+- name: quarter_of_changed_on_aedat
+  description: Quarter of Last Change Date
+- name: week_of_changed_on_aedat
+  description: Week of Last Change Date
+- name: source_last_updated_at
+  description: Source Last Updated At
+- name: bq_loaded_at
+  description: Bq Loaded At

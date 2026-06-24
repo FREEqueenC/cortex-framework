@@ -14,9 +14,9 @@
 
 description: "Organizational Unit: Distribution Channels"
 fields:
-  - name: "hide"
-    description: "Hide Value in Input Help"
   - name: "mandt"
     description: "Client (Mandant)"
   - name: "vtweg"
     description: "Distribution Channel"
+  - name: "hide"
+    description: "Hide Value in Input Help"

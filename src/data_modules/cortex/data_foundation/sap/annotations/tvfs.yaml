@@ -14,7 +14,7 @@
 
 description: "Billing: Reasons for Blocking"
 fields:
-  - name: "faksp"
-    description: "Block"
   - name: "mandt"
     description: "Client (Mandant)"
+  - name: "faksp"
+    description: "Block"

@@ -14,11 +14,11 @@
 
 description: "Company code-dependent texts"
 fields:
-  - name: "bukrs"
-    description: "Company Code"
-  - name: "ltext"
-    description: "Usage"
   - name: "mandt"
     description: "Client (Mandant)"
+  - name: "bukrs"
+    description: "Company Code"
   - name: "txtna"
     description: "Text name"
+  - name: "ltext"
+    description: "Usage"

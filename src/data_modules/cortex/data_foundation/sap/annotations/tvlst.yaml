@@ -14,11 +14,11 @@
 
 description: "Deliveries: Blocking Reasons/Scope: Texts"
 fields:
-  - name: "lifsp"
-    description: "Delivery block"
   - name: "mandt"
     description: "Client (Mandant)"
   - name: "spras"
     description: "Language Key"
+  - name: "lifsp"
+    description: "Delivery block"
   - name: "vtext"
     description: "Delivery block desc."

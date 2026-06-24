@@ -14,13 +14,13 @@
 
 description: "SAP DD: SAP Table Texts"
 fields:
+  - name: "tabname"
+    description: "Table Name"
+  - name: "ddlanguage"
+    description: "Lang."
   - name: "as4local"
     description: "Activation Status"
   - name: "as4vers"
     description: "Version"
-  - name: "ddlanguage"
-    description: "Lang."
   - name: "ddtext"
     description: "Short Description"
-  - name: "tabname"
-    description: "Table Name"

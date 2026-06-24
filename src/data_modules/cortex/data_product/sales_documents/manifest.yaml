@@ -24,5 +24,12 @@ dependencies:
       - vbak
       - vbap
       - vbep
+      - vbpa
       - tcurx
+      - vbfa
+      ecc:
+      - vbuk
+      - vbup
+      s4:
+      - lips
 builder: sap_product

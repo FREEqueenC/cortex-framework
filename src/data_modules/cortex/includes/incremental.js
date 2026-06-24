@@ -15,16 +15,21 @@
  */
 
 /**
- * Generates a WHERE clause for incremental updates based on timestamp columns.
+ * Generates a condition string for incremental updates based on timestamp columns.
+ * Returns an empty string if not an incremental run.
+ * If a column name does not contain a dot and is not "recordstamp", it assumes it is a table alias and appends ".recordstamp".
  * @param {!Object} ctx The Dataform context object.
  * @param {string|!Array<string>} timestampColumns The timestamp column(s) to check.
- * @returns {string} The WHERE clause string.
+ * @returns {string} The condition string or empty string.
  */
-function getWhere(ctx, timestampColumns) {
+function getFilter(ctx, timestampColumns) {
   const columns = Array.isArray(timestampColumns) ? timestampColumns : [timestampColumns];
 
   const timestampChecks = columns.map(
-    (col) => `IFNULL(${col}, TIMESTAMP('1900-01-01 00:00:00+00'))`
+    (col) => {
+      const fullCol = (col === "recordstamp" || col.includes(".")) ? col : `${col}.recordstamp`;
+      return `IFNULL(${fullCol}, TIMESTAMP('1900-01-01 00:00:00+00'))`;
+    }
   );
 
   const greatestTimestamp = timestampChecks.length > 1
@@ -33,9 +38,9 @@ function getWhere(ctx, timestampColumns) {
 
   return ctx.when(
     ctx.incremental(),
-    `WHERE ${greatestTimestamp} >= (
+    `${greatestTimestamp} >= (
       SELECT TIMESTAMP_SUB(
-        IFNULL(MAX(source_last_updated_at), TIMESTAMP('1900-12-25 05:30:00+00')),
+        IFNULL(MAX(source_last_updated_at), TIMESTAMP("1900-12-25 05:30:00+00")),
         INTERVAL 30 MINUTE
       )
       FROM ${ctx.self()}
@@ -44,4 +49,20 @@ function getWhere(ctx, timestampColumns) {
   );
 }
 
-module.exports = { getWhere };
+/**
+ * Generates a WHERE clause for incremental updates based on timestamp columns.
+ * Keep for backward compatibility.
+ * @param {!Object} ctx The Dataform context object.
+ * @param {string|!Array<string>} timestampColumns The timestamp column(s) to check.
+ * @returns {string} The WHERE clause string.
+ */
+function getWhere(ctx, timestampColumns) {
+  const condition = getFilter(ctx, timestampColumns);
+  const warning = "-- Deprecation Warning: Please adjust your JS file to use the new getFilter approach.\n";
+  return condition ? `${warning}WHERE ${condition}` : warning;
+}
+
+module.exports = {
+  getWhere,
+  getFilter
+};

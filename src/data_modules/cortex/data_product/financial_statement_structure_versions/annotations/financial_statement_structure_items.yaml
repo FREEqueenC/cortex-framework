@@ -1,0 +1,46 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Exposes hierarchical node items and structure layouts for Financial Statement Versions from SAP FAGL_011PC to automate balance sheet and P&L hierarchy generation."
+fields:
+  - name: "client_mandt"
+    description: "Client (Mandant), PK"
+  - name: "financial_statement_version_versn"
+    description: "FS Version, PK"
+  - name: "node_id_id"
+    description: "Node ID, PK"
+  - name: "node_type_type"
+    description: "Type"
+  - name: "financial_statement_item_ergsl"
+    description: "Financial Statement Item"
+  - name: "parent_node_id_parent"
+    description: "Parent Node ID"
+  - name: "child_node_id_child"
+    description: "Child Node ID"
+  - name: "next_node_id_nextn"
+    description: "Next Node ID"
+  - name: "hierarchy_level_stufe"
+    description: "Hierarchy level"
+  - name: "totals_indicator_summe"
+    description: "Indicator: Totals"
+  - name: "change_sign_indicator_sign"
+    description: "Change of sign (+/-)"
+  - name: "changed_on_date_aedat"
+    description: "Changed On"
+  - name: "changed_by_user_usnam"
+    description: "User Name"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BigQuery Loaded At"

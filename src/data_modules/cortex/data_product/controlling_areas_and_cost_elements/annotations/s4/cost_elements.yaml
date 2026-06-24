@@ -1,0 +1,70 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Exposes cost element master definitions from CSKB and CSKU, including valid date ranges, cost element categories, planning indicators, and multi-lingual descriptions, to support cost accounting and profitability tracking."
+fields:
+  - name: "client_mandt"
+    description: "Client (Mandant), PK"
+  - name: "controlling_area_kokrs"
+    description: "Controlling Area, PK"
+  - name: "cost_element_kstar"
+    description: "Cost Element, PK"
+  - name: "valid_to_datbi"
+    description: "Valid To, PK"
+  - name: "language_key_spras"
+    description: "Language Key, PK"
+  - name: "chart_of_accounts_ktopl"
+    description: "Chart of Accounts"
+  - name: "valid_from_datab"
+    description: "Valid From"
+  - name: "celem_category_katyp"
+    description: "Cost Element Category"
+  - name: "entered_on_ersda"
+    description: "Entered On"
+  - name: "created_by_usnam"
+    description: "Created By"
+  - name: "attribute_mix_eigen"
+    description: "Attribute mix"
+  - name: "planning_access_plazu"
+    description: "Planning Access"
+  - name: "planning_location_plaor"
+    description: "Planning Location"
+  - name: "planning_user_plaus"
+    description: "Planning User"
+  - name: "cost_center_kostl"
+    description: "Cost Center"
+  - name: "order_aufnr"
+    description: "Order"
+  - name: "record_quantity_mgefl"
+    description: "Record Quantity"
+  - name: "internal_uom_msehi"
+    description: "Internal UoM"
+  - name: "deakt_deakt"
+    description: "Deactivation Indicator"
+  - name: "deletion_flag_loevm"
+    description: "Deletion Flag"
+  - name: "timestamp_last_changed_ts"
+    description: "Last Changed Timestamp"
+  - name: "recovery_indicator_recid"
+    description: "Recovery Indicator"
+  - name: "name_ktext"
+    description: "Name"
+  - name: "description_ltext"
+    description: "Description"
+  - name: "cost_element_short_text_mctxt"
+    description: "Cost Element Short Text"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BQ Loaded At"

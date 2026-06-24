@@ -1,0 +1,62 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "BP: Bank Details"
+fields:
+  - name: "client"
+    description: "Client"
+  - name: "partner"
+    description: "Business Partner"
+  - name: "bkvid"
+    description: "Bank details ID"
+  - name: "banks"
+    description: "Bank Country"
+  - name: "bankl"
+    description: "Bank Key"
+  - name: "bankn"
+    description: "Bank acct"
+  - name: "bkont"
+    description: "Bank Control Key"
+  - name: "bkref"
+    description: "Reference Details"
+  - name: "koinh"
+    description: "Account Holder"
+  - name: "bkext"
+    description: "Extern.bank dtls ID"
+  - name: "xezer"
+    description: "Collection authorization"
+  - name: "accname"
+    description: "Account Name"
+  - name: "move_bkvid"
+    description: "Target Bank Details"
+  - name: "protect"
+    description: "Sensitivity"
+  - name: "bk_valid_from"
+    description: "Valid From"
+  - name: "bk_valid_to"
+    description: "Valid To"
+  - name: "bk_move_date"
+    description: "Date of Change"
+  - name: "iban"
+    description: "IBAN"
+  - name: "bank_guid"
+    description: "Bank GUID"
+  - name: "account_id"
+    description: "Bank Account Number"
+  - name: "check_digit"
+    description: "Bank Account Check Digit"
+  - name: "account_type"
+    description: "Bank Account Type"
+  - name: "bp_eew_but0bk"
+    description: "Dummy function in length 1"

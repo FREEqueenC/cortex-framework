@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about sales document items, at the granularity of Client(System), Sales document number and Item number of sales document."
+description: "Captures sales document item-level transaction details from SAP VBAP, documenting materials, quantities ordered, net prices, and plant locations."
 fields:
 - name: "client_mandt"
   description: "Client (Mandant), PK"

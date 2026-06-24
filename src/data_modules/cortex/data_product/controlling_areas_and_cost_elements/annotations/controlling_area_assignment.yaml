@@ -1,0 +1,28 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Maps company codes and business areas to their designated controlling areas from TKA02, facilitating cross-company controlling relationships and fiscal consolidation routing."
+fields:
+  - name: "client_mandt"
+    description: "Client (Mandant), PK"
+  - name: "company_code_bukrs"
+    description: "Company Code, PK"
+  - name: "business_area_gsber"
+    description: "Business Area, PK"
+  - name: "controlling_area_kokrs"  
+    description: "Controlling Area"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BQ Loaded At"

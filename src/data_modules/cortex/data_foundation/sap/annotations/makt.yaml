@@ -14,13 +14,13 @@
 
 description: "Material Descriptions"
 fields:
-  - name: "maktg"
-    description: "Material description"
-  - name: "maktx"
-    description: "Material Description"
   - name: "mandt"
     description: "Client (Mandant)"
   - name: "matnr"
     description: "Material"
   - name: "spras"
     description: "Language Key"
+  - name: "maktx"
+    description: "Material Description"
+  - name: "maktg"
+    description: "Material description"

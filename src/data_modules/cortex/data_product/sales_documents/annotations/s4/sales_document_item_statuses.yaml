@@ -1,0 +1,100 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Captures picking, delivery, and billing statuses of individual sales document items from SAP VBUP (ECC) or VBAP/LIPS (S4)."
+fields:
+- name: client_mandt
+  description: Client (Mandant), PK.
+- name: sales_document_vbeln
+  description: Sales Document Number, PK.
+- name: sales_document_item_posnr
+  description: Sales Document Item Number, PK.
+- name: reference_status_rfsta
+  description: Reference Status.
+- name: overall_status_of_reference_rfgsa
+  description: Overall Status of Reference.
+- name: confirmation_status_of_document_item_besta
+  description: Confirmation Status of Document Item.
+- name: delivery_status_lfsta
+  description: Delivery Status.
+- name: overall_delivery_status_of_the_item_lfgsa
+  description: Overall Delivery Status of the Item.
+- name: goods_movement_status_wbsta
+  description: Goods Movement Status.
+- name: billing_status_of_delivery_fksta
+  description: Billing Status of Delivery.
+- name: billing_status_for_order_fksaa
+  description: Billing Status for Order.
+- name: rejection_status_for_sd_item_absta
+  description: Rejection Status for SD Item.
+- name: overall_processing_status_of_the_sd_document_item_gbsta
+  description: Overall Processing Status of SD Item.
+- name: picking_status_putaway_status_kosta
+  description: Picking/Putaway Status.
+- name: status_of_warehouse_management_activities_lvsta
+  description: Status of Warehouse Management Activities.
+- name: general_incompletion_status_of_item_uvall
+  description: General Incompletion Status of Item.
+- name: incompletion_status_of_the_item_with_regard_to_delivery_uvvlk
+  description: Incompletion Status of Item with Regard to Delivery.
+- name: item_incompletion_status_with_respect_to_billing_uvfak
+  description: Item Incompletion Status with Respect to Billing.
+- name: pricing_for_item_is_incomplete_uvprs
+  description: Pricing for Item is Incomplete.
+- name: intercompany_billing_status_fkivp
+  description: Intercompany Billing Status.
+- name: customer_reserves1_item_status_uvp01
+  description: Customer Reserves 1 Item Status.
+- name: customer_reserves2_item_status_uvp02
+  description: Customer Reserves 2 Item Status.
+- name: item_reserves3_item_status_uvp03
+  description: Item Reserves 3 Item Status.
+- name: item_reserves4_item_status_uvp04
+  description: Item Reserves 4 Item Status.
+- name: customer_reserves5_item_status_uvp05
+  description: Customer Reserves 5 Item Status.
+- name: packing_status_of_item_pksta
+  description: Packing Status of Item.
+- name: confirmation_status_of_picking_putaway_koqua
+  description: Confirmation Status of Picking/Putaway.
+- name: status_of_credit_check_against_financial_document_cmppi
+  description: Status of Credit Check Against Financial Document.
+- name: status_of_credit_check_against_export_credit_insurance_cmppj
+  description: Status of Credit Check Against Export Credit Insurance.
+- name: incomplete_status_of_item_for_picking_putaway_uvpik
+  description: Incomplete Status of Item for Picking/Putaway.
+- name: incomplete_status_of_item_for_packaging_uvpak
+  description: Incomplete Status of Item for Packaging.
+- name: incomplete_status_of_item_regarding_goods_issue_uvwak
+  description: Incomplete Status of Item Regarding Goods Issue.
+- name: delay_status_dcsta
+  description: Delay Status.
+- name: decentralized_whse_processing_vlstp
+  description: Decentralized Warehouse Processing.
+- name: billing_block_status_for_items_fssta
+  description: Billing Block Status for Items.
+- name: delivery_block_status_for_item_lssta
+  description: Delivery Block Status for Item.
+- name: pod_status_on_item_level_pdsta
+  description: POD Status on Item Level.
+- name: manual_completion_of_contract_manek
+  description: Manual Completion of Contract.
+- name: inbound_delivery_item_not_yet_complete_on_hold_hdall
+  description: Inbound Delivery Item Not Yet Complete (On Hold).
+- name: ifrs15_relevance
+  description: IFRS 15 Relevance Indicator (S4 only).
+- name: source_last_updated_at
+  description: Source Last Updated At.
+- name: bq_loaded_at
+  description: Bq Loaded At.

@@ -82,11 +82,15 @@ def test_dataform_builder_initialization(mock_discover_modules, mock_config_cont
     mock_discover_modules.return_value = {}
     global_config = GlobalConfig(**mock_config_content)
     output_dir = pathlib.Path("/tmp/test_output")
+    assertions_path = pathlib.Path("/tmp/assertions.sqlx")
 
-    builder = DataformBuilder(global_config=global_config, output_dir=output_dir)
+    builder = DataformBuilder(
+        global_config=global_config, output_dir=output_dir, assertions_path=assertions_path
+    )
 
     assert builder.global_config == global_config
     assert builder.output_dir == output_dir
+    assert builder.assertions_path == assertions_path
     assert builder.base_dir == pathlib.Path.cwd()
 
 
@@ -144,15 +148,19 @@ def test_build_success(
     mock_google_auth_default.assert_called_once()
 
 
+@mock.patch("tools.build.ConfigValidator")
 @mock.patch("tools.build.GcpEnvironmentChecker")
 @mock.patch("tools.build.load_yaml")
 @mock.patch("tools.build.pathlib.Path.exists")
 @mock.patch("tools.build.DataformBuilder.build")
-def test_main_success(mock_build, mock_exists, mock_load_yaml, mock_checker, mock_config_content):
+def test_main_success(
+    mock_build, mock_exists, mock_load_yaml, mock_checker, mock_validator, mock_config_content
+):
     mock_build.return_value = True
     mock_exists.return_value = True
     mock_load_yaml.return_value = mock_config_content
     mock_checker.return_value.validate_all.return_value = True
+    mock_validator.validate.return_value = (True, [])
     try:
         main(["--config", "config.yaml"])
     except SystemExit:
@@ -162,31 +170,37 @@ def test_main_success(mock_build, mock_exists, mock_load_yaml, mock_checker, moc
     mock_checker.return_value.validate_all.assert_called_once()
 
 
+@mock.patch("tools.build.ConfigValidator")
 @mock.patch("tools.build.GcpEnvironmentChecker")
 @mock.patch("tools.build.load_yaml")
 @mock.patch("tools.build.pathlib.Path.exists")
 @mock.patch("tools.build.DataformBuilder.build")
-def test_main_failure(mock_build, mock_exists, mock_load_yaml, mock_checker, mock_config_content):
+def test_main_failure(
+    mock_build, mock_exists, mock_load_yaml, mock_checker, mock_validator, mock_config_content
+):
     mock_build.return_value = False
     mock_exists.return_value = True
     mock_load_yaml.return_value = mock_config_content
     mock_checker.return_value.validate_all.return_value = True
+    mock_validator.validate.return_value = (True, [])
 
     with pytest.raises(SystemExit) as excinfo:
         main(["--config", "config.yaml"])
     assert excinfo.value.code == 1
 
 
+@mock.patch("tools.build.ConfigValidator")
 @mock.patch("tools.build.GcpEnvironmentChecker")
 @mock.patch("tools.build.load_yaml")
 @mock.patch("tools.build.pathlib.Path.exists")
 @mock.patch("tools.build.DataformBuilder.build")
 def test_main_env_check_failure(
-    mock_build, mock_exists, mock_load_yaml, mock_checker, mock_config_content
+    mock_build, mock_exists, mock_load_yaml, mock_checker, mock_validator, mock_config_content
 ):
     mock_exists.return_value = True
     mock_load_yaml.return_value = mock_config_content
     mock_checker.return_value.validate_all.return_value = False
+    mock_validator.validate.return_value = (True, [])
 
     with pytest.raises(SystemExit) as excinfo:
         main(["--config", "config.yaml"])
@@ -277,3 +291,138 @@ def test_generate_config_js_content_version_mismatch(
     result = builder._generate_config_js_content()
 
     assert result is None
+
+
+def test_generate_centralized_sources_path_traversal_project(tmp_path):
+    """Verifies that path traversal attempts in project IDs are blocked."""
+    from common.builders.base import Source
+
+    global_config = GlobalConfig(
+        data={
+            "bigQueryLocation": "US",
+            "sources": [],
+            "targets": [],
+            "modules": {"foundation": [], "product": []},
+        }
+    )
+    builder = DataformBuilder(global_config=global_config, output_dir=tmp_path)
+
+    # Add a malicious source to registry
+    builder.sources_registry.add(Source(project="../../../pwned", dataset="sap_cdc", table="mara"))
+
+    with pytest.raises(ValueError) as excinfo:
+        builder._generate_centralized_sources()
+    assert "Invalid project ID" in str(excinfo.value)
+
+
+def test_generate_centralized_sources_path_traversal_dataset(tmp_path):
+    """Verifies that path traversal attempts in dataset IDs are blocked."""
+    from common.builders.base import Source
+
+    global_config = GlobalConfig(
+        data={
+            "bigQueryLocation": "US",
+            "sources": [],
+            "targets": [],
+            "modules": {"foundation": [], "product": []},
+        }
+    )
+    builder = DataformBuilder(global_config=global_config, output_dir=tmp_path)
+
+    # Add a source with a valid project but malicious dataset to registry
+    builder.sources_registry.add(
+        Source(project="valid-project", dataset="../../../pwned", table="mara")
+    )
+
+    with pytest.raises(ValueError) as excinfo:
+        builder._generate_centralized_sources()
+    assert "Invalid dataset ID" in str(excinfo.value)
+
+
+def test_generate_centralized_sources_valid(tmp_path):
+    """Verifies that valid project/dataset IDs work correctly."""
+    from common.builders.base import Source
+
+    global_config = GlobalConfig(
+        data={
+            "bigQueryLocation": "US",
+            "sources": [],
+            "targets": [],
+            "modules": {"foundation": [], "product": []},
+        }
+    )
+    builder = DataformBuilder(global_config=global_config, output_dir=tmp_path)
+
+    builder.sources_registry.add(
+        Source(project="valid-project", dataset="valid_dataset", table="mara")
+    )
+
+    builder._generate_centralized_sources()
+
+    expected_file = tmp_path / "definitions" / "sources" / "valid-project_valid_dataset_sources.js"
+    assert expected_file.exists()
+
+
+@mock.patch("tools.build.shutil.rmtree")
+@mock.patch("tools.build.shutil.copytree")
+@mock.patch("tools.build.shutil.copy2")
+@mock.patch("tools.build.DataformBuilder._discover_modules")
+def test_build_with_assertions_success(
+    mock_discover_modules, mock_copy2, mock_copytree, mock_rmtree, tmp_path
+):
+    mock_discover_modules.return_value = {}
+    global_config = GlobalConfig(
+        data={
+            "bigQueryLocation": "US",
+            "sources": [],
+            "targets": [],
+            "modules": {"foundation": [], "product": []},
+        }
+    )
+
+    assertions_file = tmp_path / "assertions.sqlx"
+    assertions_file.touch()
+
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=tmp_path / "output",
+        assertions_path=assertions_file,
+    )
+
+    builder._prepare_workspace()
+
+    expected_dest = tmp_path / "output" / "definitions" / "assertions" / "assertions.sqlx"
+    mock_copy2.assert_called_once_with(assertions_file, expected_dest)
+
+
+@mock.patch("tools.build.shutil.rmtree")
+@mock.patch("tools.build.shutil.copytree")
+@mock.patch("tools.build.shutil.copy2")
+@mock.patch("tools.build._logger.error")
+@mock.patch("tools.build.DataformBuilder._discover_modules")
+def test_build_with_assertions_directory_failure(
+    mock_discover_modules, mock_log_error, mock_copy2, mock_copytree, mock_rmtree, tmp_path
+):
+    mock_discover_modules.return_value = {}
+    global_config = GlobalConfig(
+        data={
+            "bigQueryLocation": "US",
+            "sources": [],
+            "targets": [],
+            "modules": {"foundation": [], "product": []},
+        }
+    )
+
+    assertions_dir = tmp_path / "assertions"
+    assertions_dir.mkdir()
+
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=tmp_path / "output",
+        assertions_path=assertions_dir,
+    )
+
+    builder._prepare_workspace()
+
+    mock_log_error.assert_called_once_with("Assertions path must be a file, not a directory.")
+    mock_copy2.assert_not_called()

@@ -318,15 +318,23 @@ class DataformClient:
         repo: str,
         release_config_id: str,
         git_commitish: str,
+        cron_schedule: str | None = None,
+        time_zone: str | None = None,
     ) -> bool:
         """Modifies a release configuration (creates if not exists, updates otherwise)."""
         logger.info("Modifying release configuration '%s'", release_config_id)
         parent = self.client.repository_path(project, region, repo)
         release_config = dataform_v1beta1.ReleaseConfig(
             git_commitish=git_commitish,
-            cron_schedule="0 1 * * *",
-            time_zone="UTC",
         )
+        paths = ["git_commitish"]
+        if cron_schedule:
+            release_config.cron_schedule = cron_schedule
+            paths.append("cron_schedule")
+        if time_zone:
+            release_config.time_zone = time_zone
+            paths.append("time_zone")
+
         request = dataform_v1beta1.CreateReleaseConfigRequest(
             parent=parent,
             release_config=release_config,
@@ -343,9 +351,7 @@ class DataformClient:
             )
             update_request = dataform_v1beta1.UpdateReleaseConfigRequest(
                 release_config=release_config,
-                update_mask=field_mask_pb2.FieldMask(
-                    paths=["git_commitish", "cron_schedule", "time_zone"]
-                ),
+                update_mask=field_mask_pb2.FieldMask(paths=paths),
             )
             try:
                 self.client.update_release_config(request=update_request)

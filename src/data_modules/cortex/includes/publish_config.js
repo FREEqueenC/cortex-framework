@@ -36,6 +36,44 @@ function getPublishConfig(materializationType, tableConfig, moduleConfig, unique
     config.onSchemaChange = "EXTEND";
     if (uniqueKeys && uniqueKeys.length > 0) {
       config.uniqueKey = uniqueKeys;
+
+      const tableName = tableConfig.tableName;
+      const database = moduleConfig.targetProjectId;
+      const schema = moduleConfig.targetDatasetId;
+      const assertionFunc = typeof assertion !== "undefined" ? assertion : global.assertion;
+
+      if (tableName && assertionFunc) {
+        // 1. Unique Key Assertion
+        assertionFunc(`${tableName}_assertions_uniqueKey`, {
+          database: database,
+          schema: schema,
+          tags: tableConfig.tags
+        }).query(ctx => `
+          SELECT
+            ${uniqueKeys.map(k => `\`${k}\``).join(", ")},
+            COUNT(1) as row_count
+          FROM
+            ${ctx.ref(tableName)}
+          GROUP BY
+            ${uniqueKeys.map(k => `\`${k}\``).join(", ")}
+          HAVING
+            row_count > 1
+        `);
+
+        // 2. Non-Null Key Assertion
+        assertionFunc(`${tableName}_assertions_nonNull`, {
+          database: database,
+          schema: schema,
+          tags: tableConfig.tags
+        }).query(ctx => `
+          SELECT
+            *
+          FROM
+            ${ctx.ref(tableName)}
+          WHERE
+            ${uniqueKeys.map(k => `\`${k}\` IS NULL`).join(" OR ")}
+        `);
+      }
     }
   }
 

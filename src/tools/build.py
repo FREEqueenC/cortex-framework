@@ -19,6 +19,7 @@ import inspect
 import json
 import logging
 import pathlib
+import re
 import shutil
 import sys
 import uuid
@@ -31,15 +32,16 @@ from google.auth import exceptions
 
 from common.builders.base import BaseBuilder, FoundationBuilder, ProductBuilder, Source
 from common.registry import auto_discover_plugins, builder_registry
-from common.schemas.config_schema import GlobalConfig, SAPModuleConfig
+from common.schemas.config_schema import DataFoundationModuleConfig, GlobalConfig, SAPModuleConfig
 from common.schemas.enums import ModuleCategory, ModuleType
 from common.schemas.manifest_schema import ManifestConfig
 from common.services.config_preprocessor import ConfigPreprocessor
+from common.services.config_validator import ConfigValidator
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
 from common.utils.file_utils import load_yaml
 from common.utils.logging import setup_logging
 
-logger = logging.getLogger(__name__)
+_logger = logging.getLogger(__name__)
 
 
 class DatasetIdentifier(NamedTuple):
@@ -55,18 +57,22 @@ class DataformBuilder:
         global_config: GlobalConfig,
         output_dir: pathlib.Path,
         base_dir: pathlib.Path | None = None,
+        config_dir: pathlib.Path | None = None,
         src_dir: pathlib.Path | None = None,
         builder_factory: Callable[[str], BaseBuilder | None] | None = None,
         default_project: str | None = None,
+        assertions_path: pathlib.Path | None = None,
     ):
         self.global_config = global_config
         self.output_dir = output_dir
-        self.base_dir = base_dir or pathlib.Path.cwd()
         # src_dir is still the python source root
         self.src_dir = src_dir or pathlib.Path(__file__).resolve().parent.parent
+        self.base_dir = base_dir or self.src_dir.parent
+        self.config_dir = config_dir or self.base_dir
         self.data_modules_dir = self.src_dir / "data_modules"
         self.builder_factory = builder_factory
         self.default_project = default_project
+        self.assertions_path = assertions_path
         self.sources_registry: set[Source] = set()
 
         if str(self.src_dir) not in sys.path:
@@ -89,6 +95,9 @@ class DataformBuilder:
             auto_discover_plugins(package_path)
         builder_registry.set_discovery_namespace(None)
 
+        # Auto-discover global builders
+        auto_discover_plugins("common.builders")
+
     def _discover_modules(self) -> dict[str, dict[str, Any]]:
         """Scans module directories to build a registry of available modules based on type."""
         registry = {}
@@ -97,7 +106,7 @@ class DataformBuilder:
             ns_path = self.data_modules_dir / ns_config.path
 
             if not ns_path.exists():
-                logger.warning("Namespace path %s does not exist. Skipping.", ns_path)
+                _logger.warning("Namespace path %s does not exist. Skipping.", ns_path)
                 continue
 
             for category in ["data_foundation", "data_product"]:
@@ -133,10 +142,10 @@ class DataformBuilder:
     def build(self) -> bool:
         """Executes the Dataform build orchestrator."""
         if self.global_config is None:
-            logger.error("GlobalConfig not provided to DataformBuilder")
+            _logger.error("GlobalConfig not provided to DataformBuilder")
             return False
 
-        logger.info("Starting Dataform build in %s", self.output_dir)
+        _logger.info("Starting Dataform build in %s", self.output_dir)
 
         self._prepare_workspace()
 
@@ -148,7 +157,7 @@ class DataformBuilder:
         self._write_build_info()
 
         if not self._execute_all_modules():
-            logger.error("Build completed with errors in one or more modules.")
+            _logger.error("Build completed with errors in one or more modules.")
             return False
 
         # --- Finalize and Write config.js ---
@@ -157,13 +166,13 @@ class DataformBuilder:
 
         self._generate_centralized_sources()
 
-        logger.info("Dataform build completed successfully.")
+        _logger.info("Dataform build completed successfully.")
         return True
 
     def _prepare_workspace(self) -> None:
         """Cleans the output directory and sets up the workspace structure."""
         if self.output_dir.exists():
-            logger.info("Cleaning old dist directory...")
+            _logger.info("Cleaning old dist directory...")
             shutil.rmtree(self.output_dir)
 
         (self.output_dir / "definitions").mkdir(parents=True, exist_ok=True)
@@ -177,8 +186,21 @@ class DataformBuilder:
             dest_ns_includes_dir = self.output_dir / "includes" / namespace
 
             if ns_includes_dir.exists() and ns_includes_dir.is_dir():
-                logger.info("Copying includes for namespace %s", namespace)
+                _logger.info("Copying includes for namespace %s", namespace)
                 shutil.copytree(ns_includes_dir, dest_ns_includes_dir, dirs_exist_ok=True)
+
+        # Copy Assertions
+        if self.assertions_path:
+            if self.assertions_path.is_dir():
+                _logger.error("Assertions path must be a file, not a directory.")
+                return
+
+            dest_assertions_dir = self.output_dir / "definitions" / "assertions"
+            dest_assertions_dir.mkdir(parents=True, exist_ok=True)
+
+            _logger.info("Copying assertions file %s", self.assertions_path)
+            # Always name it assertions.sqlx in the destination
+            shutil.copy2(self.assertions_path, dest_assertions_dir / "assertions.sqlx")
 
     def _generate_config_js_content(self) -> dict[str, Any] | None:
         """Parses configs to generate the content for includes/config.js. Returns None on error."""
@@ -204,6 +226,7 @@ class DataformBuilder:
                 }
 
         product_modules = self.global_config.data.modules.product
+        product_lookup = {m.module_id: m for m in product_modules if m.enabled}
         for prod_config in product_modules:
             if not prod_config.enabled:
                 continue
@@ -213,7 +236,7 @@ class DataformBuilder:
             module_meta = self.module_registry.get(full_type)
 
             if not module_meta:
-                logger.error(f"Cannot process {module_id}: Unknown product type '{full_type}'.")
+                _logger.error(f"Cannot process {module_id}: Unknown product type '{full_type}'.")
                 return None
 
             manifest_config = module_meta["manifest"]
@@ -222,62 +245,62 @@ class DataformBuilder:
             sources = {}
             for dep_key, dep_info in manifest_config.dependencies.items():
                 expected_type = dep_info.type
-                foundation_id = prod_config.depends_on.get(dep_key)
+                dep_module_id = prod_config.depends_on.get(dep_key)
 
-                if not foundation_id:
-                    logger.error(
-                        "Product %s depends on %s but no foundation module maps to it.",
+                if not dep_module_id:
+                    _logger.error(
+                        "Product %s depends on %s but no module maps to it.",
                         module_id,
                         dep_key,
                     )
                     return None
 
-                f_config = foundation_lookup.get(foundation_id)
+                f_config = foundation_lookup.get(dep_module_id) or product_lookup.get(dep_module_id)
                 if not f_config:
-                    logger.error(
-                        "Product %s maps %s to foundation module %s which is not enabled/exists.",
+                    _logger.error(
+                        "Product %s maps %s to module %s which is not enabled/exists.",
                         module_id,
                         dep_key,
-                        foundation_id,
+                        dep_module_id,
                     )
                     return None
 
                 # Compare using module types
                 if f_config._module_type != expected_type:
-                    logger.error(
+                    _logger.error(
                         "Product %s dependency %s expects type %s, but module %s is type %s.",
                         module_id,
                         dep_key,
                         expected_type,
-                        foundation_id,
+                        dep_module_id,
                         f_config._module_type,
                     )
                     return None
 
                 if expected_type == ModuleType.SAP:
                     if not isinstance(f_config, SAPModuleConfig):
-                        logger.error(
+                        _logger.error(
                             "Product %s expects type SAP for %s, but module %s is not a "
                             "SAP module config.",
                             module_id,
                             dep_key,
-                            foundation_id,
+                            dep_module_id,
                         )
                         return None
                     f_sap_version = f_config.module_settings.sap_version
                     if f_sap_version not in dep_info.supported_versions:
-                        logger.error(
+                        _logger.error(
                             "Product %s dependency %s requires one of %s, but module %s is "
                             "configured for %s.",
                             module_id,
                             dep_key,
                             [v.value for v in dep_info.supported_versions],
-                            foundation_id,
+                            dep_module_id,
                             f_sap_version.value,
                         )
                         return None
 
-                if f_config.external:
+                if isinstance(f_config, DataFoundationModuleConfig) and f_config.external:
                     f_source = self.global_config.get_data_source(f_config.data_source_id)
                     sources[dep_key] = {
                         "projectId": f_source.project_id,
@@ -323,7 +346,7 @@ class DataformBuilder:
                     if current_project:
                         execution_project = current_project
                 except exceptions.DefaultCredentialsError as e:
-                    logger.warning(
+                    _logger.warning(
                         "Could not determine current project for local Dataform "
                         "execution via google.auth: %s",
                         e,
@@ -336,7 +359,7 @@ class DataformBuilder:
         """Generates and writes build tracking info."""
         build_info_file = self.output_dir / "build_info.yaml"
         build_id = uuid.uuid4().hex[:6]
-        logger.info("Build ID: %s", build_id)
+        _logger.info("Build ID: %s", build_id)
 
         build_info_yaml = {
             "buildId": build_id,
@@ -380,7 +403,7 @@ class DataformBuilder:
                 all_successful = False
 
         if not all_successful:
-            logger.error("Foundation build failed. Skipping product build.")
+            _logger.error("Foundation build failed. Skipping product build.")
             return False
 
         # Process product modules
@@ -405,48 +428,52 @@ class DataformBuilder:
 
         try:
             out_dir.mkdir(parents=True, exist_ok=True)
-            table_settings_val = module_config.table_settings
-            table_settings_file = self.base_dir / table_settings_val if table_settings_val else None
+            table_settings_file = None
+            if module_config.table_settings:
+                path = pathlib.Path(module_config.table_settings)
+                if path.is_absolute():
+                    table_settings_file = path
+                elif getattr(module_config, "_table_settings_explicit", False):
+                    table_settings_file = self.config_dir / path
+                else:
+                    table_settings_file = self.base_dir / path
+
+            is_valid_builder = False
+            build_kwargs = {
+                "module_id": module_id,
+                "module_config": module_config,
+                "global_config": self.global_config,
+                "manifest": module_meta["manifest"],
+                "base_dir": self.base_dir,
+                "annotations_dir": ann_dir,
+                "output_dir": out_dir,
+                "module_dir_name": dir_name,
+                "sources_registry": self.sources_registry,
+                "table_settings_file": table_settings_file,
+            }
 
             if category == ModuleCategory.FOUNDATION and isinstance(plugin, FoundationBuilder):
-                plugin.build(
-                    module_id=module_id,
-                    module_config=module_config,
-                    global_config=self.global_config,
-                    manifest=module_meta["manifest"],
-                    base_dir=self.base_dir,
-                    annotations_dir=ann_dir,
-                    output_dir=out_dir,
-                    module_dir_name=dir_name,
-                    sources_registry=self.sources_registry,
-                    table_settings_file=table_settings_file,
-                    required_tables=self.required_tables_by_foundation.get(module_id, set()),
+                build_kwargs["required_tables"] = self.required_tables_by_foundation.get(
+                    module_id, set()
                 )
+                is_valid_builder = True
             elif category == ModuleCategory.PRODUCT and isinstance(plugin, ProductBuilder):
-                plugin.build(
-                    module_id=module_id,
-                    module_config=module_config,
-                    global_config=self.global_config,
-                    manifest=module_meta["manifest"],
-                    base_dir=self.base_dir,
-                    annotations_dir=ann_dir,
-                    output_dir=out_dir,
-                    module_dir_name=dir_name,
-                    sources_registry=self.sources_registry,
-                    table_settings_file=table_settings_file,
-                )
-            else:
-                logger.error(
+                is_valid_builder = True
+
+            if not is_valid_builder:
+                _logger.error(
                     "Invalid builder type %s for category %s.",
                     type(plugin).__name__,
                     category.value,
                 )
                 return False
 
+            plugin.build(**build_kwargs)
+
             return True
 
         except Exception as e:
-            logger.exception("Failed to process %s module %s: %s", category.value, module_id, e)
+            _logger.exception("Failed to process %s module %s: %s", category.value, module_id, e)
             return False
 
     def _generate_centralized_sources(self) -> None:
@@ -454,7 +481,7 @@ class DataformBuilder:
         if not self.sources_registry:
             return
 
-        logger.info("Generating centralized source declarations...")
+        _logger.info("Generating centralized source declarations...")
 
         # Group by (project, dataset)
         grouped_sources: dict[DatasetIdentifier, set[str]] = {}
@@ -464,11 +491,30 @@ class DataformBuilder:
 
         for dataset_ref, tables in grouped_sources.items():
             proj, ds = dataset_ref.project, dataset_ref.dataset
+
+            # Validate project and dataset IDs to prevent path traversal
+            if not re.match(r"^[a-zA-Z0-9._-]+$", proj):
+                raise ValueError(f"Invalid project ID: {proj}")
+            if not re.match(r"^[a-zA-Z0-9._-]+$", ds):
+                raise ValueError(f"Invalid dataset ID: {ds}")
+
             shared_sources_dir = self.output_dir / "definitions" / "sources"
             shared_sources_dir.mkdir(parents=True, exist_ok=True)
 
             filename = f"{proj}_{ds}_sources.js"
-            sources_file = shared_sources_dir / filename
+            # Ensure only filename component is used
+            safe_filename = pathlib.Path(filename).name
+            sources_file = shared_sources_dir / safe_filename
+
+            # Verify resolved path is within output_dir
+            abs_output_dir = self.output_dir.resolve()
+            abs_sources_file = sources_file.resolve()
+
+            if not str(abs_sources_file).startswith(str(abs_output_dir)):
+                raise ValueError(
+                    f"Path traversal detected: {sources_file} is outside {self.output_dir}"
+                )
+
             with open(sources_file, "w", encoding="utf-8") as f:
                 for table in tables:
                     f.write(
@@ -498,12 +544,12 @@ class DataformBuilder:
             try:
                 importlib.import_module(local_module_path)
             except ImportError as e:
-                logger.warning("Could not auto-import local builder %s: %s", local_module_path, e)
+                _logger.warning("Could not auto-import local builder %s: %s", local_module_path, e)
 
         if builder_name:
             plugin_class = builder_registry.get(builder_name, namespace=namespace)
             if not plugin_class:
-                logger.error(
+                _logger.error(
                     "Builder module '%s' was specified in manifest but not "
                     "found in builder_registry for namespace '%s'. "
                     "Did you forget to import it?",
@@ -544,7 +590,7 @@ class DataformBuilder:
 
         module_meta = self.module_registry.get(full_type)
         if not module_meta:
-            logger.error("Unknown module type '%s' requested by %s.", full_type, module_id)
+            _logger.error("Unknown module type '%s' requested by %s.", full_type, module_id)
             return None
 
         module_dir_name = module_meta["module_dir_name"]
@@ -552,7 +598,7 @@ class DataformBuilder:
         module_src_dir = module_meta["physical_dir"]
         namespace = module_meta["namespace"]
 
-        logger.info(
+        _logger.info(
             "Resolving context for %s module %s (namespace: %s) with builder: %s",
             module_category.value,
             module_id,
@@ -584,7 +630,7 @@ class DataformBuilder:
             return plugin_instance, module_output_dir, module_annotations_dir, module_dir_name
 
         except Exception as e:
-            logger.exception("Failed to resolve context for module %s: %s", module_id, e)
+            _logger.exception("Failed to resolve context for module %s: %s", module_id, e)
             return None
 
 
@@ -613,22 +659,40 @@ def main(args=None):
         action="store_true",
         help="Create missing datasets without prompting",
     )
+    parser.add_argument(
+        "--assertions",
+        type=pathlib.Path,
+        help="Path to a Dataform assertions file (assertions.sqlx)",
+    )
     args = parser.parse_args(args)
 
     config_file = args.config
     if not config_file.exists():
-        logger.error("Config file not found at %s", config_file)
+        _logger.error("Config file not found at %s", config_file)
+        sys.exit(1)
+
+    is_valid, validation_errors = ConfigValidator.validate(config_file)
+    if not is_valid:
+        _logger.error("Configuration validation failed with the following errors:")
+        for err in validation_errors:
+            _logger.error("  - %s", err)
         sys.exit(1)
 
     global_config_dict = load_yaml(config_file)
     global_config_dict = ConfigPreprocessor().process(global_config_dict)
-    global_config = GlobalConfig(**global_config_dict)
+
+    src_dir = pathlib.Path(__file__).resolve().parent.parent
+    repo_root = src_dir.parent
+
+    global_config = GlobalConfig.model_validate(
+        global_config_dict, context={"config_dir": config_file.parent, "repo_root": repo_root}
+    )
 
     checker = GcpEnvironmentChecker(
         global_config, enable_apis=args.enable_apis, create_datasets=args.create_datasets
     )
     if not checker.validate_all():
-        logger.error("GCP Environment checks failed. Aborting execution.")
+        _logger.error("GCP Environment checks failed. Aborting execution.")
         sys.exit(1)
 
     output_dir = args.output_dir
@@ -638,6 +702,9 @@ def main(args=None):
     builder = DataformBuilder(
         global_config=global_config,
         output_dir=output_dir,
+        base_dir=repo_root,
+        config_dir=config_file.parent,
+        assertions_path=args.assertions,
     )
     success = builder.build()
     if not success:

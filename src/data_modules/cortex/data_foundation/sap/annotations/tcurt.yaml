@@ -14,13 +14,13 @@
 
 description: "Currency Code Names"
 fields:
-  - name: "ktext"
-    description: "Short text"
-  - name: "ltext"
-    description: "Long Text"
   - name: "mandt"
     description: "Client (Mandant)"
   - name: "spras"
     description: "Language Key"
   - name: "waers"
     description: "Currency"
+  - name: "ltext"
+    description: "Long Text"
+  - name: "ktext"
+    description: "Short text"

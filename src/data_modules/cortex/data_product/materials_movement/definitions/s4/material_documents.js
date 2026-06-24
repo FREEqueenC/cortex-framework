@@ -18,12 +18,11 @@
 // ___TABLE_CONFIG___
 
 const moduleConfig = config.product[moduleContext.moduleId];
-
 const materializationType = tableConfig.materializationType || "incremental";
-
 const currency = require("includes/cortex/currency.js");
 const date = require("includes/cortex/date.js");
 const incremental = require("includes/cortex/incremental.js");
+const sql_helper = require("includes/cortex/sql_helper.js");
 const publish_config = require("includes/cortex/publish_config.js");
 
 const publishConfig = publish_config.getPublishConfig(
@@ -109,6 +108,8 @@ LEFT JOIN currency_decimal
   ON matdoc.waers = currency_decimal.currkey
 LEFT JOIN date_dimension AS dimensional_date_budat
   ON matdoc.budat = dimensional_date_budat.date
-${incremental.getWhere(ctx, "matdoc.recordstamp")}
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["matdoc"])
+])}
 `
 );

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about delivery documents at the header level at the granularity of Client(System) and Delivery document number."
+description: "Serves as the central record of SAP outbound or inbound delivery headers from LIKP, tracking logistical and shipping details including creation dates, shipping points, delivery types, weights, routing, and shipment release statuses."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"

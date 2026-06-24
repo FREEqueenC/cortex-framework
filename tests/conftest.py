@@ -44,6 +44,9 @@ def generated_workspace(tmp_path_factory):
             patch(
                 "data_modules.cortex.data_foundation.sap.metadata_provider.BigQueryMetadataProvider.get_schema_and_keys"
             ) as mock_get_schema,
+            patch(
+                "data_modules.cortex.data_foundation.sap.metadata_provider.BigQueryMetadataProvider.fetch"
+            ),
             patch("tools.build.GcpEnvironmentChecker") as mock_checker,
         ):
             mock_checker.return_value.validate_all.return_value = True
@@ -75,8 +78,8 @@ def generated_workspace(tmp_path_factory):
     df_cmd = ["dataform", "compile", "--json", str(test_dist_dir)]
     if not shutil.which("dataform"):
         if shutil.which("npx"):
-            logger.info("dataform not found in PATH. Falling back to npx @dataform/cli.")
-            df_cmd = ["npx", "@dataform/cli", "compile", "--json", str(test_dist_dir)]
+            logger.info("dataform not found in PATH. Falling back to npx -y @dataform/cli@latest.")
+            df_cmd = ["npx", "-y", "@dataform/cli@latest", "compile", "--json", str(test_dist_dir)]
         else:
             pytest.skip(
                 "Dataform CLI (and npx) not found in PATH. Skipping offline compilation tests."
@@ -105,6 +108,19 @@ def generated_workspace(tmp_path_factory):
     logger.info("Cleaning up global test workspace at %s", test_dist_dir)
     if test_dist_dir.exists():
         shutil.rmtree(test_dist_dir)
+
+    # Clean up local npx cache to avoid leaving vulnerable packages on disk
+    npx_cache_dir = pathlib.Path.home() / ".npm" / "_npx"
+    if npx_cache_dir.exists():
+        logger.info("Cleaning up npx cache at %s", npx_cache_dir)
+        try:
+            for child in npx_cache_dir.iterdir():
+                if child.is_dir():
+                    shutil.rmtree(child)
+                else:
+                    child.unlink()
+        except Exception as e:
+            logger.warning("Failed to clean up npx cache: %s", e)
 
 
 @pytest.fixture(scope="session")

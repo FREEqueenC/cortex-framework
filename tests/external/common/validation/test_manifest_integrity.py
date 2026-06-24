@@ -53,7 +53,7 @@ def test_manifest_referential_integrity(repo_root: pathlib.Path):
     Validates that every dependency type declared in a data_product manifest
     exists as a valid module type in data_foundation.
     """
-    src_dir = repo_root / "src"
+    src_dir = repo_root / "src" / "data_modules" / "cortex"
 
     foundation_dir = src_dir / "data_foundation"
     product_dir = src_dir / "data_product"

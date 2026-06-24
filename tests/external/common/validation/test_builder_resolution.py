@@ -34,7 +34,6 @@ def test_builder_resolution_integrity(repo_root: pathlib.Path):
     # 1. Populate the global registry
     sys.path.insert(0, str(repo_root / "src"))
     auto_discover_plugins("common.builders")
-    auto_discover_plugins("data_modules.cortex.common.builders")
 
     src_dir = repo_root / "src"
     errors = []

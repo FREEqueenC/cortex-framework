@@ -14,13 +14,13 @@
 
 description: "Taxes: Region (Province) Key"
 fields:
+  - name: "mandt"
+    description: "Client (Mandant)"
+  - name: "land1"
+    description: "Country Key"
   - name: "bland"
     description: "Region"
   - name: "fprcd"
     description: "Provincial tax code"
   - name: "herbl"
     description: "State of manufacture"
-  - name: "land1"
-    description: "Country Key"
-  - name: "mandt"
-    description: "Client (Mandant)"

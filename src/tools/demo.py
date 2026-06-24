@@ -20,7 +20,7 @@ import os
 import pathlib
 import sys
 
-from common.deployers.actions import DataformDemoAction
+from common.deployers.actions import DataformDemoAction, PostDeploymentAction
 from common.schemas.config_schema import GlobalConfig
 from common.services.config_preprocessor import ConfigPreprocessor
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
@@ -159,20 +159,68 @@ def main(args=None):
                 ],
                 "product": [
                     {
-                        "moduleId": "sap_purchasing_organizations",
-                        "type": "cortex.purchasing_organizations",
+                        "moduleId": "sap_accounting_documents",
+                        "type": "cortex.accounting_documents",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
                     {
-                        "moduleId": "sap_purchasing_documents",
-                        "type": "cortex.purchasing_documents",
+                        "moduleId": "sap_accounts_payable",
+                        "type": "cortex.accounts_payable",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
                     {
-                        "moduleId": "sap_vendors",
-                        "type": "cortex.vendors",
+                        "moduleId": "sap_accounts_receivable",
+                        "type": "cortex.accounts_receivable",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_addresses",
+                        "type": "cortex.addresses",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_agency_settlement_documents",
+                        "type": "cortex.agency_settlement_documents",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_billing_documents",
+                        "type": "cortex.billing_documents",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_business_partners",
+                        "type": "cortex.business_partners",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_condition_contracts",
+                        "type": "cortex.condition_contracts",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_controlling_areas_and_cost_elements",
+                        "type": "cortex.controlling_areas_and_cost_elements",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_cost_and_profit_centers",
+                        "type": "cortex.cost_and_profit_centers",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_currency_conversion",
+                        "type": "cortex.currency_conversion",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
@@ -183,38 +231,44 @@ def main(args=None):
                         "dataTargetId": "product_target",
                     },
                     {
-                        "moduleId": "sap_sales_documents",
-                        "type": "cortex.sales_documents",
-                        "dependsOn": {"sapModule": "erp"},
-                        "dataTargetId": "product_target",
-                    },
-                    {
-                        "moduleId": "sap_sales_organizations",
-                        "type": "cortex.sales_organizations",
-                        "dependsOn": {"sapModule": "erp"},
-                        "dataTargetId": "product_target",
-                    },
-                    {
-                        "moduleId": "sap_delivery_blocking_reasons",
-                        "type": "cortex.delivery_blocking_reasons",
-                        "dependsOn": {"sapModule": "erp"},
-                        "dataTargetId": "product_target",
-                    },
-                    {
                         "moduleId": "sap_delivery_documents",
                         "type": "cortex.delivery_documents",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
                     {
-                        "moduleId": "sap_material_groups",
-                        "type": "cortex.material_groups",
+                        "moduleId": "sap_financial_statement_structure_versions",
+                        "type": "cortex.financial_statement_structure_versions",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
                     {
-                        "moduleId": "sap_material_types",
-                        "type": "cortex.material_types",
+                        "moduleId": "sap_fiscal_year_variants",
+                        "type": "cortex.fiscal_year_variants",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_fixed_assets",
+                        "type": "cortex.fixed_assets",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_general_ledger_accounts",
+                        "type": "cortex.general_ledger_accounts",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_global_settings",
+                        "type": "cortex.global_settings",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_material_batches",
+                        "type": "cortex.material_batches",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
@@ -225,26 +279,62 @@ def main(args=None):
                         "dataTargetId": "product_target",
                     },
                     {
-                        "moduleId": "sap_material_plants",
-                        "type": "cortex.material_plants",
-                        "dependsOn": {"sapModule": "erp"},
-                        "dataTargetId": "product_target",
-                    },
-                    {
-                        "moduleId": "sap_material_cross_plant_batches",
-                        "type": "cortex.material_cross_plant_batches",
-                        "dependsOn": {"sapModule": "erp"},
-                        "dataTargetId": "product_target",
-                    },
-                    {
-                        "moduleId": "sap_material_movement_types",
-                        "type": "cortex.material_movement_types",
-                        "dependsOn": {"sapModule": "erp"},
-                        "dataTargetId": "product_target",
-                    },
-                    {
                         "moduleId": "sap_materials_movement",
                         "type": "cortex.materials_movement",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_plants_and_storage",
+                        "type": "cortex.plants_and_storage",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_project_structure",
+                        "type": "cortex.project_structure",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_purchasing_documents",
+                        "type": "cortex.purchasing_documents",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_purchasing_organizational_structure",
+                        "type": "cortex.purchasing_organizational_structure",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_sales_documents",
+                        "type": "cortex.sales_documents",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_sales_organizational_structure",
+                        "type": "cortex.sales_organizational_structure",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_units_of_measurement",
+                        "type": "cortex.units_of_measurement",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_vendor_invoices",
+                        "type": "cortex.vendor_invoices",
+                        "dependsOn": {"sapModule": "erp"},
+                        "dataTargetId": "product_target",
+                    },
+                    {
+                        "moduleId": "sap_vendors",
+                        "type": "cortex.vendors",
                         "dependsOn": {"sapModule": "erp"},
                         "dataTargetId": "product_target",
                     },
@@ -252,7 +342,6 @@ def main(args=None):
             },
         },
         "deployment": {
-            "createTargetDatasets": True,
             "targets": [
                 {
                     "type": "dataform",
@@ -288,6 +377,18 @@ def main(args=None):
         "SAP_VERSION": args.sap_version,
     }
     demo_config_dict = ConfigPreprocessor(context).process(global_config_dict)
+
+    # Conditionally add sap_universal_journal only if version is s4
+    if args.sap_version == "s4":
+        demo_config_dict["data"]["modules"]["product"].append(
+            {
+                "moduleId": "sap_universal_journal",
+                "type": "cortex.universal_journal",
+                "dependsOn": {"sapModule": "erp"},
+                "dataTargetId": "product_target",
+            }
+        )
+
     demo_config = GlobalConfig(**demo_config_dict)
 
     checker = GcpEnvironmentChecker(
@@ -320,7 +421,9 @@ def main(args=None):
 
     # Deploy
     logger.info("Running deployment...")
-    demo_actions = [DataformDemoAction()] if args.create_workflow_configs else []
+    demo_actions: list[PostDeploymentAction] = (
+        [DataformDemoAction()] if args.create_workflow_configs else []
+    )
     orchestrator = DeploymentOrchestrator(
         global_config=demo_config,
         output_dir=pathlib.Path.cwd() / "dist",

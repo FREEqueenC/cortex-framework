@@ -1,0 +1,70 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "WBS Element Master Data"
+fields:
+  - name: "mandt"
+    description: "Client"
+  - name: "pspnr"
+    description: "Internal number"
+  - name: "posid"
+    description: "WBS Element"
+  - name: "post1"
+    description: "Description"
+  - name: "psphi"
+    description: "Project definition number"
+  - name: "pbukr"
+    description: "Company code"
+  - name: "ernam"
+    description: "Created by"
+  - name: "erdat"
+    description: "Created on"
+  - name: "aenam"
+    description: "Changed by"
+  - name: "aedat"
+    description: "Last Changed On"
+  - name: "vernr"
+    description: "No. of Person Resp."
+  - name: "verna"
+    description: "Name of Person Resp."
+  - name: "astnr"
+    description: "Applicant no."
+  - name: "astna"
+    description: "Applicant"
+  - name: "pgsbr"
+    description: "Business area"
+  - name: "pkokr"
+    description: "Controlling area"
+  - name: "prctr"
+    description: "Profit Center"
+  - name: "prart"
+    description: "Project Type"
+  - name: "stufe"
+    description: "Level"
+  - name: "plakz"
+    description: "Planning Element"
+  - name: "belkz"
+    description: "Acct asst elem."
+  - name: "fakkz"
+    description: "Billing Element"
+  - name: "werks"
+    description: "Plant"
+  - name: "kostl"
+    description: "CCtr posted actual"
+  - name: "loevm"
+    description: "Deletion Indicator"
+  - name: "xstat"
+    description: "Statistical"
+  - name: "func_area"
+    description: "Functional Area"

@@ -1,0 +1,378 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Captures accounting document header metadata from SAP BKPF (e.g., posting dates, entry dates, user details, document status, and currency keys), enriched with calendar date dimensions for financial reporting.
+fields:
+- name: client_mandt
+  description: Client (Mandant), PK
+- name: company_code_bukrs
+  description: Company Code, PK
+- name: document_number_belnr
+  description: Accounting Document Number, PK
+- name: fiscal_year_gjahr
+  description: Fiscal Year, PK
+- name: document_type_blart
+  description: Document Type
+- name: document_date_bldat
+  description: Document Date
+- name: posting_date_budat
+  description: Posting Date
+- name: posting_period_monat
+  description: Posting period
+- name: entry_date_cpudt
+  description: Entry Date
+- name: time_of_entry_cputm
+  description: Time of Entry
+- name: changed_on_aedat
+  description: Changed On
+- name: last_update_upddt
+  description: Last Update
+- name: translation_date_wwert
+  description: Translation date
+- name: user_name_usnam
+  description: User Name
+- name: transaction_code_tcode
+  description: Transaction Code
+- name: cross_comp_code_no_bvorg
+  description: Cross-Comp.Code No.
+- name: reference_document_number_xblnr
+  description: Reference
+- name: recurring_entry_doc_dbblg
+  description: Recurring Entry Doc.
+- name: recurring_entry_fiscal_year_dbblg_gjahr
+  description: Recurring Entry Fiscal Year
+- name: recurring_entry_company_code_dbblg_bukrs
+  description: Recurring Entry Company Code
+- name: reversed_with_stblg
+  description: Reversed With
+- name: year_stjah
+  description: Year
+- name: document_header_text_bktxt
+  description: Document Header Text
+- name: currency_key_waers
+  description: Currency
+- name: exchange_rate_kursf
+  description: Exchange rate
+- name: group_currency_kzwrs
+  description: Group Currency
+- name: group_fx_rate_kzkrs
+  description: Group FX Rate
+- name: document_status_bstat
+  description: Document Status
+- name: net_document_type_xnetb
+  description: Net document type
+- name: unpl_del_costs_frath
+  description: Unpl. del.costs
+- name: document_is_back_posted_xrueb
+  description: Document Is Back-Posted
+- name: business_transaction_glvor
+  description: Business Transaction
+- name: session_name_grpid
+  description: Session Name
+- name: document_name_dokid
+  description: Document Name
+- name: extract_id_arcid
+  description: Extract ID
+- name: internal_document_type_iblar
+  description: Internal Document Type
+- name: reference_procedure_awtyp
+  description: Reference procedure
+- name: object_key_awkey
+  description: Object key
+- name: fm_area_fikrs
+  description: FM Area
+- name: local_currency_hwaer
+  description: Local Currency
+- name: local_currency_2_hwae2
+  description: Local currency 2
+- name: local_currency_3_hwae3
+  description: Local currency 3
+- name: exchange_rate_2_kurs2
+  description: Exchange Rate 2
+- name: exchange_rate_3_kurs3
+  description: Exchange Rate 3
+- name: source_currency_basw2
+  description: Source Currency
+- name: source_currency_basw3
+  description: Source Currency
+- name: translation_date_umrd2
+  description: Translation Date
+- name: translation_date_umrd3
+  description: Translation Date
+- name: reversal_flag_xstov
+  description: Reversal Flag
+- name: reverse_posting_date_stodt
+  description: Reverse Posting Date
+- name: calculate_tax_xmwst
+  description: Calculate Tax
+- name: lc2_currency_type_curt2
+  description: LC2 Currency Type
+- name: lc3_currency_type_curt3
+  description: LC3 Currency Type
+- name: exchange_rate_type_kuty2
+  description: Exchange Rate Type
+- name: exchange_rate_type_kuty3
+  description: Exchange Rate Type
+- name: calculate_taxes_on_net_amount_xsnet
+  description: Calculate Taxes on Net Amount
+- name: source_company_code_ausbk
+  description: Source Company Code
+- name: tax_details_changed_xusvr
+  description: Tax details changed
+- name: status_of_data_transfer_to_next_release_duefl
+  description: Status of Data Transfer to Next Release
+- name: logical_system_awsys
+  description: Logical System
+- name: rate_for_taxes_txkrs
+  description: Rate for Taxes
+- name: tax_rate_local_crcy_ctxkrs
+  description: 'Tax Rate: Local Crcy'
+- name: request_number_lotkz
+  description: Request Number
+- name: boe_before_due_date_xwvof
+  description: BoE Before Due Date
+- name: reversal_reason_stgrd
+  description: Reversal Reason
+- name: parked_by_ppnam
+  description: Parked By
+- name: date_of_parking_ppdat
+  description: Date of Parking
+- name: time_of_parking_pptme
+  description: Time of Parking
+- name: parking_tcode_pptcod
+  description: Parking TCode
+- name: branch_number_brnch
+  description: Branch number
+- name: number_of_pages_numpg
+  description: Number of Pages
+- name: discount_document_adisc
+  description: discount document
+- name: ref_key_header_1_xref1_hd
+  description: Ref.key (header) 1
+- name: ref_key_header_2_xref2_hd
+  description: Ref.key (header) 2
+- name: reversal_indicator_xreversal
+  description: Reversal Indicator
+- name: invoice_receipt_date_reindat
+  description: Invoice Receipt Date
+- name: ledger_rldnr
+  description: Ledger
+- name: ledger_group_ldgrp
+  description: Ledger Group
+- name: mandate_thrd_prty_mgmt_propmano
+  description: Mandate Thrd Prty Mgmt
+- name: alt_reference_number_xblnr_alt
+  description: Alt Reference Number
+- name: tax_reporting_date_vatdate
+  description: Tax Reporting Date
+- name: tax_fulfillement_date_fulfilldate
+  description: Tax Fulfillement Date
+- name: doc_type_doccat
+  description: Doc.Type
+- name: split_posting_xsplit
+  description: Split Posting
+- name: cash_flow_relevant_doc_cash_alloc
+  description: Cash Flow-Relevant Doc.
+- name: follow_on
+  description: Follow-on
+- name: open_itm_reorganized_xreorg
+  description: Open Itm Reorganized
+- name: subset
+  description: Subset
+- name: exchange_rate_type_kurst
+  description: Exchange Rate Type
+- name: market_data_exchange_rate_kursx
+  description: Market Data Exchange Rate
+- name: market_data_exchange_rate_2_kur2x
+  description: Market Data Exchange Rate 2
+- name: market_data_exchange_rate_3_kur3x
+  description: Market Data Exchange Rate 3
+- name: document_from_multi_curr_accounting_xmca
+  description: Document from Multi Curr. Accounting
+- name: resubmission_date_resubmission
+  description: Resubmission Date
+- name: logical_system_of_the_sender_logsystem_sender
+  description: Logical System of the Sender
+- name: company_code_in_sender_system_bukrs_sender
+  description: Company Code in Sender System
+- name: document_no_in_sender_system_belnr_sender
+  description: Document No. in Sender System
+- name: fiscal_year_in_sender_system_gjahr_sender
+  description: Fiscal Year in Sender System
+- name: int_assigned_subid_for_awkey_intsubid
+  description: Int. Assigned SubID for AWKEY
+- name: reversal_organizatns_aworg_rev
+  description: Reversal Organizatns
+- name: reversal_ref_no_awref_rev
+  description: Reversal Ref. No.
+- name: reversal_document_xreversing
+  description: Reversal document
+- name: reversed_xreversed
+  description: Reversed
+- name: general_ledger_bus_transaction_group_glbtgrp
+  description: General Ledger Bus.Transaction Group
+- name: business_transaction_co_vrgng
+  description: Business Transaction
+- name: ref_document_type_co_refbt
+  description: Ref. Document Type
+- name: ale_original_docnr_co_alebn
+  description: 'ALE: Original DocNr'
+- name: valuation_date_co_valdt
+  description: Valuation Date
+- name: co_document_no_in_sender_system_co_belnr_sender
+  description: CO Document No. in Sender System
+- name: controlling_area_in_sender_system_kokrs_sender
+  description: Controlling Area in Sender System
+- name: accounting_principle_acc_principle
+  description: Accounting Principle
+- name: transfer_variant_trava_pn
+  description: Transfer Variant
+- name: ldgrp_specific_entry_ldgrpspec_pn
+  description: LDGRP-Specific Entry
+- name: posting_with_area_limitation_afabespec_pn
+  description: Posting with Area Limitation
+- name: secondary_journal_entry_xsecondary
+  description: Secondary journal entry
+- name: reprocessing_status_code
+  description: Reprocessing status code
+- name: partial_processing_indicator_trr_partial_ind
+  description: Partial Processing Indicator
+- name: journal_entry_item_removal_status
+  description: Journal Entry Item Removal Status
+- name: reason_for_late_pmnt_penrc
+  description: Reason for Late Pmnt
+- name: country_specific_reference_1_glo_ref1_hd
+  description: Country Specific Reference 1
+- name: country_specific_date_1_glo_dat1_hd
+  description: Country Specific Date 1
+- name: country_specific_reference2_glo_ref2_hd
+  description: Country Specific Reference2
+- name: country_specific_date_2_glo_dat2_hd
+  description: Country Specific Date 2
+- name: country_specific_reference_3_glo_ref3_hd
+  description: Country Specific Reference 3
+- name: country_specific_date_3_glo_dat3_hd
+  description: Country Specific Date 3
+- name: country_specific_reference_4_glo_ref4_hd
+  description: Country Specific Reference 4
+- name: country_specific_date_4_glo_dat4_hd
+  description: Country Specific Date 4
+- name: country_specific_reference_5_glo_ref5_hd
+  description: Country Specific Reference 5
+- name: country_specific_date_5_glo_dat5_hd
+  description: Country Specific Date 5
+- name: country_specific_business_partner_1_glo_bp1_hd
+  description: Country Specific Business Partner 1
+- name: country_specific_business_partner_2_glo_bp2_hd
+  description: Country Specific Business Partner 2
+- name: postcntrentryview_ev_postng_ctrl
+  description: PostCntrEntryView
+- name: invoice_type_for_annexation_anxtype
+  description: invoice type (for annexation)
+- name: annexation_amount_anxamnt
+  description: annexation amount
+- name: annexation_percentage_anxperc
+  description: annexation percentage
+- name: v_a_t_indicator_zvat_indc
+  description: V.A.T indicator
+- name: request_category_psoty
+  description: Request Category
+- name: reason_psoak
+  description: Reason
+- name: region_psoks
+  description: Region
+- name: reason_for_reversal_psosg
+  description: Reason for reversal
+- name: file_number_psofn
+  description: File number
+- name: interest_formula_intform
+  description: Interest Formula
+- name: interest_calc_date_intdate
+  description: Interest Calc. Date
+- name: posting_day_psobt
+  description: Posting Day
+- name: actual_posting_psozl
+  description: Actual posting
+- name: changed_on_psodt
+  description: Changed On
+- name: changed_at_psotm
+  description: Changed at
+- name: transfer_type_fm_umart
+  description: Transfer type
+- name: card_type_ccins
+  description: Card type
+- name: card_number_ccnum
+  description: Card number
+- name: payment_sampling_block_ssblk
+  description: Payment Sampling Block
+- name: lot_number_batch
+  description: Lot Number
+- name: user_name_sname
+  description: User Name
+- name: sampled_invoice_by_payment_stat_samplin_sampled
+  description: Sampled invoice by Payment Stat. Samplin
+- name: ppa_exclude_ind_exclude_flag
+  description: PPA Exclude Ind.
+- name: budgetary_ledger_indicator_blind
+  description: Budgetary Ledger Indicator
+- name: treasury_offset_status
+  description: Treasury Offset Status
+- name: date_record_referred_to_treasury_offset_refer_dat
+  description: Date Record Referred to Treasury
+- name: doc_condition_no_knumv
+  description: Doc. Condition No.
+- name: document_block_blo
+  description: Document block
+- name: contract_no_cnt
+  description: Contract No
+- name: payt_against_pybastyp
+  description: Payt. Against
+- name: payt_ground_no_pybasno
+  description: Payt. Ground No.
+- name: payt_ground_date_pybasdat
+  description: Payt. Ground Date
+- name: iban_pyiban
+  description: IBAN
+- name: incoming_doc_nmbr_inwardno_hd
+  description: Incoming Doc. Nmbr
+- name: incoming_doc_date_inwarddt_hd
+  description: Incoming Doc. Date
+- name: year_of_document_date_bldat
+  description: Year of document date
+- name: month_of_document_date_bldat
+  description: Month of document date
+- name: quarter_of_document_date_bldat
+  description: Quarter of document date
+- name: week_of_document_date_bldat
+  description: Week of document date
+- name: year_of_posting_date_budat
+  description: Year of posting date
+- name: month_of_posting_date_budat
+  description: Month of posting date
+- name: quarter_of_posting_date_budat
+  description: Quarter of posting date
+- name: week_of_posting_date_budat
+  description: Week of posting date
+- name: year_of_entry_date_cpudt
+  description: Year of entry date
+- name: month_of_entry_date_cpudt
+  description: Month of entry date
+- name: quarter_of_entry_date_cpudt
+  description: Quarter of entry date
+- name: week_of_entry_date_cpudt
+  description: Week of entry date
+- name: source_last_updated_at
+  description: Source Last Updated At
+- name: bq_loaded_at
+  description: BigQuery Loaded At

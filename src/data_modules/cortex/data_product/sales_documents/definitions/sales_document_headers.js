@@ -18,13 +18,12 @@
 // ___TABLE_CONFIG___
 
 const moduleConfig = config.product[moduleContext.moduleId];
-
 const materializationType = tableConfig.materializationType || "incremental";
-
 const currency = require("includes/cortex/currency.js");
 const date = require("includes/cortex/date.js");
 const incremental = require("includes/cortex/incremental.js");
 const publish_config = require("includes/cortex/publish_config.js");
+const sql_helper = require("includes/cortex/sql_helper.js");
 
 const publishConfig = publish_config.getPublishConfig(
   materializationType,
@@ -170,6 +169,8 @@ LEFT JOIN date_dimension AS dimensional_date_audat
   ON vbak.audat = dimensional_date_audat.date
 LEFT JOIN date_dimension AS dimensional_date_vdatu
   ON vbak.vdatu = dimensional_date_vdatu.date
-${incremental.getWhere(ctx, "vbak.recordstamp")}
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["vbak"])
+])}
 `,
 );

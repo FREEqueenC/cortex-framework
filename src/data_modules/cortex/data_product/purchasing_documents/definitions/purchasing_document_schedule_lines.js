@@ -18,14 +18,13 @@
 // ___TABLE_CONFIG___
 
 const moduleConfig = config.product[moduleContext.moduleId];
-
 const materializationType = tableConfig.materializationType || "incremental";
-
 const currency = require("includes/cortex/currency.js");
 const date = require("includes/cortex/date.js");
 const incremental = require("includes/cortex/incremental.js");
 const po_helper = require("includes/cortex/po_helper.js");
 const publish_config = require("includes/cortex/publish_config.js");
+const sql_helper = require("includes/cortex/sql_helper.js");
 
 const publishConfig = publish_config.getPublishConfig(
   materializationType,
@@ -137,6 +136,8 @@ LEFT JOIN date_dim as dimensional_date_bedat
   ON ekko.bedat = dimensional_date_bedat.date
 LEFT JOIN currency_decimal
   ON ekko.waers = currency_decimal.currkey
-${incremental.getWhere(ctx, ["eket.recordstamp", "ekpo.recordstamp", "ekko.recordstamp"])}
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["eket", "ekpo", "ekko"])
+])}
 `,
 );

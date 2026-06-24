@@ -26,28 +26,27 @@
 function joinExchangeRateTable(sourceTableAlias, sourceDateCol, sourceCurrencyCol, targetCurrencyCol, exchangeRatesTableRef) {
   return `
     LEFT JOIN ${exchangeRatesTableRef} AS xr
-      ON ${sourceTableAlias}.Client_MANDT = xr.Client_MANDT
-      AND ${sourceTableAlias}.${sourceCurrencyCol} = xr.FromCurrency_FCURR
-      AND ${targetCurrencyCol} = xr.ToCurrency_TCURR
-      AND ${sourceTableAlias}.${sourceDateCol} = xr.ConvDate
-      AND xr.ExchangeRateType_KURST = 'M'
+      ON ${sourceTableAlias}.client_mandt = xr.client_mandt
+      AND ${sourceTableAlias}.${sourceCurrencyCol} = xr.from_currency_fcurr
+      AND ${targetCurrencyCol} = xr.to_currency_tcurr
+      AND ${sourceTableAlias}.${sourceDateCol} = xr.conv_date
+      AND xr.exchange_rate_type_kurst = 'M'
   `;
 }
 
 /**
- * Helper to execute the actual amount conversion from source to target currency.
- * This function assumes that the exchange rate table has been joined with the alias 'xr'.
- * @param {string} sourceTableAlias The alias of the table containing the source amount and currency.
- * @param {string} amountCol The name of the column containing the amount to be converted.
- * @param {string} sourceCurrencyCol The name of the column containing the source currency code.
- * @param {string} targetCurrencyCol The target currency code.
+ * Helper to execute the actual amount conversion.
+ * @param {string} amountExpr The full expression for the amount (e.g., 'sales.amount').
+ * @param {string} sourceCurrencyExpr The full expression for the source currency (e.g., 'sales.doc_currency').
+ * @param {string} targetCurrencyExpr The target currency (e.g., "'USD'").
+ * @param {string} [xrAlias='xr'] Optional. The alias of the joined exchange rate table.
  * @return {string} A SQL CASE statement for converting the currency.
  */
-function convertCurrency(sourceTableAlias, amountCol, sourceCurrencyCol, targetCurrencyCol) {
+function convertCurrency(amountExpr, sourceCurrencyExpr, targetCurrencyExpr, xrAlias = 'xr') {
   return `
     CASE 
-      WHEN ${targetCurrencyCol} = ${sourceTableAlias}.${sourceCurrencyCol} THEN ${sourceTableAlias}.${amountCol}
-      ELSE ${sourceTableAlias}.${amountCol} * xr.ExchangeRate_UKURS
+      WHEN ${targetCurrencyExpr} = ${sourceCurrencyExpr} THEN ${amountExpr}
+      ELSE ${amountExpr} * ${xrAlias}.exchange_rate_ukurs
     END
   `;
 }

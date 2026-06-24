@@ -37,7 +37,7 @@ def mock_global_config():
 @pytest.fixture
 def mock_module_config():
     config = mock.MagicMock(spec=SAPModuleConfig)
-    config.module_settings = SAPModuleSettings(sap_version=SapVersion.ECC, mandt="100")
+    config.module_settings = SAPModuleSettings(sapVersion=SapVersion.ECC, mandt="100")
     config.type = "sap"
     config.data_source_id = "sap_source"
     config.external = False
@@ -68,6 +68,9 @@ def test_build_with_required_tables_filters_output(
 
     sources_registry = set()
     mock_manifest = mock.MagicMock()
+
+    mock_module_config.table_settings = "table_settings.yaml"
+    mock_module_config._table_settings_explicit = True
 
     builder.build(
         module_id="erp",
@@ -136,44 +139,3 @@ def test_build_with_deploy_always_ignores_filter(tmp_path, mock_global_config, m
     tables = {s.table for s in sources_registry}
     assert "MARA" in tables
     assert "KNA1" in tables
-
-
-def test_build_throws_error_for_leading_underscore_column(
-    tmp_path, mock_global_config, mock_module_config
-):
-    # Setup table settings
-    table_settings_file = tmp_path / "table_settings.yaml"
-    settings = {
-        "common": [
-            {"source": {"tableName": "MARA"}, "target": {"tableName": "mara"}},
-        ]
-    }
-    with open(table_settings_file, "w") as f:
-        yaml.dump(settings, f)
-
-    output_dir = tmp_path / "dist"
-    output_dir.mkdir()
-
-    mock_provider = mock.MagicMock()
-    # Return a column with a leading underscore
-    mock_provider.get_schema_and_keys.return_value = (["MANDT", "_BAD_COL"], [], {})
-
-    builder = SapDataFoundationBuilder()
-
-    sources_registry = set()
-    mock_manifest = mock.MagicMock()
-
-    with pytest.raises(ValueError, match="Column names should not begin with underscore"):
-        builder.build(
-            module_id="erp",
-            module_config=mock_module_config,
-            global_config=mock_global_config,
-            manifest=mock_manifest,
-            base_dir=tmp_path,
-            annotations_dir=tmp_path / "annotations",
-            output_dir=output_dir,
-            module_dir_name="erp",
-            sources_registry=sources_registry,
-            provider=mock_provider,
-            table_settings_file=table_settings_file,
-        )

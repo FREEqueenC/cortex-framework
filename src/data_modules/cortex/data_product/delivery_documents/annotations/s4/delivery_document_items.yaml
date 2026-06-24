@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: Information about delivery document items at the granularity of Client(System), Delivery document number and Item number of delivery document.
+description: "Tracks individual line-item data for SAP deliveries from LIPS, capturing quantities delivered, materials, units of measure, plants, net values, and preceding order references for fulfillment and invoicing."
 fields:
   - name: client_mandt
     description: Client (Mandant), PK

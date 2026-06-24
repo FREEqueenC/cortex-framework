@@ -14,6 +14,8 @@
 
 description: "Logical system"
 fields:
+  - name: "logsys"
+    description: "Logical System"
   - name: "isprel"
     description: "Release"
   - name: "isprfcdes"
@@ -22,5 +24,3 @@ fields:
     description: "RFC Destination"
   - name: "isprfctype"
     description: "System Type"
-  - name: "logsys"
-    description: "Logical System"

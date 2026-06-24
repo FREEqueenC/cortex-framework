@@ -38,7 +38,7 @@ class ServiceUsageClient:
             return response.state == service_usage_v1.State.ENABLED
         except Exception as e:
             logger.warning("Failed to check API status for %s on %s: %s", api, project_id, e)
-            return False
+            raise
 
     def enable_api(self, project_id: str, api: str) -> bool:
         """Enables a specific API. Returns True if successful."""

@@ -14,6 +14,7 @@
 
 description: "Decimal Places in Currencies"
 fields:
-  - name: "currdec"
-    description: "Decimals"
   - name: "currkey"
+    description: "Currency Key"
+  - name: "currdec"
+    description: "Number of decimal places"

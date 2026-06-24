@@ -1,0 +1,78 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Provides a standardized, globally consistent view of SAP units of measurement (weights, volumes, dimensions, temperatures) from T006, T006A, and T006T, mapped to ISO codes."
+fields:
+  - name: "client_mandt"
+    description: "Client (Mandant), PK"
+  - name: "unit_of_measurement_msehi"
+    description: "Internal Unit of Measurement, PK"
+  - name: "language_key_spras"
+    description: "Language Key, PK"
+  - name: "three_char_indicator_for_external_unit_of_measurement_kzex3"
+    description: "3-character external unit of measurement indicator"
+  - name: "six_char_id_for_external_unit_of_measurement_kzex6"
+    description: "6-character external unit of measurement ID"
+  - name: "iso_code_isocode"
+    description: "ISO code for unit of measurement"
+  - name: "primary_code_primary"
+    description: "Selection field for conversion from ISO code to internal code"
+  - name: "commercial_measurement_unit_kzkeh"
+    description: "Commercial Measurement Unit Indicator"
+  - name: "decimal_rounding_andec"
+    description: "Number of decimal places for rounding"
+  - name: "decimal_places_decan"
+    description: "Number of decimal places for number display"
+  - name: "exponent_exp10"
+    description: "Base ten exponent for conversion to SI unit"
+  - name: "exponent_floating_point_expon"
+    description: "Base ten exponent for floating point display"
+  - name: "numerator_zaehl"
+    description: "Numerator for conversion to SI unit"
+  - name: "denominator_nennr"
+    description: "Denominator for conversion into SI unit"
+  - name: "additive_constant_addko"
+    description: "Additive constant for conversion to SI unit"
+  - name: "dimension_dimid"
+    description: "Dimension Key"
+  - name: "unit_of_measurement_family_famunit"
+    description: "Unit of Measurement Family"
+  - name: "temperature_temp_value"
+    description: "Temperature value"
+  - name: "temperature_unit_temp_unit"
+    description: "Unit of temperature"
+  - name: "pressure_value_press_val"
+    description: "Pressure value"
+  - name: "unit_of_pressure_press_unit"
+    description: "Unit of pressure"
+  - name: "measuremt_unit_text_mseht"
+    description: "Unit of measurement text (maximum 10 characters)"
+  - name: "unit_text_msehl"
+    description: "Unit of measurement text (maximum 30 characters)"
+  - name: "three_char_commercial_text_mseh3"
+    description: "Commercial unit text (maximum 3 characters)"
+  - name: "six_char_technical_text_mseh6"
+    description: "Technical unit text (maximum 6 characters)"
+  - name: "dimension_text_txdim"
+    description: "Dimension text"
+  - name: "one_unit_kz1eh"
+    description: "Indicator: 1 unit (indicator not yet defined)"
+  - name: "two_unit_kz2eh"
+    description: "Indicator: 2 unit (indicator not yet defined)"
+  - name: "value_based_commitment_indicator_kzwob"
+    description: "Value-based Commitment Indicator"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BigQuery Loaded At"

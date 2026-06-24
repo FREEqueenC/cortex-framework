@@ -1,0 +1,72 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Project Definition"
+fields:
+  - name: "mandt"
+    description: "Client"
+  - name: "pspnr"
+    description: "Internal project number"
+  - name: "pspid"
+    description: "Project Definition"
+  - name: "post1"
+    description: "Short description"
+  - name: "vbukr"
+    description: "Company Code"
+  - name: "werks"
+    description: "Plant"
+  - name: "objnr"
+    description: "Object number"
+  - name: "ernam"
+    description: "Created by"
+  - name: "erdat"
+    description: "Created on"
+  - name: "aenam"
+    description: "Changed by"
+  - name: "aedat"
+    description: "Last Changed On"
+  - name: "vernr"
+    description: "No. of Person Resp."
+  - name: "verna"
+    description: "Name of Person Resp."
+  - name: "astnr"
+    description: "Applicant no."
+  - name: "astna"
+    description: "Applicant"
+  - name: "vgsbr"
+    description: "Business area"
+  - name: "vkokr"
+    description: "Controlling area"
+  - name: "prctr"
+    description: "Profit Center"
+  - name: "pwhie"
+    description: "Project Currency"
+  - name: "profl"
+    description: "Project Profile"
+  - name: "bprof"
+    description: "Budget Profile"
+  - name: "kostl"
+    description: "Cost Center"
+  - name: "loevm"
+    description: "Deletion Indicator"
+  - name: "xstat"
+    description: "Statistical"
+  - name: "func_area"
+    description: "Functional Area"
+  - name: "vkorg"
+    description: "Sales Organization"
+  - name: "vtweg"
+    description: "Distribution Channel"
+  - name: "spart"
+    description: "Division"

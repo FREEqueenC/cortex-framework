@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about material documents at the granularity of Client(System), Document Number, Document Year and Document Item."
+description: "Captures SAP operational goods movements, tracking receipts, issues, plant-to-plant transfers, and inventory adjustments from transactional logs MSEG and MATDOC."
 fields:
   - name: client_mandt
     description: Client (Mandant), PK

@@ -21,11 +21,13 @@ import argparse
 import logging
 import pathlib
 import sys
+from collections.abc import Sequence
 
 from common.clients.bigquery import BigQueryManager
 from common.deployers.actions import PostDeploymentAction
 from common.schemas.config_schema import GlobalConfig
 from common.services.config_preprocessor import ConfigPreprocessor
+from common.services.config_validator import ConfigValidator
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
 from common.utils.file_utils import load_yaml
 from common.utils.logging import setup_logging
@@ -41,7 +43,7 @@ class DeploymentOrchestrator:
         global_config: GlobalConfig,
         output_dir: pathlib.Path,
         deployer_factory=None,
-        post_actions: list[PostDeploymentAction] | None = None,
+        post_actions: Sequence[PostDeploymentAction] | None = None,
         enable_apis: bool = False,
         create_datasets: bool = False,
     ):
@@ -156,12 +158,24 @@ def main(args=None):
         action="store_true",
         help="Create missing datasets without prompting",
     )
+    parser.add_argument(
+        "--assertions",
+        type=pathlib.Path,
+        help="Path to a Dataform assertions file (assertions.sqlx)",
+    )
     args = parser.parse_args(args)
 
     config_file = args.config
 
     if not config_file.exists():
         logger.error("Config file not found at %s", config_file)
+        sys.exit(1)
+
+    is_valid, validation_errors = ConfigValidator.validate(config_file)
+    if not is_valid:
+        logger.error("Configuration validation failed with the following errors:")
+        for err in validation_errors:
+            logger.error("  - %s", err)
         sys.exit(1)
 
     global_config_dict = load_yaml(config_file)

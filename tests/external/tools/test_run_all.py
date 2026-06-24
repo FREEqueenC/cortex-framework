@@ -28,9 +28,11 @@ def test_main_success(tmp_path):
     with (
         mock.patch("tools.run_all.load_yaml", return_value={}),
         mock.patch("tools.run_all.GlobalConfig"),
+        mock.patch("tools.run_all.ConfigValidator") as mock_validator_cls,
         mock.patch("tools.run_all.DataformBuilder") as mock_builder_cls,
         mock.patch("tools.run_all.DeploymentOrchestrator") as mock_deploy_cls,
     ):
+        mock_validator_cls.validate.return_value = (True, [])
         mock_builder = mock.MagicMock()
         mock_builder.build.return_value = True
         mock_builder_cls.return_value = mock_builder
@@ -49,3 +51,37 @@ def test_main_missing_config(tmp_path):
     with pytest.raises(SystemExit) as exc:
         main(["--config", str(config_file)])
     assert exc.value.code == 1
+
+
+def test_main_success_with_assertions(tmp_path):
+    config_file = tmp_path / "config.yaml"
+    config_file.touch()
+    assertions_file = tmp_path / "assertions.sqlx"
+    assertions_file.touch()
+
+    with (
+        mock.patch("tools.run_all.load_yaml", return_value={}),
+        mock.patch("tools.run_all.GlobalConfig"),
+        mock.patch("tools.run_all.ConfigValidator") as mock_validator_cls,
+        mock.patch("tools.run_all.DataformBuilder") as mock_builder_cls,
+        mock.patch("tools.run_all.DeploymentOrchestrator") as mock_deploy_cls,
+    ):
+        mock_validator_cls.validate.return_value = (True, [])
+        mock_builder = mock.MagicMock()
+        mock_builder.build.return_value = True
+        mock_builder_cls.return_value = mock_builder
+
+        mock_deploy = mock.MagicMock()
+        mock_deploy.execute_deployments.return_value = True
+        mock_deploy_cls.return_value = mock_deploy
+
+        main(["--config", str(config_file), "--assertions", str(assertions_file)])
+
+        # Verify DataformBuilder was instantiated with the assertions_path argument
+        mock_builder_cls.assert_called_once()
+        called_kwargs = mock_builder_cls.call_args[1]
+        assert "assertions_path" in called_kwargs
+        assert called_kwargs["assertions_path"] == assertions_file
+
+        mock_builder.build.assert_called_once()
+        mock_deploy.execute_deployments.assert_called_once()

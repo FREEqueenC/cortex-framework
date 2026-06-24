@@ -15,6 +15,35 @@
  */
 
 function generateIncrementalMergeScript(ctx, config) {
+  if (!config.is_cdc) {
+    return `
+CREATE OR REPLACE TABLE ${config.target_ref}
+${(() => {
+  if (!config.partition) return '';
+  const col = `\`${config.partition.column}\``;
+  const grain = config.partition.time_grain ? config.partition.time_grain.toUpperCase() : 'DAY';
+  const isTimestamp = config.partition.data_type === 'TIMESTAMP' || config.partition.data_type === 'DATETIME';
+  if (isTimestamp) {
+    return grain === 'DAY' ? `PARTITION BY DATE(${col})` : `PARTITION BY TIMESTAMP_TRUNC(${col}, ${grain})`;
+  } else {
+    return grain === 'DAY' ? `PARTITION BY ${col}` : `PARTITION BY DATE_TRUNC(${col}, ${grain})`;
+  }
+})()}
+${config.cluster ? `CLUSTER BY ${config.cluster.columns.map(c => `\`${c}\``).join(",")}` : ''}
+AS
+SELECT ${config.columns.map(c => `\`${c}\``).join(", ")}
+FROM ${config.source_ref}
+WHERE ${config.keys.map(k => `\`${k}\` IS NOT NULL`).join(" AND ")}
+-- Deduplication Logic
+QUALIFY ROW_NUMBER() OVER (
+    PARTITION BY ${config.keys.map(k => `\`${k}\``).join(", ")}
+) = 1;
+
+${config.table_description ? `ALTER TABLE ${config.target_ref} SET OPTIONS (description="""${config.table_description}""");` : ''}
+${config.column_descriptions && Object.keys(config.column_descriptions).length > 0 ? `ALTER TABLE ${config.target_ref} ` + Object.entries(config.column_descriptions).filter(([c, _]) => config.columns.includes(c)).map(([c, d]) => `ALTER COLUMN \`${c}\` SET OPTIONS (description="""${d}""")`).join(',\n      ') + ';' : ''}
+`;
+  }
+
   // 1. Check if Target Table exists
   return `
 BEGIN

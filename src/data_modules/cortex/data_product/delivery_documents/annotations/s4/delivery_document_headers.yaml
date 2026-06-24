@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "Information about delivery documents at the header level at the granularity of Client(System) and Delivery document number."
+description: "Serves as the central record of SAP outbound or inbound delivery headers from LIKP, tracking logistical and shipping details including creation dates, shipping points, delivery types, weights, routing, and shipment release statuses."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"
@@ -110,8 +110,8 @@ fields:
     description: "Pricing Procedure (or Calculation Procedure) that is applied to the delivery document."
   - name: "condition_number_knumv"
     description: "Number of the document condition. It is a unique identifier for the condition record used in pricing."
-  - name: "sales_document_currency_waerk"
-    description: "Currency of the sales document."
+  - name: "sales_document_currency_key_waerk"
+    description: "Sales Document Currency"
   - name: "sales_office_vkbur"
     description: "Sales Office."
   - name: "shipping_processing_time_vbeak"
@@ -340,7 +340,7 @@ fields:
     description: "Document Transfer to Transportation Managemnt Control Key"
   - name: "delivery_split_initiator_dlv_split_initia"
     description: "Delivery Split Initiator"
-  - name: "delivery_version_dlv_version "
+  - name: "delivery_version_dlv_version"
     description: "Delivery Version"
   - name: "previous_document_type_gts_vorpa"
     description: "Previous Document Type"
@@ -442,8 +442,6 @@ fields:
     description: "Items Goods Movement Incompletion Status"
   - name: "handling_unit_in_stock_indicator_vestk"
     description: "Handling Unit In Stock Indicator"
-  - name: "distribution_status_vlstk"
-    description: "Distribution Status (Decentralized Warehouse Processing)"
   - name: "goods_movement_status_wbstk"
     description: "Goods Movement Status"
   - name: "header_customer_reserve_status1_suvk01"
@@ -580,3 +578,5 @@ fields:
     description: "Source Last Updated At"
   - name: "bq_loaded_at"
     description: "BigQuery Loaded At"
+  - name: "delivery_version_dlv_version"
+    description: "Delivery Version"

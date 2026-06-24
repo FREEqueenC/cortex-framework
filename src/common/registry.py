@@ -14,17 +14,16 @@
 
 """Central explicit pattern registry for Cortex Framework."""
 
+import importlib
+import inspect
+import logging
 from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 from common.builders.base import BaseBuilder
 
-
-def find_namespace(module_name: str) -> str:
-    """Helper to determine the namespace from a module's full name (e.g. 'cortex.common...')."""
-    if "." in module_name:
-        return module_name.split(".", 1)[0]
-    return "fallback"
+_logger = logging.getLogger(__name__)
 
 
 class Registry[T]:
@@ -33,7 +32,7 @@ class Registry[T]:
     def __init__(self, name: str, expected_type: type[T] | None = None):
         self.name = name
         self.expected_type = expected_type
-        self._registry: dict[tuple[str, str], type[T]] = {}
+        self._registry: dict[str | tuple[str, str], type[T]] = {}
         self._discovery_namespace: str | None = None
 
     def set_discovery_namespace(self, namespace: str | None):
@@ -50,14 +49,28 @@ class Registry[T]:
                     f"must be a subclass of {self.expected_type.__name__}"
                 )
 
-            # Automatically detect namespace if not provided
-            ns = namespace or self._discovery_namespace or find_namespace(cls.__module__)
-            key = (ns, name)
+            # Determine namespace (None or empty string means empty namespace)
+            ns = namespace or self._discovery_namespace
+
+            # If no namespace is specified, register as flat string key (no namespace)
+            if not ns:
+                key: str | tuple[str, str] = name
+            else:
+                key = (ns, name)
 
             if key in self._registry:
+                existing_cls = self._registry[key]
+                try:
+                    if existing_cls.__name__ == cls.__name__ and inspect.getfile(
+                        existing_cls
+                    ) == inspect.getfile(cls):
+                        return cls
+                except Exception:
+                    pass
+
+                ns_desc = f"namespace '{ns}'" if ns else "no namespace"
                 raise ValueError(
-                    f"Cannot register '{name}' twice in '{self.name}' registry "
-                    f"for namespace '{ns}'."
+                    f"Cannot register '{name}' twice in '{self.name}' registry for {ns_desc}."
                 )
             self._registry[key] = cls
             return cls
@@ -66,17 +79,40 @@ class Registry[T]:
 
     def get(self, name: str, namespace: str | None = None) -> type[T] | None:
         """Retrieve a registered class by name and namespace."""
-        if namespace is not None:
-            return self._registry.get((namespace, name))
-
-        for (_ns, n), cls in self._registry.items():
-            if n == name:
+        # 1. Try namespaced lookup if namespace is provided
+        if namespace:
+            cls = self._registry.get((namespace, name))
+            if cls is not None:
                 return cls
+
+        # 2. Try empty namespace lookup (flat string key)
+        cls = self._registry.get(name)
+        if cls is not None:
+            return cls
+
+        # 3. If no namespace was requested, scan to find first matching class
+        if not namespace:
+            matches: list[tuple[str | None, type[T]]] = []
+            for key, cls in self._registry.items():
+                if isinstance(key, tuple):
+                    if key[1] == name:
+                        matches.append((key[0], cls))
+                elif key == name:
+                    matches.append((None, cls))
+
+            if len(matches) > 1:
+                _logger.warning(
+                    "Ambiguous lookup for '%s' in '%s' registry. "
+                    "Multiple matches found in namespaces: %s. Returning the first one.",
+                    name,
+                    self.name,
+                    [f"'{ns}'" if ns else "no namespace" for ns, _ in matches],
+                )
+
+            if matches:
+                return matches[0][1]
+
         return None
-
-
-builder_registry = Registry("builders", expected_type=BaseBuilder)
-deployer_registry: Registry[Any] = Registry("deployers")
 
 
 def auto_discover_plugins(package_path: str):
@@ -85,16 +121,9 @@ def auto_discover_plugins(package_path: str):
     Args:
         package_path: The dot-separated path to the package (e.g., 'cortex.common.builders').
     """
-    import importlib
-    import logging
-
-    logger = logging.getLogger(__name__)
-
     try:
         package = importlib.import_module(package_path)
         if hasattr(package, "__path__"):
-            from pathlib import Path
-
             for path_str in package.__path__:
                 path = Path(path_str)
                 for py_file in path.rglob("*.py"):
@@ -106,14 +135,22 @@ def auto_discover_plugins(package_path: str):
                     try:
                         importlib.import_module(full_module_name)
                     except ImportError as e:
-                        logger.warning(
+                        _logger.warning(
                             "Could not auto-import plugin module %s: %s",
                             full_module_name,
                             e,
                         )
     except ImportError as e:
-        logger.warning(
+        # Suppress noisy warnings for optional namespace folders
+        if isinstance(e, ModuleNotFoundError) and e.name and package_path.startswith(e.name):
+            _logger.debug("Optional plugin package %s not found. Skipping discovery.", package_path)
+            return
+        _logger.warning(
             "Could not auto-discover plugins in package %s: %s",
             package_path,
             e,
         )
+
+
+builder_registry = Registry("builders", expected_type=BaseBuilder)
+deployer_registry: Registry[Any] = Registry("deployers")

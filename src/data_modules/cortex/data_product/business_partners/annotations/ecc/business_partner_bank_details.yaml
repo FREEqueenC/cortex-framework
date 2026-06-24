@@ -1,0 +1,66 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Captures financial bank account credentials, IBANs, and validity periods for SAP Business Partners from BUT0BK to support payment routing, financial operations, and security validation."
+fields:
+  - name: "client_client"
+    description: "Client (Mandant), PK"
+  - name: "business_partner_partner"
+    description: "Business Partner Number, PK"
+  - name: "bank_details_id_bkvid"
+    description: "Bank Details ID, PK"
+  - name: "valid_from"
+    description: "Valid From Timestamp, PK"
+  - name: "valid_to"
+    description: "Valid To Timestamp"
+  - name: "bank_country_banks"
+    description: "Bank Country Key"
+  - name: "bank_key_bankl"
+    description: "Bank Key"
+  - name: "bank_acct_bankn"
+    description: "Bank Account Number"
+  - name: "bank_control_key_bkont"
+    description: "Bank Control Key"
+  - name: "reference_details_bkref"
+    description: "Reference Details for Bank Details"
+  - name: "account_holder_koinh"
+    description: "Account Holder Name"
+  - name: "extern_bank_dtls_id_bkext"
+    description: "External Bank Details ID"
+  - name: "collection_authorization_xezer"
+    description: "Indicator: Collection Authorization"
+  - name: "account_name_accname"
+    description: "Bank Account Name"
+  - name: "target_bank_details_move_bkvid"
+    description: "Target Bank Details ID (for Move)"
+  - name: "date_of_change_bk_move_date"
+    description: "Date of Change / Move"
+  - name: "iban_iban"
+    description: "IBAN (International Bank Account Number)"
+  - name: "bank_guid_bank_guid"
+    description: "Bank GUID"
+  - name: "bank_account_number_account_id"
+    description: "Bank Account Number"
+  - name: "bank_account_check_digit_check_digit"
+    description: "Bank Account Check Digit"
+  - name: "bank_account_type_account_type"
+    description: "Bank Account Type"
+  - name: "dummy_function_in_length_1_bp_eew_but0bk"
+    description: "Dummy function in length 1"
+  - name: "but0bk_recordstamp"
+    description: "Recordstamp of BUT0BK raw table"
+  - name: "source_last_updated_at"
+    description: "Source Last Updated At"
+  - name: "bq_loaded_at"
+    description: "BigQuery Loaded At"

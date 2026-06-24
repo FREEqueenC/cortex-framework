@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-description: "This view provides details about sales documents at schedule line level, including KPIs such as Open Quantity and In-Transit Quantity. The granularity of this view is Client(System), Sales Document Number, Item Number of Sales Document and Delivery Schedule Line Counter."
+description: "Tracks schedule line data for sales items from SAP VBEP, detailing confirmed, ordered, and delivered quantities."
 fields:
   - name: "client_mandt"
     description: "Client (Mandant), PK"

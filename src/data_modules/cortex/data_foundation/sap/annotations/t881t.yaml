@@ -14,11 +14,11 @@
 
 description: "FI-SL Ledger text"
 fields:
-  - name: "langu"
-    description: "Language Key"
   - name: "mandt"
     description: "Client (Mandant)"
-  - name: "name"
-    description: "Ledger Name"
+  - name: "langu"
+    description: "Language Key"
   - name: "rldnr"
     description: "Ledger"
+  - name: "name"
+    description: "Ledger Name"

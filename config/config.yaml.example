@@ -1,190 +1,307 @@
-# Configuration for the build environment.
+# ==============================================================================
+# SECTION: buildEnvironment
+# This section configures the foundational Google Cloud environment used during
+# the execution of build and deployment orchestration. The project specified here
+# acts as the central hub where intermediate build artifacts, temporary tables,
+# and deployment operations are managed and executed.
+# ==============================================================================
 buildEnvironment:
-  # Project ID where build artifacts and operations happen.
-  buildProjectId: YOUR_BUILD_PROJECT_ID
-# Data layer configuration.
+  buildProjectId: YOUR_BUILD_PROJECT_ID # Type: string. Purpose: Project ID where build artifacts and operations are managed.
+
+# ==============================================================================
+# SECTION: data
+# The data layer configuration governs the core data architecture for Cortex.
+# This encompasses geographic data placement, namespace routing, definition of
+# raw ingestion sources, storage targets, and the full dependency graph of both
+# foundational data transformation modules and downstream analytics data products.
+# ==============================================================================
 data:
-  # Geographic location for BigQuery datasets (e.g., US, EU, us-central1).
-  bigQueryLocation: US
-  # List of namespaces for data foundation and product modules.
+  bigQueryLocation: US # Type: string. Purpose: Geographic location for BigQuery datasets (e.g., US, EU, us-central1).
+
+  # ============================================================================
+  # SUBSECTION: data.namespaces
+  # Namespaces define logical groupings and mapping paths for data foundation and
+  # product modules. They ensure clean separation of concerns and prevent naming
+  # collisions across different content packages or source specific data models.
+  # Multiple namespace entries can be registered to support modular architectures.
+  # ============================================================================
   namespaces:
-    - name: cortex
-      path: cortex
-  # List of source datasets.
+    - name: cortex # Type: string. Purpose: Unique logical name identifying the namespace.
+      path: cortex # Type: string. Purpose: Relative directory path where namespace modules are located.
+    # Additional namespace entry example:
+    # - name: custom_domain # Type: string. Purpose: Unique logical name identifying the namespace.
+    #   path: custom_domain # Type: string. Purpose: Relative directory path where namespace modules are located.
+
+  # ============================================================================
+  # SUBSECTION: data.sources
+  # Sources establish the inbound raw data connection points for the framework.
+  # Each source registers a unique identifier mapped to a specific Google Cloud
+  # project and BigQuery dataset containing landed raw data (e.g., raw SAP tables).
+  # Multiple sources can be configured to integrate data from diverse systems.
+  # ============================================================================
   sources:
-    # Unique identifier for the source.
-    - id: sap_raw
-      # Google Cloud Project ID for the source dataset.
-      projectId: YOUR_SOURCE_PROJECT_ID
-      # BigQuery dataset ID for the source.
-      datasetId: cortex_sap_raw
-  # List of target datasets.
+    - id: sap_raw # Type: string. Purpose: Unique identifier for the raw data source.
+      projectId: YOUR_SOURCE_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the source dataset.
+      datasetId: cortex_sap_raw # Type: string. Purpose: BigQuery dataset ID containing the raw source tables.
+    # Additional source entry example:
+    # - id: crm_raw # Type: string. Purpose: Unique identifier for the raw data source.
+    #   projectId: YOUR_CRM_SOURCE_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the source dataset.
+    #   datasetId: cortex_crm_raw # Type: string. Purpose: BigQuery dataset ID containing the raw source tables.
+
+  # ============================================================================
+  # SUBSECTION: data.targets
+  # Targets define the destination BigQuery datasets where transformed data layers,
+  # enriched foundational models, and finalized analytics data products are stored.
+  # Defining explicit target identifiers allows decoupling transformation logic
+  # from physical storage locations and facilitates multi-project deployments.
+  # ============================================================================
   targets:
-    # Unique identifier for the target.
-    - id: sap_foundation
-      # Google Cloud Project ID for the target dataset.
-      projectId: YOUR_TARGET_PROJECT_ID
-      # BigQuery dataset ID for the target.
-      datasetId: cortex7_sap_data_foundation
+    - id: sap_foundation # Type: string. Purpose: Unique identifier for the target destination.
+      projectId: YOUR_TARGET_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the target dataset.
+      datasetId: cortex7_sap_data_foundation # Type: string. Purpose: BigQuery dataset ID where target tables will be created.
     - id: product_target
       projectId: YOUR_TARGET_PROJECT_ID
       datasetId: cortex7_data_products
-  # Configuration for data foundation and product modules.
+    # Additional target entry example:
+    # - id: custom_target # Type: string. Purpose: Unique identifier for the target destination.
+    #   projectId: YOUR_CUSTOM_TARGET_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the target dataset.
+    #   datasetId: cortex7_custom_data_products # Type: string. Purpose: BigQuery dataset ID where target tables will be created.
+
+  # ============================================================================
+  # SUBSECTION: data.modules
+  # The modules section orchestrates the data transformation lifecycle. It is
+  # divided into 'foundation' modules, which clean, conform, and enrich raw source
+  # data, and 'product' modules, which build targeted, high-value analytical data
+  # assets and business intelligence ready data products.
+  # ============================================================================
   modules:
-    # List of foundation modules.
+    # ==========================================================================
+    # SUBSECTION: data.modules.foundation
+    # Foundational data modules handle the ingestion, cleansing, deduplication,
+    # and initial modeling of raw data from external sources into a conformed
+    # source specific data layer. These modules provide the core base models upon
+    # which downstream data products are built. 
+    # Table settings and enablement flags are optional.
+    # ==========================================================================
     foundation:
-      # Unique identifier for the module instance.
-      - moduleId: erp
-        # Type of the module (namespaced, e.g., cortex.sap).
-        type: cortex.sap
-        # Reference to the source dataset ID.
-        dataSourceId: sap_raw
-        # Reference to the target dataset ID.
-        dataTargetId: sap_foundation
-        # Module-specific configuration settings.
-        moduleSettings:
-          # SAP version (e.g., ecc, s4).
-          sapVersion: ecc
-          # SAP client number.
-          mandt: "100"
-        # Whether the module is enabled. Defaults to true
-        # enabled: true
-        # Whether the foundation is external (does not create target dataset). Defaults to false
-        # external: false
-        # Path to the table settings configuration file.
-        tableSettings: "config/cortex/data_foundation/sap/table_settings.yaml"
-    # List of data product modules.
+      - moduleId: erp # Type: string. Purpose: Unique identifier for the foundation module instance.
+        type: cortex.sap # Type: string. Purpose: Type identifier of the module (namespaced).
+        dataSourceId: sap_raw # Type: string. Purpose: Reference to the source dataset ID defined in data.sources.
+        dataTargetId: sap_foundation # Type: string. Purpose: Reference to the target dataset ID defined in data.targets.
+        moduleSettings: # Type: map. Purpose: Module-specific configuration properties and parameters.
+          sapVersion: ecc # Type: string. Purpose: Specific SAP version being ingested (e.g., ecc, s4).
+          mandt: "100" # Type: string. Purpose: SAP client number (mandt) used in table extraction.
+        # Optional fields for foundation modules:
+        # enabled: true # Type: boolean. Purpose: Whether this module instance is enabled during build execution. Defaults to true.
+        # external: false # Type: boolean. Purpose: Whether the foundation is managed externally (prevents target dataset creation). Defaults to false.
+        # tableSettings: "custom_table_settings.yaml" # Type: string. Purpose: Path to custom table settings configuration relative to this config file. If omitted, defaults to src/data_modules/cortex/data_foundation/sap/table_settings.default.yaml. To customize, copy the default file to this config directory and reference it here.
+
+      # Additional foundation module entry example:
+      # - moduleId: s4_erp # Type: string. Purpose: Unique identifier for the foundation module instance.
+      #   type: cortex.sap # Type: string. Purpose: Type identifier of the module (namespaced).
+      #   dataSourceId: sap_s4_raw # Type: string. Purpose: Reference to the source dataset ID defined in data.sources.
+      #   dataTargetId: sap_s4_foundation # Type: string. Purpose: Reference to the target dataset ID defined in data.targets.
+      #   moduleSettings: # Type: map. Purpose: Module-specific configuration properties and parameters.
+      #     sapVersion: s4 # Type: string. Purpose: Specific SAP version being ingested (e.g., ecc, s4).
+      #     mandt: "100" # Type: string. Purpose: SAP client number (mandt) used in table extraction.
+
+    # ==========================================================================
+    # SUBSECTION: data.modules.product
+    # Data product modules transform foundational data models into specialized,
+    # business-ready analytical data assets and reporting marts. Each product module
+    # establishes explicit dependencies on foundation modules and deploys to a
+    # specified target dataset. Table settings and enablement flags are optional.
+    # ==========================================================================
     product:
       # Unique identifier for the data product instance.
-      - moduleId: sap_purchasing_organizations
-        # Type of the data product (namespaced).
-        type: cortex.purchasing_organizations
-        # Map of module dependencies.
+      - moduleId: sap_addresses
+        type: cortex.addresses
         dependsOn:
           sapModule: erp
-        # Reference to the target dataset ID.
         dataTargetId: product_target
-        # Whether the module is enabled. Defaults to true
-        # enabled: true
-        # Path to the table settings configuration file.
-        tableSettings: "config/cortex/data_product/purchasing_organizations/table_settings.yaml"
+        # Optional fields for product modules (shown once for illustrative purposes):
+        # enabled: true # Type: boolean. Purpose: Whether this data product is enabled. Defaults to true.
+        # tableSettings: "custom_table_settings.yaml" # Type: string. Purpose: Path to custom table settings configuration relative to this config file. If omitted, defaults to src/data_modules/cortex/data_product/addresses/table_settings.default.yaml. To customize, copy the default file to this config directory and reference it here.
+      - moduleId: sap_agency_settlement_documents
+        type: cortex.agency_settlement_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_controlling_areas_and_cost_elements
+        type: cortex.controlling_areas_and_cost_elements
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_plants_and_storage
+        type: cortex.plants_and_storage
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_purchasing_organizational_structure
+        type: cortex.purchasing_organizational_structure
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
       - moduleId: sap_purchasing_documents
         type: cortex.purchasing_documents
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
+      - moduleId: sap_vendor_invoices
+        type: cortex.vendor_invoices
         dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/purchasing_documents/table_settings.yaml"
+        dependsOn:
+          sapModule: erp
       - moduleId: sap_vendors
         type: cortex.vendors
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
         # enabled: true
-        tableSettings: "config/cortex/data_product/vendors/table_settings.yaml"
+      - moduleId: sap_business_partners
+        type: cortex.business_partners
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
       - moduleId: sap_customers
         type: cortex.customers
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/customers/table_settings.yaml"
       - moduleId: sap_sales_documents
         type: cortex.sales_documents
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
+      - moduleId: sap_sales_organizational_structure
+        type: cortex.sales_organizational_structure
         dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/sales_documents/table_settings.yaml"
-      - moduleId: sap_sales_organizations
-        type: cortex.sales_organizations
         dependsOn:
           sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/sales_organizations/table_settings.yaml"
-      - moduleId: sap_delivery_blocking_reasons
-        type: cortex.delivery_blocking_reasons
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/delivery_blocking_reasons/table_settings.yaml"
       - moduleId: sap_delivery_documents
         type: cortex.delivery_documents
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
+      - moduleId: sap_billing_documents
+        type: cortex.billing_documents
         dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/delivery_documents/table_settings.yaml"
-      - moduleId: sap_material_groups
-        type: cortex.material_groups
         dependsOn:
           sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/material_groups/table_settings.yaml"
-      - moduleId: sap_material_types
-        type: cortex.material_types
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/material_types/table_settings.yaml"
       - moduleId: sap_materials
         type: cortex.materials
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
+      - moduleId: sap_material_batches
+        type: cortex.material_batches
         dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/materials/table_settings.yaml"
-      - moduleId: sap_material_plants
-        type: cortex.material_plants
         dependsOn:
           sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/material_plants/table_settings.yaml"
-      - moduleId: sap_material_movement_types
-        type: cortex.material_movement_types
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/material_movement_types/table_settings.yaml"
-      - moduleId: sap_material_cross_plant_batches
-        type: cortex.material_cross_plant_batches
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-        tableSettings: "config/cortex/data_product/material_cross_plant_batches/table_settings.yaml"
       - moduleId: sap_materials_movement
         type: cortex.materials_movement
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      - moduleId: sap_global_settings
+        type: cortex.global_settings
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      - moduleId: sap_currency_conversion
+        type: cortex.currency_conversion
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      # Include only if sap version is s4
+      #- moduleId: sap_universal_journal
+      #  type: cortex.universal_journal
+      #  dataTargetId: product_target
+      #  dependsOn:
+      #    sapModule: erp
+      - moduleId: sap_units_of_measurement
+        type: cortex.units_of_measurement
+        dataTargetId: product_target
         dependsOn:
           sapModule: erp
         dataTargetId: product_target
         # enabled: true
-        tableSettings: "config/cortex/data_product/materials_movement/table_settings.yaml"
+      - moduleId: sap_accounting_documents
+        type: cortex.accounting_documents
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+        # enabled: true
+      - moduleId: sap_fiscal_year_variants
+        type: cortex.fiscal_year_variants
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      - moduleId: sap_project_structure
+        type: cortex.project_structure
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      - moduleId: sap_accounts_payable
+        type: cortex.accounts_payable
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      - moduleId: sap_accounts_receivable
+        type: cortex.accounts_receivable
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+      - moduleId: sap_fixed_assets
+        type: cortex.fixed_assets
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_general_ledger_accounts
+        type: cortex.general_ledger_accounts
+        dataTargetId: product_target
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_cost_and_profit_centers
+        type: cortex.cost_and_profit_centers
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_condition_contracts
+        type: cortex.condition_contracts
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_financial_statement_structure_versions
+        type: cortex.financial_statement_structure_versions
+        dependsOn:
+          sapModule: erp
+        dataTargetId: product_target
 # Deployment configuration.
+      # Additional data product module entry example:
+      # - moduleId: custom_sales_analytics # Type: string. Purpose: Unique identifier for the data product instance.
+      #   type: cortex.custom_sales # Type: string. Purpose: Type identifier of the data product (namespaced).
+      #   dataTargetId: product_target # Type: string. Purpose: Reference to the target dataset ID defined in data.targets.
+      #   dependsOn: # Type: map. Purpose: Mapping of required module dependencies.
+      #     sapModule: erp # Type: string. Purpose: Foundation module moduleId satisfying this dependency.
+
+# ==============================================================================
+# SECTION: deployment
+# We define the deployment targets for the Dataform package, and their associated configuration. 
+# It specifies the target Google Cloud project, geographic region, repository settings,
+# and workspace parameters necessary to compile and execute the transformation pipelines.
+# ==============================================================================
 deployment:
-  # Whether to create target datasets during deployment.
-  createTargetDatasets: true
-  # List of deployment targets.
   targets:
-    # Type of deployment target (e.g., dataform).
-    - type: dataform
-      # Whether this deployment target is enabled.
-      enabled: true
-      # Settings specific to the deployment target.
-      targetSettings:
-        # Project ID for the Dataform repository.
-        repositoryProjectId: YOUR_REPO_PROJECT_ID
-        # Region for the Dataform repository.
-        repositoryRegion: us-central1
-        # Name of the Dataform repository.
-        repositoryName: cortex-repository
-        # Name of the Dataform workspace.
-        workspaceName: dev
-        # Optional default service account for Dataform repository.
-        # serviceAccount: "example@example.com"
+    - type: dataform # Type: string. Purpose: Type identifier of the deployment target (e.g., dataform).
+      enabled: true # Type: boolean. Purpose: Whether this deployment target is enabled during execution.
+      targetSettings: # Type: map. Purpose: Target-specific configuration properties and environment settings.
+        repositoryProjectId: YOUR_REPO_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the Dataform repository.
+        repositoryRegion: us-central1 # Type: string. Purpose: Geographic region where the Dataform repository is located.
+        repositoryName: cortex-repository # Type: string. Purpose: Name of the Dataform repository.
+        workspaceName: dev # Type: string. Purpose: Name of the Dataform workspace used for compilation.
+        # Optional fields for deployment targets:
+        # serviceAccount: "example@example.com" # Type: string. Purpose: Default service account email for Dataform repository execution.

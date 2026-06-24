@@ -18,12 +18,11 @@
 // ___TABLE_CONFIG___
 
 const moduleConfig = config.product[moduleContext.moduleId];
-
 const materializationType = tableConfig.materializationType || "incremental";
-
 const date = require("includes/cortex/date.js");
 const incremental = require("includes/cortex/incremental.js");
 const publish_config = require("includes/cortex/publish_config.js");
+const sql_helper = require("includes/cortex/sql_helper.js");
 
 const publishConfig = publish_config.getPublishConfig(
   materializationType,
@@ -178,6 +177,8 @@ publish("purchasing_document_headers", publishConfig).query(
     ON ekko.aedat = dimensional_date_aedat.date
   LEFT JOIN date_dimension as dimensional_date_bedat
     ON ekko.bedat = dimensional_date_bedat.date
-  ${incremental.getWhere(ctx, "ekko.recordstamp")}
+  ${sql_helper.buildDynamicWhere([
+    incremental.getFilter(ctx, ["ekko"])
+  ])}
 `,
 );

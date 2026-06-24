@@ -14,11 +14,11 @@
 
 description: "Dimension Texts"
 fields:
-  - name: "dimid"
-    description: "Dimension"
   - name: "mandt"
     description: "Client (Mandant)"
   - name: "spras"
     description: "Language Key"
+  - name: "dimid"
+    description: "Dimension"
   - name: "txdim"
     description: "Dimension text"

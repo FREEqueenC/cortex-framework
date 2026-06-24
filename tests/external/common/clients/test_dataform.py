@@ -431,6 +431,57 @@ def test_modify_release_config_already_exists_updates(provider, mock_client):
     mock_client.update_release_config.assert_called_once()
 
 
+def test_modify_release_config_with_schedule_success(provider, mock_client):
+    mock_client.repository_path.return_value = REPO_NAME
+    assert (
+        provider.modify_release_config(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            release_config_id="test-release",
+            git_commitish="main",
+            cron_schedule="0 2 * * *",
+            time_zone="PST",
+        )
+        is True
+    )
+    mock_client.create_release_config.assert_called_once()
+    call_args = mock_client.create_release_config.call_args
+    kwargs = call_args.kwargs
+    request = kwargs["request"]
+    assert request.release_config.cron_schedule == "0 2 * * *"
+    assert request.release_config.time_zone == "PST"
+
+
+def test_modify_release_config_with_schedule_already_exists_updates(provider, mock_client):
+    mock_client.repository_path.return_value = REPO_NAME
+    mock_client.release_config_path.return_value = f"{REPO_NAME}/releaseConfigs/test-release"
+    mock_client.create_release_config.side_effect = exceptions.AlreadyExists("Already exists")
+
+    assert (
+        provider.modify_release_config(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            release_config_id="test-release",
+            git_commitish="main",
+            cron_schedule="0 2 * * *",
+            time_zone="PST",
+        )
+        is True
+    )
+
+    mock_client.create_release_config.assert_called_once()
+    mock_client.update_release_config.assert_called_once()
+
+    call_args = mock_client.update_release_config.call_args
+    kwargs = call_args.kwargs
+    request = kwargs["request"]
+    assert request.release_config.cron_schedule == "0 2 * * *"
+    assert request.release_config.time_zone == "PST"
+    assert set(request.update_mask.paths) == {"git_commitish", "cron_schedule", "time_zone"}
+
+
 def test_modify_workflow_config_success(provider, mock_client, mocker):
     mock_client.repository_path.return_value = REPO_NAME
     # Simulate config does not exist

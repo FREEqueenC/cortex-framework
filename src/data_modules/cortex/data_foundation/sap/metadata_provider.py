@@ -14,7 +14,6 @@
 
 """Provides metadata retrieval functionality for BigQuery tables."""
 
-import concurrent.futures
 import logging
 
 from google.api_core import exceptions as google_exceptions
@@ -120,23 +119,35 @@ class BigQueryMetadataProvider(MetadataProvider):
                     if c not in self.table_columns[t]:
                         self.table_columns[t].append(c)
                     self.table_column_types[t][c] = d_type
+                logger.info(
+                    "Fetched %s schema columns across %d tables from INFORMATION_SCHEMA.",
+                    getattr(results, "total_rows", "unknown number of"),
+                    len(self.table_columns),
+                )
             except google_exceptions.GoogleAPIError as e:
-                logger.warning("Failed to fetch INFORMATION_SCHEMA: %s", e)
+                logger.warning("Failed to fetch schema from Information Schema: %s", e)
 
         def fetch_pks():
             # First try lowercase table query
             try:
                 results = list(self.client.query(pk_query).result())
-            except google_exceptions.GoogleAPIError:
-                results = []
-
-            # If no results, try uppercase table query
-            if not results:
+                logger.info(
+                    "Fetched %d primary key records from lowercase dd03l table.", len(results)
+                )
+            except google_exceptions.NotFound as e:
+                logger.info("Lowercase dd03l not found. Trying uppercase DD03L fallback...")
                 try:
                     results = list(self.client.query(pk_query_upper).result())
-                except google_exceptions.GoogleAPIError as e:
-                    logger.warning("Failed to fetch DD03L keys: %s", e)
-                    return
+                    logger.info(
+                        "Fetched %d primary key records from uppercase DD03L table.",
+                        len(results),
+                    )
+                except google_exceptions.NotFound:
+                    # Both tables are missing
+                    raise ValueError(
+                        f"Neither lowercase 'dd03l' nor uppercase 'DD03L' tables "
+                        f"were found in dataset {self.project_id}.{self.dataset_id}."
+                    ) from e
 
             for row in results:
                 t = row["tabname"].upper()
@@ -145,11 +156,13 @@ class BigQueryMetadataProvider(MetadataProvider):
                     self.table_pks[t] = []
                 if c not in self.table_pks[t]:
                     self.table_pks[t].append(c)
+            logger.info(
+                "Loaded primary key definitions for %d tables from DD03L.",
+                len(self.table_pks),
+            )
 
-        with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-            future_schema = executor.submit(fetch_schema)
-            future_pks = executor.submit(fetch_pks)
-            concurrent.futures.wait([future_schema, future_pks])
+        fetch_schema()
+        fetch_pks()
 
     def get_schema_and_keys(
         self, project_id: str, dataset_id: str, table: str
