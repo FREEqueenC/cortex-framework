@@ -180,11 +180,8 @@ class ConfigValidator:
 
         # 3. Pydantic schema constraints and custom model validation
         try:
-            repo_root = pathlib.Path(__file__).resolve().parent.parent.parent.parent
             ctx = {
-                "external_validation": True,
                 "config_dir": config_filepath.parent,
-                "repo_root": repo_root,
             }
             GlobalConfig.model_validate(processed_dict, context=ctx)
         except pydantic.ValidationError as e:

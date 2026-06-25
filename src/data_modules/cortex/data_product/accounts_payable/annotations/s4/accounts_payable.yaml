@@ -319,7 +319,7 @@ fields:
   - name: "altvalue_freely_defined_currency_1_osalkv"
     description: "Alternative Inventory Value in Freely Defined Currency 1"
   - name: "altvalue_freely_defined_currency_2_vsalkv"
-    description: "Alternative Inventory Value  in Freely Defined Currency 2"
+    description: "Alternative Inventory Value in Freely Defined Currency 2"
   - name: "mvavgprice_localcrcy_hpvprs"
     description: "Moving Average Price in Local Currency"
   - name: "mvavgprice_groupcrcy_kpvprs"

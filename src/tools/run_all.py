@@ -20,6 +20,7 @@ import pathlib
 import sys
 
 from common.schemas.config_schema import GlobalConfig
+from common.services.config_preprocessor import ConfigPreprocessor
 from common.services.config_validator import ConfigValidator
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
 from common.utils.file_utils import load_yaml
@@ -76,7 +77,11 @@ def main(args=None):
         sys.exit(1)
 
     global_config_dict = load_yaml(config_file)
-    global_config = GlobalConfig(**global_config_dict)
+    global_config_dict = ConfigPreprocessor().process(global_config_dict)
+
+    global_config = GlobalConfig.model_validate(
+        global_config_dict, context={"config_dir": config_file.parent}
+    )
 
     checker = GcpEnvironmentChecker(
         global_config,
@@ -94,7 +99,10 @@ def main(args=None):
     # Build Dataform
     logger.info("Running Dataform build...")
     builder = DataformBuilder(
-        global_config=global_config, output_dir=output_dir, assertions_path=args.assertions
+        global_config=global_config,
+        output_dir=output_dir,
+        config_dir=config_file.parent,
+        assertions_path=args.assertions,
     )
     if not builder.build():
         logger.error("Dataform build failed.")

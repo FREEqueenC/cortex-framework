@@ -27,7 +27,7 @@ const publishConfig = publish_config.getPublishConfig(
   materializationType,
   tableConfig,
   moduleConfig,
-  ["client_mandt", "material_number", "language_key_spras"]
+  ["client_mandt", "material_number_matnr", "language_key_spras"]
 );
 
 publish('materials', publishConfig).query(

@@ -389,7 +389,9 @@ def main(args=None):
             }
         )
 
-    demo_config = GlobalConfig(**demo_config_dict)
+    demo_config = GlobalConfig.model_validate(
+        demo_config_dict, context={"config_dir": pathlib.Path.cwd()}
+    )
 
     checker = GcpEnvironmentChecker(
         demo_config,
@@ -414,6 +416,7 @@ def main(args=None):
         global_config=demo_config,
         output_dir=pathlib.Path.cwd() / "dist",
         src_dir=pathlib.Path(__file__).resolve().parent.parent,
+        config_dir=pathlib.Path.cwd(),
     )
     if not builder.build():
         logger.error("Dataform build failed.")

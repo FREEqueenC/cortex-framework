@@ -180,7 +180,10 @@ def main(args=None):
 
     global_config_dict = load_yaml(config_file)
     global_config_dict = ConfigPreprocessor().process(global_config_dict)
-    global_config = GlobalConfig(**global_config_dict)
+
+    global_config = GlobalConfig.model_validate(
+        global_config_dict, context={"config_dir": config_file.parent}
+    )
 
     checker = GcpEnvironmentChecker(
         global_config, enable_apis=args.enable_apis, create_datasets=args.create_datasets

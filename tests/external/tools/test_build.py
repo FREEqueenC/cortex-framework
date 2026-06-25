@@ -85,13 +85,18 @@ def test_dataform_builder_initialization(mock_discover_modules, mock_config_cont
     assertions_path = pathlib.Path("/tmp/assertions.sqlx")
 
     builder = DataformBuilder(
-        global_config=global_config, output_dir=output_dir, assertions_path=assertions_path
+        global_config=global_config,
+        output_dir=output_dir,
+        base_dir=pathlib.Path.cwd(),
+        config_dir=pathlib.Path.cwd(),
+        assertions_path=assertions_path,
     )
 
     assert builder.global_config == global_config
     assert builder.output_dir == output_dir
     assert builder.assertions_path == assertions_path
     assert builder.base_dir == pathlib.Path.cwd()
+    assert builder.config_dir == pathlib.Path.cwd()
 
 
 @mock.patch("tools.build.DataformBuilder._discover_modules")
@@ -115,7 +120,12 @@ def test_build_success(
     mock_manifest_content,
 ):
     global_config = GlobalConfig(**mock_config_content)
-    builder = DataformBuilder(global_config=global_config, output_dir=pathlib.Path("output"))
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=pathlib.Path("output"),
+        base_dir=pathlib.Path.cwd(),
+        config_dir=pathlib.Path.cwd(),
+    )
     # Mock exists to avoid missing config error
     mock_exists.return_value = True
 
@@ -212,7 +222,10 @@ def test_process_module_filtering(mock_discover_modules, mock_config_content):
     mock_discover_modules.return_value = {}
     global_config = GlobalConfig(**mock_config_content)
     builder = DataformBuilder(
-        global_config=global_config, output_dir=pathlib.Path("/tmp/test_output")
+        global_config=global_config,
+        output_dir=pathlib.Path("/tmp/test_output"),
+        base_dir=pathlib.Path.cwd(),
+        config_dir=pathlib.Path.cwd(),
     )
 
     # Setup state for filtering
@@ -285,7 +298,12 @@ def test_generate_config_js_content_version_mismatch(
         }
     }
 
-    builder = DataformBuilder(global_config=global_config, output_dir=pathlib.Path("output"))
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=pathlib.Path("output"),
+        base_dir=pathlib.Path.cwd(),
+        config_dir=pathlib.Path.cwd(),
+    )
 
     # Config has foundation in "s4" version, while product requires "ecc".
     result = builder._generate_config_js_content()
@@ -305,7 +323,12 @@ def test_generate_centralized_sources_path_traversal_project(tmp_path):
             "modules": {"foundation": [], "product": []},
         }
     )
-    builder = DataformBuilder(global_config=global_config, output_dir=tmp_path)
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=tmp_path,
+        base_dir=tmp_path,
+        config_dir=tmp_path,
+    )
 
     # Add a malicious source to registry
     builder.sources_registry.add(Source(project="../../../pwned", dataset="sap_cdc", table="mara"))
@@ -327,7 +350,12 @@ def test_generate_centralized_sources_path_traversal_dataset(tmp_path):
             "modules": {"foundation": [], "product": []},
         }
     )
-    builder = DataformBuilder(global_config=global_config, output_dir=tmp_path)
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=tmp_path,
+        base_dir=tmp_path,
+        config_dir=tmp_path,
+    )
 
     # Add a source with a valid project but malicious dataset to registry
     builder.sources_registry.add(
@@ -351,7 +379,12 @@ def test_generate_centralized_sources_valid(tmp_path):
             "modules": {"foundation": [], "product": []},
         }
     )
-    builder = DataformBuilder(global_config=global_config, output_dir=tmp_path)
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=tmp_path,
+        base_dir=tmp_path,
+        config_dir=tmp_path,
+    )
 
     builder.sources_registry.add(
         Source(project="valid-project", dataset="valid_dataset", table="mara")
@@ -386,6 +419,8 @@ def test_build_with_assertions_success(
     builder = DataformBuilder(
         global_config=global_config,
         output_dir=tmp_path / "output",
+        base_dir=tmp_path,
+        config_dir=tmp_path,
         assertions_path=assertions_file,
     )
 
@@ -419,6 +454,8 @@ def test_build_with_assertions_directory_failure(
     builder = DataformBuilder(
         global_config=global_config,
         output_dir=tmp_path / "output",
+        base_dir=tmp_path,
+        config_dir=tmp_path,
         assertions_path=assertions_dir,
     )
 

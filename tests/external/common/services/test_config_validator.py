@@ -231,6 +231,50 @@ def test_config_validator_valid_explicit_table_settings(temp_config_path, tmp_pa
     assert not errors
 
 
+def test_config_validator_relative_table_settings(tmp_path, monkeypatch):
+    """Test ConfigValidator correctly resolves relative table settings.
+
+    It must resolve them against the config file directory instead of CWD.
+    """
+    config_dir = tmp_path / "config"
+    config_dir.mkdir()
+    config_path = config_dir / "config.yaml"
+
+    relative_settings_file = config_dir / "my_table_settings.yaml"
+    with open(relative_settings_file, "w", encoding="utf-8") as sf:
+        yaml.dump({"common": []}, sf)
+
+    config_with_relative_settings = {
+        "buildEnvironment": {"buildProjectId": "my-build-project"},
+        "data": {
+            "bigQueryLocation": "US",
+            "namespaces": [{"name": "cortex", "path": "cortex"}],
+            "sources": [{"id": "sap_raw", "projectId": "raw-proj", "datasetId": "raw-ds"}],
+            "targets": [{"id": "sap_foundation", "projectId": "tgt-proj", "datasetId": "tgt-ds"}],
+            "modules": {
+                "foundation": [
+                    {
+                        "moduleId": "erp",
+                        "type": "cortex.sap",
+                        "dataSourceId": "sap_raw",
+                        "dataTargetId": "sap_foundation",
+                        "moduleSettings": {"sapVersion": "ecc", "mandt": "100"},
+                        "tableSettings": "my_table_settings.yaml",
+                    }
+                ]
+            },
+        },
+    }
+
+    with open(config_path, "w", encoding="utf-8") as f:
+        yaml.dump(config_with_relative_settings, f)
+
+    monkeypatch.chdir(tmp_path)
+    is_valid, errors = ConfigValidator.validate(config_path)
+    assert is_valid
+    assert not errors
+
+
 def test_config_validator_invalid_yaml_table_settings(temp_config_path, tmp_path):
     """Test ConfigValidator catches invalid YAML in explicit table settings files."""
     invalid_settings_file = tmp_path / "invalid_table_settings.yaml"

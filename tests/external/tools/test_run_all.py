@@ -42,6 +42,12 @@ def test_main_success(tmp_path):
         mock_deploy_cls.return_value = mock_deploy
 
         main(["--config", str(config_file)])
+        mock_builder_cls.assert_called_once_with(
+            global_config=mock.ANY,
+            output_dir=mock.ANY,
+            config_dir=config_file.parent,
+            assertions_path=None,
+        )
         mock_builder.build.assert_called_once()
         mock_deploy.execute_deployments.assert_called_once()
 
@@ -77,11 +83,13 @@ def test_main_success_with_assertions(tmp_path):
 
         main(["--config", str(config_file), "--assertions", str(assertions_file)])
 
-        # Verify DataformBuilder was instantiated with the assertions_path argument
-        mock_builder_cls.assert_called_once()
-        called_kwargs = mock_builder_cls.call_args[1]
-        assert "assertions_path" in called_kwargs
-        assert called_kwargs["assertions_path"] == assertions_file
+        # Verify DataformBuilder was instantiated with the correct arguments
+        mock_builder_cls.assert_called_once_with(
+            global_config=mock.ANY,
+            output_dir=mock.ANY,
+            config_dir=config_file.parent,
+            assertions_path=assertions_file,
+        )
 
         mock_builder.build.assert_called_once()
         mock_deploy.execute_deployments.assert_called_once()

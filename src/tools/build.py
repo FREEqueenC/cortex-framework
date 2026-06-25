@@ -56,8 +56,8 @@ class DataformBuilder:
         self,
         global_config: GlobalConfig,
         output_dir: pathlib.Path,
+        config_dir: pathlib.Path,
         base_dir: pathlib.Path | None = None,
-        config_dir: pathlib.Path | None = None,
         src_dir: pathlib.Path | None = None,
         builder_factory: Callable[[str], BaseBuilder | None] | None = None,
         default_project: str | None = None,
@@ -68,7 +68,7 @@ class DataformBuilder:
         # src_dir is still the python source root
         self.src_dir = src_dir or pathlib.Path(__file__).resolve().parent.parent
         self.base_dir = base_dir or self.src_dir.parent
-        self.config_dir = config_dir or self.base_dir
+        self.config_dir = config_dir
         self.data_modules_dir = self.src_dir / "data_modules"
         self.builder_factory = builder_factory
         self.default_project = default_project
@@ -681,11 +681,8 @@ def main(args=None):
     global_config_dict = load_yaml(config_file)
     global_config_dict = ConfigPreprocessor().process(global_config_dict)
 
-    src_dir = pathlib.Path(__file__).resolve().parent.parent
-    repo_root = src_dir.parent
-
     global_config = GlobalConfig.model_validate(
-        global_config_dict, context={"config_dir": config_file.parent, "repo_root": repo_root}
+        global_config_dict, context={"config_dir": config_file.parent}
     )
 
     checker = GcpEnvironmentChecker(
@@ -702,7 +699,6 @@ def main(args=None):
     builder = DataformBuilder(
         global_config=global_config,
         output_dir=output_dir,
-        base_dir=repo_root,
         config_dir=config_file.parent,
         assertions_path=args.assertions,
     )

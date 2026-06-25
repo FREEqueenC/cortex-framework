@@ -207,7 +207,7 @@ fields:
 - name: add_fin_acc_status_fkk_docstat
   description: Add. Fin. Acc.Status
 - name: nrzas_nrzas
-  description: 
+  description: Secondary legal document number or country-specific tax identifier (12 chars max)
 - name: ewm_billing_indicator_spe_billing_ind
   description: EWM Billing Indicator
 - name: contract_vtref
