@@ -1,0 +1,44 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view provides details for the different material groups and divisions for the materials and is granular on Client(System), material group and language key."
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "MaterialGroup_MATKL"
+    description: "Material Group, PK"
+  - name: "Language_SPRAS"
+    description: "Language Key, PK"
+  - name: "Division_SPART"
+    description: "Division"
+  - name: "ReferenceGroupRefMaterial_WWGDA"
+    description: "Material Group Reference Material"
+  - name: "GroupMaterial_WWGPA"
+    description: "Material Group Material"
+  - name: "DepartmentNumber_ABTNR"
+    description: "Department Number"
+  - name: "AuthorizationGroup_BEGRU"
+    description: "Authorization Group"
+  - name: "DefaultUnitofWeight_GEWEI"
+    description: "Default unit of weight in the material master"
+  - name: "ValuationClass_BKLAS"
+    description: "Valuation Class"
+  - name: "PurchasingValueKey_EKWSL"
+    description: "Purchasing Value Key"
+  - name: "AssetClass_ANLKL"
+    description: "Default: Asset Class for Creation of Asset"
+  - name: "PriceLevelGroup_PRICE_GROUP"
+    description: "Price Level Group"
+  - name: "MaterialGroupName_WGBEZ"
+    description: "Material Group Description"

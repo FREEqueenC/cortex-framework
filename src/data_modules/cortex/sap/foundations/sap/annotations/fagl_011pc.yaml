@@ -1,0 +1,50 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Fin Statement Version: Items in Financial Statement Version"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "versn"
+  description: "Fs Version"
+- name: "id"
+  description: "Id"
+- name: "type"
+  description: "Type"
+- name: "ergsl"
+  description: "Financial Statement Item"
+- name: "parent"
+  description: "Id"
+- name: "child"
+  description: "Id"
+- name: "nextn"
+  description: "Id"
+- name: "stufe"
+  description: "Hierarchy Level"
+- name: "summe"
+  description: "Indicator: Totals"
+- name: "sign"
+  description: "Change of Sign (+/-)"
+- name: "aedat"
+  description: "Changed on"
+- name: "usnam"
+  description: "User Name"
+- name: "aetim"
+  description: "Aetim"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

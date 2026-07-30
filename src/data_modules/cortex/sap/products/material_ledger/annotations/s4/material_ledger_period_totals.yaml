@@ -1,0 +1,97 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Exposes stock quantity, value, standard price, periodic unit price, and price/exchange rate
+  differences (from CKMLCR) per header, period, value structure type, and currency type.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: valuation_header_kalnr
+    description: Valuation Header Number, PK
+  - name: fiscal_year_lfgja
+    description: Fiscal Year, PK
+  - name: posting_period_lfmon
+    description: Posting Period, PK
+  - name: value_structure_type_untper
+    description: Value Structure Type, PK
+  - name: currency_type_curtp
+    description: Currency Type and Valuation View, PK
+  - name: material_number_matnr
+    description: Material Number
+  - name: valuation_area_bwkey
+    description: Valuation Area
+  - name: valuation_type_bwtar
+    description: Valuation Type
+  - name: price_unit_peinh
+    description: Price Unit
+  - name: price_control_indicator_vprsv
+    description: Price Control Indicator
+  - name: currency_key_waers
+    description: Currency Key
+  - name: standard_price_stprs
+    description: Standard Price (Shifted)
+  - name: moving_average_price_verpr
+    description: Periodic Unit Price / Moving Average Price (Shifted)
+  - name: value_of_total_valuated_stock_salk3
+    description: Total Value of Valuated Stock (Shifted)
+  - name: value_at_periodic_unit_price_salkv
+    description: Value of Valuated Stock At Periodic Unit Price (Shifted)
+  - name: revaluation_amount_pup_zuumb_o
+    description: Revaluation Amount At Periodic Unit Price (Shifted)
+  - name: beg_inv_value_absalk3
+    description: Value of Beginning Inventory (Shifted)
+  - name: intercompany_profit_markup_o
+    description: Intercompany Profit Markup (Shifted)
+  - name: beg_inv_single_level_price_diff_abprd_o
+    description: Single-Level Price Differences for Beginning Inventory (Shifted)
+  - name: beg_inv_single_level_exch_rate_diff_abkdm_o
+    description: Single-Level Exchange Rate Differences for Beginning Inventory (Shifted)
+  - name: receipts_single_level_price_diff_zuprd_o
+    description: Single-Level Price Differences From Receipts (Shifted)
+  - name: receipts_single_level_exch_rate_diff_zukdm_o
+    description: Single-Level Exchange Rate Differences From Receipts (Shifted)
+  - name: other_movements_single_level_price_diff_vpprd_o
+    description: Single-Level Price Differences From Other Movements (Shifted)
+  - name: other_movements_single_level_exch_rate_diff_vpkdm_o
+    description: Single-Level Exchange Rate Differences From Other Movements (Shifted)
+  - name: consumption_single_level_price_diff_vnprd_o
+    description: Single-Level Price Differences Allocated to Consumption (Shifted)
+  - name: consumption_single_level_exch_rate_diff_vnkdm_o
+    description: Single-Level Exchange Rate Differences Allocated to Consumption (Shifted)
+  - name: po_price_differences_ekprd_o
+    description: Price Differences From Purchase Orders (Shifted)
+  - name: po_exch_rate_differences_ekkdm_o
+    description: Exchange Rate Differences From Purchase Orders (Shifted)
+  - name: end_inv_single_level_price_diff_ebprd_ea
+    description: Single-Level Price Differences Allocated to Ending Inventory (Shifted)
+  - name: end_inv_single_level_exch_rate_diff_ebkdm_ea
+    description: Single-Level Exchange Rate Differences Allocated to Ending Inventory (Shifted)
+  - name: beg_inv_multilevel_price_diff_abprd_mo
+    description: Multi-Level Price Differences for Beginning Inventory (Shifted)
+  - name: beg_inv_multilevel_exch_rate_diff_abkdm_mo
+    description: Multi-Level Exchange Rate Differences for Beginning Inventory (Shifted)
+  - name: receipts_multilevel_price_diff_zuprd_mo
+    description: Multi-Level Price Differences From Receipts (Shifted)
+  - name: receipts_multilevel_exch_rate_diff_zukdm_mo
+    description: Multi-Level Exchange Rate Differences From Receipts (Shifted)
+  - name: end_inv_multilevel_price_diff_ebprd_ma
+    description: Multi-Level Price Differences Allocated to Ending Inventory (Shifted)
+  - name: end_inv_multilevel_exch_rate_diff_ebkdm_ma
+    description: Multi-Level Exchange Rate Differences Allocated to Ending Inventory (Shifted)
+  - name: total_value_at_sp_vksal
+    description: Total Value At Standard Price (Shifted)
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

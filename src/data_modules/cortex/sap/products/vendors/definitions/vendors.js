@@ -1,0 +1,257 @@
+/**
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// ___MODULE_CONTEXT___
+// ___TABLE_CONFIG___
+
+const moduleConfig = config.product[moduleContext.moduleId];
+const materializationType = tableConfig.materializationType || "incremental";
+const incremental = require("includes/incremental.js");
+const publish_config = require("includes/publish_config.js");
+const sql_helper = require("includes/sql_helper.js");
+
+const publishConfig = publish_config.getPublishConfig(
+  materializationType,
+  tableConfig,
+  moduleConfig,
+  [
+    "client_mandt",
+    "account_number_of_vendor_or_creditor_lifnr",
+    "address_adrnr",
+    "valid_from_date_date_from",
+    "version_id_for_international_addresses_nation"
+  ]
+);
+
+publish(moduleContext.moduleId + "_" + tableConfig.tableName, publishConfig).query(
+    (ctx) => `
+SELECT
+  lfa1.mandt as client_mandt,
+  lfa1.lifnr as account_number_of_vendor_or_creditor_lifnr,
+  lfa1.land1 as country_key_land1,
+  lfa1.name1 as name1_name1,
+  lfa1.name2 as name2_name2,
+  lfa1.name3 as name3_name3,
+  lfa1.name4 as name4_name4,
+  lfa1.ort01 as city_ort01,
+  lfa1.ort02 as district_ort02,
+  lfa1.pfach as po_box_pfach,
+  lfa1.pstl2 as po_box_postal_code_pstl2,
+  lfa1.pstlz as postal_code_pstlz,
+  lfa1.regio as region_regio,
+  lfa1.sortl as sort_field_sortl,
+  lfa1.stras as street_and_house_number_stras,
+  lfa1.adrnr as address_adrnr,
+  lfa1.mcod1 as search_term_for_matchcode_search_mcod1,
+  lfa1.mcod2 as search_term_for_matchcode_search_mcod2,
+  lfa1.mcod3 as search_term_for_matchcode_search_mcod3,
+  lfa1.anred as title_anred,
+  lfa1.bahns as train_station_bahns,
+  lfa1.bbbnr as international_location_number_part1_bbbnr,
+  lfa1.bbsnr as international_location_number_part2_bbsnr,
+  lfa1.begru as authorization_group_begru,
+  lfa1.brsch as industry_key_brsch,
+  lfa1.bubkz as check_digit_for_the_international_location_number_bubkz,
+  lfa1.datlt as data_communication_line_no_datlt,
+  lfa1.dtams as report_key_for_data_medium_exchange_dtams,
+  lfa1.dtaws as instruction_key_for_data_medium_exchange_dtaws,
+  lfa1.erdat as date_on_which_the_record_was_created_erdat,
+  lfa1.ernam as name_of_person_who_created_the_object_ernam,
+  lfa1.esrnr as por_subscriber_number_esrnr,
+  lfa1.konzs as group_key_konzs,
+  lfa1.ktokk as vendor_account_group_ktokk,
+  lfa1.kunnr as customer_number_kunnr,
+  lfa1.lnrza as account_number_of_the_alternative_payee_lnrza,
+  lfa1.loevm as central_deletion_flag_for_master_record_loevm,
+  lfa1.sperr as central_posting_block_sperr,
+  lfa1.sperm as centrally_imposed_purchasing_block_sperm,
+  lfa1.spras as language_key_spras,
+  lfa1.stcd1 as tax_number1_stcd1,
+  lfa1.stcd2 as tax_number2_stcd2,
+  lfa1.stkza as indicator_business_partner_subject_to_equalization_tax_stkza,
+  lfa1.stkzu as liable_for_vat_stkzu,
+  lfa1.telbx as telebox_number_telbx,
+  lfa1.telf1 as first_telephone_number_telf1,
+  lfa1.telf2 as second_telephone_number_telf2,
+  lfa1.telfx as fax_number_telfx,
+  lfa1.teltx as teletex_number_teltx,
+  lfa1.telx1 as telex_number_telx1,
+  lfa1.xcpdk as indicator_is_the_account_a_one_time_account_xcpdk,
+  lfa1.xzemp as indicator_alternative_payee_in_document_allowed_xzemp,
+  lfa1.vbund as company_id_of_trading_partner_vbund,
+  lfa1.fiskn as account_number_of_the_master_record_with_fiscal_address_fiskn,
+  lfa1.stceg as vat_registration_number_stceg,
+  lfa1.stkzn as natural_person_stkzn,
+  lfa1.sperq as function_that_will_be_blocked_sperq,
+  lfa1.gbort as place_of_birth_of_the_person_subject_to_withholding_tax_gbort,
+  lfa1.gbdat as date_of_birth_of_the_person_subject_to_withholding_tax_gbdat,
+  lfa1.sexkz as key_for_the_sex_of_the_person_subject_to_withholding_tax_sexkz,
+  lfa1.kraus as credit_information_number_kraus,
+  lfa1.revdb as last_review_external_revdb,
+  lfa1.qssys as vendors_qm_system_qssys,
+  lfa1.ktock as reference_account_group_for_one_time_account_vendor_ktock,
+  lfa1.pfort as po_box_city_pfort,
+  lfa1.werks as plant_own_or_external_werks,
+  lfa1.ltsna as indicator_vendor_sub_range_relevant_ltsna,
+  lfa1.werkr as indicator_plant_level_relevant_werkr,
+  lfa1.plkal as factory_calendar_key_plkal,
+  lfa1.duefl as status_of_data_transfer_into_subsequent_release_duefl,
+  lfa1.txjcd as tax_jurisdiction_txjcd,
+  lfa1.sperz as payment_block_sperz,
+  lfa1.scacd as standard_carrier_access_code_scacd,
+  lfa1.sfrgr as forwarding_agent_freight_group_sfrgr,
+  lfa1.lzone as transportation_zone_to_or_from_which_the_goods_are_delivered_lzone,
+  lfa1.xlfza as indicator_alternative_payee_using_account_number_xlfza,
+  lfa1.dlgrp as service_agent_procedure_group_dlgrp,
+  lfa1.fityp as tax_type_fityp,
+  lfa1.stcdt as tax_number_type_stcdt,
+  lfa1.regss as registered_for_social_insurance_regss,
+  lfa1.actss as activity_code_for_social_insurance_actss,
+  lfa1.stcd3 as tax_number3_stcd3,
+  lfa1.stcd4 as tax_number4_stcd4,
+  lfa1.stcd5 as tax_number5_stcd5,
+  lfa1.ipisp as tax_split_ipisp,
+  lfa1.taxbs as tax_base_in_percentage_taxbs,
+  lfa1.profs as profession_profs,
+  lfa1.stgdl as shipment_statistics_group_transportation_service_agent_stgdl,
+  lfa1.emnfr as external_manufacturer_code_name_or_number_emnfr,
+  lfa1.lfurl as uniform_resource_locator_lfurl,
+  lfa1.j_1kfrepre as name_of_representative_j_1_kfrepre,
+  lfa1.j_1kftbus as type_of_business_j_1_kftbus,
+  lfa1.j_1kftind as type_of_industry_j_1_kftind,
+  lfa1.confs as status_of_change_authorization_central_confs,
+  lfa1.updat as date_on_which_the_changes_were_confirmed_updat,
+  lfa1.uptim as time_of_last_change_confirmation_uptim,
+  lfa1.nodel as central_deletion_block_for_master_record_nodel,
+  lfa1.qssysdat as validity_date_of_certification_qssysdat,
+  lfa1.podkzb as vendor_indicator_relevant_for_proof_of_delivery_podkzb,
+  lfa1.fisku as account_number_of_master_record_of_tax_office_responsible_fisku,
+  lfa1.stenr as tax_number_at_responsible_tax_authority_stenr,
+  lfa1.carrier_conf as carrier_confirmation_is_expected_carrier_conf,
+  lfa1.min_comp as micro_company_indicator_min_comp,
+  lfa1.term_li as terms_of_liability_term_li,
+  lfa1.crc_num as crc_number_crc_num,
+  lfa1.cvp_xblck as business_purpose_completed_flag_cvp_xblck,
+  lfa1.rg as rg_number_rg,
+  lfa1.exp as issued_by_exp,
+  lfa1.uf as state_uf,
+  lfa1.rgdate as rg_issuing_date_rgdate,
+  lfa1.ric as ric_number_ric,
+  lfa1.rne as foreign_national_registration_rne,
+  lfa1.rnedate as rne_issuing_date_rnedate,
+  lfa1.cnae as cnae_cnae,
+  lfa1.legalnat as legal_nature_legalnat,
+  lfa1.crtn as crt_number_crtn,
+  lfa1.icmstaxpay as icms_taxpayer_icmstaxpay,
+  lfa1.indtyp as industry_main_type_indtyp,
+  lfa1.tdt as tax_declaration_type_tdt,
+  lfa1.comsize as company_size_comsize,
+  lfa1.decregpc as declaration_regimen_for_piscofins_decregpc,
+  lfa1.j_sc_capital as capital_amount_j_sc_capital,
+  lfa1.j_sc_currency as currency_j_sc_currency,
+  lfa1.alc as agency_location_code_alc,
+  lfa1.pmt_office as payment_office_pmt_office,
+  lfa1.ppa_relevant as vendor_is_ppa_relevant_ppa_relevant,
+  lfa1.psofg as processor_group_psofg,
+  lfa1.psois as subledger_acct_preprocessing_procedure_psois,
+  lfa1.pson1 as name1_pson1,
+  lfa1.pson2 as name2_pson2,
+  lfa1.pson3 as name3_pson3,
+  lfa1.psovn as first_name_psovn,
+  lfa1.psotl as title_psotl,
+  lfa1.transport_chain as transportation_chain_transport_chain,
+  lfa1.staging_time as staging_time_in_days_staging_time,
+  lfa1.scheduling_type as scheduling_procedure_scheduling_type,
+  lfa1.submi_relevant as cross_docking_relevant_for_collective_numbering_submi_relevant,
+  lfa1.recordstamp as lfa1_recordstamp,
+  adrc.date_from as valid_from_date_date_from,
+  adrc.nation as version_id_for_international_addresses_nation,
+  adrc.date_to as valid_to_date_date_to,
+  adrc.title as form_of_address_key_title,
+  adrc.name1 as addr_name1,
+  adrc.name2 as addr_name2,
+  adrc.name3 as addr_name3,
+  adrc.name4 as addr_name4,
+  adrc.city1 as addr_city1,
+  adrc.city2 as addr_district_city2,
+  adrc.city_code as city_code_city_code,
+  adrc.cityp_code as district_code_cityp_code,
+  adrc.home_city as city_home_city,
+  adrc.cityh_code as different_city_for_citystreet_file_cityh_code,
+  adrc.regiogroup as regional_structure_grouping_regiogroup,
+  adrc.post_code1 as city_postal_code_post_code1,
+  adrc.post_code2 as po_box_postal_code_post_code2,
+  adrc.post_code3 as company_postal_code_post_code3,
+  adrc.po_box as po_box_po_box,
+  adrc.dont_use_p as po_box_address_undeliverable_flag_dont_use_p,
+  adrc.po_box_num as flag_po_box_without_number_po_box_num,
+  adrc.po_box_loc as po_box_city_po_box_loc,
+  adrc.city_code2 as city_po_box_code_city_file_city_code2,
+  adrc.po_box_reg as region_for_po_box_po_box_reg,
+  adrc.po_box_cty as po_box_country_po_box_cty,
+  adrc.transpzone as transportation_zone_to_or_from_which_the_goods_are_delivered_transpzone,
+  adrc.street as street_street,
+  adrc.dont_use_s as street_address_undeliverable_flag_dont_use_s,
+  adrc.streetcode as street_number_for_citystreet_file_streetcode,
+  adrc.house_num1 as house_number_house_num1,
+  adrc.house_num2 as house_number_supplement_house_num2,
+  adrc.str_suppl1 as street2_str_suppl1,
+  adrc.str_suppl2 as street3_str_suppl2,
+  adrc.str_suppl3 as street4_str_suppl3,
+  adrc.location as street5_location,
+  adrc.building as building_number_or_code_building,
+  adrc.floor as floor_in_building_floor,
+  adrc.roomnumber as room_or_appartment_number_roomnumber,
+  adrc.country as country_country,
+  adrc.langu as language_langu,
+  adrc.region as region_addr_region,
+  adrc.addr_group as address_group_key_business_address_services_addr_group,
+  adrc.flaggroups as flag_there_are_more_address_group_assignments_flaggroups,
+  adrc.pers_addr as flag_this_is_a_personal_address_pers_addr,
+  adrc.sort1 as search_term1_sort1,
+  adrc.sort2 as search_term2_sort2,
+  adrc.deflt_comm as communication_method_key_business_address_services_deflt_comm,
+  adrc.tel_number as first_telephone_no_dialling_codenumber_tel_number,
+  adrc.tel_extens as first_telephone_no_extension_tel_extens,
+  adrc.fax_number as first_fax_no_dialling_codenumber_fax_number,
+  adrc.fax_extens as first_fax_no_extension_fax_extens,
+  adrc.county_code as county_code_for_county_county_code,
+  adrc.county as county_addr_county,
+  adrc.township_code as township_code_for_township_township_code,
+  adrc.township as township_township,
+  adrc.mc_county as county_name_in_upper_case_for_search_help_mc_county,
+  adrc.mc_township as township_name_in_upper_case_for_search_help_mc_township,
+  adrc.xpcpt as business_purpose_completed_flag_xpcpt,
+  adrc.recordstamp as adrc_recordstamp,
+  -- SAFE GREATEST: Protects against NULLs if Address is missing
+  GREATEST(
+    IFNULL(lfa1.recordstamp, TIMESTAMP('1900-01-01 00:00:00+00')),
+    IFNULL(adrc.recordstamp, TIMESTAMP('1900-01-01 00:00:00+00'))
+  ) AS source_last_updated_at,
+  CURRENT_TIMESTAMP() AS bq_loaded_at
+FROM
+  ${ctx.ref(moduleConfig.sources.sapModule.datasetId, "lfa1")} AS lfa1
+LEFT JOIN 
+  ${ctx.ref(moduleConfig.sources.sapModule.datasetId, 'adrc')} AS adrc
+  ON lfa1.mandt = adrc.client
+  AND lfa1.adrnr = adrc.addrnumber
+  AND adrc.date_to = CAST('9999-12-31' AS DATE)
+  AND COALESCE(adrc.nation, '') = ''
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["lfa1", "adrc"])
+])}
+`
+);

@@ -1,0 +1,163 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides the configuration of purchasing document types and their descriptions from
+  T161 and T161T. The data is captured at the granularity of Client (System), Purchasing Document Category,
+  Purchasing Document Type, and Language Key, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purch_document_category_bstyp
+    description: Purchasing Document Category, PK
+  - name: purchasing_document_type_bsart
+    description: Purchasing Document Type, PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: purchasing_document_type_description_batxt
+    description: Document Type Description
+  - name: control_indicator_bsakz
+    description: Control Indicator
+  - name: item_number_interval_pincr
+    description: Item Number Interval
+  - name: number_range_int_asst_numki
+    description: Number Range Internal Assignment
+  - name: number_range_ext_asst_numke
+    description: Number Range External Assignment
+  - name: field_selection_key_brefn
+    description: Field Selection Key
+  - name: reference_document_type_refba
+    description: Reference Document Type
+  - name: stdrd_rel_order_quantity_abvor
+    description: Standard Release Order Quantity
+  - name: update_group_stats_stafo
+    description: Update Group (Statistics)
+  - name: subitem_interval_upinc
+    description: Subitem Interval
+  - name: time_dep_conditions_stako
+    description: Time-Dependent Conditions
+  - name: partnerdetermproced_pargr
+    description: Partner Determination Procedure
+  - name: number_range_ale_numka
+    description: Number Range ALE
+  - name: supplier_hierarchy_cat_hityp
+    description: Supplier Hierarchy Category
+  - name: rel_documentation_lphis
+    description: Release Documentation
+  - name: overall_release_of_requisitions_gsfrg
+    description: Overall Release of Requisitions
+  - name: layout_variante
+    description: Layout
+  - name: shared_lock_only_shenq
+    description: Shared Lock Only
+  - name: ale_distr_contract_kzale
+    description: Ale-Distr Contract
+  - name: global_perc_bid_abgebot
+    description: Global Percentage Bid
+  - name: corr_misc_provis_kornr
+    description: Correction Misc Provisions
+  - name: supplier_data_umlif
+    description: Supplier Data
+  - name: contract_with_delivery_schedule_koett
+    description: Contract with Delivery Schedule
+  - name: document_type_ar_object
+    description: Document Type
+  - name: contract_allowed_as_release_order_against_contract_koako
+    description: Contract Allowed As Release Order Against Contract
+  - name: quantity_sched_permitted_oicsegi
+    description: Quantity.Schedule.Permitted
+  - name: precedence_f_rfq_req_oirfqreq
+    description: Precedence F.Rfq/Req
+  - name: further_processing_summar_docs_wvvkz
+    description: Further Processing Summar Docs
+  - name: cross_system_transit_xlokz
+    description: Cross-System Transit
+  - name: activation_of_comm_plan_cp_aktive
+    description: Activation of Comm Plan
+  - name: comm_plan_category_cptype
+    description: Comm Plan Category
+  - name: enh_store_return_fls_rsto
+    description: Enhanced Store Return
+  - name: adv_returns_active_msr_active
+    description: Advanced Returns Active
+  - name: rdp_profile
+    description: Rdp Profile
+  - name: srm_contract_number_range_numkc
+    description: Srm Contract Number Range
+  - name: indicator_for_follow_on_docs_of_quot_qtn_fol_document_draft_autom
+    description: Indicator for Follow on Docs of Quotation
+  - name: indicator_for_follow_on_docs_of_quot_qtn_fol_document_active_autom
+    description: Indicator for Follow on Docs of Quotation
+  - name: indicator_for_follow_on_docs_of_quot_qtn_fol_document_manually
+    description: Indicator for Follow on Docs of Quotation
+  - name: rfq_external_processing_rfq_process_type
+    description: Rfq External Processing
+  - name: flexible_workflow_scnr_based_wfl
+    description: Flexible Workflow
+  - name: rfq_awarding_type_rfx_processing_cd
+    description: Rfq Awarding Type
+  - name: trade_compliance_itmac
+    description: Trade Compliance
+  - name: fastdataentry_of_chars_is_active_sapmp_ceact
+    description: Fastdataentry of Characteristics Is Active
+  - name: inheritance_is_activated_sapmp_pdact
+    description: Inheritance Is Activated
+  - name: inheritance_log_sapmp_pprot
+    description: Inheritance Log
+  - name: inheritance_overwrite_user_values_sapmp_puser
+    description: 'Inheritance: Overwrite User Values'
+  - name: inheritance_of_char_selection_list_sapmp_pausw
+    description: Inheritance of Characteristic Selection List
+  - name: characteristic_name_sapmp_atnam
+    description: Characteristic Name
+  - name: global_local_group_may_be_undone_sapmp_gauf
+    description: Global/Local Group May Be Undone
+  - name: tolerance_key_tolsl
+    description: Tolerance Key
+  - name: vas_active_flag_fsh_vas_act
+    description: Value-Added Service Active Flag
+  - name: determination_procedure_fsh_vas_kalsm
+    description: Determination Procedure
+  - name: vas_deletion_criteria_fsh_vas_del
+    description: Value-Added Service Deletion Criteria
+  - name: vas_determination_date_fsh_vas_detdt
+    description: Value-Added Service Determination Date
+  - name: excl_return_items_fsh_excl_return
+    description: Exclude Return Items
+  - name: determination_procedure_fsh_var_kalsm
+    description: Determination Procedure
+  - name: determination_procedure_fsh_dpr_detpro
+    description: Determination Procedure
+  - name: generic_material_creation_fsh_po_idoc
+    description: Generic Material Creation
+  - name: vas_quantity_correlation_fsh_vas_corr
+    description: Value-Added Service Quantity Correlation
+  - name: auto_distribution_fsh_auto_dc
+    description: Auto Distribution
+  - name: variants_optional_fsh_vm_act
+    description: Variants Optional
+  - name: contract_consumption_by_po_items_rfm_contract_cons
+    description: Contract Consumption by PO Items
+  - name: contract_determination_for_po_items_rfm_contract_detr
+    description: Contract Determination for PO Items
+  - name: use_reference_characteristics_mill_omkz
+    description: Use Reference Characteristics
+  - name: allow_blank_segment_in_purchase_contract_sgt_cont_seg_ignore
+    description: Allow Blank Segment in Purchase Contract
+  - name: enable_dateline_wrf_enable_dateline
+    description: Enable Dateline
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

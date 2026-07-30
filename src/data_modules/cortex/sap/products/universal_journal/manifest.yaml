@@ -1,0 +1,40 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: SAP Universal Journal
+description: This data product includes information about SAP universal journal from
+  the Financial Accounting (FI), Controlling (CO) module in the Finance domain in
+  SAP S/4HANA. It exposes the unified, high-fidelity financial ledger for
+  balance sheet and P&L reporting. It constitutes the definitive source of truth for
+  corporate fiscal consolidation, cost center controlling, and AI-driven variance
+  analyses.
+category: source_aligned_product
+type: universal_journal
+dependencies:
+  sapModule:
+    supportedVersions:
+    - s4
+    tables:
+      s4:
+      - acdoca
+      - acdocu
+      - finsc_ledger
+      - finsc_ledger_t
+      - tf200
+      - tf201
+      - fincs_ref_vers_r
+      common:
+      - tcurx
+    modulePath: cortex.sap.foundations.sap
+builder: sap_product

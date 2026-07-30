@@ -1,0 +1,118 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Cost Ledger: Project Info System Data'
+fields:
+- name: mandt
+  description: Client
+- name: objnr
+  description: Object Number
+- name: lednr
+  description: Ledger
+- name: wrttp
+  description: Value Type
+- name: trgkz
+  description: Object Indicator
+- name: gjahr
+  description: Fiscal Year
+- name: acpos
+  description: Value category
+- name: vorga
+  description: Budget Type
+- name: versn
+  description: Version
+- name: abkat
+  description: Category
+- name: geber
+  description: Fund
+- name: twaer
+  description: Transaction Currency
+- name: perbl
+  description: Period Block
+- name: beltp
+  description: Debit Type
+- name: wlp00
+  description: Period Value
+- name: wlp01
+  description: Period Value
+- name: wlp02
+  description: Period Value
+- name: wlp03
+  description: Period Value
+- name: wlp04
+  description: Period Value
+- name: wlp05
+  description: Period Value
+- name: wlp06
+  description: Period Value
+- name: wlp07
+  description: Period Value
+- name: wlp08
+  description: Period Value
+- name: wlp09
+  description: Period Value
+- name: wlp10
+  description: Period Value
+- name: wlp11
+  description: Period Value
+- name: wlp12
+  description: Period Value
+- name: wlp13
+  description: Period Value
+- name: wlp14
+  description: Period Value
+- name: wlp15
+  description: Period Value
+- name: wlp16
+  description: Period Value
+- name: wtp00
+  description: Annual Value
+- name: wtp01
+  description: Annual Value
+- name: wtp02
+  description: Annual Value
+- name: wtp03
+  description: Annual Value
+- name: wtp04
+  description: Annual Value
+- name: wtp05
+  description: Annual Value
+- name: wtp06
+  description: Annual Value
+- name: wtp07
+  description: Annual Value
+- name: wtp08
+  description: Annual Value
+- name: wtp09
+  description: Annual Value
+- name: wtp10
+  description: Annual Value
+- name: wtp11
+  description: Annual Value
+- name: wtp12
+  description: Annual Value
+- name: wtp13
+  description: Annual Value
+- name: wtp14
+  description: Annual Value
+- name: wtp15
+  description: Annual Value
+- name: wtp16
+  description: Annual Value
+- name: operation_flag
+  description: Operation flag
+- name: is_deleted
+  description: Is deleted
+- name: recordstamp
+  description: Recordstamp

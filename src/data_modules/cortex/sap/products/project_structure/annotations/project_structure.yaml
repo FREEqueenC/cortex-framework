@@ -1,0 +1,160 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Project System (PS), Controlling (CO) module
+  in the Finance, Supply Chain domain and provides Combines SAP Project Definitions, WBS Elements, and
+  Scheduling Data from PROJ, PRPS, PRTE, and PRHI to provide a view of project structures, hierarchies,
+  and timelines. The data is captured at the granularity of Client (System), Project Internal Id, and
+  Wbs Element Internal Id, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: project_internal_id_pspnr
+    description: Internal Project Number, PK
+  - name: project_id_pspid
+    description: Project Definition
+  - name: project_description_post1
+    description: Description
+  - name: created_by_ernam
+    description: Created by
+  - name: created_on_erdat
+    description: Created on
+  - name: changed_by_aenam
+    description: Changed by
+  - name: changed_on_aedat
+    description: Last Changed on
+  - name: responsible_person_number_vernr
+    description: Number of Person Resp
+  - name: responsible_person_name_verna
+    description: Name of Person Resp
+  - name: applicant_number_astnr
+    description: Applicant Number
+  - name: applicant_name_astna
+    description: Applicant
+  - name: company_code_vbukr
+    description: Company Code
+  - name: business_area_vgsbr
+    description: Business Area
+  - name: controlling_area_vkokr
+    description: Controlling Area
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: project_currency_pwhie
+    description: Project Currency
+  - name: plant_werks
+    description: Plant
+  - name: project_profile_profl
+    description: Project Profile
+  - name: budget_profile_bprof
+    description: Budget Profile
+  - name: cost_center_kostl
+    description: Cost Center
+  - name: deletion_indicator_loevm
+    description: Deletion Indicator
+  - name: is_statistical_xstat
+    description: Statistical
+  - name: functional_area_func_area
+    description: Functional Area
+  - name: sales_organization_vkorg
+    description: Sales Organization
+  - name: distribution_channel_vtweg
+    description: Distribution Channel
+  - name: division_spart
+    description: Division
+  - name: wbs_element_internal_id_pspnr
+    description: WBS Element Internal Number, PK
+  - name: wbs_element_id_posid
+    description: WBS Element
+  - name: wbs_description_post1
+    description: Description
+  - name: wbs_created_by_ernam
+    description: Created by
+  - name: wbs_created_on_erdat
+    description: Created on
+  - name: wbs_changed_by_aenam
+    description: Changed by
+  - name: wbs_changed_on_aedat
+    description: Last Changed on
+  - name: wbs_responsible_person_number_vernr
+    description: Number of Person Resp
+  - name: wbs_responsible_person_name_verna
+    description: Name of Person Resp
+  - name: wbs_applicant_number_astnr
+    description: Applicant Number
+  - name: wbs_applicant_name_astna
+    description: Applicant
+  - name: wbs_company_code_pbukr
+    description: Company Code
+  - name: wbs_business_area_pgsbr
+    description: Business Area
+  - name: wbs_controlling_area_pkokr
+    description: Controlling Area
+  - name: wbs_profit_center_prctr
+    description: Profit Center
+  - name: wbs_project_type_prart
+    description: Project Type
+  - name: wbs_level_stufe
+    description: Level
+  - name: is_planning_element_plakz
+    description: Planning Element
+  - name: is_account_assignment_element_belkz
+    description: Account Assignment Elem
+  - name: is_billing_element_fakkz
+    description: Billing Element
+  - name: wbs_plant_werks
+    description: Plant
+  - name: wbs_cost_center_kostl
+    description: Cost Center Posted Actual
+  - name: wbs_deletion_indicator_loevm
+    description: Deletion Indicator
+  - name: wbs_is_statistical_xstat
+    description: Statistical
+  - name: wbs_functional_area_func_area
+    description: Functional Area
+  - name: wbs_superior_element_internal_id_up
+    description: Superior WBS Element
+  - name: wbs_subordinate_element_internal_id_down
+    description: Subordinate WBS Element
+  - name: wbs_left_element_internal_id_left
+    description: Left WBS Element
+  - name: wbs_right_element_internal_id_right
+    description: Right WBS Element
+  - name: scheduled_start_date_pstrt
+    description: Basic Start
+  - name: scheduled_finish_date_pende
+    description: Basic Finish Date
+  - name: forecast_start_date_estrt
+    description: Forecast Start
+  - name: forecast_finish_date_eende
+    description: Forecast Finish
+  - name: actual_start_date_istrt
+    description: Actual Start
+  - name: actual_finish_date_iende
+    description: Actual Finish
+  - name: basic_duration_pdaur
+    description: Basic Dates Duration
+  - name: forecast_duration_edaur
+    description: Forecasted Duration
+  - name: actual_duration_idaur
+    description: Actual Duration
+  - name: basic_duration_unit_peinh
+    description: Basic Duration Unit
+  - name: forecast_duration_unit_eeinh
+    description: Forecast Duration Unit
+  - name: actual_duration_unit_ieinh
+    description: Actual Duration Unit
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

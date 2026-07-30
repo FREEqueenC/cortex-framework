@@ -62,6 +62,19 @@ class DataformDeployer(Deployer):
         logger.info(
             "Reconciling files to workspace '%s'...", target_config.target_settings.workspace_name
         )
-        return self.reconciler.reconcile_workspace(
+        result = self.reconciler.reconcile_workspace(
             output_dir=output_dir, settings=target_config.target_settings
         )
+
+        if result:
+            project_id = target_config.target_settings.repository_project_id
+            location = target_config.target_settings.repository_region
+            repository_id = target_config.target_settings.repository_name
+            workspace_name = target_config.target_settings.workspace_name
+            dataform_url = (
+                f"https://console.cloud.google.com/bigquery/dataform/locations/"
+                f"{location}/repositories/{repository_id}/workspaces/{workspace_name}?project={project_id}"
+            )
+            logger.info("Dataform Workspace URL: %s", dataform_url)
+
+        return result

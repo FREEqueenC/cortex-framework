@@ -1,0 +1,324 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI), Controlling (CO)
+  module in the Finance domain and provides group-level consolidation journal entries from S/4HANA's ACDOCU
+  table, supporting corporate financial consolidation reporting. The data is captured at the granularity
+  of Client (System), Ledger, Dimension Rdimen, Fiscal Year, Document Number, and Line Item, ensuring
+  a unique audit trail for every record.
+fields:
+  - name: client_rclnt
+    description: Client, PK
+  - name: ledger_rldnr
+    description: Ledger, PK
+  - name: dimension_rdimen
+    description: Dimension, PK
+  - name: fiscal_year_ryear
+    description: Fiscal Year, PK
+  - name: document_number_docnr
+    description: Document Number, PK
+  - name: line_item_docln
+    description: Document Line Item, PK
+  - name: language_key_langu
+    description: Language Key, PK
+  - name: record_type_rrcty
+    description: Record Type
+  - name: version_rvers
+    description: Version
+  - name: version_description_txt
+    description: Version Description
+  - name: balance_transaction_currency_rtcur
+    description: Balance Transaction Currency
+  - name: local_currency_rhcur
+    description: Local Currency
+  - name: group_currency_rkcur
+    description: Group Currency
+  - name: base_unit_of_measure_runit
+    description: Base Unit of Measure
+  - name: posting_period_poper
+    description: Posting Period
+  - name: period_year_fiscyearper
+    description: Period/Year
+  - name: document_category_docct
+    description: Document Category
+  - name: company_rcomp
+    description: Company
+  - name: consolidation_unit_rbunit
+    description: Consolidation Unit
+  - name: chart_of_accounts_ritclg
+    description: Chart of Accounts
+  - name: fs_item_ritem
+    description: Fs Item
+  - name: partner_unit_rbuptr
+    description: Partner Unit
+  - name: consolidation_group_rcongr
+    description: Consolidation Group
+  - name: original_company_code_robukrs
+    description: Original Company Code
+  - name: subitem_type_sityp
+    description: Subitem Type
+  - name: subitem_subit
+    description: Subitem
+  - name: posting_level_plevl
+    description: Posting Level
+  - name: apportionment_flag_rpflg
+    description: Apportionment Flag
+  - name: translation_flag_rtflg
+    description: Translation Flag
+  - name: document_type_docty
+    description: Document Type
+  - name: acquisition_year_yracq
+    description: Acquisition Year
+  - name: acquisition_period_pracq
+    description: Acquisition Period
+  - name: investee_unit_coicu
+    description: Investee Unit
+  - name: investor_unit_uppcu
+    description: Investor Unit
+  - name: amount_in_balance_transaction_currency_tsl
+    description: Amount in Balance Transaction Currency
+  - name: amount_in_local_currency_hsl
+    description: Amount in Local Currency
+  - name: amount_in_group_currency_ksl
+    description: Amount in Group Currency
+  - name: quantity_msl
+    description: Quantity
+  - name: text_sgtxt
+    description: Text
+  - name: automatic_posting_autom
+    description: Automatic Posting
+  - name: transaction_activ
+    description: Transaction
+  - name: cross_company_document_number_bvorg
+    description: Cross-Cc Number
+  - name: posting_date_budat
+    description: Posting Date
+  - name: value_date_wsdat
+    description: Value Date
+  - name: reference_document_number_refdocnr
+    description: Reference Document Number
+  - name: reference_fiscal_year_refryear
+    description: Reference Fiscal Year
+  - name: reference_line_item_refdocln
+    description: Reference Line Item
+  - name: reference_document_category_refdocct
+    description: Reference Document Category
+  - name: reference_transaction_refactiv
+    description: Reference Transaction
+  - name: timestamp_timestamp
+    description: Time Stamp
+  - name: entry_date_cpudt
+    description: Entry Date
+  - name: entry_time_cputm
+    description: Entry Time
+  - name: user_name_usnam
+    description: User Name
+  - name: reversal_document_number_rvsdocnr
+    description: Reversal Document Number
+  - name: original_document_number_orndocnr
+    description: Original Document Number
+  - name: document_bundle_number_bunnr
+    description: Document Bundle Number
+  - name: co_activity_coiac
+    description: Controlling Activity
+  - name: co_activity_number_coinr
+    description: Controlling Activity Number
+  - name: reversal_year_revyear
+    description: Fiscal Year of Reversal
+  - name: reference_procedure_awtyp
+    description: Reference Procedure
+  - name: reference_org_unit_aworg
+    description: Reference Organizational Unit
+  - name: logical_system_logsys
+    description: Logical System
+  - name: chart_of_accounts_ktopl
+    description: Chart of Accounts
+  - name: account_racct
+    description: Account
+  - name: reference_xblnr
+    description: Reference
+  - name: assignment_zuonr
+    description: Assignment
+  - name: cost_center_rcntr
+    description: Cost Center
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: functional_area_rfarea
+    description: Functional Area
+  - name: business_area_rbusa
+    description: Business Area
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: segment_segment
+    description: Segment
+  - name: sender_cost_center_scntr
+    description: Sender Cost Center
+  - name: partner_profit_center_pprctr
+    description: Partner Profit Center
+  - name: partner_functional_area_sfarea
+    description: Partner Functional Area
+  - name: partner_business_area_sbusa
+    description: Partner Business Area
+  - name: trading_partner_rassc
+    description: Trading Partner
+  - name: partner_segment_psegment
+    description: Partner Segment
+  - name: order_aufnr
+    description: Order
+  - name: customer_kunnr
+    description: Customer
+  - name: vendor_lifnr
+    description: Vendor
+  - name: material_matnr
+    description: Material
+  - name: material_group_matkl_mm
+    description: Material Group
+  - name: plant_werks
+    description: Plant
+  - name: transaction_type_rmvct
+    description: Transaction Type
+  - name: wbs_element_ps_psp_pnr
+    description: WBS Element
+  - name: wbs_element_ps_posid
+    description: WBS Element Id
+  - name: project_definition_ps_pspid
+    description: Project Definition
+  - name: billing_type_fkart
+    description: Billing Type
+  - name: sales_organization_vkorg
+    description: Sales Organization
+  - name: distribution_channel_vtweg
+    description: Distribution Channel
+  - name: division_spart
+    description: Division
+  - name: product_sold_matnr_copa
+    description: Product Sold
+  - name: product_sold_group_matkl
+    description: Product Sold Group
+  - name: customer_group_kdgrp
+    description: Customer Group
+  - name: country_land1
+    description: Country
+  - name: industry_brsch
+    description: Industry
+  - name: sales_district_bzirk
+    description: Sales District
+  - name: bill_to_party_kunre
+    description: Bill-To Party
+  - name: ship_to_party_kunwe
+    description: Ship-To Party
+  - name: group_key_konzs
+    description: Group Key
+  - name: ad_hoc_item_adhocitem
+    description: Ad Hoc Item
+  - name: ad_hoc_set_adhocset
+    description: Ad Hoc Set
+  - name: ad_hoc_set_item_adhocsetitem
+    description: Ad Hoc Set Item
+  - name: reason_code_rcode
+    description: Reason Code
+  - name: original_type_orig_type
+    description: Original Type
+  - name: original_reference_orig_ref
+    description: Original Reference
+  - name: dummy_dummy_cje_incl_eew_ps
+    description: Dummy
+  - name: structure_version_strvs
+    description: 'Version: Structures'
+  - name: data_entry_version_inpvs
+    description: Data Entry Version
+  - name: translation_method_version_ctrvs
+    description: 'Version: Translation Method'
+  - name: exchange_rate_version_curvs
+    description: Version Exchange Rates
+  - name: ledger_version_ldrvs
+    description: Ledger Version
+  - name: fix_version_fixvs
+    description: Version
+  - name: tax_rate_version_taxvs
+    description: 'Version: Tax Rate'
+  - name: consolidation_of_investments_version_coivs
+    description: 'Version: C/I Method'
+  - name: invest_version_invvs
+    description: 'Version: Chgs/Invest'
+  - name: equity_change_version_equvs
+    description: 'Vers: Chgs in Equity'
+  - name: goodwill_version_gwavs
+    description: 'Version: Goodwill'
+  - name: hidden_reserves_version_hirvs
+    description: 'Version: Hid.Reserve'
+  - name: hidden_reserves_reversal_version_rhrvs
+    description: Version
+  - name: equity_holding_version_assvs
+    description: 'Version: Eqty Holdg'
+  - name: reclassification_version_rclvs
+    description: 'Version: Reclassif'
+  - name: ipi_version_ipivs
+    description: 'Version: Ipi'
+  - name: attribute_version_atrvs
+    description: 'Version: Attributes'
+  - name: report_rule_version_rrlvs
+    description: Report Rule Version
+  - name: fs_item_mapping_version_impvs
+    description: Fs Item Map Version
+  - name: fs_item_attribute_version_iatvs
+    description: Fs Item Attributes Version
+  - name: base_version_dbsvs
+    description: Base Version
+  - name: carry_forward_version_bcfind
+    description: Carry Versn Forward
+  - name: copy_version_cpyrd
+    description: Copy
+  - name: copy_consolidation_entries_version_cpyce
+    description: Copy
+  - name: overwrite_version_ovrrd
+    description: Overwrite
+  - name: overwrite_consolidation_entries_version_ovrce
+    description: Overwrite
+  - name: plan_version_planvers
+    description: Version for Plan Data
+  - name: source_category_category_src
+    description: Source Category for Plan Consolidation
+  - name: source_ledger_rldnr_src
+    description: Source Category for Plan Consolidation
+  - name: fiscal_year_variant_periv
+    description: Fiscal Year Variant
+  - name: reference_version_ref_version
+    description: Reference Version
+  - name: external_version_type_ext_version_type
+    description: Version Type
+  - name: execution_mode_exec_mode
+    description: Run Mode
+  - name: version_group_currency_group_curr
+    description: Group Currency of Consumption Vers
+  - name: source_ledger_rldnr_source
+    description: Source Ledger
+  - name: consolidation_ledger_rldnr_cons
+    description: Consolidation Version Ledger
+  - name: consolidation_unit_attributes_cuavs
+    description: Consolidation Unit Attributes
+  - name: reference_version_group_currency_group_curr
+    description: Group Currency of Consolidation Version
+  - name: year_of_posting_date_budat
+    description: Year of Posting Date
+  - name: month_of_posting_date_budat
+    description: Month of Posting Date
+  - name: quarter_of_posting_date_budat
+    description: Quarter of Posting Date
+  - name: week_of_posting_date_budat
+    description: Week of Posting Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,74 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Sales Performance reporting view for SAP BDC providing insights into sales orders, items, delivery statuses, customer and product dimensions, and overdue delivery tracking."
+fields:
+  - name: sales_order
+    description: "Sales Order Number, PK"
+  - name: sales_order_item
+    description: "Sales Order Item Number, PK"
+  - name: sales_order_type
+    description: "Sales Order Type"
+  - name: sales_order_date
+    description: "Sales Order Date"
+  - name: sales_organization
+    description: "Sales Organization"
+  - name: organization_division
+    description: "Organization Division"
+  - name: distribution_channel
+    description: "Distribution Channel"
+  - name: sold_to_party
+    description: "Sold-To Party / Customer ID"
+  - name: customer_name
+    description: "Customer Name"
+  - name: product_group
+    description: "Product Group"
+  - name: product
+    description: "Product / Material ID"
+  - name: sales_order_item_text
+    description: "Sales Order Item Description"
+  - name: order_quantity
+    description: "Order Quantity"
+  - name: order_quantity_unit
+    description: "Order Quantity Unit"
+  - name: total_net_amount
+    description: "Total Net Amount of Sales Order"
+  - name: net_amount
+    description: "Net Amount of Sales Order Item"
+  - name: transaction_currency
+    description: "Transaction Currency"
+  - name: delivery_status
+    description: "Item Delivery Status"
+  - name: total_delivery_status
+    description: "Total Delivery Status"
+  - name: requested_delivery_date
+    description: "Requested Delivery Date"
+  - name: delivery_block_reason
+    description: "Delivery Block Reason"
+  - name: overall_total_delivery_status
+    description: "Overall Total Delivery Status"
+  - name: is_delivery_overdue
+    description: "Overdue Delivery Indicator"
+  - name: year_of_sales_document
+    description: "Year of Sales Document"
+  - name: month_of_sales_document
+    description: "Month of Sales Document"
+  - name: quarter_of_sales_document
+    description: "Quarter of Sales Document"
+  - name: year_of_requested_delivery
+    description: "Year of Requested Delivery"
+  - name: month_of_requested_delivery
+    description: "Month of Requested Delivery"
+  - name: quarter_of_requested_delivery
+    description: "Quarter of Requested Delivery"

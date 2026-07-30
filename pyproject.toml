@@ -14,7 +14,7 @@
 
 [project]
 name = "cortex"
-version = "7.0.0-beta"
+version = "7.0.0"
 description = "Cortex Framework"
 requires-python = ">=3.13,<3.14"
 dependencies = [
@@ -28,6 +28,8 @@ dependencies = [
     "google-auth==2.48.0",
     "keyrings-google-artifactregistry-auth>=1.1.2",
     "google-cloud-storage>=3.10.1",
+    "google-cloud-bigquery-reservation>=1.25.0",
+    "google-cloud-dataplex>=2.20.0",
 ]
 
 [project.scripts]
@@ -35,6 +37,8 @@ cortex-build = "tools.build:main"
 cortex-deploy = "tools.deploy:main"
 cortex-build-and-deploy = "tools.run_all:main"
 cortex-demo = "tools.demo:main"
+cortex-kc-sync = "tools.kc_sync:main"
+cortex-config = "tools.config:main"
 
 [build-system]
 requires = ["hatchling"]

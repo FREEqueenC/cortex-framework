@@ -18,10 +18,10 @@ import pathlib
 from typing import Annotated, Any, Literal
 
 import pydantic
-import yaml
 from pydantic import BeforeValidator, StringConstraints, alias_generators
 
-from common.utils.file_utils import load_yaml
+from common.errors import CortexConfigError
+from common.utils.id_utils import sanitize_bq_identifier
 
 from .enums import DeploymentTargetType, ModuleType, SapVersion
 
@@ -35,17 +35,6 @@ def _empty_to_none(v: Any) -> Any:
 
 
 OptionalNonEmptyString = Annotated[str | None, BeforeValidator(_empty_to_none)]
-
-
-def _extract_module_type(v: Any) -> Any:
-    """Helper to extract module type and preserve namespace metadata."""
-    if isinstance(v, dict) and "type" in v:
-        full_type = v["type"]
-        if "." in full_type:
-            namespace, module_type = full_type.split(".", 1)
-            v["type"] = module_type
-            v["namespace"] = namespace
-    return v
 
 
 def snake_to_camel(name: str) -> str:
@@ -80,46 +69,47 @@ class SAPModuleSettings(CortexBaseModel):
 class BaseModuleConfig(CortexBaseModel):
     module_id: NonEmptyString
     enabled: bool = True
-    depends_on: dict[str, str] = pydantic.Field(default_factory=dict)
+    dependency_bindings: dict[str, str] = pydantic.Field(default_factory=dict)
     table_settings: OptionalNonEmptyString = None
     namespace: str | None = None
+    module_path: str
+    module_type: Any = "generic"
+
+    @property
+    def module_name(self) -> str:
+        """Returns the specific module name (the last segment of the path)."""
+        return self.module_path.split(".")[-1]
 
     _namespace: str = pydantic.PrivateAttr()
-    _module_type: str = pydantic.PrivateAttr()
     _table_settings_explicit: bool = pydantic.PrivateAttr(default=False)
 
     @pydantic.model_validator(mode="before")
     @classmethod
     def handle_namespaced_type(cls, data: Any) -> Any:
         """Pre-processes namespaced module types and ensures a namespace is declared."""
-        if isinstance(data, dict) and "type" in data:
-            data = _extract_module_type(data)
+        if isinstance(data, dict) and "modulePath" in data:
+            full_type = data["modulePath"]
             if "namespace" not in data:
-                raise ValueError(
-                    f"Module type '{data['type']}' must be namespaced "
-                    f"(e.g. 'cortex.{data['type']}')"
-                )
+                if "." in full_type:
+                    data["namespace"] = full_type.split(".", 1)[0]
+                else:
+                    raise ValueError(
+                        f"Module path '{full_type}' must be namespaced (e.g. 'cortex.{full_type}')"
+                    )
         return data
+
+    @property
+    def namespaced_type(self) -> str:
+        """Returns the fully qualified namespaced type."""
+        return str(self.module_path)
 
     @pydantic.model_validator(mode="after")
     def finalize_metadata(self):
         """Finalizes private metadata properties used by the builder modules."""
-        # Store namespace in private attribute for consistency
         self._namespace = self.namespace or "unknown"
-
-        # Store module type for builders to use
-        self._module_type = self.type if isinstance(self.type, str) else self.type.value
-        return self
-
-    def _set_default_table_settings_path(self, category: str):
-        """Populates default fallback table settings file path using category name if missing."""
-        if not self.table_settings:
-            self.table_settings = (
-                f"src/data_modules/{self._namespace}/{category}/"
-                f"{self._module_type}/table_settings.default.yaml"
-            )
-        else:
+        if self.table_settings:
             self._table_settings_explicit = True
+        return self
 
 
 class DataFoundationModuleConfig(BaseModuleConfig):
@@ -129,82 +119,149 @@ class DataFoundationModuleConfig(BaseModuleConfig):
     data_target_id: str | None = None
     external: bool = False
 
-    @pydantic.model_validator(mode="after")
-    def set_default_table_settings(self):
-        self._set_default_table_settings_path("data_foundation")
-        return self
-
-    @pydantic.model_validator(mode="after")
-    def validate_data_target_id(self):
-        if not self.external and not self.data_target_id:
-            raise ValueError(
-                f"Foundation module '{self.module_id}' is not external and "
-                "must specify a 'dataTargetId'."
-            )
-        if self.external and self.data_target_id:
-            raise ValueError("dataTargetId should not be set for external foundations")
-        return self
-
 
 class SAPModuleConfig(DataFoundationModuleConfig):
     """Data foundation config specific to SAP modules."""
 
-    type: Literal[ModuleType.SAP]
+    module_type: Literal[ModuleType.SAP] = ModuleType.SAP
     module_settings: SAPModuleSettings
 
 
 class GenericModuleConfig(DataFoundationModuleConfig):
     """Data foundation config for generic modules."""
 
-    type: Literal[ModuleType.GENERIC]
+    module_type: Literal[ModuleType.GENERIC] = ModuleType.GENERIC
     module_settings: dict[str, Any] | None = None
 
 
 class DataProductModuleConfig(BaseModuleConfig):
     """Configuration model for data product modules."""
 
-    type: DataProductType
+    sync_to_kc: bool = True
+    data_source_id: OptionalNonEmptyString = None
     data_target_id: NonEmptyString
     module_settings: dict[str, Any] | None = None
 
-    @pydantic.model_validator(mode="after")
-    def set_default_table_settings(self):
-        self._set_default_table_settings_path("data_product")
-        return self
+
+class ShareConfig(CortexBaseModel):
+    share_id: NonEmptyString
+
+    @property
+    def sanitized_share_id(self) -> str:
+        """Returns share_id sanitized for BigQuery/Dataform dataset compatibility."""
+        return sanitize_bq_identifier(self.share_id)
+
+
+class CatalogConnectionSettings(CortexBaseModel):
+    """Connection settings for external lakehouse delta sharing catalogs."""
+
+    catalog_id: NonEmptyString = pydantic.Field(
+        validation_alias=pydantic.AliasChoices("catalogId", "catalog_id")
+    )
+    project_id: NonEmptyString = pydantic.Field(
+        validation_alias=pydantic.AliasChoices("projectId", "project_id", "project")
+    )
+    location: NonEmptyString
+    shares: list[ShareConfig] = pydantic.Field(default_factory=list)
+
+
+class CatalogConfig(CortexBaseModel):
+    """Configuration model for external catalog modules."""
+
+    id: NonEmptyString
+    type: str = "lakehouse_delta_share"
+    enabled: bool = True
+    binds_namespaces: list[str] = pydantic.Field(
+        default_factory=list,
+        validation_alias=pydantic.AliasChoices("bindsNamespaces", "binds_namespaces"),
+    )
+    connection_settings: CatalogConnectionSettings = pydantic.Field(
+        validation_alias=pydantic.AliasChoices("connectionSettings", "connection_settings")
+    )
+
+    table_settings: OptionalNonEmptyString = None
+
+    @property
+    def _module_type(self) -> str:
+        """Returns the specific catalog technology type (e.g., lakehouse_delta_share)."""
+        return str(self.type)
+
+    @property
+    def module_id(self) -> str:
+        """Returns the module ID alias for the catalog."""
+        return str(self.id)
+
+    @property
+    def namespaced_type(self) -> str:
+        """Returns the raw technology type for the catalog module."""
+        return self._module_type
 
 
 ModuleConfig = Annotated[
     SAPModuleConfig | GenericModuleConfig,
-    pydantic.Field(discriminator="type"),
+    pydantic.Field(discriminator="module_type"),
 ]
 
 
 class ModulesConfig(CortexBaseModel):
-    foundation: list[ModuleConfig] = pydantic.Field(default_factory=list)
-    product: list[DataProductModuleConfig] = pydantic.Field(default_factory=list)
+    foundation: list[ModuleConfig] = pydantic.Field(
+        default_factory=list, validation_alias=pydantic.AliasChoices("foundation", "foundations")
+    )
+    product: list[DataProductModuleConfig] = pydantic.Field(
+        default_factory=list, validation_alias=pydantic.AliasChoices("product", "products")
+    )
+    catalogs: list[CatalogConfig] = pydantic.Field(default_factory=list)
 
-    @pydantic.model_validator(mode="before")
-    @classmethod
-    def handle_namespaced_modules(cls, data: Any) -> Any:
-        if isinstance(data, dict):
-            if "foundation" in data:
-                data["foundation"] = [_extract_module_type(m) for m in data["foundation"]]
-            if "product" in data:
-                data["product"] = [_extract_module_type(m) for m in data["product"]]
-        return data
+    @property
+    def foundations(self) -> list[ModuleConfig]:
+        return self.foundation
+
+    @property
+    def products(self) -> list[DataProductModuleConfig]:
+        return self.product
 
 
 class NamespaceConfig(CortexBaseModel):
     name: NonEmptyString
     path: NonEmptyString
 
+    def resolve_path(self, config_dir: pathlib.Path) -> pathlib.Path:
+        """Resolves the namespace path relative to the config file directory."""
+        p = pathlib.Path(self.path)
+        if p.is_absolute():
+            return p
+
+        return (config_dir / p).resolve()
+
 
 class DataConfig(CortexBaseModel):
     big_query_location: str
     namespaces: list[NamespaceConfig] = pydantic.Field(default_factory=list)
-    sources: list[DatasetConfig] = pydantic.Field(default_factory=list)
-    targets: list[DatasetConfig] = pydantic.Field(default_factory=list)
+    datasets: list[DatasetConfig] = pydantic.Field(default_factory=list)
     modules: ModulesConfig
+
+    def get_namespace_path(
+        self, namespace_name: str, config_dir: pathlib.Path | None = None
+    ) -> pathlib.Path:
+        """Resolves the path for a given namespace name."""
+        base_dir = config_dir or pathlib.Path.cwd()
+        pkg_data_modules = pathlib.Path(__file__).resolve().parent.parent.parent / "data_modules"
+        for ns in self.namespaces:
+            if ns.name == namespace_name:
+                return ns.resolve_path(base_dir)
+        return (pkg_data_modules / namespace_name).resolve()
+
+    def get_module_physical_dir(
+        self, module_type_str: str, config_dir: pathlib.Path | None = None
+    ) -> pathlib.Path:
+        """Resolves physical directory by replacing namespace alias with its resolved path."""
+        parts = module_type_str.split(".", 1)
+        if len(parts) == 2:
+            ns_name, rel_str = parts
+            ns_path = self.get_namespace_path(ns_name, config_dir)
+            rel_path = pathlib.Path(*rel_str.split("."))
+            return ns_path / rel_path
+        return pathlib.Path(module_type_str)
 
 
 class BaseDeploymentTargetConfig(CortexBaseModel):
@@ -267,167 +324,12 @@ class GlobalConfig(CortexBaseModel):
     deployment: DeploymentConfig | None = None
     data: DataConfig
 
-    def get_data_source(self, source_id: str) -> DatasetConfig:
-        """Resolves a data source dataset configuration by its identifier."""
-        for s in self.data.sources:
-            if s.id == source_id:
-                return s
-        raise ValueError(f"Data source '{source_id}' not found in configuration")
-
-    def get_data_target(self, target_id: str) -> DatasetConfig:
-        """Resolves a data target dataset configuration by its identifier."""
-        for t in self.data.targets:
-            if t.id == target_id:
-                return t
-        raise ValueError(f"Data target '{target_id}' not found in configuration")
-
-    @pydantic.model_validator(mode="after")
-    def validate_business_rules(self, info: pydantic.ValidationInfo):
-        import difflib
-
-        errors: list[str] = []
-
-        # 1. Check ID uniqueness
-        id_occurrences: dict[str, list[str]] = {}
-        for index, source in enumerate(self.data.sources):
-            id_occurrences.setdefault(source.id, []).append(f"data -> sources[{index}]")
-        for index, target in enumerate(self.data.targets):
-            id_occurrences.setdefault(target.id, []).append(f"data -> targets[{index}]")
-        for index, f_module in enumerate(self.data.modules.foundation):
-            loc = f"data -> modules -> foundation[{index}]"
-            id_occurrences.setdefault(f_module.module_id, []).append(loc)
-        for index, p_module in enumerate(self.data.modules.product):
-            loc = f"data -> modules -> product[{index}]"
-            id_occurrences.setdefault(p_module.module_id, []).append(loc)
-
-        for id_value, locations in id_occurrences.items():
-            if len(locations) > 1:
-                errors.append(
-                    f"Duplicate ID '{id_value}' found across the configuration at: "
-                    f"{', '.join(locations)}. Each ID in 'sources', 'targets', and "
-                    "modules' must be unique."
-                )
-
-        # 2. Check referential integrity
-        source_ids = {s.id for s in self.data.sources}
-        target_ids = {t.id for t in self.data.targets}
-
-        # Foundation modules referential integrity
-        for f_module in self.data.modules.foundation:
-            module_id = f_module.module_id
-            data_source_id = f_module.data_source_id
-            if data_source_id and data_source_id not in source_ids:
-                matches = difflib.get_close_matches(data_source_id, list(source_ids))
-                suggestion = f" Did you mean one of these: {matches}?" if matches else ""
-                errors.append(
-                    f"Foundation module '{module_id}' references unknown "
-                    f"dataSourceId '{data_source_id}'.{suggestion} Please check "
-                    "spelling or define this source ID in 'data -> sources'. "
-                    "(references unknown data source)"
-                )
-
-            data_target_id = f_module.data_target_id
-            is_external = getattr(f_module, "external", False)
-            if not is_external and not data_target_id:
-                errors.append(
-                    f"Foundation module '{module_id}' is not external and "
-                    "must specify a 'dataTargetId'."
-                )
-            elif data_target_id and data_target_id not in target_ids:
-                matches = difflib.get_close_matches(data_target_id, list(target_ids))
-                suggestion = f" Did you mean one of these: {matches}?" if matches else ""
-                errors.append(
-                    f"Foundation module '{module_id}' references unknown "
-                    f"dataTargetId '{data_target_id}'.{suggestion} Please check "
-                    "spelling or define this target ID in 'data -> targets'. "
-                    "(references unknown data target)"
-                )
-
-        # Product modules referential integrity
-        for p_module in self.data.modules.product:
-            module_id = p_module.module_id
-            data_target_id = p_module.data_target_id
-            if data_target_id and data_target_id not in target_ids:
-                matches = difflib.get_close_matches(data_target_id, list(target_ids))
-                suggestion = f" Did you mean one of these: {matches}?" if matches else ""
-                errors.append(
-                    f"Product module '{module_id}' references unknown "
-                    f"dataTargetId '{data_target_id}'.{suggestion} Please check "
-                    "spelling or define this target ID in 'data -> targets'. "
-                    "(references unknown data target)"
-                )
-
-        # 3. Check table settings existence
-        config_dir = (
-            info.context.get("config_dir", pathlib.Path.cwd())
-            if info.context
-            else pathlib.Path.cwd()
+    def get_dataset(self, dataset_id: str) -> DatasetConfig:
+        """Resolves a dataset configuration by its identifier."""
+        for d in self.data.datasets:
+            if d.id == dataset_id:
+                return d
+        raise CortexConfigError(
+            f"Dataset '{dataset_id}' not found in configuration",
+            hint="Define this dataset in 'data -> datasets' in config.yaml.",
         )
-
-        # Foundation modules table settings
-        for f_module in self.data.modules.foundation:
-            module_id = f_module.module_id
-            table_settings = f_module.table_settings
-            if f_module._table_settings_explicit and table_settings:
-                file_path = pathlib.Path(table_settings)
-                if not file_path.is_absolute():
-                    file_path = config_dir / file_path
-                try:
-                    load_yaml(file_path)
-                except (ValueError, FileNotFoundError, yaml.YAMLError):
-                    errors.append(
-                        f"Foundation module '{module_id}' specifies a tableSettings file "
-                        f"'{table_settings}' that does not exist at '{file_path}'. "
-                        "Please verify the path is correct and the file exists."
-                    )
-
-        # Product modules table settings
-        for p_module in self.data.modules.product:
-            module_id = p_module.module_id
-            table_settings = p_module.table_settings
-            if p_module._table_settings_explicit and table_settings:
-                file_path = pathlib.Path(table_settings)
-                if not file_path.is_absolute():
-                    file_path = config_dir / file_path
-                try:
-                    load_yaml(file_path)
-                except (ValueError, FileNotFoundError, yaml.YAMLError):
-                    errors.append(
-                        f"Product module '{module_id}' specifies a tableSettings file "
-                        f"'{table_settings}' that does not exist at '{file_path}'. "
-                        "Please verify the path is correct and the file exists."
-                    )
-
-        if errors:
-            raise ValueError("\n".join(errors))
-        return self
-
-    def _validate_module_dataset_uniqueness(
-        self,
-        modules: list[ModuleConfig] | list[DataProductModuleConfig],
-        category: str,
-    ):
-        """Helper to validate modules of same type do not target same BigQuery dataset."""
-        dataset_by_type: dict[ModuleType | str, set[tuple[str, str]]] = {}
-        for module in modules:
-            if getattr(module, "external", False) or not module.data_target_id:
-                continue
-            target = self.get_data_target(module.data_target_id)
-            target_key = (target.project_id, target.dataset_id)
-            module_type = module.type
-            if module_type not in dataset_by_type:
-                dataset_by_type[module_type] = set()
-            if target_key in dataset_by_type[module_type]:
-                raise ValueError(
-                    f"{category.capitalize()} module '{module.module_id}' of type '{module_type}' "
-                    f"shares target dataset '{target.project_id}.{target.dataset_id}' "
-                    f"with another module of the same type."
-                )
-            dataset_by_type[module_type].add(target_key)
-
-    @pydantic.model_validator(mode="after")
-    def validate_dataset_uniqueness_by_type(self):
-        """Validates that datasets targeted by modules are unique per module type."""
-        self._validate_module_dataset_uniqueness(self.data.modules.foundation, "foundation")
-        self._validate_module_dataset_uniqueness(self.data.modules.product, "product")
-        return self

@@ -1,0 +1,113 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides Ledger Master details containing ledger characteristics and language-specific names
+  The data is captured at the granularity of system default keys, ensuring a unique audit trail for every
+  record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: ledger_rldnr
+    description: Ledger, PK
+  - name: language_key_langu
+    description: Language Key, PK
+  - name: ledger_name_name
+    description: Ledger Name
+  - name: ledger_currency_gcurr
+    description: Ledger Currency
+  - name: ledger_class_class
+    description: Ledger Class
+  - name: ledger_type_typ
+    description: Ledger Type
+  - name: store_transaction_currency_trcur
+    description: Store Transaction Currency
+  - name: store_second_currency_lccur
+    description: Store Second Currency
+  - name: store_third_currency_rccur
+    description: Store Third Currency
+  - name: manage_fourth_currency_occur
+    description: Manage Fourth Currency
+  - name: store_quantities_quant
+    description: Store Quantities
+  - name: store_additional_quantity_atqnt
+    description: Store Additional Quantity
+  - name: totals_table_tab
+    description: Totals Table
+  - name: maintenance_by_copying_allowed_rcopy
+    description: Maintenance by Copying Allowed
+  - name: debit_credit_shkz
+    description: Debit/Credit
+  - name: write_line_items_glsip
+    description: Write Line Items
+  - name: set_up_balance_cf_vortrag
+    description: Set Up Balance C/F
+  - name: average_bal_ledger_dldnr
+    description: Average Balance Ledger
+  - name: store_average_xdldnr
+    description: Store Average
+  - name: local_currency_type_curt1
+    description: Lc Currency Type
+  - name: global_currency_type_curt2
+    description: Gc Currency Type
+  - name: currency_type_four_curt3
+    description: Currency Type - Currency 4
+  - name: delay_update_v2post
+    description: Delay Update
+  - name: consolidation_type_lctyp
+    description: Consolidation Type
+  - name: standard_ledger_fix
+    description: Standard Ledger
+  - name: ledger_posting_allowed_post
+    description: Ledger Posting Allowed
+  - name: rollup_allowed_rollup
+    description: Rollup Allowed
+  - name: additional_ledger_depld
+    description: Additional Ledger
+  - name: application_appl
+    description: Application
+  - name: subapplication_subappl
+    description: Subapplication
+  - name: component_komp
+    description: Component
+  - name: productive_gzledger
+    description: Productive
+  - name: exit_number_exit
+    description: Exit Number
+  - name: export_ledger_kldnr
+    description: Export Ledger
+  - name: logical_system_logsys
+    description: Logical System
+  - name: valuation_valutyp
+    description: Valuation
+  - name: summarize_gcompress
+    description: Summarize
+  - name: splitting_method_splitmethd
+    description: Splitting Method
+  - name: date_of_update_date_det_poper
+    description: Date of Update
+  - name: gl_type_glflex
+    description: Gl Type
+  - name: leading_ledger_xleading
+    description: Leading Ledger
+  - name: reference_ledger_orient_ledger
+    description: Reference Ledger for G/L Accounting
+  - name: average_ledger_avg_rollup
+    description: Average Ledger
+  - name: cash_ledger_xcash_ledger
+    description: Cash Ledger
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

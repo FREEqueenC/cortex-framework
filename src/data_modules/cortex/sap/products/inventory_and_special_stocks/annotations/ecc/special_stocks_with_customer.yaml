@@ -1,0 +1,87 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP ECC Materials Management (MM), Sales and Distribution
+  (SD) module in the Supply Chain, Sales domain and provides Special stock consigned or placed at customer
+  sites. The data is captured at the granularity of Client (System), Material, Plant, Batch, Special Stock
+  Indicator, and Customer, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: material_matnr
+    description: Material, PK
+  - name: plant_werks
+    description: Plant, PK
+  - name: batch_charg
+    description: Batch, PK
+  - name: special_stock_indicator_sobkz
+    description: Special Stock, PK
+  - name: customer_kunnr
+    description: Customer, PK
+  - name: fiscal_year_current_period_lfgja
+    description: Fiscal Year of Current Period
+  - name: current_period_lfmon
+    description: Current Period
+  - name: physical_inventory_blocking_indicator_kuspr
+    description: Physical Inventory Blocking Indicator
+  - name: unrestricted_stock_kulab
+    description: Unrestricted Stock
+  - name: stock_in_quality_inspection_kuins
+    description: Stock in Quality Inspection
+  - name: unrestricted_stock_previous_period_kuvla
+    description: Unrestricted Use Stock Previous Period
+  - name: stock_in_quality_inspection_previous_period_kuvin
+    description: Stock in Quality Inspection Previous Period
+  - name: unrestricted_stock_current_year_kuill
+    description: Warehouse Unrestricted Stock Current Year
+  - name: stock_in_quality_inspection_current_year_kuilq
+    description: Quality Inspection Stock Current Year
+  - name: unrestricted_stock_previous_year_kuvll
+    description: Warehouse Unrestricted Stock Previous Year
+  - name: stock_in_quality_inspection_previous_year_kuvlq
+    description: Quality Inspection Stock Previous Year
+  - name: unrestricted_stock_following_year_kufll
+    description: Warehouse Unrestricted Stock Following Year
+  - name: stock_in_quality_inspection_following_year_kuflq
+    description: Quality Inspection Stock Following Year
+  - name: date_of_last_physical_inventory_count_kudll
+    description: Date of Last Count
+  - name: restricted_use_stock_kuein
+    description: Restricted-Use Stock
+  - name: restricted_use_stock_previous_period_kuvei
+    description: Restricted-Use Stock Previous Period
+  - name: created_on_ersda
+    description: Created on
+  - name: fiscal_year_current_physical_inventory_indicator_kujin
+    description: Fiscal Year of Current Physical Inventory Indicator
+  - name: msku_kurue
+    description: Indicator That History Record Exists for the Period Before Last of Current Period
+  - name: stock_in_transfer_kuuml
+    description: Stock in Transfer
+  - name: stock_segment_sgt_scat
+    description: Stock Segment
+  - name: season_year_fsh_season_year
+    description: Season Year
+  - name: season_fsh_season
+    description: Season
+  - name: collection_fsh_collection
+    description: Collection
+  - name: theme_fsh_theme
+    description: Theme
+  - name: allocated_stock_quantity_fsh_salloc_qty
+    description: Allocated Stock Quantity
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

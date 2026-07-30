@@ -1,0 +1,42 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides Maps and assigns Financial Statement Items to General Ledger (G/L) accounts from
+  SAP FAGL_011ZC, verifying chart of accounts assignments and reporting node structures. The data is captured
+  at the granularity of Client (System), Financial Statement Version, Financial Statement Item, Chart
+  Of Accounts, and Gl Account From, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: financial_statement_version_versn
+    description: Fs Version, PK
+  - name: financial_statement_item_ergsl
+    description: Financial Statement Item, PK
+  - name: chart_of_accounts_ktopl
+    description: Chart of Accounts, PK
+  - name: gl_account_from_vonkt
+    description: Account From, PK
+  - name: gl_account_to_biskt
+    description: Account to
+  - name: debit_balance_indicator_xsoll
+    description: Debit Indicator (D)
+  - name: credit_balance_indicator_xhabn
+    description: Credit Indicator (C)
+  - name: group_balance_indicator_xverd
+    description: Group Balance
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,182 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Controlling (CO) module in the Finance domain
+  and provides cost center master definitions from CSKS and CSKT, including valid date ranges, company
+  codes, departments, responsible persons, lock indicators, and multi-lingual names/descriptions, to support
+  corporate spend tracking. The data is captured at the granularity of Client (System), Controlling Area,
+  Cost Center, Valid To, and Language Key, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: controlling_area_kokrs
+    description: Controlling Area, PK
+  - name: cost_center_kostl
+    description: Cost Center, PK
+  - name: valid_to_datbi
+    description: Valid to, PK
+  - name: language_spras
+    description: Language Key of Description, PK
+  - name: valid_from_datab
+    description: Valid From
+  - name: lock_indicator_for_actual_primary_postings_bkzkp
+    description: Actual Primary Costs
+  - name: lock_indicator_for_plan_primary_costs_pkzkp
+    description: Plan Primary Costs
+  - name: company_code_bukrs
+    description: Company Code
+  - name: business_area_gsber
+    description: Business Area
+  - name: cost_center_category_kosar
+    description: Cost Center Category
+  - name: person_responsible_verak
+    description: Person Responsible
+  - name: user_responsible_verak_user
+    description: User Responsible
+  - name: currency_key_waers
+    description: Currency
+  - name: costing_sheet_kalsm
+    description: Costing Sheet
+  - name: tax_jurisdiction_txjcd
+    description: Tax Jurisdiction
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: plant_werks
+    description: Plant
+  - name: logical_system_logsystem
+    description: Logical System
+  - name: created_on_ersda
+    description: Created on
+  - name: entered_by_usnam
+    description: Created by
+  - name: lock_indicator_for_actual_secondary_costs_bkzks
+    description: Actual Secondary Costs
+  - name: lock_indicator_for_actual_revenue_postings_bkzer
+    description: Actual Revenues
+  - name: lock_indicator_for_commitment_update_bkzob
+    description: Commitment Update
+  - name: lock_indicator_for_plan_secondary_costs_pkzks
+    description: Plan Secondary Costs
+  - name: lock_indicator_for_planning_revenues_pkzer
+    description: Plan Revenues
+  - name: indicator_for_allowed_allocation_methods_vmeth
+    description: Allocation Methods
+  - name: indicator_for_recording_consumption_quantities_mgefl
+    description: Record Quantity
+  - name: department_abtei
+    description: Department
+  - name: subsequent_cost_center_nkost
+    description: Subsequent Cost Center
+  - name: usage_of_the_condition_table_kvewe
+    description: Usage
+  - name: application_kappl
+    description: Application
+  - name: co_cca_overhead_key_koszschl
+    description: Overhead Key
+  - name: country_key_land1
+    description: Country Key
+  - name: title_anred
+    description: Title
+  - name: name1_name1
+    description: Name
+  - name: name2_name2
+    description: Name 2
+  - name: name3_name3
+    description: Name 3
+  - name: name4_name4
+    description: Name 4
+  - name: city_ort01
+    description: City
+  - name: district_ort02
+    description: District
+  - name: street_and_house_number_stras
+    description: Street
+  - name: po_box_pfach
+    description: PO Box
+  - name: postal_code_pstlz
+    description: Postal Code
+  - name: po_box_postal_code_pstl2
+    description: P.O Box Postal Code
+  - name: region_regio
+    description: Region
+  - name: language_key_spras
+    description: Language Key
+  - name: telebox_number_telbx
+    description: Telebox Number
+  - name: first_telephone_number_telf1
+    description: Telephone 1
+  - name: second_telephone_number_telf2
+    description: Telephone 2
+  - name: fax_number_telfx
+    description: Fax Number
+  - name: teletex_number_teltx
+    description: Teletex Number
+  - name: telex_number_telx1
+    description: Telex Number
+  - name: data_communication_line_no_datlt
+    description: Data Line
+  - name: printer_destination_for_cctr_report_drnam
+    description: Printer Destination
+  - name: standard_hierarchy_area_khinr
+    description: Hierarchy Area
+  - name: cost_collector_key_cckey
+    description: Cost Collector Key
+  - name: completion_flag_for_the_cost_center_master_record_kompl
+    description: Complete
+  - name: indicator_object_is_statistical_stakz
+    description: Statistics Indicator
+  - name: object_number_objnr
+    description: Object Number
+  - name: function_of_cost_center_funkt
+    description: Function
+  - name: alternative_function_of_cost_center_afunk
+    description: Altern Function
+  - name: template_for_activity_independent_formula_planning_cpi_templ
+    description: Acty-Indep Formplng Temp
+  - name: template_for_activity_dependent_formula_planning_cpd_templ
+    description: Acty-Dependent Form.Plng Temp
+  - name: functional_area_func_area
+    description: Functional Area
+  - name: template_activity_independent_allocation_to_cost_center_sci_templ
+    description: Acty-Indep Alloc Temp
+  - name: template_activity_dependent_allocation_to_cost_center_scd_templ
+    description: Acty-Dependent Alloc Template
+  - name: template_actual_statistical_key_figure_on_cost_center_ski_templ
+    description: 'Templ.: Act Stat Key Figure'
+  - name: template_act_stat_key_figure_cost_centeractivity_type_skd_templ
+    description: 'Templ.: Act Stat Key Figure'
+  - name: joint_venture_vname
+    description: Joint Venture
+  - name: recovery_indicator_recid
+    description: Recovery Indicator
+  - name: equity_type_etype
+    description: Equity Type
+  - name: joint_venture_object_type_jv_otype
+    description: Joint Venture Object Type
+  - name: jibjibe_class_jv_jibcl
+    description: Jib/Jibe Class
+  - name: jibjibe_subclass_a_jv_jibsa
+    description: Jib/Jibe Subclass a
+  - name: regulatory_indicator_ferc_ind
+    description: Regulatory Indicator
+  - name: general_name_ktext
+    description: Name
+  - name: description_ltext
+    description: Description
+  - name: search_term_for_matchcode_use_mctxt
+    description: Cost Center Short Text
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

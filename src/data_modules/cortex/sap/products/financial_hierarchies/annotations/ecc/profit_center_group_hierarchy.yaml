@@ -1,0 +1,36 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI), Controlling (CO)
+  module in the Finance domain and provides Master data / hierarchy for Profit Center Groups. In S/4HANA,
+  this is the HANA-optimized hierarchy. In ECC, it is the master data (texts) for profit center sets.
+  The data is captured at the granularity of system default keys, ensuring a unique audit trail for every
+  record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: set_class_setclass
+    description: Set Class, PK
+  - name: subclass_subclass
+    description: Organizational Unit, PK
+  - name: set_name_setname
+    description: Set Name, PK
+  - name: language_key_langu
+    description: Language Key, PK
+  - name: short_description_of_set_descript
+    description: Short Description of Set
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

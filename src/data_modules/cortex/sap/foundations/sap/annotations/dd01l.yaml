@@ -1,0 +1,82 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Domains"
+fields:
+- name: "domname"
+  description: "Domain Name"
+- name: "as4local"
+  description: "Activation Status"
+- name: "as4vers"
+  description: "Version"
+- name: "datatype"
+  description: "Data Type"
+- name: "leng"
+  description: "Number of Characters"
+- name: "outputlen"
+  description: "Output Length"
+- name: "decimals"
+  description: "Decimal Places"
+- name: "lowercase"
+  description: "Lowercase Letters"
+- name: "signflag"
+  description: "Sign"
+- name: "langflag"
+  description: "Lang.-Dependent Values"
+- name: "valexi"
+  description: "Fixed Values Exist"
+- name: "entitytab"
+  description: "Value Table"
+- name: "convexit"
+  description: "Conversion Routine"
+- name: "mask"
+  description: "Template"
+- name: "masklen"
+  description: "Template Length"
+- name: "actflag"
+  description: "Activation Flag"
+- name: "applclass"
+  description: "Application Class"
+- name: "authclass"
+  description: "Activation Type"
+- name: "as4user"
+  description: "Last Changed by"
+- name: "as4date"
+  description: "Date"
+- name: "as4time"
+  description: "Time"
+- name: "dommaster"
+  description: "Original Language"
+- name: "reservedom"
+  description: "Reserveflag"
+- name: "domglobal"
+  description: "Object Not Global"
+- name: "appendname"
+  description: "Domain Name"
+- name: "appexist"
+  description: "Appendexists"
+- name: "proxytype"
+  description: "Proxy Usage"
+- name: "outputstyle"
+  description: "Output"
+- name: "ampmformat"
+  description: "Am/Pm Time Format Supported"
+- name: "abap_language_version"
+  description: "Abap Language Version"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

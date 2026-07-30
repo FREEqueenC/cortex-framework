@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import datetime
 import logging
+import os
 import sys
+import tempfile
 
 
 class ColoredFormatter(logging.Formatter):
@@ -47,8 +50,28 @@ class ColoredFormatter(logging.Formatter):
 
 
 def setup_logging(level=logging.INFO):
-    handler = logging.StreamHandler(sys.stdout)
+    handlers = []
+
+    # Stream Handler (stdout)
+    stream_handler = logging.StreamHandler(sys.stdout)
     # Use \033[22m to reset dimness without resetting color
     fmt = "\033[2m%(asctime)s\033[22m - %(levelname)s - \033[2m%(name)s\033[22m - %(message)s"
-    handler.setFormatter(ColoredFormatter(fmt))
-    logging.basicConfig(level=level, handlers=[handler])
+    stream_handler.setFormatter(ColoredFormatter(fmt))
+    handlers.append(stream_handler)
+
+    # File Handler (temp file)
+    timestamp = datetime.datetime.now().strftime("%Y%m%d-%H%M")
+    log_filename = f"cortex-framework-logs-{timestamp}.log"
+    log_filepath = os.path.join(tempfile.gettempdir(), log_filename)
+
+    file_handler = logging.FileHandler(log_filepath, encoding="utf-8")
+    file_fmt = "%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+    file_handler.setFormatter(logging.Formatter(file_fmt))
+    handlers.append(file_handler)
+
+    logging.basicConfig(level=level, handlers=handlers, force=True)
+
+    print(
+        f"Tools log are also stored in the following file for troubleshooting and support"
+        f" purposes: {log_filepath}"
+    )

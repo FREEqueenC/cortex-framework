@@ -1,0 +1,74 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Profit And Loss is a financial statement which summarizes costs, expenses and revenues incurred for a specific time period at the granularity of Client(System), company code, fiscal year, fiscal period, chart of accounts, general ledger hierarchy name, business area, profit center, cost center, node, and language key (Coming from system Settings)"
+fields:
+  - name: "Client"
+    description: "Client (Mandant), PK"
+  - name: "CompanyCode"
+    description: "Company Code, PK"
+  - name: "FiscalYear"
+    description: "Fiscal Year, PK"
+  - name: "FiscalPeriod"
+    description: "Fiscal Period, PK"
+  - name: "ChartOfAccounts"
+    description: "Group of general ledger (G/L) accounts that records the transactions in a structured way, PK"
+  - name: "GLHierarchy"
+    description: "General Ledger (G/L) Hierarchy Name, PK"
+  - name: "BusinessArea"
+    description: "Business Area, PK"
+  - name: "LedgerInGeneralLedgerAccounting"
+    description: "Ledger In General Ledger Accounting, PK"
+  - name: "ProfitCenter"
+    description: "Profit Center, PK"
+  - name: "CostCenter"
+    description: "Cost Center, PK"
+  - name: "GLNode"
+    description: "G/L Node Id (includes both hierarchy node and glaccounts), PK"
+  - name: "LanguageKey_SPRAS"
+    description: "Language Key, PK"
+  - name: "GLParent"
+    description: "G/L Parent Node"
+  - name: "GLFinancialItem"
+    description: "G/L Financial Item"
+  - name: "GLNodeText"
+    description: "G/L Node Text"
+  - name: "GLParentText"
+    description: "G/L Parent Text"
+  - name: "GLLevel"
+    description: "Describes the level at which particular node exists( Level 1 is root)"
+  - name: "FiscalQuarter"
+    description: "Fiscal Quarter"
+  - name: "GLIsLeafNode"
+    description: "Indicator: The last node in the hierarchy"
+  - name: "CompanyText"
+    description: "Name of Company"
+  - name: "AmountInLocalCurrency"
+    description: "Amount in local currency"
+  - name: "CumulativeAmountInLocalCurrency"
+    description: "Aggregated amount till the given fiscal period"
+  - name: "CurrencyKey"
+    description: "Currency Key"
+  - name: "ExchangeRate"
+    description: "Exchange Rate of a currency on maximum date of that specific fiscal year and period combination"
+  - name: "MaxExchangeRate"
+    description: "Maximum Exchange Rate of a currency in that specific fiscal year and period combination"
+  - name: "AvgExchangeRate"
+    description: "Average Exchange Rate of a currency in that specific fiscal year and period combination"
+  - name: "AmountInTargetCurrency"
+    description: "Amount in target currency"
+  - name: "CumulativeAmountInTargetCurrency"
+    description: "Aggregated amount till the given fiscal period in target currency"
+  - name: "TargetCurrency_TCURR"
+    description: "To-currency, PK"

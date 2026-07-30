@@ -1,0 +1,56 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "E-Mail Addresses (Business Address Services)"
+fields:
+- name: "client"
+  description: "Client (Mandant)"
+- name: "addrnumber"
+  description: "Address Number"
+- name: "persnumber"
+  description: "Person Number"
+- name: "date_from"
+  description: "From"
+- name: "consnumber"
+  description: "Sequence Number"
+- name: "flgdefault"
+  description: "Standard Addr"
+- name: "flg_nouse"
+  description: "Do Not Use Communication Number"
+- name: "home_flag"
+  description: "Home Address"
+- name: "smtp_addr"
+  description: "E-Mail Address"
+- name: "smtp_srch"
+  description: "E-Mail Address"
+- name: "dft_receiv"
+  description: "Standard Recipient"
+- name: "r3_user"
+  description: "Flag: Sap Connection"
+- name: "encode"
+  description: "Coding"
+- name: "tnef"
+  description: "Tnef"
+- name: "valid_from"
+  description: "Valid From"
+- name: "valid_to"
+  description: "Valid to"
+- name: "dataaging"
+  description: "Dataaging"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

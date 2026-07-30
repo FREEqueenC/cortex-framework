@@ -1,0 +1,97 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Exposes current standard and moving average valuation details for ECC from MBEW, including
+  rich details like planned/future prices and costing variants.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: material_number_matnr
+    description: Material Number, PK
+  - name: valuation_area_bwkey
+    description: Valuation Area, PK
+  - name: valuation_type_bwtar
+    description: Valuation Type, PK
+  - name: fiscal_year_lfgja
+    description: Fiscal Year of Current Period
+  - name: posting_period_lfmon
+    description: Posting Period of Current Period
+  - name: price_unit_peinh
+    description: Price Unit
+  - name: price_control_indicator_vprsv
+    description: Price Control Indicator
+  - name: valuation_class_bklas
+    description: Valuation Class
+  - name: valuation_category_bwtty
+    description: Valuation Category
+  - name: deletion_flag_valuation_type_lvorm
+    description: Deletion Flag for Valuation Type
+  - name: material_ledger_active_mlmaa
+    description: Material Ledger Active Indicator
+  - name: material_price_determination_control_mlast
+    description: Material Price Determination Control
+  - name: material_origin_indicator_hkmat
+    description: Material Origin Indicator
+  - name: lifo_fifo_relevant_indicator_xlifo
+    description: Lifo/Fifo-Relevant Indicator
+  - name: lifo_pool_mypol
+    description: Lifo Pool
+  - name: total_stock_lbkum
+    description: Total Valuated Stock Quantity
+  - name: standard_cost_stprs
+    description: Standard Cost / Price of the Material (Shifted)
+  - name: value_of_total_valuated_stock_salk3
+    description: Total Value of Valuated Stock (Shifted)
+  - name: moving_average_price_verpr
+    description: Moving Average Price (Shifted)
+  - name: value_at_moving_average_price_salkv
+    description: Value Based on Moving Average Price (Shifted)
+  - name: total_value_at_sales_price_vksal
+    description: Total Value of Valuated Stock At Sales Price (Shifted)
+  - name: previous_price_stprv
+    description: Previous Standard Price (Shifted)
+  - name: future_price_zkprs
+    description: Future Price (Shifted)
+  - name: date_of_last_price_change_laepr
+    description: Date of Last Price Change
+  - name: future_price_valid_from_date_zkdat
+    description: Date From Which Future Price Is Valid
+  - name: future_planned_price_zplpr
+    description: Future Planned Price (Shifted)
+  - name: planned_price_1_zplp1
+    description: Planned Price 1 (Shifted)
+  - name: planned_price_date_1_zpld1
+    description: Planned Price Date 1
+  - name: planned_price_2_zplp2
+    description: Planned Price 2 (Shifted)
+  - name: planned_price_date_2_zpld2
+    description: Planned Price Date 2
+  - name: planned_price_3_zplp3
+    description: Planned Price 3 (Shifted)
+  - name: planned_price_date_3_zpld3
+    description: Planned Price Date 3
+  - name: product_cost_estimate_number_kaln1
+    description: Product Cost Estimate Number
+  - name: cost_estimate_number_kalnr
+    description: Cost Estimate Number for Valuation
+  - name: sales_order_stock_valuation_class_eklas
+    description: Valuation Class for Sales Order Stock
+  - name: project_stock_valuation_class_qklas
+    description: Valuation Class for Project Stock
+  - name: currency_key_waers
+    description: Currency Key
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,32 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This table contains currency conversion related information, including conversion factors, validity periods and details about the different exchange rates used by the system. The granularity is: Client (System), Exchange rate type, From-currency, To-currency, and dates for which the exchange rate is valid."
+fields:
+  - name: "mandt"
+    description: "Client (Mandant), PK"
+  - name: "kurst"
+    description: "Exchange Rate Type, PK"
+  - name: "fcurr"
+    description: "From Currency, PK"
+  - name: "tcurr"
+    description: "To-Currency, PK"
+  - name: "conv_date"
+    description: "Date for Which the Exchange Rate of the Record is Valid, PK"
+  - name: "ukurs"
+    description: "Exchange Rate"
+  - name: "start_date"
+    description: "Date as of Which the Exchange Rate is Effective"
+  - name: "end_date"
+    description: "Date till Which the Exchange Rate is Effective"

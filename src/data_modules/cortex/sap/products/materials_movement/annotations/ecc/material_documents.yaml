@@ -1,0 +1,126 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides SAP operational goods movements, tracking receipts, issues, plant-to-plant
+  transfers, and inventory adjustments from transactional logs MSEG and MATDOC. The data is captured at
+  the granularity of Client (System), Material Document Year, Material Document Number, and Material Document
+  Item, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: document_number_mblnr
+    description: Number of Material Document, PK
+  - name: document_year_mjahr
+    description: Material Document Year, PK
+  - name: document_item_zeile
+    description: Item in Material Document, PK
+  - name: material_number_matnr
+    description: Material Number
+  - name: batch_number_charg
+    description: Batch Number
+  - name: plant_werks
+    description: Plant
+  - name: storage_location_lgort
+    description: Storage Location
+  - name: movement_type_bwart
+    description: Movement Type
+  - name: stock_type_insmk
+    description: Stock Type
+  - name: debit_credit_indicator_shkzg
+    description: Debit/Credit Indicator
+  - name: quantity_menge
+    description: Quantity
+  - name: base_unit_of_measure_meins
+    description: Base Unit of Measure
+  - name: currency_key_waers
+    description: Currency Key
+  - name: amount_in_local_currency_dmbtr
+    description: Amount in Local Currency
+  - name: purchase_order_number_ebeln
+    description: Purchase Order Number
+  - name: vendors_account_number_lifnr
+    description: Vendor'S Account Number
+  - name: sales_order_number_kdauf
+    description: Sales Order Number
+  - name: account_number_of_customer_kunnr
+    description: Account Number of Customer
+  - name: receiving_issuing_material_ummat
+    description: Receiving/Issuing Material
+  - name: receiving_issuing_batch_umcha
+    description: Receiving/Issuing Batch
+  - name: item_number_of_purchasing_document_ebelp
+    description: Item Number of Purchasing Document
+  - name: document_number_of_a_reference_document_lfbnr
+    description: Document Number of a Reference Document
+  - name: item_of_a_reference_document_lfpos
+    description: Item of a Reference Document
+  - name: order_number_aufnr
+    description: Order Number
+  - name: company_code_bukrs
+    description: Company Code
+  - name: receiving_plant_umwrk
+    description: Receiving Plant
+  - name: receiving_issuing_storage_location_umlgo
+    description: Receiving/Issuing Storage Location
+  - name: warehouse_number_lgnum
+    description: Warehouse Number
+  - name: movement_type_for_warehouse_management_bwlvs
+    description: Movement Type for Warehouse Management
+  - name: indicator_posting_in_warehouse_management_system_xblvs
+    description: Indicator for Posting in Warehouse Management System
+  - name: stock_category_in_the_warehouse_management_system_bestq
+    description: Stock Category in the Warehouse Management System
+  - name: special_stock_indicator_sobkz
+    description: Special Stock Indicator
+  - name: movement_indicator_kzbew
+    description: Movement Indicator
+  - name: reason_for_movement_grund
+    description: Reason for Movement
+  - name: goods_receipt_non_valuated_weunb
+    description: Goods Receipt, Non-Valuated
+  - name: storage_type_lgtyp
+    description: Storage Type
+  - name: equipment_number_equnr
+    description: Equipment Number
+  - name: business_area_gsber
+    description: Business Area
+  - name: cost_center_kostl
+    description: Cost Center
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: work_breakdown_structure_element_ps_psp_pnr
+    description: Work Breakdown Structure Element
+  - name: gl_account_number_sakto
+    description: G/L Account Number
+  - name: debit_credit_indicator_in_revaluation_shkum
+    description: Debit/Credit Indicator in Revaluation
+  - name: valuation_type_bwtar
+    description: Valuation Type
+  - name: receipt_indicator_kzzug
+    description: Receipt Indicator
+  - name: posting_date_budat_mkpf
+    description: Posting Date
+  - name: year_of_posting_date_budat_mkpf
+    description: Year of Posting Date
+  - name: month_of_posting_date_budat_mkpf
+    description: Month of Posting Date
+  - name: quarter_of_posting_date_budat_mkpf
+    description: Quarter of Posting Date
+  - name: week_of_posting_date_budat_mkpf
+    description: Week of Posting Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

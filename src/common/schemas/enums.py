@@ -25,9 +25,16 @@ class ModuleType(enum.StrEnum):
     GENERIC = "generic"
 
 
-class ModuleCategory(enum.StrEnum):
+class Category(enum.StrEnum):
     FOUNDATION = "data_foundation"
     PRODUCT = "data_product"
+    CATALOG = "catalog"
+
+
+class ModuleCategory(enum.StrEnum):
+    FOUNDATION = "foundation"
+    FOUNDATIONAL_PRODUCT = "source_aligned_product"
+    COMPOSITE_PRODUCT = "consumption_product"
 
 
 class DeploymentTargetType(enum.StrEnum):

@@ -1,0 +1,162 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Pricing Elements
+fields:
+- name: client
+  description: Client
+- name: knumv
+  description: Doc. Condition No.
+- name: kposn
+  description: Item
+- name: stunr
+  description: Step Number
+- name: zaehk
+  description: Counter
+- name: kappl
+  description: Application
+- name: kschl
+  description: Condition type
+- name: kdatu
+  description: Valid From
+- name: krech
+  description: Calculation Type
+- name: kawrt
+  description: Condition Basis
+- name: kbetr
+  description: Amount
+- name: waers
+  description: Currency
+- name: kkurs
+  description: Cond.exchange rate
+- name: kpein
+  description: Pricing Unit
+- name: kmein
+  description: Condition Unit
+- name: kumza
+  description: Numerator
+- name: kumne
+  description: Denominator
+- name: kntyp
+  description: Condition Category
+- name: kstat
+  description: Statistical
+- name: knprs
+  description: Scale Type
+- name: kruek
+  description: Accruals
+- name: kreli
+  description: Invoice List Cond.
+- name: kherk
+  description: Condition Origin
+- name: kgrpe
+  description: Group Condition
+- name: kolnr
+  description: Access
+- name: knumh
+  description: Condition Record No.
+- name: kopos
+  description: Sequent.No. of Cond.
+- name: kvsl1
+  description: Account Key
+- name: sakn1
+  description: G/L Account
+- name: mwsk1
+  description: Tax Code
+- name: kvsl2
+  description: AcctKey Accruals
+- name: sakn2
+  description: Accruals Account
+- name: mwsk2
+  description: Withholding Tax Code
+- name: lifnr
+  description: Vendor
+- name: kdiff
+  description: Cond.Rounding Diff.
+- name: kwert
+  description: Value
+- name: waerk
+  description: Document Currency
+- name: ksteu
+  description: Condition Control
+- name: kinak
+  description: Inactive Condition
+- name: koaid
+  description: Condition Class
+- name: zaeko
+  description: Counter
+- name: kfaktor
+  description: Condition Factor
+- name: kdupl
+  description: Structure Condition
+- name: kfaktor1
+  description: Condition Factor
+- name: kzbzg
+  description: Scale Basis
+- name: kstbs
+  description: Scale Base Value
+- name: konms
+  description: Scale Unit of Meas.
+- name: konws
+  description: Scale Currency
+- name: kwaeh
+  description: Condition Currency
+- name: kwert_k
+  description: Value
+- name: kfkiv
+  description: Intercomp.Billing
+- name: kmprs
+  description: Changed Manually
+- name: prsqu
+  description: Price Source
+- name: txjlv
+  description: Tax jurisdiction level
+- name: kbflag
+  description: BitEncryptFlags
+- name: koupd
+  description: Condition Update
+- name: kmxaw
+  description: Maximum Basis Value
+- name: kmxwr
+  description: Maximum Amount
+- name: kawrt_k
+  description: Condition Basis
+- name: kunnr
+  description: Customer
+- name: kvarc
+  description: UsedforVariantConfig
+- name: varcond
+  description: Variant Key
+- name: ktrel
+  description: Rel. for Acct Assigt
+- name: mdflg
+  description: Matrix Maintenance
+- name: dataaging
+  description: Data Filter Value for Data Aging
+- name: cpf_guid
+  description: Formula ID in Document
+- name: kaqty
+  description: Adjusted Quantity
+- name: val_zero
+  description: Condition Processing if Value is Zero
+- name: is_acct_detn_relevant
+  description: Relevant for Account Determination
+- name: tax_country
+  description: Tax Country
+- name: operation_flag
+  description: Delta Operation Flag
+- name: is_deleted
+  description: Is Record Deleted Flag
+- name: recordstamp
+  description: Record ingest timestamp

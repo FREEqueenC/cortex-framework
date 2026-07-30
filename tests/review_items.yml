@@ -1,0 +1,259 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+- type: request-changes
+  text: In common/builders/sap_product_builder.py:18, the class 'SapProductBuilder'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/clients/bigquery.py:144, the function/method '_copy_single_table'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/clients/dataform.py:16, the function/method '__init__' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/clients/resource_manager.py:13, the function/method '__init__' is
+    completely missing a docstring.
+- type: request-changes
+  text: In common/clients/service_usage.py:13, the function/method '__init__' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/deployers/actions.py:50, the function/method '__init__' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/deployers/actions.py:53, the function/method 'execute' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/deployers/dataform/deployer.py:21, the function/method '__init__'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/deployers/dataform/services/provisioner.py:14, the function/method
+    '__init__' is completely missing a docstring.
+- type: request-changes
+  text: In common/deployers/dataform/services/reconciler.py:25, the function/method
+    '__init__' is completely missing a docstring.
+- type: request-changes
+  text: In common/deployers/dataform/services/reconciler.py:75, the function/method
+    'fetch_dir_contents' is completely missing a docstring.
+- type: request-changes
+  text: In common/deployers/dataform/services/reconciler.py:111, the function/method
+    'should_ignore' is completely missing a docstring.
+- type: request-changes
+  text: In common/registry.py:18, the function/method '__init__' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/registry.py:31, the function/method 'wrapper' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/schemas/builder_schema.py:12, the function/method 'build' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:196, the class 'BaseDeploymentTargetConfig'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:66, the class 'BaseModuleConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:244, the class 'BuildEnvironmentConfig'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:43, the class 'CortexBaseModel' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:188, the class 'DataConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:53, the class 'DatasetConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:240, the class 'DeploymentConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:249, the class 'GlobalConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:168, the class 'ModulesConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:183, the class 'NamespaceConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:174, the function/method 'handle_namespaced_modules'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:119, the function/method 'set_default_table_settings'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:157, the function/method 'set_default_table_settings'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:271, the function/method 'validate_business_rules'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/config_schema.py:124, the function/method 'validate_data_target_id'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/enums.py:19, the class 'DeploymentTargetType' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/enums.py:30, the class 'MaterializationType' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/enums.py:14, the class 'ModuleCategory' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/schemas/enums.py:9, the class 'ModuleType' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/schemas/enums.py:24, the class 'PartitionType' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/schemas/enums.py:4, the class 'SapVersion' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:67, the class 'GenericDependencyInfo'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:93, the class 'ManifestConfig' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:36, the class 'SapDependencyInfo' is
+    completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:11, the class 'SapVersionDependencies'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:22, the function/method 'check_at_least_one_and_must_be_non_empty'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:56, the function/method 'get_required_tables'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:83, the function/method 'get_required_tables'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:105, the function/method 'handle_namespaced_dependencies'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:78, the function/method 'must_not_be_empty'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/manifest_schema.py:47, the function/method 'validate_tables_match_versions'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/table_settings_schema.py:40, the class 'ClusterDetails'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/table_settings_schema.py:83, the class 'FoundationSource'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/table_settings_schema.py:19, the class 'PartitionDetails'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/table_settings_schema.py:29, the function/method 'validate_column'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/schemas/table_settings_schema.py:45, the function/method 'validate_columns'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_preprocessor.py:9, the function/method '__init__'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_preprocessor.py:20, the function/method 'process'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_validator.py:46, the function/method '_extract_models'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_validator.py:97, the function/method 'build_known_keys_map'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_validator.py:74, the function/method 'find_models_for_error_path'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_validator.py:25, the function/method 'format_parent_path'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/config_validator.py:123, the function/method 'snake_to_camel'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/gcp_environment_checker.py:12, the class 'GcpEnvironmentChecker'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/gcp_environment_checker.py:13, the function/method '__init__'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/gcp_environment_checker.py:164, the function/method '_get_source_datasets'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/gcp_environment_checker.py:142, the function/method '_get_target_datasets'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/gcp_environment_checker.py:123, the function/method 'action'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/gcp_environment_checker.py:207, the function/method 'action'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/services/sample_data_seeder.py:173, the function/method '_load_single_table'
+    is completely missing a docstring.
+- type: request-changes
+  text: In common/utils/logging.py:5, the class 'ColoredFormatter' is completely missing
+    a docstring.
+- type: request-changes
+  text: In common/utils/logging.py:26, the function/method 'format' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/utils/logging.py:10, the function/method 'formatMessage' is completely
+    missing a docstring.
+- type: request-changes
+  text: In common/utils/logging.py:35, the function/method 'setup_logging' is completely
+    missing a docstring.
+- type: request-changes
+  text: In data_modules/cortex/data_foundation/sap/metadata_provider.py:24, the function/method
+    '__init__' is completely missing a docstring.
+- type: request-changes
+  text: In data_modules/cortex/data_foundation/sap/metadata_provider.py:112, the function/method
+    'fetch_pks' is completely missing a docstring.
+- type: request-changes
+  text: In data_modules/cortex/data_foundation/sap/metadata_provider.py:96, the function/method
+    'fetch_schema' is completely missing a docstring.
+- type: request-changes
+  text: In data_modules/cortex/data_foundation/sap/metadata_provider.py:15, the function/method
+    'get_schema_and_keys' is completely missing a docstring.
+- type: request-changes
+  text: In data_modules/cortex/data_foundation/sap/metadata_provider.py:140, the function/method
+    'get_schema_and_keys' is completely missing a docstring.
+- type: request-changes
+  text: In tools/build.py:40, the class 'DataformBuilder' is completely missing a
+    docstring.
+- type: request-changes
+  text: In tools/build.py:41, the function/method '__init__' is completely missing
+    a docstring.
+- type: request-changes
+  text: In tools/build.py:623, the function/method 'main' is completely missing a
+    docstring.
+- type: request-changes
+  text: In tools/demo.py:21, the function/method 'main' is completely missing a docstring.
+- type: request-changes
+  text: In tools/deploy.py:27, the function/method '__init__' is completely missing
+    a docstring.
+- type: request-changes
+  text: In tools/deploy.py:122, the function/method 'main' is completely missing a
+    docstring.
+- type: request-changes
+  text: In tools/run_all.py:19, the function/method 'main' is completely missing a
+    docstring.
+- type: comment
+  text: No class naming violations found. All class names in 'src/' follow the PascalCase
+    (UpperCamelCase) naming convention.

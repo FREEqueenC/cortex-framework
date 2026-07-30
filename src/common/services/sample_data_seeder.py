@@ -14,18 +14,19 @@
 
 import concurrent.futures
 import logging
-import uuid
 from collections.abc import Iterable
 from typing import Any
 
-from common.clients import bigquery, resource_manager, storage
+from common.clients import storage
+from common.clients.bq import bigquery
+from common.errors import CortexGcpError
 from common.schemas.config_schema import GlobalConfig, SAPModuleConfig
 
 logger = logging.getLogger(__name__)
 
 
 class SampleDataSeeder:
-    """Provides sample data seeding from public GCS parquet files via ephemeral buckets."""
+    """Provides sample data seeding from region-specific public GCS parquet files."""
 
     _PUBLIC_BUCKET = "cortex-framework-public"
     _PUBLIC_PREFIX = "demo-sample-data/rel700"
@@ -41,57 +42,26 @@ class SampleDataSeeder:
         """
         self.global_config = global_config
         self.bq_client = bigquery.BigQueryManager()
-        self.resource_manager_client = resource_manager.ResourceManagerClient()
         self.storage_client: storage.StorageManager | None = None
 
-    def _get_ephemeral_bucket_name(self, project_id: str, location: str) -> str:
-        """Generates a deterministic, globally unique, and valid GCS bucket name."""
-        try:
-            # Use project number for consistency and anonymity
-            proj_identifier = self.resource_manager_client.get_project_number(project_id)
-            return f"cortex-demo-seed-{proj_identifier}-{location.lower()}"
-        except Exception as e:
-            logger.warning("Failed to fetch project number for %s", project_id, exc_info=e)
-            raise ValueError(f"Failed to fetch project number for {project_id}") from e
-
-    def _ensure_ephemeral_bucket(
-        self,
-        bucket_name: str,
-        location: str,
-        storage_client: storage.StorageManager,
-    ) -> bool:
-        """Ensures that the ephemeral bucket exists in the target region.
+    def _get_public_bucket_name(self, location: str) -> str:
+        """Constructs the standardized region-specific public bucket name.
 
         Args:
-            bucket_name: The GCS bucket name.
-            location: The location (region) where the bucket should be created.
-            storage_client: The StorageManager client to use.
+            location: The GCP region or BigQuery location (e.g. 'US', 'us-central1', 'EU').
 
         Returns:
-            True if the bucket exists or was successfully created, False otherwise.
+            The region-specific public GCS bucket name.
         """
-        logger.info("Ensuring ephemeral bucket %s exists...", bucket_name)
-        try:
-            if not storage_client.bucket_exists(bucket_name):
-                if not storage_client.create_bucket(bucket_name, location=location):
-                    logger.error("Failed to create ephemeral bucket %s", bucket_name)
-                    return False
-            else:
-                logger.info(
-                    "Ephemeral bucket %s already exists. Skipping creation.",
-                    bucket_name,
-                )
-            return True
-        except Exception as e:
-            logger.error("Error ensuring ephemeral bucket %s exists: %s", bucket_name, e)
-            return False
+        clean_location = location.strip().lower()
+        return f"{self._PUBLIC_BUCKET}-{clean_location}"
 
     def _extract_table_names(self, blobs: Iterable[Any], prefix: str) -> list[str]:
         """Extracts sorted unique table names from a list of GCS blobs.
 
         Args:
             blobs: The list of GCS blob objects.
-            prefix: The GCS folder prefix (e.g. 'run-id/sap/s4').
+            prefix: The GCS folder prefix (e.g. 'demo-sample-data/rel700/sap/s4').
 
         Returns:
             A sorted list of unique table names.
@@ -99,7 +69,7 @@ class SampleDataSeeder:
         table_names = set()
         prefix_len = len(prefix.strip("/")) + 1
         for blob in blobs:
-            # blob.name looks like: {run_id}/sap/s4/{table_name}/xxx.parquet
+            # blob.name looks like: {prefix}/{table_name}/xxx.parquet
             relative_name = blob.name[prefix_len:]
             if "/" in relative_name:
                 table_name = relative_name.split("/")[0]
@@ -107,30 +77,43 @@ class SampleDataSeeder:
         return sorted(list(table_names))
 
     def seed_sample_data(self) -> bool:
-        """Seeds sample data to all applicable target datasets defined in config."""
+        """Seeds sample data directly from the region-specific public bucket to BigQuery."""
         bq_location = self.global_config.data.big_query_location
-        all_modules = list(self.global_config.data.modules.foundation)
+        if not bq_location:
+            raise CortexGcpError(
+                "BigQuery location is not configured in GlobalConfig.",
+                hint="Specify --bigquery_location in demo arguments or config.",
+            )
+
+        public_bucket = self._get_public_bucket_name(bq_location)
+        storage_client = self.storage_client or storage.StorageManager()
+
+        foundation_mods = getattr(self.global_config.data.modules, "foundation", [])
+        product_mods = getattr(self.global_config.data.modules, "product", [])
+        all_modules = list(foundation_mods) + list(product_mods)
         all_successful = True
+        loaded_datasets: set[tuple[str, str]] = set()
 
         for module in all_modules:
-            if not module.enabled:
+            ds_id = getattr(module, "data_source_id", None)
+            if not module.enabled or not ds_id:
                 continue
 
-            source_config = self.global_config.get_data_source(module.data_source_id)
+            source_config = self.global_config.get_dataset(ds_id)
             if not source_config:
-                logger.error("Failed to resolve data source %s", module.data_source_id)
+                logger.error("Failed to resolve data source %s", ds_id)
                 all_successful = False
                 continue
 
             dest_project = source_config.project_id
             dest_dataset = source_config.dataset_id
-            module_type = module.type
+            module_path = module.module_path
             sap_version = "s4"  # Default to s4 if not specified
             if isinstance(module, SAPModuleConfig):
                 sap_version = module.module_settings.sap_version
 
-            if module_type != "sap":
-                logger.warning("Module type %s not supported for GCS seeding.", module_type)
+            if module.module_type != "sap":
+                logger.warning("Module type %s not supported for GCS seeding.", module_path)
                 continue
 
             if not dest_project or not dest_dataset:
@@ -138,94 +121,72 @@ class SampleDataSeeder:
                 all_successful = False
                 continue
 
-            run_id = uuid.uuid4().hex
-            ephemeral_bucket = self._get_ephemeral_bucket_name(dest_project, bq_location)
-            storage_client = self.storage_client or storage.StorageManager(project_id=dest_project)
+            dataset_key = (dest_project, dest_dataset)
+            if dataset_key in loaded_datasets:
+                logger.info(
+                    "Sample data for target dataset %s.%s already loaded; skipping redundant load.",
+                    dest_project,
+                    dest_dataset,
+                )
+                continue
+
+            source_prefix = f"{self._PUBLIC_PREFIX}/sap/{sap_version}"
 
             try:
-                # Step 1: Ensure Ephemeral Bucket in target region
-                if not self._ensure_ephemeral_bucket(
-                    ephemeral_bucket, location=bq_location, storage_client=storage_client
-                ):
-                    all_successful = False
-                    continue
+                blobs = list(storage_client._client.list_blobs(public_bucket, prefix=source_prefix))
+                tables_to_load = self._extract_table_names(blobs, prefix=source_prefix)
+            except Exception as list_err:
+                logger.error(
+                    "Failed to dynamically list tables in public bucket %s: %s",
+                    public_bucket,
+                    list_err,
+                )
+                raise CortexGcpError(
+                    f"Failed to access sample data in bucket '{public_bucket}' under prefix "
+                    f"'{source_prefix}': {list_err}",
+                    hint="Ensure public read access (roles/storage.objectViewer) is enabled.",
+                ) from list_err
 
-                # Step 2: Copy public GCS files selective folder to Ephemeral Bucket
-                source_prefix = f"{self._PUBLIC_PREFIX}/sap/{sap_version}"
-                dest_prefix = f"{run_id}/sap/{sap_version}"
-
-                logger.info("Copying seed files to ephemeral bucket...")
-                if not storage_client.copy_objects(
-                    source_bucket_name=self._PUBLIC_BUCKET,
-                    source_prefix=source_prefix,
-                    dest_bucket_name=ephemeral_bucket,
-                    dest_prefix=dest_prefix,
-                ):
-                    logger.error("Failed to copy objects from public bucket to ephemeral bucket.")
-                    all_successful = False
-                    continue
-
-                # Step 3: Load tables concurrently from ephemeral bucket to BigQuery
-                # Path format: sap/{sap_version}/{table_id}/xxx.parquet
-                try:
-                    blobs = storage_client._client.list_blobs(ephemeral_bucket, prefix=dest_prefix)
-                    # Extract unique table folders under sap/{sap_version}/
-                    tables_to_load = self._extract_table_names(blobs, prefix=dest_prefix)
-                except Exception as list_err:
-                    logger.error(
-                        "Failed to dynamically list tables in ephemeral bucket: %s",
-                        list_err,
-                    )
-                    all_successful = False
-                    continue
-
-                logger.info(
-                    "Loading %d dynamically discovered SAP tables into BigQuery...",
-                    len(tables_to_load),
+            if not tables_to_load:
+                raise CortexGcpError(
+                    f"No sample data found in bucket '{public_bucket}' under prefix "
+                    f"'{source_prefix}'.",
+                    hint=(
+                        "Verify that public sample data files have been published to "
+                        f"'gs://{public_bucket}/{source_prefix}'."
+                    ),
                 )
 
-                def _load_single_table(
-                    table: str,
-                    bucket: str = ephemeral_bucket,
-                    prefix: str = dest_prefix,
-                    proj: str = dest_project,
-                    dataset: str = dest_dataset,
-                ) -> bool:
-                    # Files inside the folder follow specific pattern
-                    # 'sap/<sap_version>/<table_id>/<sequence>.parquet'
-                    gcs_uris = [f"gs://{bucket}/{prefix}/{table}/*.parquet"]
-                    logger.info("Loading table %s...", table)
-                    return self.bq_client.load_table_from_parquet(
-                        project_id=proj,
-                        dataset_id=dataset,
-                        table_id=table,
-                        gcs_uris=gcs_uris,
-                        write_disposition="WRITE_TRUNCATE",
-                    )
+            logger.info(
+                "Loading %d dynamically discovered SAP tables from %s into BigQuery...",
+                len(tables_to_load),
+                public_bucket,
+            )
 
-                with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-                    results = list(executor.map(_load_single_table, tables_to_load))
+            def _load_single_table(
+                table: str,
+                bucket: str = public_bucket,
+                prefix: str = source_prefix,
+                proj: str = dest_project,
+                dataset: str = dest_dataset,
+            ) -> bool:
+                gcs_uris = [f"gs://{bucket}/{prefix}/{table}/*.parquet"]
+                logger.info("Loading table %s...", table)
+                return self.bq_client.load_table_from_parquet(
+                    project_id=proj,
+                    dataset_id=dataset,
+                    table_id=table,
+                    gcs_uris=gcs_uris,
+                    write_disposition="WRITE_TRUNCATE",
+                )
 
-                if not all(results):
-                    logger.error("One or more BigQuery table loads failed.")
-                    all_successful = False
+            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+                results = list(executor.map(_load_single_table, tables_to_load))
 
-            except Exception as e:
-                logger.exception("An error occurred during seeding: %s", e)
+            if not all(results):
+                logger.error("One or more BigQuery table loads failed.")
                 all_successful = False
-            finally:
-                # Step 4: Ensure ephemeral bucket is deleted on completion/error
-                logger.info(
-                    "Cleaning up ephemeral bucket %s...",
-                    ephemeral_bucket,
-                )
-                try:
-                    storage_client.delete_bucket(ephemeral_bucket, force=True)
-                except Exception as cleanup_err:
-                    logger.warning(
-                        "Failed to clean up ephemeral bucket %s: %s",
-                        ephemeral_bucket,
-                        cleanup_err,
-                    )
+            else:
+                loaded_datasets.add(dataset_key)
 
         return all_successful

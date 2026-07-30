@@ -19,7 +19,7 @@ import inspect
 import logging
 from collections.abc import Callable
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from common.builders.base import BaseBuilder
 
@@ -39,10 +39,10 @@ class Registry[T]:
         """Sets the current namespace during plugin dynamic discovery scan."""
         self._discovery_namespace = namespace
 
-    def register(self, name: str, namespace: str | None = None) -> Callable[[type[T]], type[T]]:
+    def register[U](self, name: str, namespace: str | None = None) -> Callable[[type[U]], type[U]]:
         """Decorator to register a class with a specific name and namespace."""
 
-        def wrapper(cls: type[T]) -> type[T]:
+        def wrapper(cls: type[U]) -> type[U]:
             if self.expected_type and not issubclass(cls, self.expected_type):
                 raise TypeError(
                     f"Cannot register '{cls.__name__}' in '{self.name}' registry: "
@@ -64,7 +64,7 @@ class Registry[T]:
                     if existing_cls.__name__ == cls.__name__ and inspect.getfile(
                         existing_cls
                     ) == inspect.getfile(cls):
-                        return cls
+                        return cast(type[U], cls)
                 except Exception:
                     pass
 
@@ -72,8 +72,8 @@ class Registry[T]:
                 raise ValueError(
                     f"Cannot register '{name}' twice in '{self.name}' registry for {ns_desc}."
                 )
-            self._registry[key] = cls
-            return cls
+            self._registry[key] = cast(type[T], cls)
+            return cast(type[U], cls)
 
         return wrapper
 

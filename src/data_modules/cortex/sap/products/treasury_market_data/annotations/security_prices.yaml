@@ -1,0 +1,64 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+schema: cortex
+name: security_prices
+description: This view is based on SAP S/4HANA or SAP ECC Treasury and Risk Management (TRM) module in
+  the Treasury domain and provides daily market prices (closing, opening, high, low) for securities across
+  different exchanges. The data is captured at the granularity of Client (System), Contract Type Rantyp,
+  Security Class Id Number, Exchange Rhandpl, Rate Price Type Skursart, and Rate Price Date, ensuring
+  a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: contract_type_rantyp
+    description: Contract Type, PK
+  - name: treasury_id_number_ranl
+    description: Treasury Id Number, PK
+  - name: exchange_rhandpl
+    description: Exchange, PK
+  - name: rate_price_type_skursart
+    description: Rate/Price Type, PK
+  - name: rate_price_date_dkurs
+    description: Rate/Price Date, PK
+  - name: quotation_currency_waers
+    description: Quotation Currency
+  - name: price_in_percent_pkur
+    description: Price in Percent
+  - name: treasury_price_pktkur
+    description: Treasury Price
+  - name: source_of_value_skherk
+    description: Source of Value
+  - name: object_key_sobjekt
+    description: Object Key
+  - name: last_changed_by_rbear
+    description: Last Changed by
+  - name: last_edited_on_dbear
+    description: Last Edited on
+  - name: last_edited_at_tbear
+    description: Last Edited At
+  - name: releaser_rfgeb
+    description: Releaser
+  - name: release_date_dfrei
+    description: Release Date
+  - name: time_of_release_tfrei
+    description: Time of Release
+  - name: price_notation_skzusa
+    description: Price Notation
+  - name: price_markdown_skabsch
+    description: Price Markdown
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

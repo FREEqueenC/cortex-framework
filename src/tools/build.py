@@ -31,17 +31,84 @@ import yaml
 from google.auth import exceptions
 
 from common.builders.base import BaseBuilder, FoundationBuilder, ProductBuilder, Source
+from common.errors import CortexBuildError, CortexConfigError, CortexError
 from common.registry import auto_discover_plugins, builder_registry
-from common.schemas.config_schema import DataFoundationModuleConfig, GlobalConfig, SAPModuleConfig
-from common.schemas.enums import ModuleCategory, ModuleType
+from common.schemas.config_schema import DataFoundationModuleConfig, GlobalConfig
+from common.schemas.enums import Category, ModuleCategory
 from common.schemas.manifest_schema import ManifestConfig
-from common.services.config_preprocessor import ConfigPreprocessor
-from common.services.config_validator import ConfigValidator
+from common.services.config_loader import ConfigLoader
+from common.services.external_module_provider import ExternalModuleProvider
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
+from common.services.internal_module_provider import InternalModuleProvider
+from common.services.telemetry.telemetry_logger import EventLogger
+from common.services.unified_module_provider import UnifiedModuleProvider
 from common.utils.file_utils import load_yaml
 from common.utils.logging import setup_logging
 
 _logger = logging.getLogger(__name__)
+
+
+class DataformVar:
+    """Wrapper to specify explicit fallback variables for a config value."""
+
+    def __init__(self, value: Any, fallbacks: list[str]):
+        self.value = value
+        self.fallbacks = fallbacks
+
+
+def dict_to_js_with_vars(
+    d: Any, path: list[str], collected_vars: dict[str, Any] | None = None
+) -> str:
+    """Recursively converts python types to JS code strings.
+
+    Supports safe bracket notation and type casting.
+    """
+    if collected_vars is None:
+        collected_vars = {}
+
+    if isinstance(d, dict):
+        items = [
+            f"{json.dumps(k)}: {dict_to_js_with_vars(v, path + [k], collected_vars)}"
+            for k, v in d.items()
+        ]
+        return "{\n" + ",\n".join(items) + "\n}"
+
+    if isinstance(d, list):
+        items = [dict_to_js_with_vars(v, path + [str(i)], collected_vars) for i, v in enumerate(d)]
+        return "[\n" + ",\n".join(items) + "\n]"
+
+    if isinstance(d, DataformVar):
+        fallbacks = d.fallbacks
+        value = d.value
+    else:
+        fallbacks = []
+        if path:
+            leaf = path[-1]
+            fallbacks.append("cortex_" + "_".join(path))
+            if len(path) > 2:
+                fallbacks.append("cortex_" + path[0] + "_" + leaf)
+            if len(path) > 1:
+                fallbacks.append("cortex_" + leaf)
+            fallbacks = list(dict.fromkeys(fallbacks))
+        value = d
+
+    for f in fallbacks:
+        if f not in collected_vars:
+            collected_vars[f] = value
+
+    chain = " || ".join([f"vars[{json.dumps(v)}]" for v in fallbacks])
+
+    if not chain:
+        return json.dumps(value)
+
+    if isinstance(value, bool):
+        return f'((v => v === "true" ? true : v === "false" ? false : v)({chain}))'
+    elif isinstance(value, (int, float)):
+        return f"Number({chain})"
+    elif value is None:
+        return f"({chain})"
+    else:
+        return f"({chain})"
 
 
 class DatasetIdentifier(NamedTuple):
@@ -83,13 +150,29 @@ class DataformBuilder:
 
         self.required_tables_by_foundation: dict[str, set[str]] = {}
 
+        # Instantiate module providers to centralize module discovery
+        self.internal_module_provider = InternalModuleProvider(
+            namespaces=self.global_config.data.namespaces,
+            config_dir=self.config_dir,
+        )
+        self.external_module_provider = ExternalModuleProvider(
+            catalogs=self.global_config.data.modules.catalogs,
+        )
+        self.module_provider = UnifiedModuleProvider(
+            self.internal_module_provider, self.external_module_provider
+        )
+
         # Build dynamic module registry mapping from namespaced_type -> module metadata
         self.module_registry = self._discover_modules()
 
         # Auto-discover plugins for each namespace
         for ns_config in self.global_config.data.namespaces:
-            path_parts = pathlib.Path(ns_config.path).parts
-            package_path = ".".join(path_parts) + ".common.builders"
+            ns_path = self.global_config.data.get_namespace_path(ns_config.name, self.config_dir)
+            try:
+                rel_to_dm = ns_path.resolve().relative_to(self.data_modules_dir.resolve())
+                package_path = ".".join(rel_to_dm.parts) + ".common.builders"
+            except ValueError:
+                package_path = f"{ns_config.name}.common.builders"
 
             builder_registry.set_discovery_namespace(ns_config.name)
             auto_discover_plugins(package_path)
@@ -99,44 +182,67 @@ class DataformBuilder:
         auto_discover_plugins("common.builders")
 
     def _discover_modules(self) -> dict[str, dict[str, Any]]:
-        """Scans module directories to build a registry of available modules based on type."""
+        """Builds a registry of available modules based on InternalModuleProvider and catalogs."""
         registry = {}
-        for ns_config in self.global_config.data.namespaces:
-            namespace = ns_config.name
-            ns_path = self.data_modules_dir / ns_config.path
-
-            if not ns_path.exists():
-                _logger.warning("Namespace path %s does not exist. Skipping.", ns_path)
+        for full_type in self.internal_module_provider.get_module_types():
+            module_dir = self.internal_module_provider.get_module_dir(full_type)
+            manifest_config = self.internal_module_provider.get_manifest(full_type)
+            if not module_dir or not manifest_config:
                 continue
 
-            for category in ["data_foundation", "data_product"]:
-                category_dir = ns_path / category
-                if not category_dir.exists():
-                    continue
+            parts = full_type.split(".", 1)
+            namespace = parts[0]
+            rel_str = parts[1] if len(parts) > 1 else ""
+            rel_parts = rel_str.split(".")
 
-                for module_dir in category_dir.iterdir():
-                    if not module_dir.is_dir():
-                        continue
+            ns_path = self.global_config.data.get_namespace_path(namespace, self.config_dir)
+            try:
+                rel_to_dm = ns_path.resolve().relative_to(self.data_modules_dir.resolve())
+                clean_ns_path = ".".join(rel_to_dm.parts)
+            except ValueError:
+                clean_ns_path = namespace
 
-                    manifest_path = module_dir / "manifest.yaml"
-                    if manifest_path.exists():
-                        manifest_data = load_yaml(manifest_path) or {}
-                        manifest_config = ManifestConfig(**manifest_data)
+            rel_dir = pathlib.Path(*rel_parts)
 
-                        # If type is defined in manifest, use it.
-                        # Otherwise, fallback to the directory name.
-                        base_type = manifest_config.type or module_dir.name
-                        full_type = f"{namespace}.{base_type}"
-                        registry[full_type] = {
-                            "physical_dir": module_dir,
-                            "module_dir_name": module_dir.name,
-                            "builder_key": manifest_config.builder,
-                            "category": category,
-                            "manifest": manifest_config,
-                            "namespace": namespace,
-                            "base_type": base_type,
-                            "ns_path": ns_config.path.strip("/"),
-                        }
+            # Determine category (foundation vs product) from manifest or folder name
+            if manifest_config.category == ModuleCategory.FOUNDATION:
+                category = Category.FOUNDATION
+            elif manifest_config.category in (
+                ModuleCategory.FOUNDATIONAL_PRODUCT,
+                ModuleCategory.COMPOSITE_PRODUCT,
+            ):
+                category = Category.PRODUCT
+            elif "foundations" in rel_parts or "data_foundation" in rel_parts:
+                category = Category.FOUNDATION
+            else:
+                category = Category.PRODUCT
+
+            registry[full_type] = {
+                "physical_dir": module_dir,
+                "module_dir_name": module_dir.name,
+                "builder_key": manifest_config.builder,
+                "category": category,
+                "manifest": manifest_config,
+                "namespace": namespace,
+                "base_type": rel_str,
+                "ns_path": clean_ns_path,
+                "rel_dir": rel_dir,
+            }
+
+        for catalog_config in self.global_config.data.modules.catalogs:
+            full_type = catalog_config.namespaced_type
+            registry[full_type] = {
+                "physical_dir": self.config_dir,
+                "module_dir_name": "catalog",
+                "builder_key": catalog_config.type,
+                "category": Category.CATALOG,
+                "manifest": ManifestConfig(
+                    category=ModuleCategory.FOUNDATION, type=catalog_config.type
+                ),
+                "namespace": None,
+                "base_type": catalog_config._module_type,
+                "ns_path": None,
+            }
         return registry
 
     def build(self) -> bool:
@@ -153,7 +259,10 @@ class DataformBuilder:
         if config_js_content is None:
             return False  # Validation or processing failed
 
-        self._setup_workflow_and_credentials()
+        collected_vars: dict[str, Any] = {}
+        js_code = dict_to_js_with_vars(config_js_content, [], collected_vars)
+
+        self._setup_workflow_and_credentials(collected_vars)
         self._write_build_info()
 
         if not self._execute_all_modules():
@@ -162,11 +271,16 @@ class DataformBuilder:
 
         # --- Finalize and Write config.js ---
         with open(self.output_dir / "includes" / "config.js", "w") as f:
-            f.write(f"module.exports = {json.dumps(config_js_content, indent=4)};\n")
+            f.write(
+                "const vars = (dataform.projectConfig && dataform.projectConfig.vars) "
+                "? dataform.projectConfig.vars : {};\n"
+            )
+            f.write(f"module.exports = {js_code};\n")
 
         self._generate_centralized_sources()
 
         _logger.info("Dataform build completed successfully.")
+        EventLogger.wait_for_telemetry()
         return True
 
     def _prepare_workspace(self) -> None:
@@ -178,15 +292,21 @@ class DataformBuilder:
         (self.output_dir / "definitions").mkdir(parents=True, exist_ok=True)
         (self.output_dir / "includes").mkdir(parents=True, exist_ok=True)
 
+        # Copy Global Includes
+        global_includes_dir = self.base_dir / "src" / "dataform_includes"
+        if global_includes_dir.exists() and global_includes_dir.is_dir():
+            _logger.info("Copying global includes from %s", global_includes_dir)
+            shutil.copytree(global_includes_dir, self.output_dir / "includes", dirs_exist_ok=True)
+
         # Copy Namespaced Includes
         for ns_config in self.global_config.data.namespaces:
             namespace = ns_config.name
-            ns_path = self.data_modules_dir / ns_config.path
+            ns_path = self.global_config.data.get_namespace_path(namespace, self.config_dir)
             ns_includes_dir = ns_path / "includes"
-            dest_ns_includes_dir = self.output_dir / "includes" / namespace
+            dest_ns_includes_dir = self.output_dir / "includes"
 
             if ns_includes_dir.exists() and ns_includes_dir.is_dir():
-                _logger.info("Copying includes for namespace %s", namespace)
+                _logger.info("Copying includes for namespace %s to includes dir", namespace)
                 shutil.copytree(ns_includes_dir, dest_ns_includes_dir, dirs_exist_ok=True)
 
         # Copy Assertions
@@ -205,34 +325,42 @@ class DataformBuilder:
     def _generate_config_js_content(self) -> dict[str, Any] | None:
         """Parses configs to generate the content for includes/config.js. Returns None on error."""
         config_js_content: dict[str, Any] = {"foundation": {}, "product": {}}
-        foundation_lookup: dict[str, Any] = {}
+        enabled_modules: dict[str, Any] = {}
 
         foundation_modules = self.global_config.data.modules.foundation
         for mod_config in foundation_modules:
             mod_id = mod_config.module_id
             if mod_config.enabled:
-                foundation_lookup[mod_id] = mod_config
+                enabled_modules[mod_id] = mod_config
                 if mod_config.external:
                     continue
                 if not mod_config.data_target_id:
                     continue
-                target = self.global_config.get_data_target(mod_config.data_target_id)
-                source = self.global_config.get_data_source(mod_config.data_source_id)
+                target = self.global_config.get_dataset(mod_config.data_target_id)
+                source = self.global_config.get_dataset(mod_config.data_source_id)
                 config_js_content["foundation"][mod_id] = {
-                    "targetProjectId": target.project_id,
-                    "targetDatasetId": target.dataset_id,
-                    "sourceProjectId": source.project_id,
-                    "sourceDatasetId": source.dataset_id,
+                    "targetProjectId": DataformVar(
+                        target.project_id, [f"cortex_datasets_{target.id}_projectId"]
+                    ),
+                    "targetDatasetId": DataformVar(
+                        target.dataset_id, [f"cortex_datasets_{target.id}_datasetId"]
+                    ),
+                    "sourceProjectId": DataformVar(
+                        source.project_id, [f"cortex_datasets_{source.id}_projectId"]
+                    ),
+                    "sourceDatasetId": DataformVar(
+                        source.dataset_id, [f"cortex_datasets_{source.id}_datasetId"]
+                    ),
                 }
 
         product_modules = self.global_config.data.modules.product
-        product_lookup = {m.module_id: m for m in product_modules if m.enabled}
+        enabled_modules.update({m.module_id: m for m in product_modules if m.enabled})
         for prod_config in product_modules:
             if not prod_config.enabled:
                 continue
 
             module_id = prod_config.module_id
-            full_type = f"{prod_config._namespace}.{prod_config._module_type}"
+            full_type = prod_config.namespaced_type
             module_meta = self.module_registry.get(full_type)
 
             if not module_meta:
@@ -242,10 +370,10 @@ class DataformBuilder:
             manifest_config = module_meta["manifest"]
             module_meta["module_dir_name"]
 
-            sources = {}
+            sources: dict[str, Any] = {}
             for dep_key, dep_info in manifest_config.dependencies.items():
-                expected_type = dep_info.type
-                dep_module_id = prod_config.depends_on.get(dep_key)
+                expected_type = dep_info.module_path
+                dep_module_id = prod_config.dependency_bindings.get(dep_key)
 
                 if not dep_module_id:
                     _logger.error(
@@ -255,8 +383,56 @@ class DataformBuilder:
                     )
                     return None
 
-                f_config = foundation_lookup.get(dep_module_id) or product_lookup.get(dep_module_id)
+                f_config = enabled_modules.get(dep_module_id)
                 if not f_config:
+                    catalog_id = dep_module_id.split(".", 1)[0]
+                    cat_match = next(
+                        (
+                            cat
+                            for cat in self.global_config.data.modules.catalogs
+                            if cat.id == catalog_id
+                        ),
+                        None,
+                    )
+                    if cat_match:
+                        if not cat_match.enabled:
+                            _logger.error(
+                                "Product %s maps %s to catalog %s which is disabled.",
+                                module_id,
+                                dep_key,
+                                cat_match.id,
+                            )
+                            return None
+                        resolved = self.external_module_provider.resolve_catalog_schema(
+                            dep_module_id
+                        )
+                        if not resolved:
+                            _logger.error(
+                                "Product %s maps %s to external catalog schema '%s'"
+                                " which was not found.",
+                                module_id,
+                                dep_key,
+                                dep_module_id,
+                            )
+                            return None
+                        sources[dep_key] = {
+                            "projectId": DataformVar(
+                                resolved.project_id,
+                                [
+                                    f"cortex_catalogs_{cat_match.id}_{dep_key}_projectId",
+                                    f"cortex_catalogs_{cat_match.id}_projectId",
+                                ],
+                            ),
+                            "datasetId": DataformVar(
+                                resolved.physical_dataset_id,
+                                [
+                                    f"cortex_catalogs_{cat_match.id}_{dep_key}_datasetId",
+                                    f"cortex_catalogs_{cat_match.id}_datasetId",
+                                ],
+                            ),
+                        }
+                        continue
+
                     _logger.error(
                         "Product %s maps %s to module %s which is not enabled/exists.",
                         module_id,
@@ -265,66 +441,64 @@ class DataformBuilder:
                     )
                     return None
 
-                # Compare using module types
-                if f_config._module_type != expected_type:
+                # Strict comparison using module_path or namespaced_type
+                if (
+                    f_config.module_path != expected_type
+                    and f_config.namespaced_type != expected_type
+                ):
                     _logger.error(
                         "Product %s dependency %s expects type %s, but module %s is type %s.",
                         module_id,
                         dep_key,
                         expected_type,
                         dep_module_id,
-                        f_config._module_type,
+                        f_config.module_path,
                     )
                     return None
 
-                if expected_type == ModuleType.SAP:
-                    if not isinstance(f_config, SAPModuleConfig):
-                        _logger.error(
-                            "Product %s expects type SAP for %s, but module %s is not a "
-                            "SAP module config.",
-                            module_id,
-                            dep_key,
-                            dep_module_id,
-                        )
-                        return None
-                    f_sap_version = f_config.module_settings.sap_version
-                    if f_sap_version not in dep_info.supported_versions:
-                        _logger.error(
-                            "Product %s dependency %s requires one of %s, but module %s is "
-                            "configured for %s.",
-                            module_id,
-                            dep_key,
-                            [v.value for v in dep_info.supported_versions],
-                            dep_module_id,
-                            f_sap_version.value,
-                        )
-                        return None
-
                 if isinstance(f_config, DataFoundationModuleConfig) and f_config.external:
-                    f_source = self.global_config.get_data_source(f_config.data_source_id)
+                    f_source = self.global_config.get_dataset(f_config.data_source_id)
                     sources[dep_key] = {
-                        "projectId": f_source.project_id,
-                        "datasetId": f_source.dataset_id,
+                        "projectId": DataformVar(
+                            f_source.project_id, [f"cortex_datasets_{f_source.id}_projectId"]
+                        ),
+                        "datasetId": DataformVar(
+                            f_source.dataset_id, [f"cortex_datasets_{f_source.id}_datasetId"]
+                        ),
                     }
                 else:
                     if not f_config.data_target_id:
-                        raise ValueError(f"dataTargetId is missing for module {f_config.module_id}")
-                    f_target = self.global_config.get_data_target(f_config.data_target_id)
+                        raise CortexConfigError(
+                            f"dataTargetId is missing for module '{f_config.module_id}'",
+                            hint=(
+                                "Verify that 'dataTargetId' is set for this module "
+                                "in your config.yaml."
+                            ),
+                        )
+                    f_target = self.global_config.get_dataset(f_config.data_target_id)
                     sources[dep_key] = {
-                        "projectId": f_target.project_id,
-                        "datasetId": f_target.dataset_id,
+                        "projectId": DataformVar(
+                            f_target.project_id, [f"cortex_datasets_{f_target.id}_projectId"]
+                        ),
+                        "datasetId": DataformVar(
+                            f_target.dataset_id, [f"cortex_datasets_{f_target.id}_datasetId"]
+                        ),
                     }
 
-            prod_target = self.global_config.get_data_target(prod_config.data_target_id)
+            prod_target = self.global_config.get_dataset(prod_config.data_target_id)
             config_js_content["product"][module_id] = {
-                "targetProjectId": prod_target.project_id,
-                "targetDatasetId": prod_target.dataset_id,
+                "targetProjectId": DataformVar(
+                    prod_target.project_id, [f"cortex_datasets_{prod_target.id}_projectId"]
+                ),
+                "targetDatasetId": DataformVar(
+                    prod_target.dataset_id, [f"cortex_datasets_{prod_target.id}_datasetId"]
+                ),
                 "sources": sources,
             }
 
         return config_js_content
 
-    def _setup_workflow_and_credentials(self) -> None:
+    def _setup_workflow_and_credentials(self, collected_vars: dict[str, Any]) -> None:
         """Sets up Dataform workflow settings and local credentials."""
         location = self.global_config.data.big_query_location
         src_workflow_settings = self.src_dir / "workflow_settings.yaml"
@@ -333,6 +507,10 @@ class DataformBuilder:
         if src_workflow_settings.exists():
             settings_yaml = load_yaml(src_workflow_settings)
             settings_yaml["defaultLocation"] = location
+
+            vars_dict = settings_yaml.setdefault("vars", {})
+            for k, v in collected_vars.items():
+                vars_dict[k] = v
 
             with open(dest_workflow_settings, "w") as f:
                 yaml.dump(settings_yaml, f)
@@ -381,25 +559,32 @@ class DataformBuilder:
         for prod_config in product_modules:
             if not prod_config.enabled:
                 continue
-            full_type = f"{prod_config._namespace}.{prod_config._module_type}"
+            full_type = prod_config.namespaced_type
             module_meta = self.module_registry.get(full_type)
             if not module_meta:
                 continue
 
             manifest_config = module_meta["manifest"]
             for dep_key, dep_info in manifest_config.dependencies.items():
-                foundation_id = prod_config.depends_on.get(dep_key)
+                foundation_id = prod_config.dependency_bindings.get(dep_key)
                 if foundation_id:
                     tables = dep_info.get_required_tables()
                     self.required_tables_by_foundation.setdefault(foundation_id, set()).update(
                         tables
                     )
 
+        # Process catalog modules
+        for cat_config in self.global_config.data.modules.catalogs:
+            if cat_config.enabled and not self._process_module(cat_config, Category.CATALOG):
+                all_successful = False
+
+        if not all_successful:
+            _logger.error("Catalog build failed. Skipping foundation and product builds.")
+            return False
+
         # Process foundation modules
         for mod_config in foundation_modules:
-            if mod_config.enabled and not self._process_module(
-                mod_config, ModuleCategory.FOUNDATION
-            ):
+            if mod_config.enabled and not self._process_module(mod_config, Category.FOUNDATION):
                 all_successful = False
 
         if not all_successful:
@@ -408,14 +593,12 @@ class DataformBuilder:
 
         # Process product modules
         for prod_config in product_modules:
-            if prod_config.enabled and not self._process_module(
-                prod_config, ModuleCategory.PRODUCT
-            ):
+            if prod_config.enabled and not self._process_module(prod_config, Category.PRODUCT):
                 all_successful = False
 
         return all_successful
 
-    def _process_module(self, module_config, category: ModuleCategory) -> bool:
+    def _process_module(self, module_config, category: Category) -> bool:
         """Loads and executes a dynamic data module's builder.py."""
         context = self._get_module_context(module_config, category)
         if not context:
@@ -423,20 +606,16 @@ class DataformBuilder:
 
         plugin, out_dir, ann_dir, dir_name = context
         module_id = module_config.module_id
-        full_type = f"{module_config._namespace}.{module_config._module_type}"
+        full_type = module_config.namespaced_type
         module_meta = self.module_registry[full_type]
 
         try:
             out_dir.mkdir(parents=True, exist_ok=True)
-            table_settings_file = None
             if module_config.table_settings:
                 path = pathlib.Path(module_config.table_settings)
-                if path.is_absolute():
-                    table_settings_file = path
-                elif getattr(module_config, "_table_settings_explicit", False):
-                    table_settings_file = self.config_dir / path
-                else:
-                    table_settings_file = self.base_dir / path
+                table_settings_file = path if path.is_absolute() else self.config_dir / path
+            else:
+                table_settings_file = module_meta["physical_dir"] / "table_settings.default.yaml"
 
             is_valid_builder = False
             build_kwargs = {
@@ -452,12 +631,14 @@ class DataformBuilder:
                 "table_settings_file": table_settings_file,
             }
 
-            if category == ModuleCategory.FOUNDATION and isinstance(plugin, FoundationBuilder):
+            if category == Category.FOUNDATION and isinstance(plugin, FoundationBuilder):
                 build_kwargs["required_tables"] = self.required_tables_by_foundation.get(
                     module_id, set()
                 )
                 is_valid_builder = True
-            elif category == ModuleCategory.PRODUCT and isinstance(plugin, ProductBuilder):
+            elif (category == Category.PRODUCT and isinstance(plugin, ProductBuilder)) or (
+                category == Category.CATALOG and isinstance(plugin, BaseBuilder)
+            ):
                 is_valid_builder = True
 
             if not is_valid_builder:
@@ -472,6 +653,9 @@ class DataformBuilder:
 
             return True
 
+        except CortexError as e:
+            _logger.error("Failed to process %s module %s: %s", category.value, module_id, e)
+            return False
         except Exception as e:
             _logger.exception("Failed to process %s module %s: %s", category.value, module_id, e)
             return False
@@ -494,9 +678,21 @@ class DataformBuilder:
 
             # Validate project and dataset IDs to prevent path traversal
             if not re.match(r"^[a-zA-Z0-9._-]+$", proj):
-                raise ValueError(f"Invalid project ID: {proj}")
+                raise CortexBuildError(
+                    f"Invalid project ID: '{proj}'",
+                    hint=(
+                        "Ensure the project ID contains only alphanumeric characters, "
+                        "dots, underscores, or hyphens."
+                    ),
+                )
             if not re.match(r"^[a-zA-Z0-9._-]+$", ds):
-                raise ValueError(f"Invalid dataset ID: {ds}")
+                raise CortexBuildError(
+                    f"Invalid dataset ID: '{ds}'",
+                    hint=(
+                        "Ensure the dataset ID contains only alphanumeric characters, "
+                        "dots, underscores, or hyphens."
+                    ),
+                )
 
             shared_sources_dir = self.output_dir / "definitions" / "sources"
             shared_sources_dir.mkdir(parents=True, exist_ok=True)
@@ -511,24 +707,28 @@ class DataformBuilder:
             abs_sources_file = sources_file.resolve()
 
             if not str(abs_sources_file).startswith(str(abs_output_dir)):
-                raise ValueError(
-                    f"Path traversal detected: {sources_file} is outside {self.output_dir}"
+                raise CortexBuildError(
+                    f"Path traversal detected: {sources_file} is outside {self.output_dir}",
+                    hint=(
+                        "Ensure that project ID and dataset ID do not contain "
+                        "path traversal sequences."
+                    ),
                 )
 
             with open(sources_file, "w", encoding="utf-8") as f:
                 for table in tables:
                     f.write(
                         f"declare({{\n"
-                        f'  database: "{proj}",\n'
-                        f'  schema: "{ds}",\n'
-                        f'  name: "{table}"\n'
+                        f"  database: {json.dumps(proj)},\n"
+                        f"  schema: {json.dumps(ds)},\n"
+                        f"  name: {json.dumps(table)}\n"
                         f"}});\n"
                     )
 
     def _get_builder(
         self,
         builder_name: str | None,
-        namespace: str = "cortex",
+        namespace: str | None = None,
         local_module_path: str = "",
         module_dir_name: str = "",
     ) -> BaseBuilder | None:
@@ -581,12 +781,11 @@ class DataformBuilder:
         return None
 
     def _get_module_context(
-        self, module_config, module_category: ModuleCategory
+        self, module_config, category: Category
     ) -> tuple[Any, pathlib.Path, pathlib.Path, str] | None:
         """Resolves common module metadata and initializes the builder plugin."""
         module_id = module_config.module_id
-        # Construct the full type from the namespace and module type for metadata lookup
-        full_type = f"{module_config._namespace}.{module_config._module_type}"
+        full_type = module_config.namespaced_type
 
         module_meta = self.module_registry.get(full_type)
         if not module_meta:
@@ -600,21 +799,25 @@ class DataformBuilder:
 
         _logger.info(
             "Resolving context for %s module %s (namespace: %s) with builder: %s",
-            module_category.value,
+            category.value,
             module_id,
             namespace,
             builder_name,
         )
 
-        category_dir_name = module_category.value
         definitions_dir = self.output_dir / "definitions"
-        module_output_dir = definitions_dir / category_dir_name / module_id
+        rel_dir = module_meta.get("rel_dir")
+        ns_dir = definitions_dir / namespace if namespace else definitions_dir
+        if rel_dir and len(rel_dir.parts) >= 2:
+            module_output_dir = ns_dir / rel_dir.parent / module_id
+        else:
+            module_output_dir = ns_dir / category.value / module_id
         module_annotations_dir = module_src_dir / "annotations"
 
         try:
-            # Builders are now located at <namespace>.common.builders... or in module builder.py
             ns_path = module_meta.get("ns_path")
-            local_module_path = f"{ns_path}.{category_dir_name}.{module_dir_name}.builder"
+            rel_dir_str = str(module_meta.get("rel_dir", "")).replace("/", ".")
+            local_module_path = f"data_modules.{ns_path}.{rel_dir_str}.builder"
             builder_path = module_src_dir / "builder.py"
 
             plugin_instance = self._get_builder(
@@ -666,44 +869,53 @@ def main(args=None):
     )
     args = parser.parse_args(args)
 
-    config_file = args.config
-    if not config_file.exists():
-        _logger.error("Config file not found at %s", config_file)
+    try:
+        config_file = args.config
+        if not config_file.exists():
+            raise CortexConfigError(
+                f"Config file not found at {config_file}",
+                hint="Please check that the file path is correct and that the file exists.",
+            )
+
+        global_config, validation_errors = ConfigLoader.load_and_validate(config_file)
+        if not global_config:
+            errors_str = "\n".join(f"  - {err}" for err in validation_errors)
+            raise CortexConfigError(
+                f"Configuration validation failed with the following errors:\n{errors_str}",
+                hint="Correct the issues in config.yaml according to the validation rules.",
+            )
+
+        checker = GcpEnvironmentChecker(
+            global_config,
+            enable_apis=args.enable_apis,
+            create_datasets=args.create_datasets,
+        )
+        checker.validate_all()
+
+        output_dir = args.output_dir
+        if not output_dir.is_absolute():
+            output_dir = pathlib.Path.cwd() / output_dir
+
+        builder = DataformBuilder(
+            global_config=global_config,
+            output_dir=output_dir,
+            config_dir=config_file.parent,
+            assertions_path=args.assertions,
+        )
+        success = builder.build()
+        if not success:
+            raise CortexBuildError(
+                "Build completed with errors in one or more modules.",
+                hint=(
+                    "Check the log files or console output above to identify which "
+                    "builder module failed and check its settings."
+                ),
+            )
+    except CortexError as e:
+        _logger.error(str(e))
         sys.exit(1)
-
-    is_valid, validation_errors = ConfigValidator.validate(config_file)
-    if not is_valid:
-        _logger.error("Configuration validation failed with the following errors:")
-        for err in validation_errors:
-            _logger.error("  - %s", err)
-        sys.exit(1)
-
-    global_config_dict = load_yaml(config_file)
-    global_config_dict = ConfigPreprocessor().process(global_config_dict)
-
-    global_config = GlobalConfig.model_validate(
-        global_config_dict, context={"config_dir": config_file.parent}
-    )
-
-    checker = GcpEnvironmentChecker(
-        global_config, enable_apis=args.enable_apis, create_datasets=args.create_datasets
-    )
-    if not checker.validate_all():
-        _logger.error("GCP Environment checks failed. Aborting execution.")
-        sys.exit(1)
-
-    output_dir = args.output_dir
-    if not output_dir.is_absolute():
-        output_dir = pathlib.Path.cwd() / output_dir
-
-    builder = DataformBuilder(
-        global_config=global_config,
-        output_dir=output_dir,
-        config_dir=config_file.parent,
-        assertions_path=args.assertions,
-    )
-    success = builder.build()
-    if not success:
+    except Exception:
+        _logger.exception("An unexpected error occurred:")
         sys.exit(1)
 
 

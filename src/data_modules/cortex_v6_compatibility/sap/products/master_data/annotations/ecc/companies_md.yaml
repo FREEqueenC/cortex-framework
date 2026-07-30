@@ -1,0 +1,42 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Master data is the fundamental business data in an enterprise and defines the business objects and classifications. CompaniesMD view gives information related to different companies in the system like company code, country, name, at Granularity of Client(system), Company code and Language key."
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "CurrencyCode_WAERS"
+    description: "Currency"
+  - name: "CompanyCode_BUKRS"
+    description: "Company Code, PK"
+  - name: "CompanyText_BUTXT"
+    description: "Name of Company"
+  - name: "CityName_ORT01"
+    description: "City Name"
+  - name: "Country_LAND1"
+    description: "Country Key of Company"
+  - name: "Language_SPRAS"
+    description: "Language Key, PK"
+  - name: "ChartOfAccounts_KTOPL"
+    description: "Chart of Accounts"
+  - name: "FiscalyearVariant_PERIV"
+    description: "Fiscal Year Variant"
+  - name: "Company_RCOMP"
+    description: "Company Information"
+  - name: "CreditControlArea_KKBER"
+    description: "Credit Control Area"
+  - name: "CountryChartofAccounts_KTOP2"
+    description: "Chart of Accounts According To Country Legislation"
+  - name: "FundsManagement_FIKRS"
+    description: "Funds Management Area"

@@ -1,0 +1,178 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Controlling Object: Line Items (By Period)'
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: controlling_area_kokrs
+    description: Controlling Area, PK
+  - name: document_number_belnr
+    description: Document Number, PK
+  - name: posting_row_buzei
+    description: Posting Row, PK
+  - name: period_perio
+    description: Period
+  - name: value_transaction_currency_wtgbtr
+    description: Value in Transaction Currency
+  - name: value_in_object_currency_wogbtr
+    description: Value in Object Currency
+  - name: value_controlling_area_currency_wkgbtr
+    description: Value in Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkfbtr
+    description: Fixvalue Controlling Area Currency
+  - name: price_variance_pagbtr
+    description: Price Variance
+  - name: price_variance_fixed_pafbtr
+    description: Price Variance Fixed
+  - name: total_quantity_megbtr
+    description: Total Quantity
+  - name: fixed_quantity_mefbtr
+    description: Fixed Quantity
+  - name: total_quantity_mbgbtr
+    description: Total Quantity
+  - name: fix_quantity_entered_mbfbtr
+    description: Fix Quantity Entered
+  - name: ledger_lednr
+    description: Ledger
+  - name: object_number_objnr
+    description: Object Number
+  - name: fiscal_year_gjahr
+    description: Fiscal Year
+  - name: value_type_wrttp
+    description: Value Type
+  - name: version_versn
+    description: Version
+  - name: cost_element_kstar
+    description: Cost Element
+  - name: controlling_subkey_hrkft
+    description: Controlling Subkey
+  - name: business_transaction_vrgng
+    description: Business Transaction
+  - name: partner_object_parob
+    description: Partner Object
+  - name: partner_object_parob1
+    description: Partner Object
+  - name: source_object_uspob
+    description: Source Object
+  - name: trading_partner_number_vbund
+    description: Trading Partner
+  - name: trading_partner_business_area_pargb
+    description: Trading Partner Business Area
+  - name: debit_credit_indicator_beknz
+    description: Debit/Credit Indicator
+  - name: transaction_currency_twaer
+    description: Transaction Currency
+  - name: object_currency_owaer
+    description: Object Currency
+  - name: unit_of_measure_meinh
+    description: Unit of Measure
+  - name: posted_unit_of_measure_meinb
+    description: Posted Unit of Measure
+  - name: quantity_complete_incomplete_mvflg
+    description: Quantity Complete/Incomp
+  - name: name_sgtxt
+    description: Name
+  - name: posting_row_refbz
+    description: Posting Row
+  - name: document_item_zlenr
+    description: Document Item
+  - name: row_in_op_version_bw_refbz
+    description: Row in Op Version
+  - name: offsetting_account_no_gkont
+    description: Offsetting Account Number
+  - name: offsetting_account_type_gkoar
+    description: Offsetting Account Type
+  - name: plant_werks
+    description: Plant
+  - name: material_matnr
+    description: Material
+  - name: po_category_rbest
+    description: PO Category
+  - name: purchasing_document_ebeln
+    description: Purchasing Document
+  - name: item_ebelp
+    description: Item
+  - name: seq_no_of_account_assignment_zekkn
+    description: Sequential Number of Account Assignment
+  - name: completion_indicator_erlkz
+    description: Completion Indicator
+  - name: personnel_number_pernr
+    description: Personnel Number
+  - name: amount_class_btrkl
+    description: Amount Class
+  - name: auxiliary_account_assignment_1_objnr_n1
+    description: Aux.Account Assgnmnt_1
+  - name: auxiliary_account_assignment_2_objnr_n2
+    description: Aux Account Assgnmt_2
+  - name: auxiliary_account_assignment_3_objnr_n3
+    description: Aux.Account Assgnmnt_3
+  - name: profitability_segment_no_paobjnr
+    description: Profitab Segmt Number
+  - name: debit_credit_type_beltp
+    description: Debit Type
+  - name: company_code_bukrs
+    description: Company Code
+  - name: business_area_gsber
+    description: Business Area
+  - name: functional_area_fkber
+    description: Functional Area
+  - name: object_class_scope
+    description: Object Class
+  - name: logical_system_logsyso
+    description: Logical System
+  - name: partner_cost_element_pkstar
+    description: Partner Cost Element
+  - name: partner_company_code_pbukrs
+    description: Partner Cocode
+  - name: partner_functional_area_pfkber
+    description: Partner Func Area
+  - name: partner_object_class_pscope
+    description: Partner Object Class
+  - name: logical_system_logsysp
+    description: Logical System
+  - name: reference_date_dabrz
+    description: Reference Date
+  - name: valuation_strategy_bwstrat
+    description: Valuation Strategy
+  - name: origin_object_objnr_hk
+    description: Origin Object
+  - name: time_created_timestmp
+    description: Time Created
+  - name: notification_qmnum
+    description: Notification
+  - name: fund_geber
+    description: Fund
+  - name: partner_fund_pgeber
+    description: Partner Fund
+  - name: grant_grant_nbr
+    description: Grant
+  - name: partner_grant_pgrant_nbr
+    description: Partner Grant
+  - name: fi_posting_item_refbz_fi
+    description: FI Posting Item
+  - name: segment
+    description: Segment
+  - name: partner_segment_psegment
+    description: Partner Segment
+  - name: budget_period_budget_pd
+    description: Budget Period
+  - name: partner_budget_period_pbudget_pd
+    description: Par Budget Per
+  - name: production_month_prodper
+    description: Production Month
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

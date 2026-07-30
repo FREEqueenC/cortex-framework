@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Budget Values (Overall)"
+fields:
+- name: "mandt"
+  description: "Client"
+- name: "lednr"
+  description: "Ledger"
+- name: "objnr"
+  description: "Object Number"
+- name: "posit"
+  description: "Internal Commitment Item (8)"
+- name: "trgkz"
+  description: "Object Indicator"
+- name: "wrttp"
+  description: "Value Type"
+- name: "geber"
+  description: "Fund"
+- name: "versn"
+  description: "Version"
+- name: "vorga"
+  description: "Budget Type"
+- name: "twaer"
+  description: "Transaction Currency"
+- name: "subvo"
+  description: "Budget Subtype"
+- name: "farea"
+  description: "Functional Area"
+- name: "wtges"
+  description: "Total Value"
+- name: "wlges"
+  description: "Total Value"
+- name: "wtgev"
+  description: "Total Distributed Value"
+- name: "wlgev"
+  description: "Total Distributed Value"
+- name: "kalnr"
+  description: "Cost Estimate Number"
+- name: "klvar"
+  description: "Costing Variant"
+- name: "beltp"
+  description: "Debit Type"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

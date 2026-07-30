@@ -26,13 +26,11 @@ def test_main_success(tmp_path):
     config_file.touch()
 
     with (
-        mock.patch("tools.run_all.load_yaml", return_value={}),
-        mock.patch("tools.run_all.GlobalConfig"),
-        mock.patch("tools.run_all.ConfigValidator") as mock_validator_cls,
+        mock.patch("tools.run_all.ConfigLoader") as mock_loader_cls,
         mock.patch("tools.run_all.DataformBuilder") as mock_builder_cls,
         mock.patch("tools.run_all.DeploymentOrchestrator") as mock_deploy_cls,
     ):
-        mock_validator_cls.validate.return_value = (True, [])
+        mock_loader_cls.load_and_validate.return_value = (mock.MagicMock(), [])
         mock_builder = mock.MagicMock()
         mock_builder.build.return_value = True
         mock_builder_cls.return_value = mock_builder
@@ -66,13 +64,11 @@ def test_main_success_with_assertions(tmp_path):
     assertions_file.touch()
 
     with (
-        mock.patch("tools.run_all.load_yaml", return_value={}),
-        mock.patch("tools.run_all.GlobalConfig"),
-        mock.patch("tools.run_all.ConfigValidator") as mock_validator_cls,
+        mock.patch("tools.run_all.ConfigLoader") as mock_loader_cls,
         mock.patch("tools.run_all.DataformBuilder") as mock_builder_cls,
         mock.patch("tools.run_all.DeploymentOrchestrator") as mock_deploy_cls,
     ):
-        mock_validator_cls.validate.return_value = (True, [])
+        mock_loader_cls.load_and_validate.return_value = (mock.MagicMock(), [])
         mock_builder = mock.MagicMock()
         mock_builder.build.return_value = True
         mock_builder_cls.return_value = mock_builder

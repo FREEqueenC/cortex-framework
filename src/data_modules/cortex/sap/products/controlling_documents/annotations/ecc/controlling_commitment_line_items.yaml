@@ -1,0 +1,122 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Commitments Management: Line Items'
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: reference_document_category_refbt
+    description: Reference Document Category, PK
+  - name: reference_document_number_refbn
+    description: Reference Document Number, PK
+  - name: reference_item_rfpos
+    description: Reference Item, PK
+  - name: account_assignment_number_rfknt
+    description: Account Assignment Number, PK
+  - name: deadline_item_rftrm
+    description: Deadline Item, PK
+  - name: reference_document_type_rfart
+    description: Reference Document Type, PK
+  - name: vendor_lifnr
+    description: Vendor, PK
+  - name: ledger_lednr
+    description: Ledger, PK
+  - name: object_number_objnr
+    description: Object Number, PK
+  - name: controlling_subkey_hrkft
+    description: Controlling Subkey, PK
+  - name: reference_organizational_unit_rforg
+    description: Reference Organizational Unit, PK
+  - name: reference_procedure_rftyp
+    description: Reference Procedure, PK
+  - name: logical_system_rfsys
+    description: Logical System, PK
+  - name: business_transaction_vrgng
+    description: Business Transaction
+  - name: fiscal_year_gjahr
+    description: Fiscal Year
+  - name: value_type_wrttp
+    description: Value Type
+  - name: version_versn
+    description: Version
+  - name: cost_element_sakto
+    description: Cost Element
+  - name: trading_partner_number_vbund
+    description: Trading Partner
+  - name: trading_partner_business_area_pargb
+    description: Trading Partner Business Area
+  - name: debit_credit_indicator_beknz
+    description: Debit/Credit Indicator
+  - name: transaction_currency_twaer
+    description: Transaction Currency
+  - name: user_name_uname
+    description: User Name
+  - name: document_date_bldat
+    description: Document Date
+  - name: debit_date_budat
+    description: Debit Date
+  - name: period_perio
+    description: Period
+  - name: company_code_bukrs
+    description: Company Code
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: material_matnr
+    description: Material
+  - name: material_group_matkl
+    description: Material Group
+  - name: name_sgtxt
+    description: Name
+  - name: planned_quantity_gesmng
+    description: Quantity Plan
+  - name: unit_of_measure_meinh
+    description: Unit of Measure
+  - name: total_quantity_megbtr
+    description: Total Quantity
+  - name: total_quantity_mbgbtr
+    description: Total Quantity
+  - name: posted_unit_of_measure_meinb
+    description: Posted Unit of Measure
+  - name: exchange_rate_wkurs
+    description: Exchange Rate
+  - name: planned_local_currency_orgwth
+    description: Plan in Local Currency
+  - name: value_local_currency_whgbtr
+    description: Value in Local Currency
+  - name: planned_controlling_area_currency_orgwtk
+    description: Plan/Cocurrency
+  - name: value_controlling_area_currency_wkgbtr
+    description: Value in Controlling Area Currency
+  - name: planned_transaction_currency_orgwtt
+    description: Plan in Transaction Currency
+  - name: value_transaction_currency_wtgbtr
+    description: Value in Transaction Currency
+  - name: planned_object_currency_orgwto
+    description: Plan in Object Currency
+  - name: value_in_object_currency_wogbtr
+    description: Value in Object Currency
+  - name: planned_ledger_currency_orgwtl
+    description: Plan/Ledger Currency
+  - name: value_ledger_currency_wlgbtr
+    description: Value in Ledger Currency
+  - name: deletion_indicator_loekz
+    description: Deletion Indicator
+  - name: reference_date_dabrz
+    description: Reference Date
+  - name: timestamp_gmt_timestmp
+    description: Time (GMT)
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

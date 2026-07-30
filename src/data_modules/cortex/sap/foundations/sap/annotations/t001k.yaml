@@ -1,0 +1,68 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Valuation Area"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "bwkey"
+  description: "Valuation Area"
+- name: "bukrs"
+  description: "Company Code"
+- name: "bwmod"
+  description: "Valuation Grpg Code"
+- name: "xbkng"
+  description: "Neg Stocks Allowed"
+- name: "mlbwa"
+  description: "Mat Ledger Active"
+- name: "mlbwv"
+  description: "Ml Active(Compulsory)"
+- name: "xvkbw"
+  description: "Salesprice Valuation"
+- name: "erklaerkom"
+  description: "Explanation Facility"
+- name: "uprof"
+  description: "Revaluat Profile"
+- name: "wbpro"
+  description: "Value.-Based Im Profile"
+- name: "mlast"
+  description: "Material Price Determination: Control"
+- name: "mlasv"
+  description: "Price Determ Is Binding in Value Area"
+- name: "bdifp"
+  description: "Stock Correction Toler"
+- name: "xlbpd"
+  description: "Prdiff Goods Receipt Sc"
+- name: "xewrx"
+  description: "Post with Recpt Value"
+- name: "x2fdo"
+  description: "Two FI Documents"
+- name: "prsfr"
+  description: "Price Release"
+- name: "mlccs"
+  description: "Actcstcmpsplt Active"
+- name: "xefre"
+  description: "Delivery Costs to Price Difference Account"
+- name: "efrej"
+  description: "From Fiscal Year"
+- name: "fmp_prsfr"
+  description: "Fmp Prsfr"
+- name: "fmp_prfrgr"
+  description: "Fmp Prfrgr"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

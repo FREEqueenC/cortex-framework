@@ -1,0 +1,50 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides Links materials to their Bill of Material (BOM) numbers and alternatives at
+  the plant and BOM usage level, using SAP MAST. The data is captured at the granularity of Client (System),
+  Material Number, Plant, Bom Usage, Bill Of Material, and Alternative Bom, ensuring a unique audit trail
+  for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: material_number_matnr
+    description: Material Number, PK
+  - name: plant_werks
+    description: Plant, PK
+  - name: bom_usage_stlan
+    description: Bom Usage, PK
+  - name: bill_of_material_stlnr
+    description: Bill of Material, PK
+  - name: alternative_bom_stlal
+    description: Alternative Bom, PK
+  - name: from_lot_size_losvn
+    description: From Lot Size
+  - name: to_lot_size_losbs
+    description: To Lot Size
+  - name: created_on_andat
+    description: Created on
+  - name: created_by_annam
+    description: Created by
+  - name: changed_on_aedat
+    description: Changed on
+  - name: changed_by_aenam
+    description: Changed by
+  - name: configured_material_cslty
+    description: Configured Material
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

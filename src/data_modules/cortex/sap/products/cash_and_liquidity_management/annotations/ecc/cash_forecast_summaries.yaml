@@ -1,0 +1,45 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP ECC Financial Accounting (FI), Financial Supply
+  Chain Management (FSCM) module in the Finance domain and provides summary records of cash management
+  and forecast data for G/L accounts from the ECC FDSB table. The data is captured at the granularity
+  of system default keys, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: not_used_segmt
+    description: Not Used, PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: general_ledger_account_number_bnkko
+    description: General Ledger Account Number, PK
+  - name: planning_level_ebene
+    description: Planning Level, PK
+  - name: planned_currency_dispw
+    description: Planned Currency, PK
+  - name: planning_date_datum
+    description: Planning Date, PK
+  - name: expiration_date_avdat
+    description: Expiration Date, PK
+  - name: business_area_gsber
+    description: Business Area, PK
+  - name: amount_wrshb
+    description: Amount
+  - name: local_currency_amount_dmshb
+    description: Local Currency Amount
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

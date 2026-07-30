@@ -18,7 +18,8 @@ import pytest
 from google.api_core.exceptions import NotFound
 from google.cloud import bigquery
 
-from common.clients.bigquery import BigQueryManager
+from common.clients.bq.bigquery import BigQueryManager
+from common.clients.bq.model import TableInfo
 from common.schemas.config_schema import GlobalConfig
 
 
@@ -241,3 +242,64 @@ def test_get_dataset_exception():
     with pytest.raises(Exception) as excinfo:
         bq_client.get_dataset(project_id="proj1", dataset_id="ds1")
     assert "Generic error" in str(excinfo.value)
+
+
+# -- Tests for list_dataset_tables --
+
+
+def test_list_dataset_tables_success():
+    mock_client = MagicMock(spec=bigquery.Client)
+
+    mock_item1 = MagicMock()
+    mock_item1.table_id = "table_1"
+    mock_item1.labels = {"key1": "val1"}
+
+    mock_item2 = MagicMock()
+    mock_item2.table_id = "table_2"
+    mock_item2.labels = {"key2": "val2"}
+
+    mock_client.list_tables.return_value = [mock_item1, mock_item2]
+
+    bq_client = BigQueryManager(clients={"proj1": mock_client})
+    result = bq_client.list_dataset_tables(project_id="proj1", dataset_id="ds1")
+
+    assert len(result) == 2
+    assert result[0] == TableInfo(id="table_1", dataset_id="ds1", labels={"key1": "val1"})
+    assert result[1] == TableInfo(id="table_2", dataset_id="ds1", labels={"key2": "val2"})
+
+    mock_client.list_tables.assert_called_once_with(
+        "proj1.ds1", retry=bq_client._bigquery_read_retry
+    )
+
+
+def test_list_dataset_tables_list_error():
+    mock_client = MagicMock(spec=bigquery.Client)
+    mock_client.list_tables.side_effect = Exception("API error")
+
+    bq_client = BigQueryManager(clients={"proj1": mock_client})
+    from common.clients.model import exception as exceptions
+
+    with pytest.raises(exceptions.FailedOperationError) as excinfo:
+        bq_client.list_dataset_tables(project_id="proj1", dataset_id="ds1")
+    assert "Failed to list bigquery tables in proj1.ds1" in str(excinfo.value)
+
+
+def test_list_dataset_tables_missing_labels():
+    mock_client = MagicMock(spec=bigquery.Client)
+
+    mock_item1 = MagicMock()
+    mock_item1.table_id = "table_1"
+    mock_item1.labels = {"key1": "val1"}
+
+    mock_item2 = MagicMock()
+    mock_item2.table_id = "table_2"
+    mock_item2.labels = None
+
+    mock_client.list_tables.return_value = [mock_item1, mock_item2]
+
+    bq_client = BigQueryManager(clients={"proj1": mock_client})
+    result = bq_client.list_dataset_tables(project_id="proj1", dataset_id="ds1")
+
+    assert len(result) == 2
+    assert result[0] == TableInfo(id="table_1", dataset_id="ds1", labels={"key1": "val1"})
+    assert result[1] == TableInfo(id="table_2", dataset_id="ds1", labels={})

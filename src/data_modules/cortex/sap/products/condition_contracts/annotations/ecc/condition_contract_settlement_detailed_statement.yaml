@@ -1,0 +1,84 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Sales and Distribution (SD), Materials Management
+  (MM) module in the Sales, Supply Chain domain and provides a detailed settlement evaluation statement
+  from WB2_D_BVDETAIL, reflecting business volume and settlement amounts, to support commercial rebate
+  audits. The data is captured at the granularity of Client (System), Condition Contract, Document, Document
+  Item, Document Type Business Volume Doc, Document Id Business Volume Doc, Document Id Business Volume
+  2 Doc, Document Id Business Volume 3 Doc, and Document Item Business Volume Doc, ensuring a unique audit
+  trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: condition_contract_num
+    description: Condition Contract, PK
+  - name: document_wbeln
+    description: Document, PK
+  - name: item_posnr
+    description: Item, PK
+  - name: document_type_business_volume_doc_type
+    description: Document Type Business Volume, PK
+  - name: document_id_business_volume_doc_id
+    description: Document Id Business Volume, PK
+  - name: document_id_business_volume_2_doc_id2
+    description: Document Id Business Volume 2, PK
+  - name: document_id_business_volume_3_doc_id3
+    description: Document Id Business Volume 3, PK
+  - name: document_item_business_volume_doc_item
+    description: Document Item Business Volume, PK
+  - name: date_for_settlement_bv_date
+    description: Date for Settlement
+  - name: quantity_menge
+    description: Quantity
+  - name: unit_of_measure_meina
+    description: Unit of Measure
+  - name: currency_waers
+    description: Currency
+  - name: net_weight_ntgew
+    description: Net Weight
+  - name: gross_weight_brgew
+    description: Gross Weight
+  - name: weight_unit_gewei
+    description: Weight Unit
+  - name: volume_volum
+    description: Volume
+  - name: volume_unit_voleh
+    description: Volume Unit
+  - name: points_anzpu
+    description: Points
+  - name: points_unit_punei
+    description: Points Unit
+  - name: business_volume_1_busvol_1
+    description: Business Volume 1
+  - name: business_volume_2_busvol_2
+    description: Business Volume 2
+  - name: business_volume_3_busvol_3
+    description: Business Volume 3
+  - name: business_volume_4_busvol_4
+    description: Business Volume 4
+  - name: dummy_function_in_length_1_dummy1
+    description: Dummy Function in Length 1
+  - name: year_of_date_for_settlement_bv_date
+    description: Year of Date for Settlement
+  - name: quarter_of_date_for_settlement_bv_date
+    description: Quarter of Date for Settlement
+  - name: month_of_date_for_settlement_bv_date
+    description: Month of Date for Settlement
+  - name: week_of_date_for_settlement_bv_date
+    description: Week of Date for Settlement
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

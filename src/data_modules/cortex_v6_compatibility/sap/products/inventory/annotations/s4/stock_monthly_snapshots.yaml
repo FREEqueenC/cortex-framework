@@ -1,0 +1,76 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "For each calendar month, this view provides an aggregated snapshot stock quantity and value as of the last day of the month. This view is at the granularity of Client(System), Material Number, Batch Number, Plant, Storage Location, Month End Date, Stock Characteristic and Language Key (Coming from system Settings)"
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "MaterialNumber_MATNR"
+    description: "Material Number, PK"
+  - name: "Plant_WERKS"
+    description: "Plant, PK"
+  - name: "StorageLocation_LGORT"
+    description: "Storage Location, PK"
+  - name: "BatchNumber_CHARG"
+    description: "Batch Number, PK"
+  - name: "StockCharacteristic"
+    description: "The characteristics/categories of Inventory the materials are moving into/out of, PK"
+  - name: "MonthEndDate"
+    description: "Month End Date for the Inventory snapshot captured, PK"
+  - name: "LanguageKey_SPRAS"
+    description: "Language Key, PK"
+  - name: "MaterialType_MTART"
+    description: "Material Type"
+  - name: "DescriptionOfMaterialType_MTBEZ"
+    description: "Description of Material Type"
+  - name: "MaterialText_MAKTX"
+    description: "Description of Material"
+  - name: "MaterialGroup_MATKL"
+    description: "Material Group"
+  - name: "MaterialGroupName_WGBEZ"
+    description: "Description of Material Group"
+  - name: "Plant_Name2_NAME2"
+    description: "Description of Plant"
+  - name: "StorageLocationText_LGOBE"
+    description: "Description of Storage Location"
+  - name: "CompanyCode_BUKRS"
+    description: "Company Code"
+  - name: "CompanyText_BUTXT"
+    description: "Company Name"
+  - name: "CountryKey_LAND1"
+    description: "Country Key"
+  - name: "BaseUnitOfMeasure_MEINS"
+    description: "Base Unit Of Measure"
+  - name: "CurrencyKey_WAERS"
+    description: "Currency Key"
+  - name: "FiscalYear"
+    description: "Fiscal Year"
+  - name: "FiscalPeriod"
+    description: "Fiscal Period"
+  - name: "CalYear"
+    description: "Calendar Year for Month End Date"
+  - name: "CalMonth"
+    description: "Calendar Month for Month End Date"
+  - name: "QuantityMonthlyCumulative"
+    description: "Aggregated Quantity of stock till the month end date"
+  - name: "AmountMonthlyCumulative"
+    description: "Aggregated Amount of stock till the month end date in Local Currency"
+  - name: "StockOnHand"
+    description: "The quantity of stock available by stock categories"
+  - name: "StockOnHandValue"
+    description: "The amount of inventory available by stock categories in Local Currency"
+  - name: "QuantityIssuedToDelivery"
+    description: "Quantity Issued To Delivery by the end of the month"
+  - name: "TotalConsumptionQuantity"
+    description: "Total Quantity Consumed by the end of that month"

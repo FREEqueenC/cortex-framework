@@ -1,0 +1,76 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Supplier spend analysis reporting view integrating purchase order headers, order items, supplier details, purchasing organizations, and purchasing groups with date dimensions and overdue indicators."
+fields:
+  - name: purchase_order
+    description: "Purchase Order Number, PK"
+  - name: purchase_order_item
+    description: "Purchase Order Item Number, PK"
+  - name: language
+    description: Language Key, PK
+  - name: purchasing_order_type
+    description: "Purchase Order Type"
+  - name: purchase_order_subtype
+    description: "Purchase Order Subtype"
+  - name: purchasing_document_origin
+    description: "Purchasing Document Origin"
+  - name: supplier
+    description: "Supplier / Vendor Account Number"
+  - name: supplier_name
+    description: "Supplier Name"
+  - name: country
+    description: "Country Key"
+  - name: material
+    description: "Material Number"
+  - name: purchase_order_item_text
+    description: "Purchase Order Item Description"
+  - name: material_type
+    description: "Material Type"
+  - name: material_group
+    description: "Material Group"
+  - name: purchasing_organization
+    description: "Purchasing Organization"
+  - name: purchasing_organization_name
+    description: "Purchasing Organization Description"
+  - name: purchasing_group
+    description: "Purchasing Group"
+  - name: purchasing_group_name
+    description: "Purchasing Group Description"
+  - name: purchase_order_date
+    description: "Purchase Order Date"
+  - name: order_quantity
+    description: "Order Quantity"
+  - name: net_amount
+    description: "Net Order Value in Purchasing Currency"
+  - name: document_currency
+    description: "Document Currency Key"
+  - name: active_vendor_indicator
+    description: "Active Vendor Indicator"
+  - name: delivery_completed_flag
+    description: "Delivery Completed Indicator"
+  - name: open_purchasing_document_net_amount
+    description: "Open Purchasing Document Net Amount"
+  - name: is_overdue
+    description: "Overdue Purchasing Document Indicator"
+  - name: average_spend_per_unit
+    description: "Average Spend Per Unit"
+  - name: line_item_count
+    description: "Line Item Count"
+  - name: year_of_purchase_order
+    description: "Year of Purchase Order"
+  - name: month_of_purchase_order
+    description: "Month of Purchase Order"
+  - name: quarter_of_purchase_order
+    description: "Quarter of Purchase Order"

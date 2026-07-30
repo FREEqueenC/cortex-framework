@@ -1,0 +1,39 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI), Controlling (CO)
+  module in the Finance domain and provides Directory of financial hierarchies. Base view of `hrrp_directory`.
+  The data is captured at the granularity of system default keys, ensuring a unique audit trail for every
+  record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: hierarchy_id_hryid
+    description: Hierarchy Id, PK
+  - name: hierarchy_version_hryver
+    description: Hierarchy Version, PK
+  - name: valid_to_hryvalto
+    description: Valid to, PK
+  - name: valid_from_hryvalfrom
+    description: Valid From
+  - name: hierarchy_type_hrytyp
+    description: Hierarchy Type
+  - name: last_updated_at_updtime
+    description: Last Updated At
+  - name: last_changed_by_upduser
+    description: Last Changed by
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -15,7 +15,7 @@
 """Unit tests for DataformProvider."""
 
 import base64
-from unittest.mock import MagicMock, create_autospec, patch
+from unittest.mock import MagicMock, call, create_autospec, patch
 
 import pytest
 from google.api_core import exceptions
@@ -346,7 +346,6 @@ def test_query_directory_contents_pagination(provider, mock_client):
     )
     assert result == [entry1, entry2]
     assert mock_client.query_directory_contents.call_count == 2
-    from unittest.mock import call
 
     expected_request1 = dataform_v1beta1.QueryDirectoryContentsRequest(
         workspace=WORKSPACE_NAME,

@@ -1,0 +1,233 @@
+/**
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// ___MODULE_CONTEXT___
+// ___TABLE_CONFIG___
+
+const moduleConfig = config.product[moduleContext.moduleId];
+const publish_config = require("includes/publish_config.js");
+const currencyHelper = require("includes/cortex_v6_compatibility_currency.js");
+
+const materializationType = tableConfig.materializationType || "table";
+const publishConfig = publish_config.getPublishConfig(
+  materializationType,
+  tableConfig,
+  moduleConfig,
+  []
+);
+
+publish("delivery_headers", { ...publishConfig, name: "DeliveryHeaders" }).query(
+  (ctx) => `
+WITH currency_decimal AS (
+  ${currencyHelper.getCurrencyDecimalCTE(ctx, moduleConfig.sources.sapModule.datasetId)}
+)
+SELECT
+  LIKP.MANDT AS Client_MANDT,
+  LIKP.VBELN AS Delivery_VBELN,
+  LIKP.ERNAM AS CreatedBy_ERNAM,
+  LIKP.ERZET AS CreateTime_ERZET,
+  LIKP.ERDAT AS DateCreated_ERDAT,
+  LIKP.BZIRK AS SalesDistrict_BZIRK,
+  LIKP.VSTEL AS ShippingPointreceivingPoint_VSTEL,
+  LIKP.VKORG AS SalesOrganization_VKORG,
+  LIKP.LFART AS DeliveryType_LFART,
+  LIKP.AUTLF AS CompleteDeliveryDefinedForEachSalesOrder_AUTLF,
+  LIKP.KZAZU AS OrderCombinationIndicator_KZAZU,
+  LIKP.WADAT AS PlannedGoodsMovementDate_WADAT,
+  LIKP.LDDAT AS LoadingDate_LDDAT,
+  LIKP.TDDAT AS TransportationPlanningDate_TDDAT,
+  LIKP.LFDAT AS DeliveryDate_LFDAT,
+  LIKP.LFUHR AS DeliveryTime_LFUHR,
+  LIKP.KODAT AS PickingDate_KODAT,
+  LIKP.ABLAD AS UnloadingPoint_ABLAD,
+  LIKP.INCO1 AS Incoterms__part1___INCO1,
+  LIKP.INCO2 AS Incoterms__part2___INCO2,
+  LIKP.EXPKZ AS ExportIndicator_EXPKZ,
+  LIKP.ROUTE AS Route_ROUTE,
+  LIKP.FAKSK AS BillingBlockInSdDocument_FAKSK,
+  LIKP.LIFSK AS DeliveryBlock_DocumentHeader_LIFSK,
+  LIKP.VBTYP AS SdDocumentCategory_VBTYP,
+  LIKP.KNFAK AS CustomerFactoryCalendar_KNFAK,
+  LIKP.LPRIO AS DeliveryPriority_LPRIO,
+  LIKP.VSBED AS ShippingConditions_VSBED,
+  LIKP.KUNNR AS ShipToParty_KUNNR,
+  LIKP.KUNAG AS SoldToParty_KUNAG,
+  LIKP.KDGRP AS CustomerGroup_KDGRP,
+  LIKP.BTGEW AS TotalWeight_BTGEW,
+  LIKP.NTGEW AS NetWeightHdr_NTGEW,
+  LIKP.GEWEI AS WeightUnitHdr_GEWEI,
+  LIKP.VOLUM AS VolumeHdr_VOLUM,
+  LIKP.VOLEH AS VolumeUnitHdr_VOLEH,
+  LIKP.ANZPK AS TotalNumberOfPackagesInDelivery_ANZPK,
+  LIKP.BEROT AS PickedItemsLocation_BEROT,
+  LIKP.LFUHR AS TimeOfDelivery_LFUHR,
+  LIKP.GRULG AS WeightGroupForDelivery_GRULG,
+  LIKP.LSTEL AS LoadingPoint_LSTEL,
+  LIKP.TRAGR AS TransportationGroupHdr_TRAGR,
+  LIKP.FKARV AS ProposedBillingTypeForADeliveryRelatedBillingDoc_FKARV,
+  LIKP.FKDAT AS BillingDateForBillingIndexAndPrintout_FKDAT,
+  LIKP.PERFK AS InvoiceDates_PERFK,
+  LIKP.ROUTA AS Route_ROUTA,
+  LIKP.STAFO AS UpdateGroupForStatisticsHdr_STAFO,
+  LIKP.KALSM AS PricingProcedure_KALSM,
+  LIKP.KNUMV AS NumberOfTheDocumentCondition_KNUMV,
+  LIKP.WAERK AS SdDocumentCurrency_WAERK,
+  LIKP.VKBUR AS SalesOfficeHdr_VKBUR,
+  LIKP.VBEAK AS ShippingProcessingTimeForTheEntireDocument_VBEAK,
+  LIKP.ZUKRL AS CombinationCriteriaForDelivery_ZUKRL,
+  LIKP.VERUR AS DistributionDelivery_VERUR,
+  LIKP.COMMN AS CommunicationNumberForQApiInterface_COMMN,
+  LIKP.STWAE AS StatisticsCurrency_STWAE,
+  LIKP.STCUR AS ExchangeRateForStatistics_STCUR,
+  LIKP.EXNUM AS NumberOfForeignTradeDataInMmAndSdDocuments_EXNUM,
+  LIKP.AENAM AS NameOfPersonWhoChangedObjectHdr_AENAM,
+  LIKP.AEDAT AS DateOfLastChangeHdr_AEDAT,
+  LIKP.LGNUM AS WarehouseNumberWarehouseComplex_LGNUM,
+  LIKP.LISPL AS DeliveryWithinOneWarehouse_LISPL,
+  LIKP.VKOIV AS SalesOrganizationForIntercompanyBilling_VKOIV,
+  LIKP.VTWIV AS DistributionChannelForIntercompanyBilling_VTWIV,
+  LIKP.SPAIV AS DivisionForIntercompanyBilling_SPAIV,
+  LIKP.FKAIV AS BillingTypeForIntercompanyBilling_FKAIV,
+  LIKP.PIOIV AS DateForInterCompanyBilling_PIOIV,
+  LIKP.FKDIV AS BillingDateForInterCompanyBilling_FKDIV,
+  LIKP.KUNIV AS CustomerNumberForInterCompanyBilling_KUNIV,
+  LIKP.KKBER AS CreditControlArea_KKBER,
+  LIKP.KNKLI AS CreditLimitReference_KNKLI,
+  LIKP.GRUPP AS CustomerCreditGroup_GRUPP,
+  LIKP.SBGRP AS CreditRepresentativeGroupForCreditManagement_SBGRP,
+  LIKP.CTLPC AS CreditManagement_RiskCategory_CTLPC,
+  LIKP.CMWAE AS CurrencyKeyOfCreditControlArea_CMWAE,
+  LIKP.AMTBL AS ReleasedCreditValueOfTheDocument_AMTBL,
+  LIKP.BOLNR AS BillOfLading_BOLNR,
+  LIKP.LIFNR AS VendorsAccountNumber_LIFNR,
+  LIKP.TRATY AS MeansOfTransportType_TRATY,
+  LIKP.TRAID AS MeansOfTransportId_TRAID,
+  LIKP.CMFRE AS ReleaseDateOfTheDocumentDeterminedByCreditManagement_CMFRE,
+  LIKP.CMNGV AS NextDate_CMNGV,
+  LIKP.XABLN AS GoodsReceiptissueSlipNumber_XABLN,
+  LIKP.BLDAT AS DocumentDateInDocument_BLDAT,
+  LIKP.WADAT_IST AS ActualGoodsMovementDate_WADAT_IST,
+  LIKP.TRSPG AS ShipmentBlockingReason_TRSPG,
+  LIKP.TPSID AS IdForExternalTransportSystem_TPSID,
+  LIKP.LIFEX AS ExternalIdentificationOfDeliveryNote_LIFEX,
+  LIKP.TERNR AS OrderNumber_TERNR,
+  LIKP.KALSM_CH AS SearchProcedureForBatchDetermination_KALSM_CH,
+  LIKP.KLIEF AS CorrectionDelivery_KLIEF,
+  LIKP.KALSP AS Shipping_PricingProcedure_KALSP,
+  LIKP.KNUMP AS NumberOfDocumentConditionPricing_KNUMP,
+  LIKP.AULWE AS RouteSchedule_AULWE,
+  LIKP.WERKS AS ReceivingPlantForDeliveries_WERKS,
+  LIKP.LCNUM AS FinancialDocNumber_LCNUM,
+  LIKP.ABSSC AS PaymentGuaranteeProcedure_ABSSC,
+  LIKP.KOUHR AS PickingTime_KOUHR,
+  LIKP.TDUHR AS TransTPlanningTime_TDUHR,
+  LIKP.LDUHR AS LoadingTime_LDUHR,
+  LIKP.WAUHR AS TimeOfGoodsIssue_WAUHR,
+  LIKP.LGTOR AS DoorForWarehouseNumber_LGTOR,
+  LIKP.LGBZO AS StagingAreaForWarehouseComplexHdr_LGBZO,
+  LIKP.AKWAE AS CurrencyKeyForeignTrade_AKWAE,
+  LIKP.AKKUR AS ExchangeRateForLetterCreditProcgInForeignTrade_AKKUR,
+  LIKP.AKPRZ AS DepreciationPercentageForFinancialDocumentProcessing_AKPRZ,
+  LIKP.PROLI AS DangerousGoodsManagementProfileInSdDocuments_PROLI,
+  LIKP.XBLNR AS ReferenceDocumentNumber_XBLNR,
+  LIKP.XBLNR AS ExternalReferenceDocumentNumber_XBLNR,
+  LIKP.HANDLE AS WorldwideUniqueKeyForLikpVbeln_HANDLE,
+  LIKP.TSEGFL AS TimeSegmentExists_TSEGFL,
+  LIKP.TSEGTP AS EventGroupTimeSegmentDeliveryHeader_TSEGTP,
+  LIKP.TZONIS AS TimeZoneOfDeliveringLocation_TZONIS,
+  LIKP.TZONRC AS TimeZoneOfRecipientLocation_TZONRC,
+  LIKP.CONT_DG AS Indicator_DocumentContainsDangerousGoods_CONT_DG,
+  LIKP.VERURSYS AS DistributionDelivery_OriginalSystem_VERURSYS,
+  LIKP.KZWAB AS IndicatorForControllingGoodsMovement_KZWAB,
+  LIKP.VLSTK AS DistributionStatus_VLSTK,
+  LIKP.TCODE AS TransactionCode_TCODE,
+  LIKP.VSART AS ShippingType_VSART,
+  LIKP.TRMTYP AS MeansOfTransport_TRMTYP,
+  LIKP.SDABW AS SpecialProcessingIndicator_SDABW,
+  LIKP.VBUND AS CompanyId_VBUND,
+  LIKP.XWOFF AS CalculationOfValOpen_XWOFF,
+  LIKP.DIRTA AS AutomaticToCreationImmediatelyAfterTrGeneration_DIRTA,
+  LIKP.PRVBE AS ProductionSupplyArea_PRVBE,
+  LIKP.FOLAR AS DeliveryType_FOLAR,
+  LIKP.PODAT AS Date__proofOfDelivery___PODAT,
+  LIKP.POTIM AS ConfirmationTime_POTIM,
+  LIKP.VGANZ AS NumberOfDeliveryItemsWithPrecedessOrInOtherSystem_VGANZ,
+  LIKP.IMWRK AS DeliveryHasStatusInPlant_IMWRK,
+  LIKP.SPE_LOEKZ AS DocumentDeletionIndicator_SPE_LOEKZ,
+  LIKP.SPE_LOC_SEQ AS SequenceOfIntermediateLocationsInReturnsProcess_SPE_LOC_SEQ,
+  LIKP.SPE_ACC_APP_STS AS DeliveryConfirmationStatus_SPE_ACC_APP_STS,
+  LIKP.SPE_SHP_INF_STS AS ShipmentInformationStatus_SPE_SHP_INF_STS,
+  LIKP.SPE_RET_CANC AS Returns_FlagShowingThatAnAsnIsCancelled_SPE_RET_CANC,
+  LIKP.SPE_WAUHR_IST AS TimeOfGoodsIssue_Local,
+  LIKP.SPE_WAZONE_IST AS TimeZone_SPE_WAZONE_IST,
+  LIKP.SPE_REV_VLSTK AS DistributionStatus_DecentralizedWarehouseProcessing_SPE_REV_VLSTK,
+  LIKP.SPE_LE_SCENARIO AS ScenarioLogisticExecution_SPE_LE_SCENARIO,
+  LIKP.SPE_ORIG_SYS AS OriginalSystemType_SPE_ORIG_SYS,
+  LIKP.SPE_CHNG_SYS AS LastChangerSystemType_SPE_CHNG_SYS,
+  LIKP.SPE_GEOROUTE AS DescriptionOfAGeographicalRoute_SPE_GEOROUTE,
+  LIKP.SPE_GEOROUTEIND AS ChangeIndicatorForTheRoute_SPE_GEOROUTEIND,
+  LIKP.SPE_CARRIER_IND AS ChangeIndicatorForTheCarrier_SPE_CARRIER_IND,
+  LIKP.SPE_GTS_REL AS GoodsTrafficType_SPE_GTS_REL,
+  LIKP.SPE_GTS_RT_CDE AS RouteCodeForSapGlobalTradeServices_SPE_GTS_RT_CDE,
+  LIKP.SPE_REL_TMSTMP AS ReleaseTimeStamp_SPE_REL_TMSTMP,
+  LIKP.SPE_UNIT_SYSTEM AS MeasurementUnitSystem_SPE_UNIT_SYSTEM,
+  LIKP.SPE_INV_BFR_GI AS InvoiceCreationBeForeGoodsIssue_SPE_INV_BFR_GI,
+  LIKP.SPE_QI_STATUS AS StatusOfQualityInspectionForReturnsDeliveries_SPE_QI_STATUS,
+  LIKP.SPE_RED_IND AS SpeIndicatorIfRedirectingHasOccured_SPE_RED_IND,
+  LIKP.SAKES AS SapGlobalTradeServices_StorageStatusOfDelivery_SAKES,
+  LIKP.SPE_LIFEX_TYPE AS TypeOfExternalIdentification_SPE_LIFEX_TYPE,
+  LIKP.SPE_TTYPE AS MeansOfTransport_SPE_TTYPE,
+  LIKP.SPE_PRO_NUMBER AS PartnerIdentification_ProgressiveIdentificationNumber_SPE_PRO_NUMBER,
+  LIKP.LOC_GUID AS Akkreditiv_guid_LOC_GUID,
+  LIKP.SPE_BILLING_IND AS EwmBillingIndicator_SPE_BILLING_IND,
+  LIKP.PRINTER_PROFILE AS DescriptionOfPrintProfile_PRINTER_PROFILE,
+  LIKP.MSR_ACTIVE AS AdvancedReturnsManagementActive_MSR_ACTIVE,
+  LIKP.PRTNR AS ConfirmationNumber_PRTNR,
+  LIKP.STGE_LOC_CHANGE AS TemporaryChangeOfStorageLocationsInDelivery_STGE_LOC_CHANGE,
+  LIKP.TM_CTRL_KEY AS ControlKeyForDocumentTransferToTm_TM_CTRL_KEY,
+  LIKP.DLV_SPLIT_INITIA AS DeliverySplitInitiator_DLV_SPLIT_INITIA,
+  LIKP.DLV_VERSION AS DeliveryVersion_DLV_VERSION,
+  LIKP.HANDOVERLOC AS LocationForAPhysicalHandoverOfGoods_HANDOVERLOC,
+  LIKP.HANDOVERDATE AS HandoverDateAtTheHandoverLocation_HANDOVERDATE,
+  LIKP.INCO3_L AS IncotermsLocation2_INCO3_L,
+  LIKP.BORGR_GRP AS MultiLevelGoodsReceiptAutomotive_BORGR_GRP,
+  LIKP.FSH_TRANSACTION AS TransactionNumberHdr_FSH_TRANSACTION,
+  LIKP.FSH_VAS_LAST_ITEM AS LastVasItemNumber_FSH_VAS_LAST_ITEM,
+  LIKP.FSH_VAS_CG AS ValueAddedServicesCustomerGroup_FSH_VAS_CG,
+  CalendarDateDimension_LFDAT.CalYear AS YearOfDeliveryDate_LFDAT,
+  CalendarDateDimension_LFDAT.CalMonth AS MonthOfDeliveryDate_LFDAT,
+  CalendarDateDimension_LFDAT.CalWeek AS WeekOfDeliveryDate_LFDAT,
+  CalendarDateDimension_LFDAT.DayOfMonth AS DayOfDeliveryDate_LFDAT,
+  CalendarDateDimension_LFDAT.CalQuarter AS QuarterOfDeliveryDate_LFDAT,
+  CalendarDateDimension_PODAT.CalYear AS YearOfProofOfDeliveryDate_PODAT,
+  CalendarDateDimension_PODAT.CalMonth AS MonthOfProofOfDeliveryDate_PODAT,
+  CalendarDateDimension_PODAT.CalWeek AS WeekOfProofOfDeliveryDate_PODAT,
+  CalendarDateDimension_PODAT.DayOfMonth AS DayOfProofOfDeliveryDate_PODAT,
+  CalendarDateDimension_PODAT.CalQuarter AS QuarterOfProofOfDeliveryDate_PODAT,
+  IF(
+    LIKP.VBTYP IN ('H', 'K', 'N', 'O', 'T', '6'),
+    COALESCE(LIKP.NETWR * currency_decimal.CURRFIX * -1, LIKP.NETWR * -1),
+    COALESCE(LIKP.NETWR * currency_decimal.CURRFIX, LIKP.NETWR)
+  ) AS NetValueOfTheSalesOrderInDocumentCurrency_NETWR
+FROM ${ctx.ref(moduleConfig.sources.sapModule.datasetId, 'likp')} AS LIKP
+LEFT JOIN currency_decimal
+  ON LIKP.WAERK = currency_decimal.CURRKEY
+LEFT JOIN ${ctx.ref(moduleConfig.sources.sapMasterData.datasetId, 'calendar_date_dim')} AS CalendarDateDimension_LFDAT
+  ON CalendarDateDimension_LFDAT.Date = LIKP.LFDAT
+LEFT JOIN ${ctx.ref(moduleConfig.sources.sapMasterData.datasetId, 'calendar_date_dim')} AS CalendarDateDimension_PODAT
+  ON CalendarDateDimension_PODAT.Date = LIKP.PODAT
+`
+);

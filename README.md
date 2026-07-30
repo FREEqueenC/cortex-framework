@@ -1,59 +1,80 @@
 # Google Cloud Cortex Framework
 
-[**Cortex Framework v7**](https://docs.cloud.google.com/cortex/docs/overview) introduces a highly modular deployment architecture, simplified data orchestration via [Dataform](https://cloud.google.com/dataform), and enhanced support for the next generation of AI-ready data products with [BigQuery](https://cloud.google.com/bigquery) \- enabling enterprises to build, extend, and deploy robust data models and pipelines for advanced analytics and AI/agentic use cases.
+[**Cortex Framework v7**](https://docs.cloud.google.com/cortex/docs/overview) introduces a modular deployment architecture, simple data orchestration via [Dataform](https://cloud.google.com/dataform), and AI-ready data products with [BigQuery](https://cloud.google.com/bigquery) and [Knowledge Catalog](https://docs.cloud.google.com/dataplex/docs/introduction) integration \- enabling enterprises to quickly build, extend, and deploy data assets and pipelines for advanced analytics and agentic use cases with less risk, complexity, and cost.
 
----
 
 ## Key features
 
 * **Modular deployment and smart dependency resolution**: Deploy exactly what you need. Simply select the desired data products, and the framework will automatically identify, retrieve, and transform the necessary tables to the data foundation layer, ensuring no unnecessary data is processed. Easily add custom fields or logic without breaking standard models.
 
-* **Native dependency graph generation:** Automatically handle the order of operations for complex data models, ensuring prerequisite tables are ready before deploying data foundations and data products.
+* **Native runtime dependency graph generation:** Automatically orchestrates the runtime execution order for complex data models using Dataform, ensuring prerequisite tables are processed before downstream data foundations and data products.
 
-* **Bring your own CDC (External data foundation):** A flexible architecture allows you to bypass built-in Change Data Capture processing and connect your own existing CDC pipelines directly to the foundation layer.
+* **Knowledge Catalog integration:** Provides an option to automatically synchronize deployed Cortex Framework data products, complete with enriched business descriptions and metadata, directly into Knowledge Catalog for discovery and governance.
 
-* **Serverless BigQuery-native execution:** Orchestration relies entirely on Google Cloud **Dataform**, enabling easy data transformation and processing using version-controlled SQL. No standing compute clusters or Airflow VMs are required, minimizing infrastructure overhead. 
+* **Skills for an agentic data product builder:** Accelerate development by creating new data products simply via natural language. Cortex Framework provides packaged agentic skills to translate your business needs into tangible data assets.
 
-* **Incremental loading:** Native, incremental loading configurations ensure highly efficient processing of large enterprise datasets. Significantly reduce BigQuery processing time and costs by processing only new or changed data since the last execution.
+* **Extensibility framework:** Maintain a clean separation between your custom data products and Cortex Framework delivered data products using namespaces. This ensures you can benefit from the latest updates without impacting your custom work.
 
-* **High data fidelity & semantics:** Features dynamic discovery and ingestion of custom fields, robust semantic mapping (e.g. translating cryptic table names to business-friendly terms), AI-ready metadata, and advanced logic handling (e.g. integrating the SAP TCURX table for exact currency decimal shifts).
+* **Bring your own CDC (External data foundation):** A flexible architecture allows you to bypass built-in change data capture processing and connect your own existing CDC pipelines directly to the foundation layer.
 
-* **Multi-system SAP support:** Built-in dynamic dependency resolution and logic differentiation allows seamless compilation and parallel deployment for both SAP ECC and SAP S/4HANA source systems. Seamlessly bring in data from multiple SAP ERP systems.
+* **Multi-system SAP support:** Built-in dynamic dependency resolution and logic differentiation allows for parallel deployment of SAP ECC and SAP S/4HANA source systems. Bring in data from multiple SAP ERP systems.
 
-* **Extensibility framework:** Maintain a clean separation between your custom data products and Cortex Data Products using namespaces. This ensures you can benefit from the latest Cortex updates without impacting your custom work.
+* **High data fidelity & semantics:** Features core platform capabilities like dynamic discovery of custom fields, AI-ready metadata generation, and robust semantic mapping. In SAP-specific data products, this framework handles advanced logic, such as translating complex SAP terminology into business-friendly terms and integrating the SAP TCURX table for exact currency decimal shifts.
 
-Please refer to the [public documentation](https://docs.cloud.google.com/cortex/docs/overview) for more information. 
+* **Serverless BigQuery-native execution:** Orchestration relies entirely on Google Cloud Dataform, which natively executes the version-controlled SQL generated by Cortex Framework for seamless data transformation and processing.
 
----
+* **Incremental loading:** Cortex Framework data products are built with native incremental loading configurations to ensure highly efficient processing of large enterprise datasets in BigQuery. This reduces processing time and costs by processing only new or changed data since the last execution.
 
-## Available modules and data products
-
-Cortex Framework v7 comes packaged with a comprehensive set of BigQuery data models for both SAP ECC and SAP S/4HANA source systems. 
-
-### Data foundation modules:
-
-* SAP ECC 
-* SAP S/4HANA
-
-### Data products:
-
-* Find all available data products and their corresponding data assets on the [public documentation](https://docs.cloud.google.com/cortex/docs/data-product) site.
+* **Environment management and operations:** Gain deeper control over deployments with the option to provide [compilation overrides](https://docs.cloud.google.com/dataform/docs/manage-repository#create-compilation-variables) that integrate cleanly with Dataform release configurations.
 
 Please refer to the [public documentation](https://docs.cloud.google.com/cortex/docs/overview) for more information. 
 
----
+## Supported data sources
 
-## Getting Started
+Cortex Framework v7 supports the following data sources:
 
-We recommend using Cloud Shell for the interaction with the Cortex Framework
-command line interface as it contains all the required tools pre-installed.
+* [SAP ECC](https://docs.cloud.google.com/cortex/docs/source-system-integration/sap-erp)  
+* [SAP S/4HANA](https://docs.cloud.google.com/cortex/docs/source-system-integration/sap-erp)  
+* [SAP Business Data Cloud](https://docs.cloud.google.com/cortex/docs/source-system-integration/sap-bdc)
+
+Find all available data products on the [public documentation](https://docs.cloud.google.com/cortex/docs/data-product) site.
+
+## Getting started
 
 ### Demo deployment
 
-To quickly spin up a demo deployment with automated sample data for PoC evaluations:
+To quickly spin up a demo deployment with raw sample data for evaluations:
+
+`uv run cortex-demo --project_id=<PROJECT_ID> --region=<REGION> --location=<LOCATION>`
+
+For detailed instructions on deployment and configuration, please refer to our [public documentation](https://docs.cloud.google.com/cortex/docs/overview). 
+
+## Telemetry
+
+Cortex Framework gathers anonymized usage statistics during deployment to help us analyze and improve the overall framework experience.
+
+When telemetry is active, a specialized metadata usage header is transmitted with [Dataform](https://cloud.google.com/dataform) and [BigQuery](https://cloud.google.com/bigquery?e=48754805) API requests. This metadata is managed within Google Cloud’s internal analytics platform in strict accordance with established data privacy and governance standards, and contains the following information:
+
+* Cloud project number  
+* Deployment region  
+* Framework version  
+* Specific module configurations
+
+For more information on how data is handled, please consult the [Google Privacy Policy](https://policies.google.com/privacy).
+
+#### Opting Out
+
+Telemetry is \*\*active by default\*\*. You can disable this feature by including the \`--disable-telemetry\` flag when running the framework's command-line tools. Applying this setting prevents the framework from including usage headers in any API communication.   
+\*\*Example:\*\*
 
 ```shell
-uv run cortex-demo --project_id=<PROJECT_ID>
+bash
+uv run cortex-build-and-deploy --config "config/sample.config.yaml" --disable-telemetry
+
+To opt out globally, run:
+
+bash
+uv run cortex-config telemetry disable
 ```
 
-For detailed instructions on deployment and configuration, please refer to our [public documentation](https://docs.cloud.google.com/cortex/docs/overview).
+For detailed information on Telemetry, please refer to our [public documentation](https://docs.cloud.google.com/cortex/docs/overview).

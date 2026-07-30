@@ -1,0 +1,210 @@
+/**
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+// ___MODULE_CONTEXT___
+// ___TABLE_CONFIG___
+
+const moduleConfig = config.product[moduleContext.moduleId];
+const materializationType = tableConfig.materializationType || "incremental";
+const incremental = require("includes/incremental.js");
+const publish_config = require("includes/publish_config.js");
+const sql_helper = require("includes/sql_helper.js");
+
+const publishConfig = publish_config.getPublishConfig(
+  materializationType,
+  tableConfig,
+  moduleConfig,
+  [
+    "client_mandt",
+    "ledger_lednr",
+    "object_number_objnr",
+    "fiscal_year_gjahr",
+    "value_type_wrttp",
+    "version_versn",
+    "cost_element_kstar",
+    "controlling_subkey_hrkft",
+    "business_transaction_vrgng",
+    "trading_partner_number_vbund",
+    "trading_partner_business_area_pargb",
+    "debit_credit_indicator_beknz",
+    "transaction_currency_twaer",
+    "period_block_perbl"
+  ]
+);
+
+publish(moduleContext.moduleId + "_" + tableConfig.tableName, publishConfig).query(
+  (ctx) => `
+SELECT
+  cosp.mandt AS client_mandt,
+  cosp.lednr AS ledger_lednr,
+  cosp.objnr AS object_number_objnr,
+  cosp.gjahr AS fiscal_year_gjahr,
+  cosp.wrttp AS value_type_wrttp,
+  cosp.versn AS version_versn,
+  cosp.kstar AS cost_element_kstar,
+  cosp.hrkft AS controlling_subkey_hrkft,
+  cosp.vrgng AS business_transaction_vrgng,
+  cosp.vbund AS trading_partner_number_vbund,
+  cosp.pargb AS trading_partner_business_area_pargb,
+  cosp.beknz AS debit_credit_indicator_beknz,
+  cosp.twaer AS transaction_currency_twaer,
+  cosp.perbl AS period_block_perbl,
+  cosp.meinh AS unit_of_measure_meinh,
+  cosp.wtg001 AS value_transaction_currency_wtg001,
+  cosp.wtg002 AS value_transaction_currency_wtg002,
+  cosp.wtg003 AS value_transaction_currency_wtg003,
+  cosp.wtg004 AS value_transaction_currency_wtg004,
+  cosp.wtg005 AS value_transaction_currency_wtg005,
+  cosp.wtg006 AS value_transaction_currency_wtg006,
+  cosp.wtg007 AS value_transaction_currency_wtg007,
+  cosp.wtg008 AS value_transaction_currency_wtg008,
+  cosp.wtg009 AS value_transaction_currency_wtg009,
+  cosp.wtg010 AS value_transaction_currency_wtg010,
+  cosp.wtg011 AS value_transaction_currency_wtg011,
+  cosp.wtg012 AS value_transaction_currency_wtg012,
+  cosp.wtg013 AS value_transaction_currency_wtg013,
+  cosp.wtg014 AS value_transaction_currency_wtg014,
+  cosp.wtg015 AS value_transaction_currency_wtg015,
+  cosp.wtg016 AS value_transaction_currency_wtg016,
+  cosp.wog001 AS value_in_object_currency_wog001,
+  cosp.wog002 AS value_in_object_currency_wog002,
+  cosp.wog003 AS value_in_object_currency_wog003,
+  cosp.wog004 AS value_in_object_currency_wog004,
+  cosp.wog005 AS value_in_object_currency_wog005,
+  cosp.wog006 AS value_in_object_currency_wog006,
+  cosp.wog007 AS value_in_object_currency_wog007,
+  cosp.wog008 AS value_in_object_currency_wog008,
+  cosp.wog009 AS value_in_object_currency_wog009,
+  cosp.wog010 AS value_in_object_currency_wog010,
+  cosp.wog011 AS value_in_object_currency_wog011,
+  cosp.wog012 AS value_in_object_currency_wog012,
+  cosp.wog013 AS value_in_object_currency_wog013,
+  cosp.wog014 AS value_in_object_currency_wog014,
+  cosp.wog015 AS value_in_object_currency_wog015,
+  cosp.wog016 AS value_in_object_currency_wog016,
+  cosp.wkg001 AS value_controlling_area_currency_wkg001,
+  cosp.wkg002 AS value_controlling_area_currency_wkg002,
+  cosp.wkg003 AS value_controlling_area_currency_wkg003,
+  cosp.wkg004 AS value_controlling_area_currency_wkg004,
+  cosp.wkg005 AS value_controlling_area_currency_wkg005,
+  cosp.wkg006 AS value_controlling_area_currency_wkg006,
+  cosp.wkg007 AS value_controlling_area_currency_wkg007,
+  cosp.wkg008 AS value_controlling_area_currency_wkg008,
+  cosp.wkg009 AS value_controlling_area_currency_wkg009,
+  cosp.wkg010 AS value_controlling_area_currency_wkg010,
+  cosp.wkg011 AS value_controlling_area_currency_wkg011,
+  cosp.wkg012 AS value_controlling_area_currency_wkg012,
+  cosp.wkg013 AS value_controlling_area_currency_wkg013,
+  cosp.wkg014 AS value_controlling_area_currency_wkg014,
+  cosp.wkg015 AS value_controlling_area_currency_wkg015,
+  cosp.wkg016 AS value_controlling_area_currency_wkg016,
+  cosp.wkf001 AS fixvalue_controlling_area_currency_wkf001,
+  cosp.wkf002 AS fixvalue_controlling_area_currency_wkf002,
+  cosp.wkf003 AS fixvalue_controlling_area_currency_wkf003,
+  cosp.wkf004 AS fixvalue_controlling_area_currency_wkf004,
+  cosp.wkf005 AS fixvalue_controlling_area_currency_wkf005,
+  cosp.wkf006 AS fixvalue_controlling_area_currency_wkf006,
+  cosp.wkf007 AS fixvalue_controlling_area_currency_wkf007,
+  cosp.wkf008 AS fixvalue_controlling_area_currency_wkf008,
+  cosp.wkf009 AS fixvalue_controlling_area_currency_wkf009,
+  cosp.wkf010 AS fixvalue_controlling_area_currency_wkf010,
+  cosp.wkf011 AS fixvalue_controlling_area_currency_wkf011,
+  cosp.wkf012 AS fixvalue_controlling_area_currency_wkf012,
+  cosp.wkf013 AS fixvalue_controlling_area_currency_wkf013,
+  cosp.wkf014 AS fixvalue_controlling_area_currency_wkf014,
+  cosp.wkf015 AS fixvalue_controlling_area_currency_wkf015,
+  cosp.wkf016 AS fixvalue_controlling_area_currency_wkf016,
+  cosp.pag001 AS price_variance_pag001,
+  cosp.pag002 AS price_variance_pag002,
+  cosp.pag003 AS price_variance_pag003,
+  cosp.pag004 AS price_variance_pag004,
+  cosp.pag005 AS price_variance_pag005,
+  cosp.pag006 AS price_variance_pag006,
+  cosp.pag007 AS price_variance_pag007,
+  cosp.pag008 AS price_variance_pag008,
+  cosp.pag009 AS price_variance_pag009,
+  cosp.pag010 AS price_variance_pag010,
+  cosp.pag011 AS price_variance_pag011,
+  cosp.pag012 AS price_variance_pag012,
+  cosp.pag013 AS price_variance_pag013,
+  cosp.pag014 AS price_variance_pag014,
+  cosp.pag015 AS price_variance_pag015,
+  cosp.pag016 AS price_variance_pag016,
+  cosp.meg001 AS total_quantity_meg001,
+  cosp.meg002 AS total_quantity_meg002,
+  cosp.meg003 AS total_quantity_meg003,
+  cosp.meg004 AS total_quantity_meg004,
+  cosp.meg005 AS total_quantity_meg005,
+  cosp.meg006 AS total_quantity_meg006,
+  cosp.meg007 AS total_quantity_meg007,
+  cosp.meg008 AS total_quantity_meg008,
+  cosp.meg009 AS total_quantity_meg009,
+  cosp.meg010 AS total_quantity_meg010,
+  cosp.meg011 AS total_quantity_meg011,
+  cosp.meg012 AS total_quantity_meg012,
+  cosp.meg013 AS total_quantity_meg013,
+  cosp.meg014 AS total_quantity_meg014,
+  cosp.meg015 AS total_quantity_meg015,
+  cosp.meg016 AS total_quantity_meg016,
+  cosp.mef001 AS fixed_quantity_mef001,
+  cosp.mef002 AS fixed_quantity_mef002,
+  cosp.mef003 AS fixed_quantity_mef003,
+  cosp.mef004 AS fixed_quantity_mef004,
+  cosp.mef005 AS fixed_quantity_mef005,
+  cosp.mef006 AS fixed_quantity_mef006,
+  cosp.mef007 AS fixed_quantity_mef007,
+  cosp.mef008 AS fixed_quantity_mef008,
+  cosp.mef009 AS fixed_quantity_mef009,
+  cosp.mef010 AS fixed_quantity_mef010,
+  cosp.mef011 AS fixed_quantity_mef011,
+  cosp.mef012 AS fixed_quantity_mef012,
+  cosp.mef013 AS fixed_quantity_mef013,
+  cosp.mef014 AS fixed_quantity_mef014,
+  cosp.mef015 AS fixed_quantity_mef015,
+  cosp.mef016 AS fixed_quantity_mef016,
+  cosp.muv001 AS quantity_incomplete_muv001,
+  cosp.muv002 AS quantity_incomplete_muv002,
+  cosp.muv003 AS quantity_incomplete_muv003,
+  cosp.muv004 AS quantity_incomplete_muv004,
+  cosp.muv005 AS quantity_incomplete_muv005,
+  cosp.muv006 AS quantity_incomplete_muv006,
+  cosp.muv007 AS quantity_incomplete_muv007,
+  cosp.muv008 AS quantity_incomplete_muv008,
+  cosp.muv009 AS quantity_incomplete_muv009,
+  cosp.muv010 AS quantity_incomplete_muv010,
+  cosp.muv011 AS quantity_incomplete_muv011,
+  cosp.muv012 AS quantity_incomplete_muv012,
+  cosp.muv013 AS quantity_incomplete_muv013,
+  cosp.muv014 AS quantity_incomplete_muv014,
+  cosp.muv015 AS quantity_incomplete_muv015,
+  cosp.muv016 AS quantity_incomplete_muv016,
+  cosp.beltp AS debit_credit_type_beltp,
+  cosp.timestmp AS time_created_timestmp,
+  cosp.bukrs AS company_code_bukrs,
+  cosp.fkber AS functional_area_fkber,
+  cosp.segment AS segment,
+  cosp.geber AS fund_geber,
+  cosp.grant_nbr AS grant_grant_nbr,
+  cosp.budget_pd AS budget_period_budget_pd,
+  IFNULL(cosp.recordstamp, TIMESTAMP('1900-01-01 00:00:00+00')) AS source_last_updated_at,
+  CURRENT_TIMESTAMP() AS bq_loaded_at
+FROM
+  ${ctx.ref(moduleConfig.sources.sapModule.datasetId, "cosp")} AS cosp
+${sql_helper.buildDynamicWhere([
+  incremental.getFilter(ctx, ["cosp"])
+])}
+`
+);

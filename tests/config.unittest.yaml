@@ -16,14 +16,13 @@ buildEnvironment:
   buildProjectId: cortex-connector-test
 data:
   bigQueryLocation: US
-  sources:
+  datasets:
     - id: sap_raw
       projectId: cortex-connector-test
       datasetId: CORTEX_SAP_RAW
     - id: sap_raw_s4
       projectId: cortex-connector-test
       datasetId: CORTEX_SAP_RAW_S4
-  targets:
     - id: sap_foundation
       projectId: cortex-connector-test
       datasetId: CORTEX7_SAP_DATA_FOUNDATION
@@ -35,163 +34,275 @@ data:
       datasetId: CORTEX7_DEVELOPMENT_PRODUCT
   namespaces:
     - name: cortex
-      path: cortex
+      path: ../src/data_modules/cortex
   modules:
-    foundation:
+    catalogs:
+    - id: sap_bdc_catalog
+      type: lakehouse_delta_share
+      bindsNamespaces: [sap_bdc]
+      enabled: true
+      connectionSettings:
+        catalogId: sap_bdc_catalog
+        projectId: kittycorn-dev-five
+        location: europe-west3
+        shares:
+        - shareId: purchasecontract_v1_he4_400_p8111
+        - shareId: customer_v1_he4_400_p8111  
+    foundations:
       - moduleId: erp
-        type: cortex.sap
+        modulePath: cortex.sap.foundations.sap
         dataSourceId: sap_raw
         dataTargetId: sap_foundation
         moduleSettings:
           sapVersion: ecc
           mandt: "100"
       - moduleId: erp_s4
-        type: cortex.sap
+        modulePath: cortex.sap.foundations.sap
         dataSourceId: sap_raw_s4
         dataTargetId: sap_foundation_s4
         moduleSettings:
           sapVersion: s4
           mandt: "250"
-    product:
+    products:
       - moduleId: sap_plants_and_storage
-        type: cortex.plants_and_storage
-        dependsOn:
+        modulePath: cortex.sap.products.plants_and_storage
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_treasury_market_data
+        modulePath: cortex.sap.products.treasury_market_data
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_purchasing_organizational_structure
-        type: cortex.purchasing_organizational_structure
-        dependsOn:
+        modulePath: cortex.sap.products.purchasing_organizational_structure
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_purchasing_documents
-        type: cortex.purchasing_documents
-        dependsOn:
+        modulePath: cortex.sap.products.purchasing_documents
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_vendor_invoices
-        type: cortex.vendor_invoices
-        dependsOn:
+        modulePath: cortex.sap.products.vendor_invoices
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_vendors
-        type: cortex.vendors
-        dependsOn:
+        modulePath: cortex.sap.products.vendors
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_delivery_documents
-        type: cortex.delivery_documents
-        dependsOn:
+        modulePath: cortex.sap.products.delivery_documents
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_billing_documents
-        type: cortex.billing_documents
-        dependsOn:
+        modulePath: cortex.sap.products.billing_documents
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_customers
-        type: cortex.customers
-        dependsOn:
+      - moduleId: sap_treasury_positions
+        modulePath: cortex.sap.products.treasury_positions
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_sales_documents
-        type: cortex.sales_documents
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_materials
-        type: cortex.materials
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_material_batches
-        type: cortex.material_batches
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_materials_movement
-        type: cortex.materials_movement
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_sales_organizational_structure
-        type: cortex.sales_organizational_structure
-        dependsOn:
+      - moduleId: sap_ecc_sales_pricing_conditions
+        modulePath: cortex.sap.products.sales_pricing_conditions
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
 
+      - moduleId: sap_customers
+        modulePath: cortex.sap.products.customers
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_sales_documents
+        modulePath: cortex.sap.products.sales_documents
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_materials
+        modulePath: cortex.sap.products.materials
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_inventory_and_special_stocks
+        modulePath: cortex.sap.products.inventory_and_special_stocks
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_bill_of_materials
+        modulePath: cortex.sap.products.bill_of_materials
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_batches
+        modulePath: cortex.sap.products.material_batches
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_materials_movement
+        modulePath: cortex.sap.products.materials_movement
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_product_hierarchies
+        modulePath: cortex.sap.products.product_hierarchies
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_sales_organizational_structure
+        modulePath: cortex.sap.products.sales_organizational_structure
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
       - moduleId: sap_global_settings
-        type: cortex.global_settings
-        dependsOn:
+        modulePath: cortex.sap.products.global_settings
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_business_partners
-        type: cortex.business_partners
-        dependsOn:
+        modulePath: cortex.sap.products.business_partners
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_universal_journal
-        type: cortex.universal_journal
-        dependsOn:
+        modulePath: cortex.sap.products.universal_journal
+        dependencyBindings:
           sapModule: erp_s4
         dataTargetId: product_target
+      - moduleId: sap_general_ledger_items
+        modulePath: cortex.sap.products.general_ledger_items
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
       - moduleId: sap_currency_conversion
-        type: cortex.currency_conversion
-        dependsOn:
+        modulePath: cortex.sap.products.currency_conversion
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_units_of_measurement
-        type: cortex.units_of_measurement
-        dependsOn:
+        modulePath: cortex.sap.products.units_of_measurement
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_accounting_documents
-        type: cortex.accounting_documents
-        dependsOn:
+        modulePath: cortex.sap.products.accounting_documents
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_production_orders
+        modulePath: cortex.sap.products.production_orders
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_order_master_data
+        modulePath: cortex.sap.products.order_master_data
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_fiscal_year_variants
-        type: cortex.fiscal_year_variants
-        dependsOn:
+        modulePath: cortex.sap.products.fiscal_year_variants
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_project_structure
-        type: cortex.project_structure
-        dependsOn:
+        modulePath: cortex.sap.products.project_structure
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_fixed_assets
-        type: cortex.fixed_assets
-        dependsOn:
+        modulePath: cortex.sap.products.fixed_assets
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_asset_documents
+        modulePath: cortex.sap.products.asset_documents
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_controlling_areas_and_cost_elements
-        type: cortex.controlling_areas_and_cost_elements
-        dependsOn:
+        modulePath: cortex.sap.products.controlling_areas_and_cost_elements
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_controlling_documents
+        modulePath: cortex.sap.products.controlling_documents
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target        
+      - moduleId: sap_cash_and_liquidity_management
+        modulePath: cortex.sap.products.cash_and_liquidity_management
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_general_ledger_accounts
-        type: cortex.general_ledger_accounts
-        dependsOn:
+        modulePath: cortex.sap.products.general_ledger_accounts
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_cost_and_profit_centers
-        type: cortex.cost_and_profit_centers
-        dependsOn:
+        modulePath: cortex.sap.products.cost_and_profit_centers
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target        
       - moduleId: sap_agency_settlement_documents
-        type: cortex.agency_settlement_documents
-        dependsOn:
+        modulePath: cortex.sap.products.agency_settlement_documents
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_condition_contracts
-        type: cortex.condition_contracts
-        dependsOn:
+        modulePath: cortex.sap.products.condition_contracts
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_financial_statement_structure_versions
-        type: cortex.financial_statement_structure_versions
-        dependsOn:
+        modulePath: cortex.sap.products.financial_statement_structure_versions
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_financial_hierarchies
+        modulePath: cortex.sap.products.financial_hierarchies
+        dependencyBindings:
+          sapModule: erp_s4
+        dataTargetId: product_target
+      - moduleId: sap_object_statuses
+        modulePath: cortex.sap.products.object_statuses
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_budget_allocations
+        modulePath: cortex.sap.products.budget_allocations
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_ledger_master
+        modulePath: cortex.sap.products.ledger_master
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_accounts_payable
+        modulePath: cortex.sap.products.accounts_payable
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_accounts_receivable
+        modulePath: cortex.sap.products.accounts_receivable
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_addresses
+        modulePath: cortex.sap.products.addresses
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_material_ledger
+        modulePath: cortex.sap.products.material_ledger
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
 deployment:

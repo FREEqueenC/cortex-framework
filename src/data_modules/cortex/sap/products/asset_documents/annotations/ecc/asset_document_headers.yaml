@@ -1,0 +1,74 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides Asset Document Headers (ECC) - Captures asset posting document header-level transaction
+  metadata from SAP ANEK (such as company code, asset number, fiscal year, posting date, and entry time),
+  enriched with calendar date dimensions to support asset transaction analysis. The data is captured at
+  the granularity of system default keys, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset Number, PK
+  - name: asset_subnumber_anln2
+    description: Asset Subnumber, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: sequence_number_lnran
+    description: Sequence Number, PK
+  - name: document_date_bldat
+    description: Document Date in Document
+  - name: posting_date_budat
+    description: Posting Date in the Document
+  - name: fiscal_period_monat
+    description: Fiscal Period
+  - name: entry_date_cpudt
+    description: Day on Which Accounting Document Was Entered
+  - name: entry_time_cputm
+    description: Time of Entry
+  - name: user_name_usnam
+    description: User Name
+  - name: transaction_code_tcode
+    description: Transaction Code
+  - name: accounting_document_number_belnr
+    description: Accounting Document Number
+  - name: accounting_document_line_item_buzei
+    description: Number of Line Item Within Accounting Document
+  - name: asset_value_date_bzdat
+    description: Asset Value Date
+  - name: proportional_values_indicator_xantei
+    description: Proportional Values Indicator
+  - name: year_of_document_date_bldat
+    description: Calendar Year of Document Date
+  - name: month_of_document_date_bldat
+    description: Calendar Month of Document Date
+  - name: quarter_of_document_date_bldat
+    description: Calendar Quarter of Document Date
+  - name: week_of_document_date_bldat
+    description: Calendar Week of Document Date
+  - name: year_of_posting_date_budat
+    description: Calendar Year of Posting Date
+  - name: month_of_posting_date_budat
+    description: Calendar Month of Posting Date
+  - name: quarter_of_posting_date_budat
+    description: Calendar Quarter of Posting Date
+  - name: week_of_posting_date_budat
+    description: Calendar Week of Posting Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -15,6 +15,7 @@
 from unittest.mock import MagicMock
 
 import pytest
+from google.api_core.exceptions import GoogleAPICallError
 from google.cloud import resourcemanager_v3
 
 from common.clients.resource_manager import ResourceManagerClient
@@ -43,13 +44,54 @@ def test_get_project_number_success():
 def test_get_project_number_failure():
     # Mock the ProjectsClient to raise an exception
     mock_client = MagicMock(spec=resourcemanager_v3.ProjectsClient)
-    mock_client.get_project.side_effect = Exception("Permission denied or project not found")
+    mock_client.get_project.side_effect = GoogleAPICallError(
+        "Permission denied or project not found"
+    )
 
     rm_client = ResourceManagerClient(client=mock_client)
 
     # Call the method and expect an exception
-    with pytest.raises(Exception) as exc_info:
+    with pytest.raises(GoogleAPICallError) as exc_info:
         rm_client.get_project_number("my-project-id")
 
     assert "Permission denied or project not found" in str(exc_info.value)
     mock_client.get_project.assert_called_once_with(name="projects/my-project-id")
+
+
+def test_get_project_ancestry_success():
+    mock_projects_client = MagicMock(spec=resourcemanager_v3.ProjectsClient)
+    mock_folders_client = MagicMock(spec=resourcemanager_v3.FoldersClient)
+
+    mock_project = MagicMock()
+    mock_project.name = "projects/123456789012"
+    mock_project.parent = "folders/111"
+    mock_projects_client.get_project.return_value = mock_project
+
+    mock_folder = MagicMock()
+    mock_folder.name = "folders/111"
+    mock_folder.parent = "organizations/999"
+    mock_folders_client.get_folder.return_value = mock_folder
+
+    rm_client = ResourceManagerClient(
+        client=mock_projects_client, folders_client=mock_folders_client
+    )
+    ancestry = rm_client.get_project_ancestry("my-project-id")
+
+    assert ancestry == [
+        "projects/my-project-id",
+        "projects/123456789012",
+        "folders/111",
+        "organizations/999",
+    ]
+    mock_projects_client.get_project.assert_called_once_with(name="projects/my-project-id")
+    mock_folders_client.get_folder.assert_called_once_with(name="folders/111")
+
+
+def test_get_project_ancestry_failure_fallback():
+    mock_projects_client = MagicMock(spec=resourcemanager_v3.ProjectsClient)
+    mock_projects_client.get_project.side_effect = GoogleAPICallError("API error")
+
+    rm_client = ResourceManagerClient(client=mock_projects_client)
+    ancestry = rm_client.get_project_ancestry("my-project-id")
+
+    assert ancestry == ["projects/my-project-id"]

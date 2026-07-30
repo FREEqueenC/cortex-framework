@@ -1,0 +1,478 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Sales and Distribution (SD) module in the Sales
+  domain and provides billing document item-level transaction details from SAP VBRP (e.g., material number,
+  plant, storage location, billed quantity, net value, cost, and preceding reference documents) to support
+  customer profitability and margin reporting. The data is captured at the granularity of Client (System),
+  Billing Document, and Item, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: billing_document_vbeln
+    description: Billing Document, PK
+  - name: item_posnr
+    description: Billing Document Item, PK
+  - name: higher_level_item_uepos
+    description: Higher-Level Item
+  - name: billed_quantity_fkimg
+    description: Billed Quantity
+  - name: sales_unit_vrkme
+    description: Sales Unit
+  - name: numerator_umvkz
+    description: Numerator
+  - name: denominator_umvkn
+    description: Denominator
+  - name: base_unit_of_measure_meins
+    description: Base Unit of Measure
+  - name: scale_quantity_smeng
+    description: Scale Quantity
+  - name: billing_qty_in_sku_fklmg
+    description: Billing Quantity in Sku
+  - name: required_quantity_lmeng
+    description: Required Quantity
+  - name: net_weight_ntgew
+    description: Net Weight
+  - name: gross_weight_brgew
+    description: Gross Weight
+  - name: weight_unit_gewei
+    description: Weight Unit
+  - name: volume_volum
+    description: Volume
+  - name: volume_unit_voleh
+    description: Volume Unit
+  - name: business_area_gsber
+    description: Business Area
+  - name: pricing_date_prsdt
+    description: Pricing Date
+  - name: serv_rendered_date_fbuda
+    description: Serv.Rendered Date
+  - name: exchange_rate_kursk
+    description: Exchange Rate
+  - name: net_value_netwr
+    description: Net Value
+  - name: originating_document_vbelv
+    description: Originating Document
+  - name: item_posnv
+    description: Item
+  - name: reference_document_vgbel
+    description: Preceding Reference Document Number
+  - name: reference_item_vgpos
+    description: Preceding Reference Document Item
+  - name: preceding_doc_categ_vgtyp
+    description: Preceding Document.Categ
+  - name: sales_document_aubel
+    description: Sales Document
+  - name: sales_document_item_aupos
+    description: Sales Document Item
+  - name: referenced_sales_document_auref
+    description: Referenced Sales Document
+  - name: material_matnr
+    description: Material
+  - name: description_arktx
+    description: Description
+  - name: pricing_ref_matl_pmatn
+    description: Pricing Reference Matl
+  - name: batch_charg
+    description: Batch
+  - name: material_group_matkl
+    description: Material Group
+  - name: item_category_pstyv
+    description: Item Category
+  - name: item_type_posar
+    description: Item Type
+  - name: product_hierarchy_prodh
+    description: Product Hierarchy
+  - name: shipping_point_receiving_pt_vstel
+    description: Shipping Point/Receiving Pt
+  - name: replacement_part_atpkz
+    description: Replacement Part
+  - name: division_spart
+    description: Division
+  - name: partner_item_pospa
+    description: Partner Item
+  - name: plant_werks
+    description: Plant
+  - name: country_aland
+    description: Country
+  - name: region_of_dlv_plant_wkreg
+    description: Region of Dlv.Plant
+  - name: county_of_dlv_plant_wkcou
+    description: County of Dlv.Plant
+  - name: city_of_deliv_plant_wkcty
+    description: City of Deliveryplant
+  - name: tax_class_material_taxm1
+    description: Tax Class Material
+  - name: taxclass2_matl_taxm2
+    description: Taxclass2-Matl
+  - name: taxclass3_matl_taxm3
+    description: Taxclass3-Matl
+  - name: taxclass4_matl_taxm4
+    description: Taxclass4-Matl
+  - name: taxclass5_matl_taxm5
+    description: Taxclass5-Matl
+  - name: taxclass6_matl_taxm6
+    description: Taxclass6-Matl
+  - name: taxclass7_matl_taxm7
+    description: Taxclass7-Matl
+  - name: taxclass8_matl_taxm8
+    description: Taxclass8-Matl
+  - name: taxclass9_matl_taxm9
+    description: Taxclass9-Matl
+  - name: statistical_value_kowrr
+    description: Statistical Value
+  - name: pricing_prsfd
+    description: Pricing
+  - name: cash_discount_sktof
+    description: Cash Discount
+  - name: cash_disc_basis_skfbp
+    description: Cash Disc.Basis
+  - name: material_pricing_grp_kondm
+    description: Material Pricing Grp
+  - name: acct_assignment_grp_ktgrm
+    description: Account Assignment Grp
+  - name: cost_center_kostl
+    description: Cost Center
+  - name: volume_rebate_group_bonus
+    description: Volume Rebate Group
+  - name: commission_group_provg
+    description: Commission Group
+  - name: ean_number_eannr
+    description: Ean Number
+  - name: sales_group_vkgrp
+    description: Sales Group
+  - name: sales_office_vkbur
+    description: Sales Office
+  - name: division_spara
+    description: Division
+  - name: returns_shkzg
+    description: Returns
+  - name: created_by_ernam
+    description: Created by
+  - name: created_on_erdat
+    description: Created on
+  - name: time_erzet
+    description: Time
+  - name: valuation_type_bwtar
+    description: Valuation Type
+  - name: storage_location_lgort
+    description: Storage Location
+  - name: update_group_stats_stafo
+    description: Update Group (Statistics)
+  - name: cost_wavwr
+    description: Cost
+  - name: subtotal_1_kzwi1
+    description: Subtotal 1
+  - name: subtotal_2_kzwi2
+    description: Subtotal 2
+  - name: subtotal_3_kzwi3
+    description: Subtotal 3
+  - name: subtotal_4_kzwi4
+    description: Subtotal 4
+  - name: subtotal_5_kzwi5
+    description: Subtotal 5
+  - name: subtotal_6_kzwi6
+    description: Subtotal 6
+  - name: exchange_rate_stats_stcur
+    description: Exchange Rate Statistics
+  - name: pricing_uvprs
+    description: Pricing
+  - name: general_uvall
+    description: General
+  - name: ean_upc_ean11
+    description: Ean/Upc
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: customer_group_1_kvgr1
+    description: Customer Group 1
+  - name: customer_group_2_kvgr2
+    description: Customer Group 2
+  - name: customer_group_3_kvgr3
+    description: Customer Group 3
+  - name: customer_group_4_kvgr4
+    description: Customer Group 4
+  - name: customer_group_5_kvgr5
+    description: Customer Group 5
+  - name: material_group_1_mvgr1
+    description: Material Group 1
+  - name: material_group_2_mvgr2
+    description: Material Group 2
+  - name: material_group_3_mvgr3
+    description: Material Group 3
+  - name: material_group_4_mvgr4
+    description: Material Group 4
+  - name: material_group_5_mvgr5
+    description: Material Group 5
+  - name: material_entered_matwa
+    description: Material Entered
+  - name: rebate_basis_bonba
+    description: Rebate Basis
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: profitab_segmt_no_paobjnr
+    description: Profitab Segmt Number
+  - name: wbs_element_ps_psp_pnr
+    description: WBS Element
+  - name: order_aufnr
+    description: Order
+  - name: tax_jurisdiction_txjcd
+    description: Tax Jurisdiction
+  - name: credit_price_cmpre
+    description: Credit Price
+  - name: credit_funct_active_cmpnt
+    description: Credit Funct Active
+  - name: configuration_cuobj
+    description: Configuration
+  - name: internal_object_no_cuobj_ch
+    description: Internal Object Number
+  - name: condition_update_koupd
+    description: Condition Update
+  - name: higherlevelitembatch_uecha
+    description: Higherlevelitembatch
+  - name: batch_management_xchar
+    description: Batch Management
+  - name: usage_abrvw
+    description: Usage
+  - name: bom_explosion_number_sernr
+    description: Bom Explosion Number
+  - name: sales_distr_order_bzirk_auft
+    description: Sales Distr.Order
+  - name: customergroupslsord_kdgrp_auft
+    description: Customergroupslsord
+  - name: price_group_of_order_konda_auft
+    description: Price Group of Order
+  - name: destinctry_of_order_lland_auft
+    description: Destinctry of Order
+  - name: manual_price_mprok
+    description: Manual Price
+  - name: price_list_order_pltyp_auft
+    description: Price List Order
+  - name: region_order_regio_auft
+    description: Region Order
+  - name: sales_org_of_order_vkorg_auft
+    description: Sales Organizational of Order
+  - name: distribchannelorder_vtweg_auft
+    description: Distribchannelorder
+  - name: acctsettlementstart_abrbg
+    description: Acctsettlementstart
+  - name: mat_determ_active_prosa
+    description: Mat.Determ.Active
+  - name: usage_of_hl_item_uepvw
+    description: Usage of Hl Item
+  - name: sd_document_categ_autyp
+    description: SD Document Categ
+  - name: statistics_date_stadat
+    description: Statistics Date
+  - name: billing_plan_number_fplnr
+    description: Billing Plan Number
+  - name: item_fpltr
+    description: Item
+  - name: promotion_aktnr
+    description: Promotion
+  - name: promotion_knuma_pi
+    description: Promotion
+  - name: sales_deal_knuma_ag
+    description: Sales Deal
+  - name: eligible_for_pref_prefe
+    description: Eligible for Pref
+  - name: tax_amount_mwsbp
+    description: Tax Amount
+  - name: order_reason_augru_auft
+    description: Order Reason
+  - name: billing_rule_fareg
+    description: Billing Rule
+  - name: mnitm_prcrefmatl_upmat
+    description: Mnitm Prcrefmatl
+  - name: mnitem_matpricinggrp_ukonm
+    description: Mnitem Matpricinggrp
+  - name: credit_price_cmpre_flt
+    description: Credit Price
+  - name: paymt_guarantee_form_abfor
+    description: Paymt Guarantee Form
+  - name: guaranteed_abges
+    description: Guaranteed
+  - name: reason_0_vat_j_1arfz
+    description: Reason 0 VAT
+  - name: region_j_1aregio
+    description: Region
+  - name: activity_code_gi_tax_j_1agicd
+    description: Activity Code Gi Tax
+  - name: distribution_type_j_1adtyp
+    description: Distribution Type
+  - name: tax_rel_classif_j_1atxrel
+    description: Tax Release Classif
+  - name: cfop_j_1bcfop
+    description: Cfop
+  - name: icms_law_j_1btaxlw1
+    description: Icms Law
+  - name: ipi_law_j_1btaxlw2
+    description: Ipi Law
+  - name: tax_code_j_1btxsdc
+    description: Tax Code
+  - name: gross_value_brtwr
+    description: Gross Value
+  - name: value_contract_no_wktnr
+    description: Value Contract Number
+  - name: value_contract_item_wktps
+    description: Value Contract Item
+  - name: paym_ca_pl_no_sales_rplnr
+    description: Paym.Ca.Pl.Number-Sales
+  - name: translation_date_kursk_dat
+    description: Translation Date
+  - name: material_group_1_wgru1
+    description: Material Group 1
+  - name: material_group_2_wgru2
+    description: Material Group 2
+  - name: condition_group_1_kdkg1
+    description: Condition Group 1
+  - name: condition_group_2_kdkg2
+    description: Condition Group 2
+  - name: condition_group_3_kdkg3
+    description: Condition Group 3
+  - name: condition_group_4_kdkg4
+    description: Condition Group 4
+  - name: condition_group_5_kdkg5
+    description: Condition Group 5
+  - name: usage_vkaus
+    description: Usage
+  - name: inflation_index_j_1aindxp
+    description: Inflation Index
+  - name: indexing_base_date_j_1aidatep
+    description: Indexing Base Date
+  - name: leading_uom_kzfme
+    description: Leading Unit of Measure
+  - name: tax_code_mwskz
+    description: Tax Code
+  - name: contract_type_vertt
+    description: Contract Type
+  - name: contract_number_vertn
+    description: Contract Number
+  - name: text_sgtxt
+    description: Text
+  - name: delivery_time_delco
+    description: Delivery Time
+  - name: accounting_indicator_bemot
+    description: Accounting Indicator
+  - name: rev_recognition_cat_rrrel
+    description: Rev Recognition Category
+  - name: ex_rate_lettofcredit_akkur
+    description: Ex.Rate-Lettofcredit
+  - name: catalog_wminr
+    description: Catalog
+  - name: reference_document_vgbel_ex
+    description: Reference Document
+  - name: reference_item_vgpos_ex
+    description: Reference Item
+  - name: logical_system_logsys
+    description: Logical System
+  - name: category_vgtyp_ex
+    description: Category
+  - name: iss_law_j_1btaxlw3
+    description: Iss Law
+  - name: cofins_law_j_1btaxlw4
+    description: Cofins Law
+  - name: pis_law_j_1btaxlw5
+    description: Pis Law
+  - name: process_id_no_msr_id
+    description: Process Id Number
+  - name: refund_code_msr_refund_code
+    description: Refund Code
+  - name: return_reason_msr_ret_reason
+    description: Return Reason
+  - name: condition_record_no_nrab_knumh
+    description: Condition Record Number
+  - name: condition_value_nrab_value
+    description: Condition Value
+  - name: dispute_case_dispute_case
+    description: Dispute Case
+  - name: fund_usage_item_fund_usage_item
+    description: Fund Usage Item
+  - name: rev_accounting_type_farr_reltype
+    description: Rev Accounting Type
+  - name: claims_taxation_claims_taxation
+    description: Claims Taxation
+  - name: translation_date_kurrf_dat_orig
+    description: Translation Date
+  - name: requirement_segment_sgt_rcat
+    description: Requirement Segment
+  - name: stock_segment_sgt_scat
+    description: Stock Segment
+  - name: country_specific_reference_1_glo_log_ref1_it
+    description: Country Specific Reference 1
+  - name: opertn_task_list_no_aufpl
+    description: Opertn Task List Number
+  - name: counter_aplzl
+    description: Counter
+  - name: down_payment_chain_number_dpcnr
+    description: Down Payment Chain Number
+  - name: transaction_number_dcpnr
+    description: Transaction Number
+  - name: document_seq_no_dpnrb
+    description: Document Sequential Number
+  - name: period_of_performance_start_date_perop_beg
+    description: Period of Performance Start Date
+  - name: period_of_performance_end_date_perop_end
+    description: Period of Performance End Date
+  - name: us_government_fields_fmfgus_key
+    description: Us Government Fields
+  - name: season_year_fsh_season_year
+    description: Season Year
+  - name: season_fsh_season
+    description: Season
+  - name: collection_fsh_collection
+    description: Collection
+  - name: theme_fsh_theme
+    description: Theme
+  - name: fund_fonds
+    description: Fund
+  - name: funds_center_fistl
+    description: Funds Center
+  - name: functional_area_fkber
+    description: Functional Area
+  - name: grant_grant_nbr
+    description: Grant
+  - name: budget_period_budget_pd
+    description: Budget Period
+  - name: work_period_prs_work_period
+    description: Work Period
+  - name: partner_profit_ctr_pprctr
+    description: Partner Profit Center
+  - name: trading_part_ba_pargb
+    description: Trading Partner Business Area
+  - name: opertn_task_list_no_aufpl_oaa
+    description: Opertn Task List Number
+  - name: counter_aplzl_oaa
+    description: Counter
+  - name: cgpl_guid_campaign
+    description: Cgpl_Guid
+  - name: abb_complaints_reason_compreas
+    description: Abb Complaints Reason
+  - name: characteristic_value_1_wrf_charstc1
+    description: Characteristic Value 1
+  - name: characteristic_value_2_wrf_charstc2
+    description: Characteristic Value 2
+  - name: characteristic_value_3_wrf_charstc3
+    description: Characteristic Value 3
+  - name: year_of_creation_date_erdat
+    description: Year of Creation Date
+  - name: month_of_creation_date_erdat
+    description: Month of Creation Date
+  - name: quarter_of_creation_date_erdat
+    description: Quarter of Creation Date
+  - name: week_of_creation_date_erdat
+    description: Week of Creation Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

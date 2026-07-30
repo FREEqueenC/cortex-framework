@@ -1,0 +1,32 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: Supplier Spend Analysis
+description: This data product includes information about supplier spend analysis
+  from the Materials Management (MM) module in the Supply Chain domain in SAP S/4HANA or
+  SAP ECC. This data product provides a comprehensive view of supplier spend across
+  the organization. It integrates data from various foundational SAP data products to enable strategic
+  procurement insights and supplier performance analysis.
+category: consumption_product
+type: supplier_spend_analysis
+dependencies:
+  sapMaterials:
+    modulePath: cortex.sap.products.materials
+  sapPurchasingDocuments:
+    modulePath: cortex.sap.products.purchasing_documents
+  sapPurchasingOrganizationalStructure:
+    modulePath: cortex.sap.products.purchasing_organizational_structure
+  sapVendors:
+    modulePath: cortex.sap.products.vendors
+builder: sap_product

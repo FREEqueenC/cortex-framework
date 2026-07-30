@@ -1,0 +1,68 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view provides important financial KPIs including comapany's assests, liabilitlies and equity at specific point of time at the granularity of Client(System), Company Code, Fiscal Year, Fiscal Period, ChartOfAccount, Hierarchy Name, Ledger, Business Area, Node, Target Currency and Language Key."
+fields:
+  - name: "Client"
+    description: "Client (Mandant), PK"
+  - name: "CompanyCode"
+    description: "Company Code, PK"
+  - name: "FiscalYear"
+    description: "Fiscal Year, PK"
+  - name: "FiscalPeriod"
+    description: "Fiscal Period, PK"
+  - name: "ChartOfAccounts"
+    description: "Group of general ledger (G/L) accounts that records the transactions in a structured way, PK"
+  - name: "HierarchyName"
+    description: "Hierarchy Name, PK"
+  - name: "BusinessArea"
+    description: "Business Area, PK"
+  - name: "LedgerInGeneralLedgerAccounting"
+    description: "Ledger In General Ledger Accounting, PK"
+  - name: "Node"
+    description: "Node Id (includes both hierarchy node and glaccounts), PK"
+  - name: "LanguageKey_SPRAS"
+    description: "Language Key, PK"
+  - name: "TargetCurrency_TCURR"
+    description: "To-currency, PK"
+  - name: "Parent"
+    description: "Parent Node"
+  - name: "NodeText"
+    description: "Node Text"
+  - name: "ParentText"
+    description: "Parent Text"
+  - name: "Level"
+    description: "Describes the level at which particular node exists( Level 1 is root)"
+  - name: "FiscalQuarter"
+    description: "Fiscal Quarter"
+  - name: "IsLeafNode"
+    description: "Indicator: The last node in the hierarchy"
+  - name: "CompanyText"
+    description: "Name of Company"
+  - name: "AmountInLocalCurrency"
+    description: "Amount in local currency"
+  - name: "CumulativeAmountInLocalCurrency"
+    description: "Aggregated amount till the given fiscal period"
+  - name: "CurrencyKey"
+    description: "Currency Key"
+  - name: "ExchangeRate"
+    description: "Exchange Rate of a currency on maximum date of that specific fiscal year and period combination"
+  - name: "MaxExchangeRate"
+    description: "Maximum Exchange Rate of a currency in that specific fiscal year and period combination"
+  - name: "AvgExchangeRate"
+    description: "Average Exchange Rate of a currency in that specific fiscal year and period combination"
+  - name: "AmountInTargetCurrency"
+    description: "Amount in target currency"
+  - name: "CumulativeAmountInTargetCurrency"
+    description: "Aggregated amount till the given fiscal period in target currency"

@@ -1,0 +1,53 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI), Controlling (CO)
+  module in the Finance domain and provides Joined view of `setheader` and `setheadert` containing set
+  headers and descriptions. The data is captured at the granularity of system default keys, ensuring a
+  unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: set_class_setclass
+    description: Set Class, PK
+  - name: subclass_subclass
+    description: Organizational Unit, PK
+  - name: set_name_setname
+    description: Set Name, PK
+  - name: language_key_langu
+    description: Language Key, PK
+  - name: set_type_settype
+    description: Set Type
+  - name: table_name_tabname
+    description: Table Name
+  - name: field_name_fieldname
+    description: Field Name
+  - name: created_on_credate
+    description: Creation Date
+  - name: created_at_cretime
+    description: Creation Time
+  - name: created_by_creuser
+    description: Created by
+  - name: changed_on_upddate
+    description: Last Changed on
+  - name: changed_at_updtime
+    description: Last Changed Time
+  - name: changed_by_upduser
+    description: Last Changed by
+  - name: set_title_descript
+    description: Description
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

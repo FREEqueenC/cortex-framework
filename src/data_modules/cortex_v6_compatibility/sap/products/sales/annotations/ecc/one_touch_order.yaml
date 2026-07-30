@@ -1,0 +1,28 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view shows the sales documents which are one touch in nature (i.e.,The sales orders which were fulfilled in one go from sales order creation to delivery and billing). This view has granularity of Client(system), sales document number and item."
+fields:
+  - name: "VBAPClient_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "VBAPSalesDocument_VBELN"
+    description: "Sales Document, PK"
+  - name: "VBAPSalesDocument_Item_POSNR"
+    description: "Sales Document Item, PK"
+  - name: "VBAPTotalOrder_KWMENG"
+    description: " Total Order Quantity in Sales Units"
+  - name: "ActualBilledQuantity_FKIMG"
+    description: "Actual Billed Quantity"
+  - name: "OneTouchOrderCount"
+    description: "Number of One Touch orders for the sales document and item"

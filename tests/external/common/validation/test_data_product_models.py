@@ -85,10 +85,10 @@ def test_data_product_models(repo_root: pathlib.Path):
     compliance and ensures consistency between fields explicitly declared in JS
     and those documented in YAML annotations.
     """
-    src_dir = repo_root / "src" / "data_modules" / "cortex" / "data_product"
+    src_dir = repo_root / "src" / "data_modules" / "cortex" / "sap" / "products"
 
     if not src_dir.exists():
-        pytest.skip("No data_product directory found.")
+        pytest.skip("No products directory found.")
 
     errors = []
 

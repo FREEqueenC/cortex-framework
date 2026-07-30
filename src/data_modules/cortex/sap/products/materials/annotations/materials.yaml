@@ -1,0 +1,356 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides SAP general material master data from MARA combined with multilingual text
+  entries from MAKT, documenting product codes, descriptions, and physical and dimensional specifications.
+  The data is captured at the granularity of Client (System), Material Number, and Language Key, ensuring
+  a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: material_number_matnr
+    description: Material, PK
+  - name: language_key_spras
+    description: Language, PK
+  - name: material_text_maktx
+    description: Material Description
+  - name: created_on_ersda
+    description: Created on
+  - name: created_by_ernam
+    description: Created by
+  - name: last_changed_on_laeda
+    description: Last Change
+  - name: changed_by_aenam
+    description: Changed by
+  - name: maintenance_status_of_complete_material_vpsta
+    description: Compl Maint Status
+  - name: maintenance_status_pstat
+    description: Maintenance Status
+  - name: flag_material_for_deletion_at_client_level_lvorm
+    description: Df At Client Level
+  - name: material_type_mtart
+    description: Material Type
+  - name: industry_sector_mbrsh
+    description: Industry Sector
+  - name: material_group_matkl
+    description: Material Group
+  - name: old_material_number_bismt
+    description: Old Material Number
+  - name: base_unit_of_measure_meins
+    description: Base Unit of Measure
+  - name: order_unit_bstme
+    description: Order Unit
+  - name: document_number_without_document_management_system_zeinr
+    description: Document
+  - name: document_type_without_document_management_system_zeiar
+    description: Document Type
+  - name: document_version_without_document_management_system_zeivr
+    description: Document Version
+  - name: page_format_of_document_without_document_management_system_zeifo
+    description: Page Format
+  - name: document_change_number_without_document_management_system_aeszn
+    description: Document Change Number
+  - name: page_number_of_document_without_document_management_system_blatt
+    description: Page Number
+  - name: number_of_sheets_without_document_management_system_blanz
+    description: Number of Sheets
+  - name: production_inspection_memo_ferth
+    description: Prod./Insp Memo
+  - name: page_format_of_production_memo_formt
+    description: Page Format
+  - name: size_dimensions_groes
+    description: Size/Dimensions
+  - name: basic_material_wrkst
+    description: Basic Material
+  - name: industry_standard_description_such_as_ansi_or_iso_normt
+    description: Industry Std Desc
+  - name: laboratory_design_office_labor
+    description: Lab/Office
+  - name: purchasing_value_key_ekwsl
+    description: Purchasing Value Key
+  - name: gross_weight_brgew
+    description: Gross Weight
+  - name: net_weight_ntgew
+    description: Net Weight
+  - name: weight_unit_gewei
+    description: Weight Unit
+  - name: volume_volum
+    description: Volume
+  - name: volume_unit_voleh
+    description: Volume Unit
+  - name: container_requirements_behvo
+    description: Container Reqmts
+  - name: storage_conditions_raube
+    description: Storage Conditions
+  - name: temperature_conditions_indicator_tempb
+    description: Temp Conditions
+  - name: low_level_code_disst
+    description: Low-Level Code
+  - name: transportation_group_tragr
+    description: Transportation Group
+  - name: hazardous_material_number_stoff
+    description: Haz Material Number
+  - name: division_spart
+    description: Division
+  - name: competitor_kunnr
+    description: Competitor
+  - name: european_article_number_eannr
+    description: Ean Number
+  - name: quantity_number_of_gr_gis_lips_to_be_printed_wesch
+    description: Number of Goods Receipt Slips
+  - name: procurement_rule_bwvor
+    description: Procurement Rule
+  - name: source_of_supply_bwscl
+    description: Source of Supply
+  - name: season_category_saiso
+    description: Season
+  - name: label_type_etiar
+    description: Label Type
+  - name: label_form_etifo
+    description: Label Form
+  - name: deactivated_entar
+    description: Field Deactivated
+  - name: international_article_number_ean_upc_ean11
+    description: Ean/Upc
+  - name: category_of_international_article_number_ean_numtp
+    description: Ean Category
+  - name: length_laeng
+    description: Length
+  - name: width_breit
+    description: Width
+  - name: height_hoehe
+    description: Height
+  - name: unit_of_dimension_for_length_width_height_meabm
+    description: Unit of Dimension
+  - name: product_hierarchy_prdha
+    description: Product Hierarchy
+  - name: stock_transfer_net_change_costing_aeklk
+    description: Net Change Costing
+  - name: cad_indicator_cadkz
+    description: Cad Indicator
+  - name: qm_in_procurement_is_active_qmpur
+    description: QM Procedure Active
+  - name: allowed_packaging_weight_ergew
+    description: Allowed Pkg Weight
+  - name: unit_of_weight_allowed_packaging_weight_ergei
+    description: Unit of Weight
+  - name: allowed_packaging_volume_ervol
+    description: Allowed Pkg Volume
+  - name: volume_unit_allowed_packaging_volume_ervoe
+    description: Volume Unit
+  - name: excess_weight_tolerance_for_handling_unit_gewto
+    description: Excess Wt Tolerance
+  - name: excess_volume_tolerance_of_the_handling_unit_volto
+    description: Excess Volume Tol
+  - name: variable_purchase_order_unit_active_vabme
+    description: Variable Purchase Order Unit
+  - name: revision_level_has_been_assigned_to_the_material_kzrev
+    description: Revision Level Assgd
+  - name: configurable_material_kzkfg
+    description: Material Is Configurable
+  - name: batch_management_requirement_indicator_xchpf
+    description: Is Batch Management Required
+  - name: packaging_material_type_vhart
+    description: Packaging Mat Type
+  - name: maximum_level_by_volume_fuelg
+    description: Maximum Level
+  - name: stacking_factor_stfak
+    description: Stackability Factor
+  - name: material_group_packaging_materials_magrv
+    description: Matl Grp Pack.Matls
+  - name: authorization_group_begru
+    description: Authorization Group
+  - name: valid_from_date_datab
+    description: Valid From
+  - name: deletion_date_liqdt
+    description: Deletion Date
+  - name: season_year_saisj
+    description: Season Year
+  - name: price_band_category_plgtp
+    description: Price Band Category
+  - name: empties_bill_of_material_mlgut
+    description: With Empties Bom
+  - name: external_material_group_extwg
+    description: External Material Group
+  - name: cross_plant_configurable_material_satnr
+    description: Cross-Plant Cm
+  - name: material_category_attyp
+    description: Material Category
+  - name: indicator_material_can_be_coproduct_kzkup
+    description: Controlling-Product
+  - name: indicator_the_material_has_a_follow_up_material_kznfm
+    description: Follow-Up Material
+  - name: pricing_reference_material_pmata
+    description: Pricing Reference Matl
+  - name: cross_plant_material_status_mstae
+    description: X-Plant Matl Status
+  - name: cross_distribution_chain_material_status_mstav
+    description: X-Distr.Chain Status
+  - name: date_from_which_the_cross_plant_material_status_is_valid_mstde
+    description: Valid From
+  - name: date_from_which_the_x_distr_chain_material_status_is_valid_mstdv
+    description: Valid From
+  - name: tax_classification_of_the_material_taklv
+    description: Tax Classification
+  - name: catalog_profile_rbnrm
+    description: Catalog Profile
+  - name: minimum_remaining_shelf_life_mhdrz
+    description: Min Reminders Shelf Life
+  - name: total_shelf_life_mhdhb
+    description: Total Shelf Life
+  - name: storage_percentage_mhdlp
+    description: Storage Percentage
+  - name: content_unit_inhme
+    description: Content Unit
+  - name: net_contents_inhal
+    description: Net Contents
+  - name: comparison_price_unit_vpreh
+    description: Comparisonpriceunit
+  - name: gross_contents_inhbr
+    description: Gross Contents
+  - name: quantity_conversion_method_cmeth
+    description: Conversion Method
+  - name: internal_object_number_cuobf
+    description: Internal Object Number
+  - name: environmentally_relevant_kzumw
+    description: Environmentally Rlvt
+  - name: product_allocation_determination_procedure_kosch
+    description: Product Allocation
+  - name: pricing_profile_for_variants_sprof
+    description: Pricing Profile
+  - name: material_qualifies_for_discount_in_kind_nrfhg
+    description: Qual.F.Freegoodsdis
+  - name: manufacturer_part_number_mfrpn
+    description: Material Manufacturer Part Number
+  - name: manufacturer_number_mfrnr
+    description: Material Manufacturer Number
+  - name: number_inventory_managed_material_bmatn
+    description: Internal Material Number
+  - name: mfr_part_profile_mprof
+    description: Manufacturer Part Profile
+  - name: units_of_measure_usage_kzwsm
+    description: Units of Measure Usage
+  - name: rollout_in_a_season_saity
+    description: Rollout
+  - name: dangerous_goods_indicator_profile_profl
+    description: Dg Indicator Profile
+  - name: indicator_highly_viscous_ihivi
+    description: Highly Viscous
+  - name: indicator_in_bulk_liquid_iloos
+    description: In Bulk/Liquid
+  - name: level_of_explicitness_for_serial_number_serlv
+    description: Serialization Level
+  - name: packaging_material_is_closed_packaging_kzgvh
+    description: Closed
+  - name: indicator_approved_batch_record_required_xgchp
+    description: Appr.Batch Rec Req
+  - name: assign_effectivity_parameter_values_override_change_numbers_kzeff
+    description: Assign Effect Vals
+  - name: material_completion_level_compl
+    description: Material Completion Level
+  - name: period_indicator_for_shelf_life_expiration_date_iprkz
+    description: Period Ind for Sled
+  - name: rounding_rule_for_calculation_of_sled_rdmhd
+    description: Rounding Rule Sled
+  - name: indicator_product_composition_printed_on_packaging_przus
+    description: Product Composition
+  - name: general_item_category_group_mtpos_mara
+    description: Gen Item Category Grp
+  - name: generic_material_with_logistical_variants_bflme
+    description: Logistical Variants
+  - name: material_is_locked_matfi
+    description: Material Is Locked
+  - name: relevant_for_configuration_management_cmrel
+    description: Relevant for Cm
+  - name: assortment_list_type_bbtyp
+    description: Assortment List Type
+  - name: expiration_date_sled_bbd
+    description: Expiration Date
+  - name: global_trade_item_number_variant_gtin_variant
+    description: Ean Variant
+  - name: material_number_of_the_generic_material_in_prepack_materials_gennr
+    description: Generic Material
+  - name: reference_material_for_materials_packed_in_same_way_rmatp
+    description: Reference Matl for Packing
+  - name: indicator_global_data_synchronization_relevant_gds_relevant
+    description: Gds-Relevant
+  - name: acceptance_at_origin_weora
+    description: Origin Acceptance
+  - name: standard_hu_type_hutyp_dflt
+    description: Standard Hu Type
+  - name: pilferable_pilferable
+    description: Pilferable
+  - name: warehouse_storage_condition_whstc
+    description: Wh Storage Condition
+  - name: warehouse_material_group_whmatgr
+    description: Wh Material Group
+  - name: handling_indicator_hndlcode
+    description: Handling Indicator
+  - name: relevant_for_hazardous_substances_hazmat
+    description: Release for Hs
+  - name: handling_unit_type_hutyp
+    description: Handling Unit Type
+  - name: variable_tare_weight_tare_var
+    description: Varb Tare Weight
+  - name: maximum_allowed_capacity_of_packaging_material_maxc
+    description: Maximum Capacity
+  - name: over_capacity_tolerance_of_the_handling_unit_maxc_tol
+    description: Overcapacity Toler
+  - name: maximum_packing_length_of_packaging_material_maxl
+    description: Max Pack Length
+  - name: maximum_packing_width_of_packaging_material_maxb
+    description: Max Pack Width
+  - name: maximum_packing_height_of_packaging_material_maxh
+    description: Max Pack Height
+  - name: unit_of_measure_for_maximum_packing_length_width_height_maxdim_uom
+    description: Unit of Measurement
+  - name: country_of_origin_of_material_herkl
+    description: Country of Origin
+  - name: material_freight_group_mfrgr
+    description: Material Freight Grp
+  - name: quarantine_period_qqtime
+    description: Quarant Per
+  - name: time_unit_for_quarantine_period_qqtimeuom
+    description: Time Unit
+  - name: quality_inspection_group_qgrp
+    description: Quality Inspec Grp
+  - name: serial_number_profile_serial
+    description: Serial Number Profile
+  - name: form_name_ps_smartform
+    description: Form Name
+  - name: ewm_cw_logistics_unit_of_measure_logunit
+    description: Logistics Unit of Measure
+  - name: ewm_cw_material_is_a_catch_weight_material_cwqrel
+    description: Catch-Weight-Relevant
+  - name: ewm_cw_catch_weight_profile_for_entering_cw_quantity_cwqproc
+    description: Cw Profile for Cw Quantity
+  - name: ewm_catch_weight_tolerance_group_for_ewm_cwqtolgr
+    description: Cw Tolerance Group
+  - name: adjustment_profile_adprof
+    description: Adjustment Profile
+  - name: id_for_an_intellectual_property_crm_product_ipmipproduct
+    description: Intellectual Property
+  - name: variant_price_allowed_for_material_master_allow_pmat_igno
+    description: Variant Price Allowed
+  - name: medium_medium
+    description: Medium
+  - name: physical_commodity_commodity
+    description: Physical Commodity
+  - name: brand_brand_id
+    description: Brand
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

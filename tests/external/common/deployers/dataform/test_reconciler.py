@@ -108,7 +108,7 @@ def test_verify_local_file_needs_update(reconciler, client, tmp_path):
 def test_verify_local_file_new(reconciler, tmp_path):
     local_file = tmp_path / "a.sql"
     local_file.write_text("content")
-    remote_files = set()
+    remote_files: set[str] = set()
 
     res = reconciler.verify_local_file(
         PROJECT, REGION, REPO, WORKSPACE, tmp_path, remote_files, "a.sql"

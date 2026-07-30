@@ -1,0 +1,83 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides Asset Document Line Items (ECC) - Captures asset posting document line item-level
+  transaction metadata from SAP ANEP (such as depreciation area, transaction type, posted amount, ordinary
+  depreciation, and interest), enriched with calendar date dimensions to support asset valuation and depreciation
+  analysis. The data is captured at the granularity of system default keys, ensuring a unique audit trail
+  for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset Number, PK
+  - name: asset_subnumber_anln2
+    description: Asset Subnumber, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: sequence_number_lnran
+    description: Sequence Number, PK
+  - name: depreciation_area_afabe
+    description: Depreciation Area, PK
+  - name: acquisition_year_zujhr
+    description: Acquisition Year
+  - name: acquisition_code_zucod
+    description: Acquisition Code
+  - name: depreciation_period_peraf
+    description: Depreciation Period
+  - name: accounting_document_number_belnr
+    description: Accounting Document Number
+  - name: accounting_document_line_item_buzei
+    description: Number of Line Item Within Accounting Document
+  - name: asset_value_date_bzdat
+    description: Asset Value Date
+  - name: transaction_type_bwasl
+    description: Asset Transaction Type
+  - name: ordinary_depreciation_indicator_xafar
+    description: Ordinary Depreciation Indicator
+  - name: amount_posted_anbtr
+    description: Amount Posted
+  - name: ordinary_depreciation_nafab
+    description: Ordinary Depreciation Posted on Transaction
+  - name: special_depreciation_safab
+    description: Special Depreciation Posted on Transaction
+  - name: interest_posted_zinsb
+    description: Interest Posted on Transaction
+  - name: proportional_values_indicator_xantw
+    description: Proportional Values Indicator
+  - name: transfer_of_residual_value_indicator_xawbt
+    description: Transfer of Residual Value Indicator
+  - name: sequence_number_lnsan
+    description: Sequence Number
+  - name: update_indicator_anupd
+    description: Update Indicator
+  - name: clearing_line_item_augln
+    description: Clearing Line Item
+  - name: local_currency_waers
+    description: Local Currency
+  - name: year_of_asset_value_date_bzdat
+    description: Calendar Year of Asset Value Date
+  - name: month_of_asset_value_date_bzdat
+    description: Calendar Month of Asset Value Date
+  - name: quarter_of_asset_value_date_bzdat
+    description: Calendar Quarter of Asset Value Date
+  - name: week_of_asset_value_date_bzdat
+    description: Calendar Week of Asset Value Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

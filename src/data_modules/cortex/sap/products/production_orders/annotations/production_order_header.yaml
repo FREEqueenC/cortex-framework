@@ -1,0 +1,365 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Production Planning (PP) module in the Manufacturing
+  domain and provides Scheduled dates, supervisor keys, quantities, and statuses of production orders
+  The data is captured at the granularity of Client (System) and Order Number, ensuring a unique audit
+  trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: order_number_aufnr
+    description: Order Number, PK
+  - name: basic_finish_date_gltrp
+    description: Basic Finish Date
+  - name: basic_start_date_gstrp
+    description: Basic Start Date
+  - name: year_of_basic_start_date_gstrp
+    description: Year of Basic Start Date
+  - name: month_of_basic_start_date_gstrp
+    description: Month of Basic Start Date
+  - name: quarter_of_basic_start_date_gstrp
+    description: Quarter of Basic Start Date
+  - name: week_of_basic_start_date_gstrp
+    description: Week of Basic Start Date
+  - name: scheduled_release_date_ftrms
+    description: Scheduled Release Date
+  - name: scheduled_finish_gltrs
+    description: Scheduled Finish Date
+  - name: scheduled_start_gstrs
+    description: Scheduled Start Date
+  - name: actual_start_date_gstri
+    description: Actual Start Date
+  - name: actual_finish_date_getri
+    description: Actual Finish Date
+  - name: actual_finish_date_gltri
+    description: Actual Finish Date Details
+  - name: actual_release_date_ftrmi
+    description: Actual Release Date
+  - name: planned_release_date_ftrmp
+    description: Planned Release Date
+  - name: reservation_number_rsnum
+    description: Reservation Number
+  - name: total_scrap_quantity_gasmg
+    description: Total Scrap Quantity
+  - name: total_order_quantity_gamng
+    description: Total Target Order Quantity
+  - name: base_unit_of_measure_gmein
+    description: Base Unit of Measure
+  - name: material_number_plnbez
+    description: Material Number
+  - name: task_list_type_plnty
+    description: Task List Type
+  - name: group_plnnr
+    description: Group Key
+  - name: application_plnaw
+    description: Application Key
+  - name: group_counter_plnal
+    description: Group Counter
+  - name: usage_pverw
+    description: Usage Key
+  - name: explosion_date_plauf
+    description: Explosion Date
+  - name: lot_size_to_plsvb
+    description: To Lot Size
+  - name: task_list_unit_plnme
+    description: Task List Unit
+  - name: lot_size_from_plsvn
+    description: From Lot Size
+  - name: valid_from_pdatv
+    description: Valid From Date
+  - name: change_number_paenr
+    description: Change Number
+  - name: planner_group_plgrp
+    description: Planner Group
+  - name: lot_size_divisor_lodiv
+    description: Lot Size Divisor
+  - name: bom_category_stlty
+    description: Bom Category
+  - name: material_number_stlbez
+    description: Bom Material Number
+  - name: bom_status_stlst
+    description: Bom Status
+  - name: bill_of_material_stlnr
+    description: Bill of Material
+  - name: valid_from_sdatv
+    description: Bom Valid From Date
+  - name: base_quantity_sbmng
+    description: Base Quantity
+  - name: base_unit_of_measure_sbmeh
+    description: Base Unit of Measure
+  - name: change_number_saenr
+    description: Bom Change Number
+  - name: alternative_bom_stlal
+    description: Alternative Bom
+  - name: bom_usage_stlan
+    description: Bom Usage
+  - name: lot_size_from_slsvn
+    description: Bom From Lot Size
+  - name: lot_size_to_slsbs
+    description: Bom to Lot Size
+  - name: bom_explosion_date_aufld
+    description: Bom Explosion Date
+  - name: mrp_controller_dispo
+    description: Mrp Controller
+  - name: opertn_task_list_no_aufpl
+    description: Operation Task List Number
+  - name: production_supervisor_fevor
+    description: Production Supervisor
+  - name: sched_margin_key_fhori
+    description: Scheduling Margin Key
+  - name: scheduling_type_terkz
+    description: Scheduling Type
+  - name: reduction_indicator_redkz
+    description: Reduction Indicator
+  - name: priority_aprio
+    description: Order Priority
+  - name: network_ntzue
+    description: Superior Network Number
+  - name: superior_activity_vorue
+    description: Superior Activity Number
+  - name: network_profile_profid
+    description: Network Profile
+  - name: float_before_prod_vorgz
+    description: Float Before Production
+  - name: float_after_product_sichz
+    description: Float After Production
+  - name: release_period_freiz
+    description: Release Period
+  - name: dates_chngd_manually_upter
+    description: Dates Changed Manually Indicator
+  - name: capacity_requirement_id_bedid
+    description: Capacity Requirement Id
+  - name: project_definition_pronr
+    description: Project Definition
+  - name: counter_zaehl
+    description: Internal Counter
+  - name: counter_mzaehl
+    description: Internal Counter Details
+  - name: add_crit_counter_zkriz
+    description: Additional Criterion Counter
+  - name: inspection_lot_prueflos
+    description: Inspection Lot Number
+  - name: planned_costs_costing_variant_klvarp
+    description: Costing Variant Planned
+  - name: actual_costs_costing_variant_klvari
+    description: Costing Variant Actual
+  - name: backflushing_rgekz
+    description: Backflushing Indicator
+  - name: scheduling_basis_plart
+    description: Scheduling Basis
+  - name: ind_relationships_flg_aob
+    description: Relationship Indicator
+  - name: ind_work_flg_arbei
+    description: Work Indicator
+  - name: finish_date_gltpp
+    description: Planned Finish Date
+  - name: start_date_gstpp
+    description: Planned Start Date
+  - name: scheduled_finish_gltps
+    description: Scheduled Finish Date
+  - name: scheduled_start_gstps
+    description: Scheduled Start Date
+  - name: sched_release_date_ftrps
+    description: Scheduled Release Date
+  - name: reduction_indicator_rdkzp
+    description: Planned Reduction Indicator
+  - name: sched_type_forecast_trkzp
+    description: Forecast Scheduling Type
+  - name: confirmation_rueck
+    description: Confirmation Number
+  - name: counter_rmzhl
+    description: Confirmation Counter
+  - name: confirmed_yield_quantity_igmng
+    description: Confirmed Yield Quantity
+  - name: rate_id_ratid
+    description: Rate Id
+  - name: rough_sched_id_groid
+    description: Rough Scheduling Id
+  - name: internal_object_no_cuobj
+    description: Internal Object Number
+  - name: scheduled_fin_time_gluzs
+    description: Scheduled Finish Time
+  - name: scheduled_start_time_gsuzs
+    description: Scheduled Start Time
+  - name: revision_level_revlv
+    description: Revision Level
+  - name: object_type_rshty
+    description: Object Type
+  - name: object_id_rshid
+    description: Object Id
+  - name: object_type_rsnty
+    description: Object Type Name
+  - name: object_id_rsnid
+    description: Object Id Number
+  - name: no_auto_scheduling_nauterm
+    description: Number Automatic Scheduling Indicator
+  - name: no_automatic_costing_naucost
+    description: Number Automatic Costing Indicator
+  - name: level_stufe
+    description: Hierarchy Level
+  - name: path_wegxx
+    description: Path Key
+  - name: path_vwegx
+    description: Path Details
+  - name: reservation_arsnr
+    description: Reservation Number
+  - name: order_item_number_arsps
+    description: Order Item Number
+  - name: superior_order_maufnr
+    description: Superior Order Number
+  - name: left_node_lknot
+    description: Left Node Indicator
+  - name: right_node_rknot
+    description: Right Node Indicator
+  - name: collective_order_prodnet
+    description: Collective Order Indicator
+  - name: confirmed_scrap_quantity_iasmg
+    description: Confirmed Scrap Quantity
+  - name: degree_of_processing_abarb
+    description: Degree of Processing
+  - name: subnetwork_of_aufnt
+    description: Subnetwork of Order
+  - name: opertn_task_list_no_aufpt
+    description: Operation Task List Number
+  - name: counter_aplzt
+    description: Internal Counter
+  - name: effec_mat_planning_no_disp
+    description: Effective Material Planning Number
+  - name: apportionment_struct_csplit
+    description: Apportionment Structure
+  - name: change_number_aennr
+    description: Change Number
+  - name: sequence_number_cy_seqnr
+    description: Sequence Number
+  - name: exact_break_times_breaks
+    description: Exact Break Times Indicator
+  - name: schd_flt_before_prod_vorgz_trm
+    description: Scheduled Float Before Production
+  - name: sched_flt_after_prod_sichz_trm
+    description: Scheduled Float After Production
+  - name: scheduled_on_trmdt
+    description: Scheduled on Date
+  - name: basic_finish_time_gluzp
+    description: Basic Finish Time
+  - name: basic_start_time_gsuzp
+    description: Basic Start Time
+  - name: actualstarttime_gsuzi
+    description: Actual Start Time
+  - name: actual_finish_time_geuzi
+    description: Actual Finish Time
+  - name: finish_time_glupp
+    description: Planned Finish Time
+  - name: start_time_gsupp
+    description: Planned Start Time
+  - name: sched_finish_time_glups
+    description: Scheduled Finish Time
+  - name: sched_start_time_gsups
+    description: Scheduled Start Time
+  - name: search_procedure_chsch
+    description: Search Procedure
+  - name: remainpreprodfloat_kapt_vorgz
+    description: Remaining Float Before Production
+  - name: remaining_float_kapt_sichz
+    description: Remaining Float After Production
+  - name: leading_order_lead_aufnr
+    description: Leading Order Number
+  - name: start_pnetstartd
+    description: Network Start Date
+  - name: start_pnetstartt
+    description: Network Start Time
+  - name: finish_pnetendd
+    description: Network End Date
+  - name: finish_pnetendt
+    description: Network End Time
+  - name: no_cap_requirements_kbed
+    description: Number Capacity Requirements Indicator
+  - name: costingcomp_ind_kkalkr
+    description: Costing Component Indicator
+  - name: production_scheduling_profile_sfcpf
+    description: Production Scheduling Profile
+  - name: confirmed_rework_quantity_rmnga
+    description: Confirmed Rework Quantity
+  - name: commitment_date_gsbtr
+    description: Overall Commitment Date
+  - name: committed_qty_vfmng
+    description: Committed Quantity
+  - name: no_planned_costs_nopcost
+    description: Number Planned Costs Indicator
+  - name: account_assignment_netzkont
+    description: Account Assignment Key
+  - name: request_id_atrkz
+    description: Request Id
+  - name: change_indicator_objtype
+    description: Change Indicator
+  - name: change_process_type_ch_proc
+    description: Change Process Type
+  - name: version_kapversa
+    description: Capacity Version
+  - name: co_processing_colordproc
+    description: Collective Order Processing
+  - name: proj_summ_mastdata_kzerb
+    description: Project Summarization Master Data
+  - name: identical_object_conf_key
+    description: Identical Object Configuration Key
+  - name: object_id_st_arbid
+    description: Object Id
+  - name: version_vsnmr_v
+    description: Version Number
+  - name: scheduling_note_terhw
+    description: Scheduling Note
+  - name: split_status_splstat
+    description: Split Status
+  - name: update_costs_costupd
+    description: Update Costs Indicator
+  - name: maximum_quantity_max_gamng
+    description: Maximum Quantity
+  - name: mes_routing_mes_routingid
+    description: Mes Routing Id
+  - name: pm_ps_reference_element_adpsp
+    description: Pm/Ps Reference Element
+  - name: sales_document_rmanr
+    description: Sales Document Number
+  - name: item_sd_posnr_rma
+    description: Sales Document Item
+  - name: item_sd_posnv_rma
+    description: Sales Document Item Version
+  - name: max_storage_period_cfb_maxlz
+    description: Maximum Storage Period
+  - name: time_unit_cfb_lzeih
+    description: Time Unit
+  - name: additional_days_cfb_adtdays
+    description: Additional Days
+  - name: date_of_manufacture_cfb_datofm
+    description: Date of Manufacture
+  - name: bbd_sled_cfb_bbdpi
+    description: Best Before Date / Sled
+  - name: handling_type_oihantyp
+    description: Handling Type
+  - name: master_production_order_fsh_mprod_ord
+    description: Master Production Order
+  - name: bundle_flag_flg_bundle
+    description: Bundle Flag
+  - name: adjustment_factor_for_settlement_rules_mill_ratio
+    description: Adjustment Factor for Settlement Rules
+  - name: base_unit_of_measure_bmeins
+    description: Base Unit of Measure
+  - name: base_quantity_bmenge
+    description: Base Quantity
+  - name: combination_indicator_mill_oc_zuskz
+    description: Combination Indicator
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

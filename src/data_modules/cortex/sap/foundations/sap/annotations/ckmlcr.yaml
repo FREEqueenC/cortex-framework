@@ -1,0 +1,134 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Material Ledger: Period Prices'
+fields:
+- name: mandt
+  description: Client
+- name: kalnr
+  description: Cost Estimate Number
+- name: bdatj
+  description: Year
+- name: poper
+  description: Posting period
+- name: untper
+  description: Value Structure Type
+- name: curtp
+  description: Currency/Valuation Type
+- name: peinh
+  description: Price Unit
+- name: vprsv
+  description: Price control
+- name: stprs
+  description: Standard Price
+- name: pvprs
+  description: Periodic Unit Price
+- name: waers
+  description: Currency
+- name: salk3
+  description: Total Inventory Val.
+- name: salkv
+  description: Value/Periodic Unit Price
+- name: zuumb_o
+  description: Revaluation Amount at Periodic Unit Pr.
+- name: abprd_o
+  description: 'Beginning Inv.: Single-Level Price Diff.'
+- name: abkdm_o
+  description: 'Beginning Inv.: Single-Lvl Exch.Rate Dif'
+- name: zuprd_o
+  description: 'Receipts: Single-Level Price Differences'
+- name: zukdm_o
+  description: 'Receipts: Single-Level Exch.Rate Diff.'
+- name: vpprd_o
+  description: 'Ohter Inward/Outward Mvmts: 1-Lvl PrDiff'
+- name: vpkdm_o
+  description: Other Inward/Outward Mvmnts Ex.Rt.Diff.
+- name: vppbprd_o
+  description: Price Differences from Sub. Adjustment
+- name: vppbkdm_o
+  description: Exchange Rate Diff. from Sub. Adjustment
+- name: vnprd_o
+  description: 'Cons: 1-Lvl Pr.Diff (Not Affecting Pr.)'
+- name: vnkdm_o
+  description: 'Consumpt: 1-Lvl ERD (Not Affecting Pr.)'
+- name: ekprd_o
+  description: Price Differences from Purchase Orders
+- name: ekkdm_o
+  description: Exchange Rate Diff. from Purchase Orders
+- name: pbprd_o
+  description: Price Differences from Sub. Adjustment
+- name: pbkdm_o
+  description: Exchange Rate Diff. from Sub. Adjustment
+- name: vnprd_ea
+  description: 'Cons: 1-Lvl. Sub.Adjust. from Pr. Diff.'
+- name: vnkdm_ea
+  description: 'Consumpt: 1-Level Sub.Adj from ExRtDiff.'
+- name: ebprd_ea
+  description: End. Inv.:Single-Level Price Differences
+- name: ebkdm_ea
+  description: 'Ending Inv.: Single-Level ExchRate Diff.'
+- name: zuumb_a
+  description: Revaluation Amount PUP (Not Allocated)
+- name: zuprd_a
+  description: 'Receipts: Single-Level Price Diff. (NA)'
+- name: zukdm_a
+  description: 'Receipts: Single-Level ERD (Not Alloc.)'
+- name: ekprd_a
+  description: Price Differences Settled from PO
+- name: ekkdm_a
+  description: Exchange Rate Diff. from POs (Settled)
+- name: pbprd_a
+  description: Pr. Differences from Sub.Adjust. Settled
+- name: pbkdm_a
+  description: Exch.Rt.Diff. from Sub.Adjust. (Stld)
+- name: abprd_mo
+  description: 'BI: Multilevel Price Differences'
+- name: abkdm_mo
+  description: 'Beginning Inv.: Multilevel ER Diff.'
+- name: zuprd_mo
+  description: 'Receipts: Multi-Level Price Differences'
+- name: zukdm_mo
+  description: Receipt:Multi-Level Exch.Rate Difference
+- name: vnprd_ma
+  description: 'Cons: M-Lvl Sub.Adjust. from Pr. Diff.'
+- name: vnkdm_ma
+  description: Cons:M-Lvl Sub.Adj. from Exch.Rate Diff.
+- name: ebprd_ma
+  description: 'End.Inv.: Multilevel Price Differences'
+- name: ebkdm_ma
+  description: 'End.Inv.: Multilevel Exch. Rate. Diff.'
+- name: absalk3
+  description: 'Beginning Inv.: Value at Start of Period'
+- name: zukdm_ost
+  description: 'Receipts: Non-Inventory Relevant ERDs'
+- name: ekkdm_ost
+  description: Non Invent.-Rel.ERDs from P. Orders
+- name: pbkdm_ost
+  description: Non Inv.Rel. ERDs from Sub. Adjustment
+- name: vpkdm_ost
+  description: 'Other Receipts/Withdrawals: N Rel ERDs'
+- name: vppbkdm_ost
+  description: Non Invent.Rel. ERDs from Sub. Adjust
+- name: vnkdm_ost
+  description: 'Cons: Non Invent.Relevant ERDs'
+- name: markup_o
+  description: Intercompany Profit CoCd
+- name: vksal
+  description: Total value at SP
+- name: operation_flag
+  description: Delta Operation Flag
+- name: is_deleted
+  description: Is Record Deleted Flag
+- name: recordstamp
+  description: Record ingest timestamp

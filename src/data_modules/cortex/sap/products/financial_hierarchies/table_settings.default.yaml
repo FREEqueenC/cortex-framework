@@ -1,0 +1,211 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ecc:
+  set_headers:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  set_leaves:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  set_nodes:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  cost_center_group_hierarchy:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+    filters:
+      set_classes: ['0101']
+  profit_center_group_hierarchy:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+    filters:
+      set_classes: ['0106']
+  cost_center_hierarchy_flattened:
+    materializationType: table
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+    filters:
+      set_classes: ['0101']
+      languages: ['E', 'D']
+      fallback_language: 'E'
+  profit_center_hierarchy_flattened:
+    materializationType: table
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+    filters:
+      set_classes: ['0106']
+      languages: ['E', 'D']
+      fallback_language: 'E'
+
+s4:
+  financial_hierarchy_nodes:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  financial_hierarchy_directories:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  set_headers:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  set_leaves:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  set_nodes:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  cost_center_group_hierarchy:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  profit_center_group_hierarchy:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+  cost_center_hierarchy_flattened:
+    materializationType: table
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+    filters:
+      languages: ['E', 'D']
+      fallback_language: 'E'
+  profit_center_hierarchy_flattened:
+    materializationType: table
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: masterdata
+    dataformTags: [sap, finance, sap_fi, sap_co, source_aligned_product, 
+        masterdata, monthly]
+    filters:
+      languages: ['E', 'D']
+      fallback_language: 'E'

@@ -1,0 +1,66 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Storage Locations"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "werks"
+  description: "Plant"
+- name: "lgort"
+  description: "Storage Location"
+- name: "lgobe"
+  description: "Descr of Storage Local"
+- name: "spart"
+  description: "Division"
+- name: "xlong"
+  description: "Neg.Stocks in Sloc"
+- name: "xbufx"
+  description: "Freeze Book Invoicesloc"
+- name: "diskz"
+  description: "Sloc Mrp Indicator"
+- name: "xblgo"
+  description: "Authorization Check"
+- name: "xress"
+  description: "Stor Resource"
+- name: "xhupf"
+  description: "Hu Reqmnt"
+- name: "parlg"
+  description: "Partner Stor Local"
+- name: "vkorg"
+  description: "Sales Organization"
+- name: "vtweg"
+  description: "Distribution Channel"
+- name: "vstel"
+  description: "Shipping Point/Receiving Pt"
+- name: "lifnr"
+  description: "Supplier"
+- name: "kunnr"
+  description: "Customer"
+- name: "mesbs"
+  description: "Business System"
+- name: "messt"
+  description: "Invoice Mngmnt Type"
+- name: "oih_licno"
+  description: "License Number"
+- name: "oig_itrfl"
+  description: "In-Transit Assignment"
+- name: "oib_tnkassign"
+  description: "Tank Assgn"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

@@ -1,0 +1,40 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view provides insights on the valuation of a material over the different periods and fiscal years it has been used, and based on these valuations, its prices are calculated. The granularity of this view is at Client(System), material number, valuation type, valuation area, posting period and fiscal year."
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "MaterialNumber_MATNR"
+    description: "Material Number, PK"
+  - name: "ValuationType_BWTAR"
+    description: "Valuation Type, PK"
+  - name: "ValuationArea_BWKEY"
+    description: "Valuation Area, PK"
+  - name: "PostingPeriod"
+    description: "Posting Period, PK"
+  - name: "FiscalYear"
+    description: "Fiscal Year of the posting period, PK"
+  - name: "PriceUnit_PEINH"
+    description: "Price unit"
+  - name: "PriceControlIndicator_VPRSV"
+    description: "Price Control Indicator"
+  - name: "StandardCost_STPRS"
+    description: "Standard price"
+  - name: "ValueOfTotalValuatedStock_SALK3"
+    description: "Value of Total Valuated Stock"
+  - name: "MovingAveragePrice"
+    description: "Moving Average Price"
+  - name: "CurrencyKey_WAERS"
+    description: "Currency Key"

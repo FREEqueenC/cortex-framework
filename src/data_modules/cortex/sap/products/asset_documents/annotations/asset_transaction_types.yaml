@@ -1,0 +1,87 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides Asset Transaction Types details the business transaction types used in asset accounting,
+  including capitalization flags, retirement rules, and group mappings. The data is captured at the granularity
+  of system default keys, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: transaction_type_bwasl
+    description: Asset Transaction Type, PK
+  - name: transaction_type_name_bwatxt
+    description: Transaction Type Name
+  - name: transaction_type_group_bwagrp
+    description: Transaction Type Group
+  - name: transaction_type_group_name_bwgtxt
+    description: Transaction Type Group Name
+  - name: transaction_in_past_xverga
+    description: Transaction in Past Allowed
+  - name: capitalize_fixed_asset_xaktiv
+    description: Capitalize Fixed Asset
+  - name: deactivate_fixed_asset_xdeakt
+    description: Deactivate Fixed Asset
+  - name: gain_loss_from_asset_retirement_xabgmm
+    description: Gain/Loss From Asset Retirement
+  - name: retirement_with_revenue_xerlos
+    description: Retirement with Revenue
+  - name: transfer_between_affiliates_gross_xaverb
+    description: Transfer Between Affiliated Companies (Gross)
+  - name: cannot_be_used_manually_xabuch
+    description: Cannot Be Used Manually
+  - name: consolidation_transaction_type_bwakon
+    description: Consolidation Transaction Type
+  - name: account_assignment_to_project_xprjkt
+    description: Account Assignment to Project
+  - name: debit_credit_indicator_anshkz
+    description: Debit/Credit Indicator
+  - name: offsetting_transaction_type_bwaslg
+    description: Offsetting Transaction Type
+  - name: document_type_blart
+    description: Document Type
+  - name: repay_investment_support_xabinv
+    description: Repay Investment Support
+  - name: acquisition_in_same_year_bwasln
+    description: Acquisition in Same Year
+  - name: asset_history_sheet_group_gittgr
+    description: Asset History Sheet Group
+  - name: lva_retirement_simulation_xabgwg
+    description: Lva Retirement Simulation
+  - name: retirement_intangibles_simulation_xabimm
+    description: Retirement Intangibles Simulation
+  - name: individual_check_required_xusbwa
+    description: Individual Check Required
+  - name: adopt_depreciation_start_date_xumbhi
+    description: Adopt Depreciation Start Date for Transfer
+  - name: post_gain_loss_to_asset_xifrel
+    description: Post Gain/Loss to Asset
+  - name: budget_relevant_xcoobj
+    description: Budget-Relevant
+  - name: post_to_affiliate_net_xaverbn
+    description: Post to Affiliated Company (Net)
+  - name: enter_gross_acquisition_xzugbr
+    description: Enter Gross Acquisition (Including Depreciation)
+  - name: changeover_year_set_xumja
+    description: Set Changeover Year
+  - name: asset_transaction_category_rsn_code
+    description: Asset Transaction Category
+  - name: transaction_type_obsolete_xobs
+    description: Transaction Type Obsolete
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,1835 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+s4:
+- source:
+    tableName: acdoca
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+    clusterDetails:
+      columns: [rclnt, rbukrs]
+- source:
+    tableName: acdocu
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: faat_doc_it
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: faat_plan_values
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: faat_ydda
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: fincs_ref_vers_r
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: finsc_ld_cmp
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: finsc_ledger
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: finsc_ledger_rep
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: finsc_ledger_t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: fqm_flow
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fscm
+    dataformTags: [sap, foundation, finance, sap_fscm, hourly]
+- source:
+    tableName: hrrp_directory
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: hr
+    - key: sap_module
+      value: sap_hcm
+    dataformTags: [sap, foundation, hr, sap_hcm, monthly]
+- source:
+    tableName: hrrp_node
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: hr
+    - key: sap_module
+      value: sap_hcm
+    dataformTags: [sap, foundation, hr, sap_hcm, monthly]
+- source:
+    tableName: hrrp_nodet
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: hr
+    - key: sap_module
+      value: sap_hcm
+    dataformTags: [sap, foundation, hr, sap_hcm, monthly]
+- source:
+    tableName: matdoc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: prcd_elements
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: sethanahier0101
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, monthly]
+- source:
+    tableName: sethanahier0106
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, monthly]
+- source:
+    tableName: tf200
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: tf201
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+ecc:
+- source:
+    tableName: anek
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: anep
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: anlc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: bsad
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: bsak
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: bsid
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: bsik
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: faglflexa
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: fdsb
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fscm
+    dataformTags: [sap, foundation, finance, sap_fscm, hourly]
+- source:
+    tableName: konv
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, daily]
+    clusterDetails:
+      columns: [stunr]
+    partitionDetails:
+      column: kdatu
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: mseg
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: msfd
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, weekly]
+- source:
+    tableName: vbuk
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: vbup
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+common:
+- source:
+    tableName: adr6
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: adrc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: adrct
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: afko
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, hourly]
+- source:
+    tableName: afpo
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, hourly]
+- source:
+    tableName: ankt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: anla
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: anlb
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: anlh
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: anlz
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: atras
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: aufk
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, hourly]
+- source:
+    tableName: bkpf
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+    clusterDetails:
+      columns: [bukrs, gjahr]
+    partitionDetails:
+      column: budat
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: bpge
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: bpja
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: bpvg
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: bseg
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+    clusterDetails:
+      columns: [mandt, bukrs, gjahr]
+- source:
+    tableName: but000
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: but020
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: but0bk
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: cepc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: cepct
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: ckmlcr
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: ckmlhd
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: cobk
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: coep
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: cooi
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: cosp
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: coss
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: cskb
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: csks
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: cskt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: csku
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: dd01l
+    isCdc: false
+  deployAlways: true
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: it
+    - key: sap_module
+      value: sap_basis
+    dataformTags: [sap, foundation, it, sap_basis, once]
+- source:
+    tableName: dd03l
+    isCdc: false
+  deployAlways: true
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: it
+    - key: sap_module
+      value: sap_basis
+    dataformTags: [sap, foundation, it, sap_basis, once]
+- source:
+    tableName: dd04t
+    isCdc: false
+  deployAlways: true
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: it
+    - key: sap_module
+      value: sap_basis
+    dataformTags: [sap, foundation, it, sap_basis, once]
+- source:
+    tableName: dd07l
+    isCdc: false
+  deployAlways: true
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: it
+    - key: sap_module
+      value: sap_basis
+    dataformTags: [sap, foundation, it, sap_basis, once]
+- source:
+    tableName: dd07t
+    isCdc: false
+  deployAlways: true
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: it
+    - key: sap_module
+      value: sap_basis
+    dataformTags: [sap, foundation, it, sap_basis, once]
+- source:
+    tableName: dd08l
+    isCdc: false
+  deployAlways: true
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: it
+    - key: sap_module
+      value: sap_basis
+    dataformTags: [sap, foundation, it, sap_basis, once]
+- source:
+    tableName: ekbe
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+    clusterDetails:
+      columns: [mandt, vgabe, ebeln, bwart]
+    partitionDetails:
+      column: budat
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: ekes
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: eket
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+    clusterDetails:
+      columns: [mandt, ebeln]
+    partitionDetails:
+      column: eindt
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: ekkn
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: ekko
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+    clusterDetails:
+      columns: [mandt, ebeln]
+    partitionDetails:
+      column: bedat
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: ekpo
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+    clusterDetails:
+      columns: [mandt, ebeln]
+    partitionDetails:
+      column: aedat
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: fagl_011pc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, monthly]
+- source:
+    tableName: fagl_011qt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, monthly]
+- source:
+    tableName: fagl_011zc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, monthly]
+- source:
+    tableName: jest
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, daily]
+- source:
+    tableName: kna1
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, daily]
+- source:
+    tableName: lfa1
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: likp
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_le
+    dataformTags: [sap, foundation, supply_chain, sap_le, hourly]
+    clusterDetails:
+      columns: [vkorg]
+    partitionDetails:
+      column: erdat
+      partitionType: time
+      timeGrain: month
+- source:
+    tableName: lips
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_le
+    dataformTags: [sap, foundation, supply_chain, sap_le, hourly]
+    partitionDetails:
+      column: erdat
+      partitionType: time
+      timeGrain: month
+- source:
+    tableName: makt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+    clusterDetails:
+      columns: [spras]
+- source:
+    tableName: mara
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: marc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: mard
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: mast
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, monthly]
+- source:
+    tableName: mbew
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: mbewh
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: mch1
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: mcha
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: mchb
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, daily]
+- source:
+    tableName: mkol
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, weekly]
+- source:
+    tableName: mska
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, weekly]
+- source:
+    tableName: msku
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, weekly]
+- source:
+    tableName: mslb
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, weekly]
+- source:
+    tableName: prhi
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_ps
+    dataformTags: [sap, foundation, finance, sap_ps, hourly]
+- source:
+    tableName: proj
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_ps
+    dataformTags: [sap, foundation, finance, sap_ps, hourly]
+- source:
+    tableName: prps
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_ps
+    dataformTags: [sap, foundation, finance, sap_ps, hourly]
+- source:
+    tableName: prte
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_ps
+    dataformTags: [sap, foundation, finance, sap_ps, hourly]
+- source:
+    tableName: rbco
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: rbkp
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: rpsco
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_ps
+    dataformTags: [sap, foundation, finance, sap_ps, daily]
+- source:
+    tableName: rseg
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, hourly]
+- source:
+    tableName: setheader
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, monthly]
+- source:
+    tableName: setheadert
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, monthly]
+- source:
+    tableName: setleaf
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, monthly]
+- source:
+    tableName: setnode
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, monthly]
+- source:
+    tableName: ska1
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: skat
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: stas
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, monthly]
+- source:
+    tableName: stko
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, monthly]
+- source:
+    tableName: stpo
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: manufacturing
+    - key: sap_module
+      value: sap_pp
+    dataformTags: [sap, foundation, manufacturing, sap_pp, monthly]
+- source:
+    tableName: t001
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: t001k
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t001l
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t001w
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t002
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: t002t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: t005
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: t005k
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: t005s
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: t005t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: t005u
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, yearly]
+- source:
+    tableName: t006
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, yearly]
+- source:
+    tableName: t006a
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t006t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t009
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: t009b
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: t023
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t023t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t024
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t024e
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t090nat
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: t093b
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: t093c
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: t093t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: t095t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: t098t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, hourly]
+- source:
+    tableName: t134
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t134t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t148t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t156
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t156t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t157e
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t161
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t161t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: supply_chain
+    - key: sap_module
+      value: sap_mm
+    dataformTags: [sap, foundation, supply_chain, sap_mm, once]
+- source:
+    tableName: t179
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, once]
+- source:
+    tableName: t179t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, once]
+- source:
+    tableName: t881
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: t881t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: tabw
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tabwh
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tabwt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tcurc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: tcurf
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, once]
+- source:
+    tableName: tcurr
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tcurt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tcurx
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tj02t
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, yearly]
+- source:
+    tableName: tka01
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, yearly]
+- source:
+    tableName: tka02
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_co
+    dataformTags: [sap, foundation, finance, sap_co, yearly]
+- source:
+    tableName: tspa
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tspat
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tvarvc
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: tvfst
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tvko
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tvkot
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tvlst
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tvtw
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: tvtwt
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, yearly]
+- source:
+    tableName: vbak
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+    clusterDetails:
+      columns: [vkorg]
+    partitionDetails:
+      column: audat
+      partitionType: time
+      timeGrain: day
+- source:
+    tableName: vbap
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+    clusterDetails:
+      columns: [werks, lgort]
+- source:
+    tableName: vbep
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: vbfa
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: vbpa
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: vbrk
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: vbrp
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: vtbfha
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_trm
+    dataformTags: [sap, foundation, finance, sap_trm, hourly]
+- source:
+    tableName: vtbfhapo
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_trm
+    dataformTags: [sap, foundation, finance, sap_trm, hourly]
+- source:
+    tableName: vtbfhazu
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_trm
+    dataformTags: [sap, foundation, finance, sap_trm, hourly]
+- source:
+    tableName: vtvbar
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_trm
+    dataformTags: [sap, foundation, finance, sap_trm, hourly]
+- source:
+    tableName: vwpanla
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    dataformTags: [sap, foundation, finance, sap_fi, daily]
+- source:
+    tableName: wb2_d_bvdetail
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, daily]
+- source:
+    tableName: wb2_d_settl_cal
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, daily]
+- source:
+    tableName: wbrk
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: wbrp
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, hourly]
+- source:
+    tableName: wcocoh
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, daily]
+- source:
+    tableName: wcocoi
+  target:
+    bigQueryLabels:
+    - key: line_of_business
+      value: sales
+    - key: sap_module
+      value: sap_sd
+    dataformTags: [sap, foundation, sales, sap_sd, daily]

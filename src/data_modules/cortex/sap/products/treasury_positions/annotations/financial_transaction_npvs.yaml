@@ -1,0 +1,79 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Treasury and Risk Management (TRM) module in
+  the Treasury domain and provides Treasury Financial Transaction Net Present Values (NPV) The data is
+  captured at the granularity of Client (System), Company Code, Financial Transaction, Contract Number
+  Ranlvd, Price Npv Type Okuart, and Effective From Databs, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: contract_type_rantyp
+    description: Contract Type
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: transaction_rfha
+    description: Transaction, PK
+  - name: contract_number_ranlvd
+    description: Contract Number, PK
+  - name: price_npv_type_okuart
+    description: Price/Npv Type, PK
+  - name: effective_from_databs
+    description: Effective From, PK
+  - name: net_present_value_barwert
+    description: Net Present Value
+  - name: currency_of_npv_wbarwert
+    description: Currency of Npv
+  - name: intrinsic_value_in_document_currency_intrinsic_value
+    description: Intrinsic Value in Distribution Center
+  - name: time_value_in_display_currency_time_value
+    description: Time Value in Display Currency
+  - name: clean_price_in_display_currency_clean_price
+    description: Clean Price in Display Currency
+  - name: npv_of_incoming_side_barwert_in
+    description: Npv of Incoming Side
+  - name: npv_of_outgoing_side_barwert_out
+    description: Npv of Outgoing Side
+  - name: risk_free_npv_barwert_rf
+    description: Risk-Free Npv
+  - name: credit_value_adjustment_cva
+    description: Credit Value Adjustment
+  - name: debit_value_adjustment_dva
+    description: Debit Value Adjustment
+  - name: credit_and_debit_value_adjustment_type_cva_type
+    description: Credit and Debit Value Adjustment Type
+  - name: entered_by_create_name
+    description: Entered by
+  - name: first_entered_on_create_date
+    description: First Entered on
+  - name: time_of_creation_create_time
+    description: Time of Creation
+  - name: transaction_code_create_tcode
+    description: Transaction Code
+  - name: last_changed_by_change_name
+    description: Last Changed by
+  - name: last_edited_on_change_date
+    description: Last Edited on
+  - name: last_edited_at_change_time
+    description: Last Edited At
+  - name: transaction_code_change_tcode
+    description: Transaction Code
+  - name: guid_of_log_log_guid
+    description: Guid of Log
+  - name: hash_value_160_bits_check_sum
+    description: Hash Value (160 Bits)
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

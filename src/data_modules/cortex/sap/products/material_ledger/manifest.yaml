@@ -1,0 +1,41 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: SAP Material Ledger
+description: This data product includes information about SAP material ledger from
+  the Materials Management (MM), Controlling (CO) module in the Supply Chain, Finance
+  domain in SAP S/4HANA or SAP ECC. This data product provides a unified interface
+  for material valuation and costing data from SAP systems (supporting both ECC and
+  S/4HANA). It abstracts the complexities of SAP's material ledger architecture, allowing
+  easy consumption of material cost details, valuation history, and period-end totals.
+category: source_aligned_product
+type: material_ledger
+dependencies:
+  sapModule:
+    supportedVersions:
+    - ecc
+    - s4
+    tables:
+      ecc:
+      - mbew
+      - mbewh
+      common:
+      - ckmlhd
+      - ckmlcr
+      - t001k
+      - t001
+      - t001w
+      - tcurx
+    modulePath: cortex.sap.foundations.sap
+builder: sap_product

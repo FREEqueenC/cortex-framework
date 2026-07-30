@@ -1,0 +1,38 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Sales and Distribution (SD), Materials Management
+  (MM) module in the Sales, Supply Chain domain and provides Master data for product hierarchies, including
+  node codes, levels, and descriptions. The data is captured at the granularity of Client (System), Language
+  Key, and Product Hierarchy, ensuring a unique audit trail for every record.
+catalog_tags:
+  - display_name: line_of_business
+    fields:
+      - display_name: group
+        value: Master Data
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: product_hierarchy_prodh
+    description: Product Hierarchy, PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: level_number_stufe
+    description: Number of the Level in the Product Hierarchy
+  - name: description_vtext
+    description: Description
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

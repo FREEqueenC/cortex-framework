@@ -1,0 +1,50 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Sales and Distribution (SD) module in the Sales
+  domain and provides Information about sales document flows from SAP VBFA, mapping preceding Sales Orders
+  to subsequent Deliveries and Invoices. The data is captured at the granularity of Client (System), Sales
+  Order, Sales Order Item, Delivery, Delivery Item, Billing, and Billing Item, ensuring a unique audit
+  trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: sales_order_vbelv
+    description: Preceding Sales Order Document Number, PK, PK
+  - name: sales_order_item_posnv
+    description: Preceding Sales Order Item Number, PK, PK
+  - name: delivery_vbelv
+    description: Delivery Document Number, PK, PK
+  - name: delivery_item_posnv
+    description: Delivery Document Item Number, PK, PK
+  - name: billing_vbeln
+    description: Subsequent Billing Document Number, PK, PK
+  - name: billing_item_posnn
+    description: Subsequent Billing Document Item Number, PK, PK
+  - name: delivered_qty_rfmng
+    description: Delivered Quantity in Sales Units
+  - name: delivered_uom_meins
+    description: Delivered Unit of Measure
+  - name: billed_qty_rfmng
+    description: Billed Quantity in Sales Units
+  - name: billed_uom_meins
+    description: Billed Unit of Measure
+  - name: billed_value_rfwrt
+    description: Billed Value in Statistics Currency
+  - name: billing_currency_waers
+    description: Statistics Currency for Billing Value
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

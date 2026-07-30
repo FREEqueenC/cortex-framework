@@ -1,0 +1,91 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI), Project System (PS),
+  Controlling (CO) module in the Finance domain and provides Budget allocation document line items representing
+  budget postings. The data is captured at the granularity of Client, Document Number, and Posting, ensuring
+  a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: document_number_belnr
+    description: Document Number, PK
+  - name: posting_row_buzei
+    description: Posting Row, PK
+  - name: total_value_transaction_currency_wtges
+    description: Total Value in Transaction Currency
+  - name: total_value_local_currency_wlges
+    description: Total Value in Local Currency
+  - name: cost_estimate_number_kalnr
+    description: Cost Estimate Number
+  - name: costing_variant_klvar
+    description: Costing Variant
+  - name: ledger_lednr
+    description: Ledger
+  - name: object_number_objnr
+    description: Object Number
+  - name: commitment_item_posit
+    description: Internal Commitment Item (8)
+  - name: object_indicator_trgkz
+    description: Object Indicator
+  - name: value_type_wrttp
+    description: Value Type
+  - name: fund_geber
+    description: Fund
+  - name: version_versn
+    description: Version
+  - name: budget_type_vorga
+    description: Budget Type
+  - name: transaction_currency_twaer
+    description: Transaction Currency
+  - name: value_date_pldat
+    description: Value Date
+  - name: exchange_rate_type_kurst
+    description: Exchange Rate Type
+  - name: fiscal_year_gjahr
+    description: Fiscal Year
+  - name: created_on_cpudt
+    description: Created on
+  - name: created_by_usnam
+    description: Created by
+  - name: line_item_total_sumbz
+    description: Line Item Total
+  - name: document_date_bldat
+    description: Document Date
+  - name: text_sgtext
+    description: Text
+  - name: text_name_namtext
+    description: Text Name
+  - name: deleted_line_items_delbz
+    description: Deleted Line Items
+  - name: line_item_total_bpja_sum_bpja
+    description: Line Item Total Bpja
+  - name: deleted_line_items_bpja_del_bpja
+    description: Deleted Line Items Bpja
+  - name: line_item_total_bpge_sum_bpge
+    description: Line Item Total Bpge
+  - name: deleted_line_items_bpge_del_bpge
+    description: Deleted Line Items Bpge
+  - name: line_item_total_bppe_sum_bppe
+    description: Line Item Total Bppe
+  - name: deleted_line_items_bppe_del_bppe
+    description: Deleted Line Items Bppe
+  - name: referenced_document_number_fobel
+    description: Referenced Document Number
+  - name: person_responsible_verant
+    description: Person Responsible
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,80 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Organizational Unit: Sales Organizations"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "vkorg"
+  description: "Sales Organization"
+- name: "waers"
+  description: "Statistics Currency"
+- name: "bukrs"
+  description: "Company Code"
+- name: "adrnr"
+  description: "Address"
+- name: "txnam_adr"
+  description: "Address Text Name"
+- name: "txnam_kop"
+  description: "Letter Header Text"
+- name: "txnam_fus"
+  description: "Footer Lines Text"
+- name: "txnam_gru"
+  description: "Greeting Text Name"
+- name: "vkoau"
+  description: "Refsorg.Salesdoctype"
+- name: "kunnr"
+  description: "Cust.Inter-Controlling.Bill"
+- name: "boavo"
+  description: "Rebate Procedure.Active"
+- name: "vkokl"
+  description: "Sales Organizational.Calendar"
+- name: "ekorg"
+  description: "Purchasing Organization"
+- name: "ekgrp"
+  description: "Purchasing Group"
+- name: "lifnr"
+  description: "Vendor"
+- name: "werks"
+  description: "Plant"
+- name: "bsart"
+  description: "Order Type"
+- name: "bstyp"
+  description: "Purchasing Document Category"
+- name: "bwart"
+  description: "Movement Type"
+- name: "lgort"
+  description: "Storage Location"
+- name: "txnam_sdb"
+  description: "Text Sds Sender"
+- name: "mwskz"
+  description: "Tax Code for SD Document"
+- name: "xstceg"
+  description: "Tax Number"
+- name: "j_1anutime"
+  description: "Numbering Time"
+- name: "maxbi"
+  description: "Max Number Bill Items"
+- name: "hide"
+  description: "Hide Value in Input Help"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"
+- name: "plaufz"
+  description: "Price Protection Pd"
+- name: "plauez"
+  description: "Price Protection Unit"

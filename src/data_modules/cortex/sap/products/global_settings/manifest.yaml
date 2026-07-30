@@ -1,0 +1,42 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: SAP Global Settings
+description: This data product includes information about SAP global settings from
+  the Financial Accounting (FI), Sales and Distribution (SD), Materials Management
+  (MM), Controlling (CO), Production Planning (PP), Project System (PS) module in
+  the Cross-Functional domain in SAP S/4HANA or SAP ECC. It establishes enterprise-wide
+  foundational standards, incorporating countries, currencies, and languages. It provides
+  the essential cross-domain reference layers needed for accurate localized operations,
+  global tax calculation, and transaction mapping.
+category: consumption_product
+type: global_settings
+dependencies:
+  sapModule:
+    supportedVersions:
+    - ecc
+    - s4
+    tables:
+      common:
+      - t001
+      - t002
+      - t002t
+      - t005
+      - t005t
+      - t005k
+      - t005s
+      - t005u
+      - tj02t
+    modulePath: cortex.sap.foundations.sap
+builder: sap_product

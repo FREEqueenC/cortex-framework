@@ -30,6 +30,11 @@ class BaseSchemaModel(pydantic.BaseModel):
     )
 
 
+class BigQueryLabel(BaseSchemaModel):
+    key: str
+    value: str
+
+
 class PartitionDetails(BaseSchemaModel):
     column: str
     partition_type: PartitionType
@@ -73,9 +78,11 @@ class ProductTableItem(BaseSchemaModel):
     """Item descriptor schema for Data Products."""
 
     materialization_type: MaterializationType = MaterializationType.INCREMENTAL
-    tags: list[str] = pydantic.Field(default_factory=list)
+    dataform_tags: list[str] = pydantic.Field(default_factory=list)
+    big_query_labels: list[BigQueryLabel] = pydantic.Field(default_factory=list)
     cluster_details: ClusterDetails | None = None
     partition_details: PartitionDetails | None = None
+    enabled: bool = True
 
     # Include extra config allowances to pass arbitrary properties into spread.
     model_config = pydantic.ConfigDict(
@@ -102,7 +109,8 @@ class FoundationSource(BaseSchemaModel):
 class FoundationTarget(BaseSchemaModel):
     """Publish targeting settings for Data Foundation."""
 
-    tags: list[str] = pydantic.Field(default_factory=list)
+    dataform_tags: list[str] = pydantic.Field(default_factory=list)
+    big_query_labels: list[BigQueryLabel] = pydantic.Field(default_factory=list)
     table_name: str | None = None
     cluster_details: ClusterDetails | None = None
     partition_details: PartitionDetails | None = None

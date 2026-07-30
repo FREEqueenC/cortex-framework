@@ -1,0 +1,475 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Treasury and Risk Management (TRM) module in
+  the Treasury domain and provides Treasury Financial Transaction Flows The data is captured at the granularity
+  of Client (System), Company Code, Financial Transaction, Activity Rfhazu, Entered On Dcrdat, Entry Time
+  Tcrtim, and Flow Rfhazb, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: transaction_rfha
+    description: Transaction, PK
+  - name: activity_rfhazu
+    description: Activity, PK
+  - name: entered_on_dcrdat
+    description: Entered on, PK
+  - name: entry_time_tcrtim
+    description: Entry Time, PK
+  - name: flow_rfhazb
+    description: Flow, PK
+  - name: entered_by_cruser
+    description: Entered by
+  - name: last_changed_by_upuser
+    description: Last Changed by
+  - name: changed_on_dupdat
+    description: Changed on
+  - name: time_changed_tuptim
+    description: Time Changed
+  - name: contract_type_rantyp
+    description: Contract Type
+  - name: flow_type_sfhazba
+    description: Flow Type
+  - name: classification_sbkklas
+    description: Classification
+  - name: category_sbktyp
+    description: Category
+  - name: fima_calc_category_sberfima
+    description: Fima Calc Category
+  - name: direction_ssign
+    description: Direction
+  - name: source_sherkunft
+    description: Source
+  - name: derivation_procedure_sabverf
+    description: Derivation Procedure
+  - name: direction_rkondgr
+    description: Direction
+  - name: condition_rkond
+    description: Condition
+  - name: item_effective_from_dguel_kp
+    description: Item Effective From
+  - name: level_number_nstufe
+    description: Level Number
+  - name: condition_type_skoart
+    description: Condition Type
+  - name: account_assignment_reference_rrefkont
+    description: Account Assignment Reference
+  - name: alt_payment_details_sbzvabw
+    description: Alt Payment Details
+  - name: house_bank_rahabki
+    description: House Bank
+  - name: house_bank_account_rahktid
+    description: House Bank Account
+  - name: payer_payee_rpzahl
+    description: Payer/Payee
+  - name: partner_bank_rpbank
+    description: Partner Bank
+  - name: payment_transaction_szart
+    description: Payment Transaction
+  - name: payment_method_zlsch
+    description: Payment Method
+  - name: pmt_meth_supplement_uzawe
+    description: Pmt Meth Supplement
+  - name: payment_request_spayrq
+    description: Payment Request
+  - name: individual_payment_sprsng
+    description: Individual Payment
+  - name: group_determ_sprgrd
+    description: Group Determ
+  - name: same_direction_scspay
+    description: Same Direction
+  - name: payment_methods_zwels
+    description: Payment Methods
+  - name: grouping_paygr
+    description: Grouping
+  - name: posting_status_sbewebe
+    description: Posting Status
+  - name: posting_block_reason_ssprgrd
+    description: Posting Block Reason
+  - name: posting_release_sbfrei
+    description: Posting Release
+  - name: flow_reversal_sstornobwg
+    description: Flow Reversal
+  - name: key_number_prkey
+    description: Key Number
+  - name: document_number_belnr
+    description: Document Number
+  - name: journal_entry_number_2_belnr2
+    description: Journal Entry Number 2
+  - name: fiscal_year_gjahr
+    description: Fiscal Year
+  - name: posting_date_dbuchung
+    description: Posting Date
+  - name: due_date_dfaell
+    description: Due Date
+  - name: payment_date_dzterm
+    description: Payment Date
+  - name: payment_amount_in_payment_currency_bzbetr
+    description: Payment Amount in Payment Currency
+  - name: payment_currency_wzbetr
+    description: Payment Currency
+  - name: payment_amount_in_local_currency_bhwbetr
+    description: Payment Amount in Local Currency
+  - name: local_currency_rate_khwkurs
+    description: Local Currency Rate
+  - name: number_of_units_astueck
+    description: Number of Units
+  - name: price_per_unit_bprice
+    description: Price Per Unit
+  - name: price_currency_wprice
+    description: Price Currency
+  - name: local_currency_price_bhwpreis
+    description: Local Currency Price
+  - name: point_value_bindex
+    description: Point Value
+  - name: price_in_points_vvbasis
+    description: Price in Points
+  - name: price_in_percent_pwkurs
+    description: Price in Percent
+  - name: premium_in_price_pts_prkkurs
+    description: Premium in Price Pts
+  - name: nominal_amount_bnwhr
+    description: Nominal Amount
+  - name: exchange_rhandpl
+    description: Exchange
+  - name: rate_price_type_skursart
+    description: Rate/Price Type
+  - name: calculation_from_dbervon
+    description: Calculation From
+  - name: calculation_to_dberbis
+    description: Calculation to
+  - name: number_of_days_atage
+    description: Number of Days
+  - name: number_of_base_days_abastage
+    description: Number of Base Days
+  - name: percentage_rate_pkond
+    description: Percentage Rate
+  - name: percent_fixing_date_dpkond
+    description: Percent Fixing Date
+  - name: int_rate_fixing_date_dzfest
+    description: Internalrate Fixing Date
+  - name: int_calc_method_szbmeth
+    description: Internal Calc Method
+  - name: interest_calendar_skalidwt
+    description: Interest Calendar
+  - name: base_amount_bbasis
+    description: Base Amount
+  - name: calculatn_basis_currency_wbasis
+    description: Calculatn Basis Currency
+  - name: exponential_interest_calc_jexpozins
+    description: Exponential Interest Calc
+  - name: inclusive_indicator_sincl
+    description: Inclusive Indicator
+  - name: inclusive_end_date_sinclbis
+    description: Inclusive End Date
+  - name: month_end_end_date_sultbis
+    description: Month-End End Date
+  - name: exclusive_start_date_sexclvon
+    description: Exclusive Start Date
+  - name: month_start_date_sultvon
+    description: Month Start Date
+  - name: change_indicator_saend
+    description: Change Indicator
+  - name: calculation_date_dvalut
+    description: Calculation Date
+  - name: inclusive_val_dte_svincl
+    description: Inclusive Value.Dte
+  - name: month_end_val_date_svult
+    description: Month-End Value Date
+  - name: immediate_settlement_jsofverr
+    description: Immediate Settlement
+  - name: settlement_date_dverrech
+    description: Settlement Date
+  - name: incl_clearing_date_sinclverr
+    description: Incl Clearing Date
+  - name: month_end_clearing_sultverr
+    description: Month-End Clearing
+  - name: manual_reversal_sstornoman
+    description: Manual Reversal
+  - name: reversal_type_sstornoart
+    description: Reversal Type
+  - name: referenced_flow_type_sbwgartref
+    description: Referenced Flow Type
+  - name: transl_local_currency_skhwfix
+    description: Transl.->Local Currency
+  - name: assignment_zuonr
+    description: Assignment
+  - name: securities_account_rldepo
+    description: Securities Account
+  - name: sec_class_id_number_ranl
+    description: Security Class Id Number
+  - name: internal_doc_number_rtrbelnr
+    description: Internal Document Number
+  - name: price_unit_quot_buprc
+    description: Price (Unit Quotation.)
+  - name: price_bpprc
+    description: Price (%)
+  - name: position_currency_wbbetr
+    description: Position Currency
+  - name: amount_in_position_currency_bbbetr
+    description: Amount in Position Currency
+  - name: price_currency_webetr
+    description: Price Currency
+  - name: mrkt_val_in_quotation_currency_bebetr
+    description: Mrkt Value in Quotation Currency
+  - name: currency_unit_srunit
+    description: Currency Unit
+  - name: payment_currency_rate_kzwkurs
+    description: Payment Currency Rate
+  - name: position_currency_rate_kbwkurs
+    description: Position Currency Rate
+  - name: source_currency_wsbetr
+    description: Source Currency
+  - name: position_value_date_dbestand
+    description: Position Value Date
+  - name: accrue_int_method_sstckkz
+    description: Accrue.Internalmethod
+  - name: daily_method_sstcktg
+    description: Daily Method
+  - name: traded_flat_sflat
+    description: Traded Flat
+  - name: coupon_scoupon
+    description: Coupon
+  - name: coupon_date_dcoupon
+    description: Coupon Date
+  - name: object_key_awkey
+    description: Object Key
+  - name: index_val_w_o_basis_index_value
+    description: Index Value W/O Basis
+  - name: calculation_base_sbasis
+    description: Calculation Base
+  - name: int_rate_adj_status_regi_state
+    description: Internalrate Adj Status
+  - name: repetitive_code_rpcode
+    description: Repetitive Code
+  - name: reference_type_text_rp_text
+    description: Reference Type Text
+  - name: hedge_id
+    description: Hedge Id
+  - name: period_start_dbperiod
+    description: Period Start
+  - name: exclusive_start_date_spaexcl
+    description: Exclusive Start Date
+  - name: monendindstartperiod_spault
+    description: Monendindstartperiod
+  - name: period_end_deperiod
+    description: Period End
+  - name: inclusive_indendper_speincl
+    description: Inclusive Indendper
+  - name: monthendperiodend_speult
+    description: Monthendperiodend
+  - name: frequency_in_months_ammrhy
+    description: Frequency in Months
+  - name: payment_rate_ppayment
+    description: Payment Rate
+  - name: int_sttlmnt_freq_ammrhyzv
+    description: Internal Sttlmnt Freq
+  - name: scb_indicator_lzbkz
+    description: Scb Indicator
+  - name: supplying_cntry_landl
+    description: Supplying Cntry
+  - name: dirty_price_bdirty
+    description: Dirty Price
+  - name: capitalization_amnt_bamountcomp
+    description: Capitalization Amnt
+  - name: original_nominal_amount_nominal_org_amt
+    description: Original Nominal Amount
+  - name: factor_nom_factor
+    description: Factor
+  - name: securities_account_rldepo2
+    description: Securities Account
+  - name: indicator_price_including_index_value_index_price
+    description: 'Indicator: Price Including Index Value'
+  - name: flow_uuid_flowuuid
+    description: Flow Uuid
+  - name: flag_byte_1_flagbyte1
+    description: Flag Byte 1
+  - name: qty_quantity
+    description: Quantity
+  - name: unit_of_measure
+    description: Unit of Measure
+  - name: price_contract_price
+    description: Price
+  - name: spotprice_spot_price
+    description: Spotprice
+  - name: commodity_contango_contango_backwrd
+    description: Commodity Contango
+  - name: spot_1_bprc_spot1
+    description: Spot 1
+  - name: spot_rate_maturity_bprc_spot2
+    description: Spot Rate Maturity
+  - name: cost_cost_fwd
+    description: Cost
+  - name: interest_interest_fwd
+    description: Interest
+  - name: flow_reference_uuid_ref_flowuuid
+    description: Flow Reference Uuid
+  - name: class_rgatt
+    description: Class
+  - name: quotation_name
+    description: Quotation Name
+  - name: source_of_quotation_quotation_source
+    description: Source of Quotation
+  - name: quotation_type
+    description: Quotation Type
+  - name: spread
+    description: Spread
+  - name: currency_unit_price_curr_unit
+    description: Currency Unit
+  - name: unit_of_measure_price_uom
+    description: Unit of Measure
+  - name: dividend_percentage_relevant_for_payment_div_pctc_otc
+    description: Dividend Percentage Relevant for Payment
+  - name: manipulated_cashflow_tainted
+    description: Manipulated Cashflow
+  - name: cleared
+    description: Cleared
+  - name: derivative_contract_specification_id_dcsid
+    description: Derivative Contract Specification Id
+  - name: market_identifier_code_mic
+    description: Market Identifier Code
+  - name: price_type
+    description: Price Type
+  - name: time_to_maturity
+    description: Time to Maturity
+  - name: timing
+    description: Timing
+  - name: exchange_rate_type_exch_rate_type
+    description: Exchange Rate Type
+  - name: price_in_payment_currency_price_paym_curr
+    description: Price in Payment Currency
+  - name: spread_in_pymt_currency_spread_paym_curr
+    description: Spread in Pymt Currency
+  - name: fx_translation
+    description: Fx Translation
+  - name: mandate_reference_mndid
+    description: Mandate Reference
+  - name: lower_limit_for_amnt_bugrenz
+    description: Lower Limit for Amnt
+  - name: upper_limit_for_amount_bogrenz
+    description: Upper Limit for Amount
+  - name: scaled_calculation_sstaff
+    description: Scaled Calculation
+  - name: logical_condition_group_logic_rkond
+    description: Logical Condition Group
+  - name: condition_rkondref
+    description: Condition
+  - name: item_effective_from_dguel_kpref
+    description: Item Effective From
+  - name: presentation_date_present_date
+    description: Presentation Date
+  - name: interest_paid_by
+    description: Interest Paid by
+  - name: shipment_date
+    description: Shipment Date
+  - name: status
+    description: Status
+  - name: presentation_item_present_id
+    description: Presentation Item
+  - name: reason_for_reversal_sstogrd
+    description: Reason for Reversal
+  - name: presentation_amount_present_amount
+    description: Presentation Amount
+  - name: presentation_bank_present_bank
+    description: Presentation Bank
+  - name: discrepancy_amount_present_discrepancy
+    description: Discrepancy Amount
+  - name: presentation_decreased_amount_present_decrease_amount
+    description: Presentation Decreased Amount
+  - name: released_amount_present_rea_cre_line
+    description: Released Amount
+  - name: payment_amount_in_payment_currency_present_pay_amt
+    description: Payment Amount in Payment Currency
+  - name: rounding_cat_of_a_factor_sroundfactor
+    description: Rounding Category of a Factor
+  - name: number_of_dec_places_for_factor_rounding_rounddecfactor
+    description: Number of Dec Places for Factor Rounding
+  - name: exp_interest_calculation_with_factor_jexpointfactor
+    description: Exp Interest Calculation with Factor
+  - name: flow_factor_flowfactor
+    description: Flow Factor
+  - name: base_factor_basefactor
+    description: Base Factor
+  - name: rounding_cat_of_a_base_factor_sroundbasefactor
+    description: Rounding Category of a Base Factor
+  - name: number_of_dec_places_for_base_fac_rounding_rounddecbasefactor
+    description: Number of Dec.Places for Base Fac Rounding
+  - name: transl_pos_currency_skbwfix
+    description: Transl.->Pos Currency
+  - name: grouping_term_for_derived_flows_grouping_term
+    description: Grouping Term for Derived Flows
+  - name: sequence_number_ssequence
+    description: Sequence Number
+  - name: rounding_category_of_interest_factor_sroundratefactor
+    description: Rounding Category of Interest Factor
+  - name: number_of_rounding_dec_for_int_factor_rounddecratefactor
+    description: Number of Rounding Dec for Internal Factor
+  - name: days_for_int_calc_with_air_aavgdays
+    description: Days for Internal Calc with Air
+  - name: average_interest_rate_pavginterest
+    description: Average Interest Rate
+  - name: base_days_method_stgbasis
+    description: Base Days Method
+  - name: upper_limit_of_air_javgcap
+    description: Upper Limit of Air
+  - name: upper_limit_of_air_pavgcap
+    description: Upper Limit of Air
+  - name: lower_limit_of_air_javgfloor
+    description: Lower Limit of Air
+  - name: lower_limit_of_air_pavgfloor
+    description: Lower Limit of Air
+  - name: average_interest_rate_spread_pavgspread
+    description: Average Interest Rate Spread
+  - name: rounding_cat_of_average_interest_rate_sroundavginterest
+    description: Rounding Category of Average Interest Rate
+  - name: number_of_rounding_dec_places_for_air_rounddecavginterest
+    description: Number of Rounding Dec Places for Air
+  - name: weighting_of_ir_aavgweight
+    description: Weighting of Invoice Receipt
+  - name: cumulative_weighting_of_ir_aavgweightsum
+    description: Cumulative Weighting of Invoice Receipt
+  - name: fixing_date_fx_fixing_date
+    description: Fixing Date
+  - name: fx_fixing_status_fx_regi_state
+    description: Fx Fixing Status
+  - name: date_of_fx_rate_read_fx_read_date
+    description: Date of Fx Rate Read
+  - name: traded_quantity
+    description: Traded Quantity
+  - name: unit_of_measure_traded_quantity_uom
+    description: Unit of Measure
+  - name: qty_conv_fct_of_priced_otc_transaction_conv_factor_traded_qty
+    description: Quantity Conv Fct of Priced Otc Transaction
+  - name: unit_of_measure_conv_factor_traded_qty_uom
+    description: Unit of Measure
+  - name: qty_conv_factor_of_otc_transaction_conv_factor_priced_qty
+    description: Quantity Conv Factor of Otc Transaction
+  - name: unit_of_measure_conv_factor_priced_qty_uom
+    description: Unit of Measure
+  - name: haircut_rate_type_idcfm_usha_type
+    description: Haircut Rate Type
+  - name: percentage_value_idcfm_usha_perc
+    description: Percentage Value
+  - name: haircut_amount_in_position_currency_idcfm_usha_tota
+    description: Haircut Amount in Position Currency
+  - name: haircut_currency_idcfm_usha_curr
+    description: Haircut Currency
+  - name: european_formula_calculation_idcfm_usha_form
+    description: European Formula Calculation
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

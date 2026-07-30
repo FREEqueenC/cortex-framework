@@ -1,0 +1,354 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Controlling Object: Cost Totals for Internal Postings'
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: ledger_lednr
+    description: Ledger, PK
+  - name: object_number_objnr
+    description: Object Number, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: value_type_wrttp
+    description: Value Type, PK
+  - name: version_versn
+    description: Version, PK
+  - name: cost_element_kstar
+    description: Cost Element, PK
+  - name: controlling_subkey_hrkft
+    description: Controlling Subkey, PK
+  - name: business_transaction_vrgng
+    description: Business Transaction, PK
+  - name: partner_object_parob
+    description: Partner Object, PK
+  - name: source_object_uspob
+    description: Source Object, PK
+  - name: debit_credit_indicator_beknz
+    description: Debit/Credit Indicator, PK
+  - name: transaction_currency_twaer
+    description: Transaction Currency, PK
+  - name: period_block_perbl
+    description: Period Block, PK
+  - name: unit_of_measure_meinh
+    description: Unit of Measure
+  - name: value_transaction_currency_wtg001
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg002
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg003
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg004
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg005
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg006
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg007
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg008
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg009
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg010
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg011
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg012
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg013
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg014
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg015
+    description: Value in Transaction Currency
+  - name: value_transaction_currency_wtg016
+    description: Value in Transaction Currency
+  - name: value_in_object_currency_wog001
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog002
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog003
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog004
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog005
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog006
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog007
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog008
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog009
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog010
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog011
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog012
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog013
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog014
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog015
+    description: Value in Object Currency
+  - name: value_in_object_currency_wog016
+    description: Value in Object Currency
+  - name: value_controlling_area_currency_wkg001
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg002
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg003
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg004
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg005
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg006
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg007
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg008
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg009
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg010
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg011
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg012
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg013
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg014
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg015
+    description: Value in Controlling Area Currency
+  - name: value_controlling_area_currency_wkg016
+    description: Value in Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf001
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf002
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf003
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf004
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf005
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf006
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf007
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf008
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf009
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf010
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf011
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf012
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf013
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf014
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf015
+    description: Fixvalue Controlling Area Currency
+  - name: fixvalue_controlling_area_currency_wkf016
+    description: Fixvalue Controlling Area Currency
+  - name: price_variance_pag001
+    description: Price Variance
+  - name: price_variance_pag002
+    description: Price Variance
+  - name: price_variance_pag003
+    description: Price Variance
+  - name: price_variance_pag004
+    description: Price Variance
+  - name: price_variance_pag005
+    description: Price Variance
+  - name: price_variance_pag006
+    description: Price Variance
+  - name: price_variance_pag007
+    description: Price Variance
+  - name: price_variance_pag008
+    description: Price Variance
+  - name: price_variance_pag009
+    description: Price Variance
+  - name: price_variance_pag010
+    description: Price Variance
+  - name: price_variance_pag011
+    description: Price Variance
+  - name: price_variance_pag012
+    description: Price Variance
+  - name: price_variance_pag013
+    description: Price Variance
+  - name: price_variance_pag014
+    description: Price Variance
+  - name: price_variance_pag015
+    description: Price Variance
+  - name: price_variance_pag016
+    description: Price Variance
+  - name: price_variance_fixed_paf001
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf002
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf003
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf004
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf005
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf006
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf007
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf008
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf009
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf010
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf011
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf012
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf013
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf014
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf015
+    description: Price Variance Fixed
+  - name: price_variance_fixed_paf016
+    description: Price Variance Fixed
+  - name: total_quantity_meg001
+    description: Total Quantity
+  - name: total_quantity_meg002
+    description: Total Quantity
+  - name: total_quantity_meg003
+    description: Total Quantity
+  - name: total_quantity_meg004
+    description: Total Quantity
+  - name: total_quantity_meg005
+    description: Total Quantity
+  - name: total_quantity_meg006
+    description: Total Quantity
+  - name: total_quantity_meg007
+    description: Total Quantity
+  - name: total_quantity_meg008
+    description: Total Quantity
+  - name: total_quantity_meg009
+    description: Total Quantity
+  - name: total_quantity_meg010
+    description: Total Quantity
+  - name: total_quantity_meg011
+    description: Total Quantity
+  - name: total_quantity_meg012
+    description: Total Quantity
+  - name: total_quantity_meg013
+    description: Total Quantity
+  - name: total_quantity_meg014
+    description: Total Quantity
+  - name: total_quantity_meg015
+    description: Total Quantity
+  - name: total_quantity_meg016
+    description: Total Quantity
+  - name: fixed_quantity_mef001
+    description: Fixed Quantity
+  - name: fixed_quantity_mef002
+    description: Fixed Quantity
+  - name: fixed_quantity_mef003
+    description: Fixed Quantity
+  - name: fixed_quantity_mef004
+    description: Fixed Quantity
+  - name: fixed_quantity_mef005
+    description: Fixed Quantity
+  - name: fixed_quantity_mef006
+    description: Fixed Quantity
+  - name: fixed_quantity_mef007
+    description: Fixed Quantity
+  - name: fixed_quantity_mef008
+    description: Fixed Quantity
+  - name: fixed_quantity_mef009
+    description: Fixed Quantity
+  - name: fixed_quantity_mef010
+    description: Fixed Quantity
+  - name: fixed_quantity_mef011
+    description: Fixed Quantity
+  - name: fixed_quantity_mef012
+    description: Fixed Quantity
+  - name: fixed_quantity_mef013
+    description: Fixed Quantity
+  - name: fixed_quantity_mef014
+    description: Fixed Quantity
+  - name: fixed_quantity_mef015
+    description: Fixed Quantity
+  - name: fixed_quantity_mef016
+    description: Fixed Quantity
+  - name: quantity_incomplete_muv001
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv002
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv003
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv004
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv005
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv006
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv007
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv008
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv009
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv010
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv011
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv012
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv013
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv014
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv015
+    description: Quantity Incomplete
+  - name: quantity_incomplete_muv016
+    description: Quantity Incomplete
+  - name: debit_credit_type_beltp
+    description: Debit Type
+  - name: time_created_timestmp
+    description: Time Created
+  - name: company_code_bukrs
+    description: Company Code
+  - name: functional_area_fkber
+    description: Functional Area
+  - name: segment
+    description: Segment
+  - name: fund_geber
+    description: Fund
+  - name: grant_grant_nbr
+    description: Grant
+  - name: budget_period_budget_pd
+    description: Budget Period
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

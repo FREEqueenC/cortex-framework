@@ -1,0 +1,76 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI), Project System (PS),
+  Controlling (CO) module in the Finance domain and provides Annual and overall budget allocations and
+  balances per budget object. The data is captured at the granularity of Client, Ledger, Object Number,
+  Commitment, Object Indicator, Value, Fiscal, Fund, Version, Budget, Transaction Currency, Budget Subtype,
+  Year Of Cash Effectivity, and Functional, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: ledger_lednr
+    description: Ledger, PK
+  - name: object_number_objnr
+    description: Object Number, PK
+  - name: commitment_item_posit
+    description: Internal Commitment Item (8), PK
+  - name: object_indicator_trgkz
+    description: Object Indicator, PK
+  - name: value_type_wrttp
+    description: Value Type, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: fund_geber
+    description: Fund, PK
+  - name: version_versn
+    description: Version, PK
+  - name: budget_type_vorga
+    description: Budget Type, PK
+  - name: transaction_currency_twaer
+    description: Transaction Currency, PK
+  - name: budget_subtype_subvo
+    description: Budget Subtype, PK
+  - name: year_of_cash_effectivity_gnjhr
+    description: Year of Cash Effectivity, PK
+  - name: functional_area_farea
+    description: Functional Area, PK
+  - name: annual_value_transaction_currency_wtjhr
+    description: Annual Value in Transaction Currency
+  - name: annual_value_local_currency_wljhr
+    description: Annual Value in Local Currency
+  - name: distributed_annual_value_transaction_currency_wtjhv
+    description: Distributed Annual Value in Transaction Currency
+  - name: distributed_annual_value_local_currency_wljhv
+    description: Distributed Annual Value in Local Currency
+  - name: total_value_transaction_currency_wtges
+    description: Total Value in Transaction Currency
+  - name: total_value_local_currency_wlges
+    description: Total Value in Local Currency
+  - name: total_distributed_value_transaction_currency_wtgev
+    description: Total Distributed Value in Transaction Currency
+  - name: total_distributed_value_local_currency_wlgev
+    description: Total Distributed Value in Local Currency
+  - name: cost_estimate_number_kalnr
+    description: Cost Estimate Number
+  - name: costing_variant_klvar
+    description: Costing Variant
+  - name: distribution_key_spred
+    description: Distribution Key
+  - name: debit_type_beltp
+    description: Debit Type
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

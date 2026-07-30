@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Asset Allocations
+fields:
+- name: mandt
+  description: Client
+- name: rantyp
+  description: Contract Type
+- name: ranl
+  description: Treasury ID number
+- name: rhandpl
+  description: Exchange
+- name: skursart
+  description: Rate/price type
+- name: dkurs
+  description: Rate/price date
+- name: waers
+  description: Quotation currency
+- name: pkur
+  description: Price in Percent
+- name: pktkur
+  description: Treasury price
+- name: skherk
+  description: Source of value
+- name: sobjekt
+  description: Object key
+- name: rbear
+  description: Last Changed By
+- name: dbear
+  description: Last Edited On
+- name: tbear
+  description: Last Edited At
+- name: rfgeb
+  description: Releaser
+- name: dfrei
+  description: Release date
+- name: tfrei
+  description: Time of release
+- name: skzusa
+  description: Price notation
+- name: skabsch
+  description: Price markdown
+- name: operation_flag
+  description: Operation Flag
+- name: is_deleted
+  description: Is Deleted
+- name: recordstamp
+  description: Recordstamp

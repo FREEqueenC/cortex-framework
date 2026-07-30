@@ -1,0 +1,186 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Sales and Distribution (SD), Materials Management
+  (MM) module in the Sales, Supply Chain domain and provides header-level SAP Condition Contract Settlement
+  (CCS) definitions from WCOCOH (e.g., partner numbers, contract types, and validity dates) to track commercial
+  rebate contracts. The data is captured at the granularity of Condition Contract Number, ensuring a unique
+  audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: condition_contract_num
+    description: Condition Contract, PK
+  - name: condition_contract_type
+    description: Condition Contract Type
+  - name: owner_vendor_vend_owner
+    description: Owner Vendor
+  - name: customer_owner_cust_owner
+    description: Customer Owner
+  - name: reference
+    description: Reference
+  - name: assignment
+    description: Assignment
+  - name: external_partner_ext_partner
+    description: External Partner
+  - name: created_by
+    description: Created by
+  - name: created_on
+    description: Created on
+  - name: created_at_rec_time
+    description: Created At
+  - name: purch_organization_ekorg
+    description: Purchasing Organization
+  - name: purchasing_group_ekgrp
+    description: Purchasing Group
+  - name: sales_organization_vkorg
+    description: Sales Organization
+  - name: distribution_channel_vtweg
+    description: Distribution Channel
+  - name: division_spart
+    description: Division
+  - name: terms_of_payment_zterm
+    description: Terms of Payment
+  - name: payment_in_zbd1t
+    description: Payment in
+  - name: disc_percent_1_zbd1p
+    description: Disc.Percent 1
+  - name: days_2_zbd2t
+    description: Days 2
+  - name: disc_percent_2_zbd2p
+    description: Disc.Percent 2
+  - name: days_net_zbd3t
+    description: Days Net
+  - name: payment_method_zlsch
+    description: Payment Method
+  - name: condition_contract_guid
+    description: Condition Contract Guid
+  - name: deactivated_deact
+    description: Deactivated
+  - name: valid_from_date_from
+    description: Valid From
+  - name: valid_to_date_to
+    description: Valid to
+  - name: time_zone_zonlo
+    description: Time Zone
+  - name: external_number_ext_num
+    description: External Number
+  - name: contract_currency_cc_curr
+    description: Contract Currency
+  - name: exchange_rate
+    description: Exchange Rate
+  - name: conversion_date_rate_date
+    description: Conversion Date
+  - name: exchange_rate_type
+    description: Exchange Rate Type
+  - name: sales_group_vkgrp
+    description: Sales Group
+  - name: sales_office_vkbur
+    description: Sales Office
+  - name: access_type
+    description: Access Type
+  - name: settlement_material_settl_matnr
+    description: Settlement Material
+  - name: settlement_type_vendor_settl_type_vend
+    description: Settlement Type Vendor
+  - name: calendar_final_settlement_settl_cal_final
+    description: Calendar Final Settlement
+  - name: calendar_partial_settlement_settl_cal_part
+    description: Calendar Partial Settlement
+  - name: company_code_bukrs
+    description: Company Code
+  - name: settlement_type_customer_settl_type_cust
+    description: Settlement Type Customer
+  - name: changed_by_ch_name
+    description: Changed by
+  - name: changed_on_ch_date
+    description: Changed on
+  - name: time_of_change_ch_time
+    description: Time of Change
+  - name: calendar_contract_extension_extension_cal
+    description: Calendar Contract Extension
+  - name: predecessor_pred_cc
+    description: Predecessor
+  - name: condition_contract_category
+    description: Condition Contract Category
+  - name: purpose_cc_purpose
+    description: Purpose
+  - name: external_reference_category_ext_ref_cat
+    description: External Reference Category
+  - name: external_reference_ext_ref
+    description: External Reference
+  - name: prior_vendor_kolif
+    description: Prior Vendor
+  - name: calendar_delta_settlement_settl_cal_delta
+    description: Calendar Delta Settlement
+  - name: business_volume_table_group_bvtab_group
+    description: Business Volume Table Group
+  - name: calendar_delta_accruals_settlement_settl_cal_accr
+    description: Calendar Delta Accruals Settlement
+  - name: amount_fields_group_af_group
+    description: Amount Fields Group
+  - name: settlement_unit_of_measure_settl_meins
+    description: Settlement Unit of Measure
+  - name: settlement_unit_of_weight_settl_gewei
+    description: Settlement Unit of Weight
+  - name: settlement_volume_unit_settl_voleh
+    description: Settlement Volume Unit
+  - name: settlement_points_unit_settl_punei
+    description: Settlement Points Unit
+  - name: external_cc_guid_ext_guid
+    description: External Cc Guid
+  - name: year_of_created_on
+    description: Year of Created on
+  - name: quarter_of_created_on
+    description: Quarter of Created on
+  - name: month_of_created_on
+    description: Month of Created on
+  - name: week_of_created_on
+    description: Week of Created on
+  - name: year_of_valid_from_date_from
+    description: Year of Valid From
+  - name: quarter_of_valid_from_date_from
+    description: Quarter of Valid From
+  - name: month_of_valid_from_date_from
+    description: Month of Valid From
+  - name: week_of_valid_from_date_from
+    description: Week of Valid From
+  - name: year_of_valid_to_date_to
+    description: Year of Valid to
+  - name: quarter_of_valid_to_date_to
+    description: Quarter of Valid to
+  - name: month_of_valid_to_date_to
+    description: Month of Valid to
+  - name: week_of_valid_to_date_to
+    description: Week of Valid to
+  - name: year_of_conversion_date_rate_date
+    description: Year of Conversion Date
+  - name: quarter_of_conversion_date_rate_date
+    description: Quarter of Conversion Date
+  - name: month_of_conversion_date_rate_date
+    description: Month of Conversion Date
+  - name: week_of_conversion_date_rate_date
+    description: Week of Conversion Date
+  - name: year_of_changed_on_ch_date
+    description: Year of Changed on
+  - name: quarter_of_changed_on_ch_date
+    description: Quarter of Changed on
+  - name: month_of_changed_on_ch_date
+    description: Month of Changed on
+  - name: week_of_changed_on_ch_date
+    description: Week of Changed on
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

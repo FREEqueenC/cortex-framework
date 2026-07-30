@@ -1,0 +1,92 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides Maps material type codes to localized descriptions from SAP T134 and T134T,
+  defining control parameters such as price controls and procurement types. The data is captured at the
+  granularity of Client (System), Language Key, and Material Type, ensuring a unique audit trail for every
+  record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: material_type_mtart
+    description: Material Type, PK
+  - name: reference_material_type_mtref
+    description: Reference Material Type
+  - name: screen_reference_mbref
+    description: Screen Reference Depending on the Material Type
+  - name: description_mtbez
+    description: Material Type Description
+  - name: display_material_aranz
+    description: Display Material on Cash Register Display
+  - name: time_till_deleted_ardel
+    description: Time in Days Until a Material Is Deleted
+  - name: authorization_group_begru
+    description: Authorization Group in the Material Master
+  - name: external_purchase_orders_bsext
+    description: External Purchase Orders Allowed
+  - name: internal_purchase_orders_bsint
+    description: Internal Purchase Orders Allowed
+  - name: history_requirement_cchis
+    description: 'Control (Time) of History Requirement: Material'
+  - name: create_new_batch_chneu
+    description: Create New Batch
+  - name: class_class
+    description: Class Number
+  - name: class_type_ctype
+    description: Class Type
+  - name: with_quantity_structure_ekalr
+    description: Material Is Costed with Quantity Structure
+  - name: external_number_assignment_indicator_envop
+    description: Indicates Whether External Number Assignment Is Allowed Without Validation
+  - name: field_reference_flref
+    description: Field Reference for Material Master
+  - name: initial_status_izust
+    description: Initial Status of a New Batch
+  - name: account_category_reference_kkref
+    description: Account Category Reference
+  - name: grouping_indicator_kzgrp
+    description: Grouping Indicator
+  - name: configurable_material_kzkfg
+    description: Material Is Configurable
+  - name: manufacturer_part_kzmpn
+    description: Manufacturer Part
+  - name: pipeline_mandatory_indicator_kzpip
+    description: Indicates Whether Pipeline Handling Is Mandatory
+  - name: material_for_process_kzprc
+    description: Material Master Record for a Process
+  - name: returnable_packaging_logistics_mandatory_indicator_kzrac
+    description: Indicates Whether Returnable Packaging Logistics Is Mandatory
+  - name: price_control_mandatory_indicator_kzvpr
+    description: Indicates Whether Price Control Is Mandatory
+  - name: cross_plant_status_mstae
+    description: Cross Plant Material Status
+  - name: print_price_indicator_prdru
+    description: Indicates Whether Price Is Displayed on Cash Register Display and Printed on Receipt
+  - name: maintenance_status_pstat
+    description: Maintenance Status
+  - name: item_category_group_vmtpo
+    description: Default Value for Material Item Category Group
+  - name: price_control_vprsv
+    description: Price Control
+  - name: version_category_vtype
+    description: Version Category
+  - name: material_type_id_wmakg
+    description: Material Type Id
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

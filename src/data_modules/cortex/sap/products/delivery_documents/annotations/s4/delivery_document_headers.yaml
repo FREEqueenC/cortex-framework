@@ -1,0 +1,600 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Sales and Distribution (SD) module in the Supply
+  Chain, Sales domain and provides Serves as the central record of SAP outbound or inbound delivery headers
+  from LIKP, tracking logistical and shipping details including creation dates, shipping points, delivery
+  types, weights, routing, and shipment release statuses. The data is captured at the granularity of Client
+  (System) and Document Number, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: document_number_vbeln
+    description: Delivery Document Number, PK
+  - name: created_by_ernam
+    description: Name of the Person Who Created the Delivery Document
+  - name: creation_time_erzet
+    description: Time of Creation (Entry Time) of the Delivery Document
+  - name: creation_date_erdat
+    description: Date of Creation of the Delivery Document
+  - name: sales_district_bzirk
+    description: Sales District
+  - name: shipping_point_receiving_point_vstel
+    description: Shipping Point/Receiving Point
+  - name: sales_organization_vkorg
+    description: Sales Organization
+  - name: delivery_type_lfart
+    description: Delivery Type
+  - name: complete_delivery_defined_indicator_autlf
+    description: Indicates Whether All Items in a Sales Order Should Be Delivered Together in a Single
+      Delivery, Rather Than in Partial Deliveries
+  - name: order_combination_indicator_kzazu
+    description: Indicates Whether Multiple Sales Orders Can Be Combined Into a Single Delivery Document
+  - name: planned_goods_movement_date_wadat
+    description: Planned Goods Movement Date
+  - name: loading_date_lddat
+    description: Loading Date
+  - name: transportation_planning_date_tddat
+    description: Transporation Planning Date
+  - name: delivery_date_lfdat
+    description: Delivery Date
+  - name: picking_date_kodat
+    description: Picking Date
+  - name: unloading_point_ablad
+    description: Unloading Point
+  - name: incoterms_part1_inco1
+    description: Incoterms (Part 1)
+  - name: incoterms_part2_inco2
+    description: Incoterms (Part 2)
+  - name: export_indicator_expkz
+    description: Export Indicator
+  - name: route_route
+    description: Route It Represents the Planned Transportation Route for the Delivery
+  - name: billing_block_in_sales_document_faksk
+    description: Billing Block in Sales Document
+  - name: delivery_block_document_header_lifsk
+    description: Delivery Block in Delivery Document Header
+  - name: sales_document_category_vbtyp
+    description: Sales Document Category
+  - name: customer_factory_calendar_knfak
+    description: Customer Factory Calendar
+  - name: delivery_priority_lprio
+    description: Delivery Priority
+  - name: shipping_conditions_vsbed
+    description: Shipping Conditions
+  - name: ship_to_party_kunnr
+    description: Ship-To Party
+  - name: sold_to_party_kunag
+    description: Sold-To Party
+  - name: customer_group_kdgrp
+    description: Customer Group
+  - name: total_weight_btgew
+    description: Total Weight
+  - name: net_weight_ntgew
+    description: Net Weight
+  - name: weight_unit_gewei
+    description: Weight Unit
+  - name: volume_volum
+    description: Volume
+  - name: volume_unit_voleh
+    description: Volume Unit
+  - name: total_packages_anzpk
+    description: Total Packages
+  - name: picked_items_location_berot
+    description: Picked Items Location
+  - name: delivery_time_lfuhr
+    description: Delivery Time
+  - name: weight_group_grulg
+    description: Weight Group for Delivery (To Group)
+  - name: loading_point_lstel
+    description: Loading Point
+  - name: transportation_group_tragr
+    description: Transportation Group
+  - name: proposed_billing_type_fkarv
+    description: Proposed Billing Type for a Delivery Related Billing Document
+  - name: proposed_billing_date_fkdat
+    description: Proposed Billing Date for Billing Index and Printout
+  - name: invoice_dates_perfk
+    description: Invoice Dates (Calendar Identification). It Represents the Invoice Date Profile Or Invoice
+      Date Formula for the Delivery
+  - name: route_routa
+    description: Route It Represents the the Specific Route Or Itinerary Assigned to a Delivery Document
+  - name: update_group_for_statistics_stafo
+    description: Update Group for Statistics It Determines the Update Group Is Utilized for Updating Statistics
+      in Logistics Information Systems
+  - name: procedure_kalsm
+    description: Pricing Procedure (Or Calculation Procedure) That Is Applied to the Delivery Document
+  - name: condition_number_knumv
+    description: Number of the Document Condition It Is a Unique Identifier for the Condition Record Used
+      in Pricing
+  - name: sales_document_currency_key_waerk
+    description: Sales Document Currency
+  - name: sales_office_vkbur
+    description: Sales Office
+  - name: shipping_processing_time_vbeak
+    description: Shipping Processing Time for the Entire Document
+  - name: delivery_combination_criteria_zukrl
+    description: Combination Criteria for Delivery
+  - name: distribution_delivery_verur
+    description: Distribution Delivery
+  - name: communication_number_commn
+    description: Communication Number for Q-Api Interface
+  - name: statistics_currency_stwae
+    description: Statistics Currency
+  - name: statistics_exchange_rate_stcur
+    description: Exchange Rate for Statistics
+  - name: foreign_trade_data_number_exnum
+    description: Number of Foreign Trade Data in Materials Management (Mm) and Sales and Distribution
+      (Sd) Documents
+  - name: changed_by_aenam
+    description: Changed by
+  - name: changed_on_aedat
+    description: Changed on
+  - name: warehouse_number_lgnum
+    description: Warehouse Number / Warehouse Complex
+  - name: delivery_within_one_warehouse_lispl
+    description: Delivery Within One Warehouse
+  - name: intercompany_billing_sales_organization_vkoiv
+    description: Sales Organization for Intercompany Billing
+  - name: intercompany_billing_distribution_channel_vtwiv
+    description: Distribution Channel for Intercompany Billing
+  - name: intercompany_billing_division_spaiv
+    description: Division for Intercompany Billing
+  - name: intercompany_billing_type_fkaiv
+    description: Billing Type for Intercompany Billing
+  - name: intercompany_billing_price_date_pioiv
+    description: Price Date for Intercompany Billing It Determines the Date on Which the Price Is Calculated
+      for the Invoice Between Company Codes
+  - name: intercompany_billing_date_fkdiv
+    description: Billing Date for Intercompany Billing
+  - name: intercompany_billing_customer_number_kuniv
+    description: Customer Number for Intercompany Billing
+  - name: credit_control_area_kkber
+    description: Credit Control Area
+  - name: credit_account_knkli
+    description: Credit Account Used to Determine the Credit Limit for the Customer in That Delivery,
+      Usually Based on the Payer Assigned to the Shipment
+  - name: customer_credit_group_grupp
+    description: Customer Credit Group
+  - name: credit_representative_group_sbgrp
+    description: Credit Representative Group for Credit Management
+  - name: credit_management_risk_category_ctlpc
+    description: Credit Management Risk Category
+  - name: credit_control_area_currency_key_cmwae
+    description: Currency Key of the Credit Control Area
+  - name: released_credit_value_amtbl
+    description: Released Credit Value of the Document
+  - name: bill_of_lading_bolnr
+    description: Bill of Lading Number
+  - name: vendor_account_number_lifnr
+    description: Vendor Account Number
+  - name: means_of_transport_type_traty
+    description: Means of Transport Type
+  - name: means_of_transport_id_traid
+    description: Means of Transport Identification
+  - name: credit_release_date_cmfre
+    description: Release Date of the Document Determined by Credit Management the Specific Date on Which
+      a Delivery Document, Which Was Previously Blocked Due to Credit Checks, Was Formally Released by
+      Authorized Personnel
+  - name: next_date_cmngv
+    description: Next Delivery Relevant Date E.G., the Next Planned Picking Date Or Goods Issue Date (Typically
+      Populated After Picking Has Occurred)
+  - name: goods_receipt_issue_slip_number_xabln
+    description: Goods Receipt/Issue Slip Number
+  - name: document_date_bldat
+    description: Document Date in the Delivery Document It Is the Date on Which the Delivery Document
+      Was Created Or the Date Stated on the Original, Physical Document, May Differ From the System Creation_Date_Erdat
+      Or the Planned_Goods_Movement_Date_Wadat
+  - name: actual_goods_movement_date_wadat_ist
+    description: Actual Goods Movement Date
+  - name: shipment_blocking_reason_trspg
+    description: Shipment Blocking Reason
+  - name: external_transport_system_id_tpsid
+    description: Id for External Transport System
+  - name: external_delivery_note_id_lifex
+    description: External Identification of Delivery Note
+  - name: order_number_ternr
+    description: Order Number Associated with a Specific Delivery a Link Back to a Specific Upstream Document
+  - name: batch_search_procedure_kalsm_ch
+    description: Search Procedure for Batch Determination
+  - name: correction_delivery_klief
+    description: Correction Delivery
+  - name: shipping_pricing_procedure_kalsp
+    description: Shipping Pricing Procedure
+  - name: pricing_condition_number_knump
+    description: Number of Document Condition - Pricing Used When Pricing Needs to Be Updated Or Recalculating
+      During Delivery Creation Rather Than Relying Solely on the Sales Order Pricing
+  - name: net_value_in_document_currency_netwr
+    description: Net Value of the Related Order in Document Currency
+  - name: route_schedule_aulwe
+    description: Route Schedule
+  - name: receiving_plant_werks
+    description: Receiving Plant for Deliveries
+  - name: internal_financial_document_number_lcnum
+    description: 'Financial Document Processing: Internal Financial Document Number'
+  - name: payment_guarantee_procedure_abssc
+    description: Payment Guarantee Procedure
+  - name: picking_time_kouhr
+    description: Picking Time (Local Time, with Reference to a Plant)
+  - name: transportation_planning_time_tduhr
+    description: Transportation Planning Time (Local, Relating to a Shipping Point)
+  - name: loading_time_lduhr
+    description: Loading Time (Local, Relating to a Shipping Point)
+  - name: goods_issue_time_wauhr
+    description: Time of Goods Issue (Local, Relating to a Shipping Point)
+  - name: warehouse_door_number_lgtor
+    description: Door for Warehouse Number
+  - name: warehouse_staging_area_lgbzo
+    description: Staging Area for Warehouse Complex
+  - name: foreign_trade_currency_key_akwae
+    description: Currency Key for Letter-Of-Credit Processing in Foreign Trade
+  - name: foreign_trade_exchange_rate_akkur
+    description: Exchange Rate for Letter-Of-Credit Processing in Foreign Trade
+  - name: depreciation_percentage_akprz
+    description: Depreciation Percentage for Financial Document Processing
+  - name: dangerous_goods_management_profile_proli
+    description: Dangerous Goods Management Profile for Sales Documents
+  - name: reference_document_number_xblnr
+    description: Reference Document Number
+  - name: worldwide_unique_key_handle
+    description: Worldwide Unique Key for Delivery Document Header
+  - name: time_segment_exists_indicator_tsegfl
+    description: Time Segment Exists Indicator
+  - name: event_group_time_segment_delivery_header_tsegtp
+    description: Event Group Time Segment Delivery Header
+  - name: delivery_location_timezone_tzonis
+    description: Time Zone of Delivering Location
+  - name: recipient_location_timezone_tzonrc
+    description: Time Zone of Recipient Location
+  - name: dangerous_goods_indicator_cont_dg
+    description: Indicator Whether the Delivery Contains Dangerous Goods
+  - name: distribution_delivery_original_system_verursys
+    description: 'Distribution Delivery: Original System'
+  - name: goods_movement_control_indicator_kzwab
+    description: Indicator for Controlling Goods Movement
+  - name: distribution_status_vlstk
+    description: Distribution Status (Decentralized Warehouse Processing)
+  - name: transaction_code_tcode
+    description: Transaction Code
+  - name: shipping_type_vsart
+    description: Shipping Type
+  - name: means_of_transport_trmtyp
+    description: Means of Transport Type
+  - name: special_processing_indicator_sdabw
+    description: Special Processing Indicator
+  - name: company_id_vbund
+    description: Company Id
+  - name: calculation_of_value_open_indicator_xwoff
+    description: Indicates Wheteher the Tax Calculation Or Specific Value-Based Calculations Are Switched
+      Off Or Excluded
+  - name: automatic_transportation_order_creation_indicator_dirta
+    description: Indicates Whether the Automatic Creation of Transportation Orders Is Triggered Immediately
+      After the Creation of a Transfer Requirement
+  - name: production_supply_area_prvbe
+    description: Production Supply Area
+  - name: delivery_type_folar
+    description: Delivery Type
+  - name: proof_of_delivery_date_podat
+    description: Date of Proof of Delivery
+  - name: proof_of_delivery_confirmation_time_potim
+    description: Confirmation Time of Proof of Delivery
+  - name: shipment_document_total_count_vganz
+    description: The Total Count of Shipment Documents Assigned to the Specific Delivery Header
+  - name: goods_movement_within_company_code_indicator_imwrk
+    description: Indicates Whether the Goods Movement (Goods Issue) for the Delivery Should Be Posted
+      Within the Same Company Code Or If It Involves Cross-Company Code Transactions
+  - name: document_deletion_indicator_spe_loekz
+    description: Indicates Whether the Delivery Document Has Been Deleted
+  - name: locations_sequenece_number_spe_loc_seq
+    description: Locations_Sequenece_Number_Spe_Loc_Seq Mapped From Spe_Loc_Seq
+  - name: delivery_confirmation_status_spe_acc_app_sts
+    description: Delivery Confirmation Status
+  - name: shipment_information_status_spe_shp_inf_sts
+    description: Shipment Information Status
+  - name: return_document_cancellation_indicator_spe_ret_canc
+    description: Return Document Cancellation Indicator
+  - name: goods_issue_time_spe_wauhr_ist
+    description: Time of Goods Issue (Local, Relating to a Plant)
+  - name: goods_issue_time_zone_spe_wazone_ist
+    description: Time Zone
+  - name: revenue_recognition_status_spe_rev_vlstk
+    description: Revenue Recognition Status
+  - name: logistics_execution_scenario_spe_le_scenario
+    description: Logistics Execution Scenario
+  - name: original_system_type_spe_orig_sys
+    description: Original System Type
+  - name: last_changer_system_type_spe_chng_sys
+    description: Last Changer System Type
+  - name: geographical_route_description_spe_georoute
+    description: Description of a Geographical Route
+  - name: route_change_indicator_spe_georouteind
+    description: Indicator for the Route Change
+  - name: carrier_change_indicator_spe_carrier_ind
+    description: Indicator for the Carrier Change
+  - name: goods_traffic_type_spe_gts_rel
+    description: Goods Traffic Type
+  - name: sap_global_trade_services_route_code_spe_gts_rt_cde
+    description: Sap Global Trade Services Route Code
+  - name: release_time_stamp_spe_rel_tmstmp
+    description: Release Time Stamp
+  - name: measurement_unit_system_spe_unit_system
+    description: Measurement Unit System
+  - name: invoice_creation_before_goods_issue_spe_inv_bfr_gi
+    description: Invoice Creation Before Goods Issue
+  - name: return_delivery_quality_inspection_status_spe_qi_status
+    description: Status of Quality Inspection for Returns Deliveries
+  - name: redirection_indicator_spe_red_ind
+    description: Indicates Whether a Redirection Has Occured
+  - name: sap_global_trade_services_delivery_storage_status_sakes
+    description: Sap Global Trade Services Storage Status of Delivery
+  - name: external_identification_type_spe_lifex_type
+    description: Type of External Identification
+  - name: means_of_transport_spe_ttype
+    description: Means of Transport
+  - name: progressive_identification_number_spe_pro_number
+    description: 'Partner Identification : Progressive Identification Number'
+  - name: location_guid_loc_guid
+    description: Location Guid
+  - name: ewm_billing_indicator_spe_billing_ind
+    description: Ewm Billing Indicator
+  - name: print_profile_description_printer_profile
+    description: Print Profile Description
+  - name: advanced_returns_management_active_msr_active
+    description: Advanced Returns Management Active
+  - name: confirmation_number_prtnr
+    description: Confirmation Number
+  - name: storage_location_change_stge_loc_change
+    description: Temporary Change of Storage Locations in Delivery
+  - name: document_transfer_control_key_tm_ctrl_key
+    description: Document Transfer to Transportation Managemnt Control Key
+  - name: delivery_split_initiator_dlv_split_initia
+    description: Delivery Split Initiator
+  - name: delivery_version_dlv_version
+    description: Delivery Version
+  - name: previous_document_type_gts_vorpa
+    description: Previous Document Type
+  - name: previous_document_number_gts_vornu
+    description: Previous Document Number
+  - name: intrastat_border_mode_of_transport_gts_expvz
+    description: Intrastat Border Mode of Transport
+  - name: port_airport_gts_porti
+    description: Port Airport
+  - name: border_means_of_transport_itm_expvz
+    description: Border Means of Transport
+  - name: origin_border_means_of_transport_itm_stgbe
+    description: Origin Border Means of Transport
+  - name: border_cross_means_of_transport_id_itm_kzgbe
+    description: Border Cross Means of Transport Id
+  - name: cross_border_conveyance_reference_id_itm_vygid
+    description: Cross Border Conveyance Reference Id
+  - name: inland_means_of_transport_itm_iever
+    description: Inland Means of Transport
+  - name: country_of_origin_means_of_transport_itm_stabe
+    description: Country of Origin Means of Transport
+  - name: inland_means_of_transport_id_itm_kzabe
+    description: Inland Means of Transport Id
+  - name: handover_location_handoverloc
+    description: Location for a Physical Handover of Goods
+  - name: handover_date_handoverdate
+    description: Handover Date At the Handover Location
+  - name: handover_time_handovertime
+    description: Handover Time At the Handover Location
+  - name: handover_time_zone_handovertzone
+    description: Handover Time Zone
+  - name: delivery_confirmation_status_bestk
+    description: Delivery Confirmation Status
+  - name: maximum_document_value_credit_check_status_cmpsc
+    description: Maximum Document Value Credit Check Status
+  - name: terms_of_payment_credit_check_status_cmpsd
+    description: Terms of Payment Credit Check Status
+  - name: financial_document_credit_check_status_cmpsi
+    description: Financial Document Credit Check Status
+  - name: export_credit_insurance_credit_check_status_cmpsj
+    description: Export Credit Insurance Credit Check Status
+  - name: payment_card_authorization_credit_check_status_cmpsk
+    description: Payment Card Authorization Credit Check Status
+  - name: sap_credit_management_credit_check_status_cmps_cm
+    description: Sap Credit Management Credit Check Status
+  - name: sap_credit_management_technical_error_status_cmps_te
+    description: Sap Credit Management Technical Error Status
+  - name: credit_checks_overall_status_cmgst
+    description: Credit Checks Overall Status
+  - name: intercompany_billing_status_fkivk
+    description: Intercompany Billing Status
+  - name: delivery_related_billing_status_fkstk
+    description: Delivery Related Billing Status
+  - name: overall_processing_status_gbstk
+    description: Overall Processing Status
+  - name: incomplete_inbound_delivery_header_indicator_hdall
+    description: Incomplete Inbound Delivery Header Indicator
+  - name: incomplete_inbound_delivery_item_indicator_hdals
+    description: Incomplete Inbound Delivery Item Indicator
+  - name: pick_confirmation_status_koquk
+    description: Pick Confirmation Status
+  - name: picking_status_kostk
+    description: Picking Status
+  - name: warehouse_management_status_lvstk
+    description: Warehouse Management Status
+  - name: pod_header_status_pdstk
+    description: Pod Header Status
+  - name: packing_status_pkstk
+    description: Packing Status
+  - name: temporary_inbound_delivery_indicator_spe_tmpid
+    description: Temporary Inbound Delivery Indicator
+  - name: overall_header_block_status_spstg
+    description: Overall Header Block Status
+  - name: transportation_planning_status_trsta
+    description: Transportation Planning Status
+  - name: header_incompletion_status_uvall
+    description: Header Incompletion Status
+  - name: items_incompletion_status_uvals
+    description: Items Incompletion Status
+  - name: header_billing_incompletion_status_uvfak
+    description: Header Billing Incompletion Status
+  - name: items_billing_incompletion_status_uvfas
+    description: Items Billing Incompletion Status
+  - name: header_packing_incompletion_status_uvpak
+    description: Header Packing Incompletion Status
+  - name: items_packing_incompletion_status_uvpas
+    description: Items Packing Incompletion Status
+  - name: header_picking_incompletion_status_uvpik
+    description: Header Picking Incompletion Status
+  - name: items_picking_incompletion_status_uvpis
+    description: Items Picking Incompletion Status
+  - name: header_delivery_incompletion_status_uvvlk
+    description: Header Delivery Incompletion Status
+  - name: items_delivery_incompletion_status_uvvls
+    description: Items Delivery Incompletion Status
+  - name: header_goods_movement_incompletion_status_uvwak
+    description: Header Goods Movement Incompletion Status
+  - name: items_goods_movement_incompletion_status_uvwas
+    description: Items Goods Movement Incompletion Status
+  - name: handling_unit_in_stock_indicator_vestk
+    description: Handling Unit in Stock Indicator
+  - name: goods_movement_status_wbstk
+    description: Goods Movement Status
+  - name: header_customer_reserve_status1_suvk01
+    description: Header Customer Reserve Status 1
+  - name: header_customer_reserve_status2_suvk02
+    description: Header Customer Reserve Status 2
+  - name: header_customer_reserve_status3_suvk03
+    description: Header Customer Reserve Status 3
+  - name: header_customer_reserve_status4_suvk04
+    description: Header Customer Reserve Status 4
+  - name: header_customer_reserve_status5_suvk05
+    description: Header Customer Reserve Status 5
+  - name: item_customer_reserve_status1_suvs01
+    description: Item Customer Reserve Status 1
+  - name: item_customer_reserve_status2_suvs02
+    description: Item Customer Reserve Status 2
+  - name: item_customer_reserve_status3_suvs03
+    description: Item Customer Reserve Status 3
+  - name: item_customer_reserve_status4_suvs04
+    description: Item Customer Reserve Status 4
+  - name: item_customer_reserve_status5_suvs05
+    description: Item Customer Reserve Status 5
+  - name: total_product_marketability_check_status_total_pcsta
+    description: Total Product Marketability Check Status
+  - name: total_dangerous_goods_check_status_total_dgsta
+    description: Total Dangerous Goods Check Status
+  - name: total_safety_data_sheet_check_status_total_sdssta
+    description: Total Safety Data Sheet Check Status
+  - name: excise_tax_total_header_status_total_arc_status
+    description: Excise Tax Total Header Status
+  - name: dtuc_status_sapmp_lbask
+    description: Dtuc Status
+  - name: incoterms_version_incov
+    description: Incoterms Version
+  - name: incoterms_location_1_inco2_l
+    description: Incoterms Location 1
+  - name: incoterms_location_2_inco3_l
+    description: Incoterms Location 2
+  - name: external_billing_of_lading_oid_extbol
+    description: External Billing of Lading
+  - name: miscellaneous_delivery_number_oid_miscdl
+    description: Miscellaneous Delivery Number
+  - name: external_business_system_id_ext_bus_syst_id
+    description: External Business System Id
+  - name: valuated_stock_in_transit_issue_specification_sitkz_db
+    description: Valuated Stock in Transit Issue Specification
+  - name: advanced_shipping_receipt_relevance_indicator_tm_adv_ship_recv
+    description: Advanced Shipping Receipt Relevance Indicator
+  - name: warehouse_execution_status_tm_whse_exec
+    description: Warehouse Execution Status
+  - name: loading_units_bev1_luleinh
+    description: Loading Units
+  - name: number_category_1_bev1_rpfaess
+    description: Number Category 1
+  - name: number_category_2_bev1_rpkist
+    description: Number Category 2
+  - name: number_category_3_bev1_rpcont
+    description: Number Category 3
+  - name: number_category_4_bev1_rpsonst
+    description: Number Category 4
+  - name: tour_loading_sequqnce_number_bev1_rpflgnr
+    description: Tour Loading Sequence Number
+  - name: tracking_last_notified_route_point_idt_cur_evtloc
+    description: Tracking Last Notified Route Point
+  - name: tracking_arrival_departure_indicator_idt_cur_evtqua
+    description: Tracking Arrival Departure Indicator
+  - name: tracking_current_point_event_timestamp_idt_cur_evttst
+    description: Tracking Current Point Event Timestamp
+  - name: tracking_current_point_time_estimation_base_point_idt_cur_estloc
+    description: Tracking Current Point Time Estimation Base Point
+  - name: tracking_current_point_arrival_departure_time_estimation_idt_cur_estqua
+    description: Tracking Current Point Arrival Departure Time Estimation
+  - name: tracking_current_point_delivery_date_estimation_base_date_idt_cur_esttst
+    description: Tracking Current Point Delivery Date Estimation Base Date
+  - name: tracking_current_point_entry_qualifiers_idt_cur_wrkqua
+    description: Tracking Current Point Entry Qualifiers
+  - name: tracking_prior_point_idt_pre_evtloc
+    description: Tracking Prior Point
+  - name: tracking_prior_point_arrival_departure_indicator_idt_pre_evtqua
+    description: Tracking Prior Point Arrival Departure Indicator
+  - name: tracking_prior_point_event_timestamp_idt_pre_evttst
+    description: Tracking Prior Point Event Timestamp
+  - name: tracking_prior_point_time_estimation_base_point_idt_pre_estloc
+    description: Tracking Prior Point Time Estimation Base Point
+  - name: tracking_prior_point_arrival_departure_time_estimation_idt_pre_estqua
+    description: Tracking Prior Point Arrival Departure Time Estimation
+  - name: tracking_prior_point_delivery_date_estimation_base_date_idt_pre_esttst
+    description: Tracking Prior Point Delivery Date Estimation Base Date
+  - name: tracking_prior_point_entry_qualifiers_idt_pre_wrkqua
+    description: Tracking Prior Point Entry Qualifiers
+  - name: tracking_reference_point_time_estimation_base_point_idt_ref_estloc
+    description: Tracking Reference Point Time Estimation Base Point
+  - name: tracking_reference_point_arrival_departure_time_estimation_idt_ref_estqua
+    description: Tracking Reference Point Arrival Departure Time Estimation
+  - name: tracking_reference_point_delivery_date_estimation_base_date_idt_ref_esttst
+    description: Tracking Reference Point Delivery Date Estimation Base Date
+  - name: delivery_date_time_commitment_level_idt_firm_lfdat
+    description: Delivery Date Time Commitment Level
+  - name: document_number_idt_docnum
+    description: Document Number
+  - name: multi_level_goods_receipt_automotive_borgr_grp
+    description: 'Inbound Delivery Group: Multi-Level Goods Receipt Automotive'
+  - name: kanban_indicator_kbnkz
+    description: Kanban Indicator
+  - name: psst_group_rfm_psst_group
+    description: Psst Group
+  - name: jit_relevant_indicator_jit_rlvnt
+    description: Jit Relevant Indicator
+  - name: year_of_delivery_date_lfdat
+    description: Year of Delivery Date
+  - name: month_of_delivery_date_lfdat
+    description: Month of Delivery Date
+  - name: quarter_of_delivery_date_lfdat
+    description: Quarter of Delivery Date
+  - name: week_of_delivery_date_lfdat
+    description: Week of Delivery Date
+  - name: year_of_proof_of_delivery_date_podat
+    description: Year of Proof of Delivery Date
+  - name: month_of_proof_of_delivery_date_podat
+    description: Month of Proof of Delivery Date
+  - name: quarter_of_proof_of_delivery_date_podat
+    description: Quarter of Proof of Delivery Date
+  - name: week_of_proof_of_delivery_date_podat
+    description: Week of Proof of Delivery Date
+  - name: year_of_document_date_bldat
+    description: Year of Document Date
+  - name: month_of_document_date_bldat
+    description: Month of Document Date
+  - name: quarter_of_document_date_bldat
+    description: Quarter of Document Date
+  - name: week_of_document_date_bldat
+    description: Week of Document Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,232 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM), Financial Accounting
+  (FI) module in the Finance, Supply Chain domain and provides line-item details of supplier incoming
+  invoices from SAP RSEG, tracking invoiced quantities, materials, and purchase order references. The
+  data is captured at the granularity of Client (System), Invoice Document Number, Fiscal Year, and Invoice
+  Item, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: invoice_document_number_belnr
+    description: Invoice Document Number, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: invoice_item_buzei
+    description: Invoice Item, PK
+  - name: purchasing_document_number_ebeln
+    description: Purchasing Document Number
+  - name: purchasing_document_item_ebelp
+    description: Purchasing Document Item
+  - name: sequential_number_account_assignment_zekkn
+    description: Sequential Number of Account Assignment
+  - name: material_number_matnr
+    description: Material Number
+  - name: valuation_area_bwkey
+    description: Valuation Area
+  - name: valuation_type_bwtar
+    description: Valuation Type
+  - name: purchase_order_unit_measure_bstme
+    description: Purchase Order Unit of Measure
+  - name: order_price_unit_bprme
+    description: Order Price Unit (Purchasing)
+  - name: total_valuated_stock_lbkum
+    description: Total Valuated Stock
+  - name: total_valuated_stock_previous_period_vrkum
+    description: Total Valuated Stock in Previous Period
+  - name: purchase_order_item_category_pstyp
+    description: Purchasing Document Item Category
+  - name: account_assignment_category_knttp
+    description: Account Assignment Category
+  - name: valuation_class_bklas
+    description: Valuation Class
+  - name: final_invoice_indicator_erekz
+    description: Final Invoice Indicator
+  - name: update_purchase_order_history_indicator_exkbe
+    description: 'Indicator: Update Purchase Order History'
+  - name: update_purchase_order_delivery_costs_indicator_xekbz
+    description: 'Indicator: Update Purchase Order Delivery Costs'
+  - name: subsequent_debit_credit_indicator_tbtkz
+    description: 'Indicator: Subsequent Debit/Credit'
+  - name: blocking_reason_price_spgrp
+    description: 'Blocking Reason: Price'
+  - name: blocking_reason_quantity_spgrm
+    description: 'Blocking Reason: Quantity'
+  - name: blocking_reason_date_spgrt
+    description: 'Blocking Reason: Date'
+  - name: blocking_reason_order_price_quantity_spgrg
+    description: 'Blocking Reason: Order Price Quantity'
+  - name: blocking_reason_project_budget_spgrv
+    description: 'Blocking Reason: Project Budget'
+  - name: manual_blocking_reason_spgrq
+    description: Manual Blocking Reason
+  - name: blocking_reason_quality_spgrc
+    description: 'Blocking Reason: Quality'
+  - name: blocking_reason_enhancement_fields_spgrext
+    description: 'Blocking Reason: Enhancement Fields'
+  - name: posting_string_values_bustw
+    description: Posting String for Values
+  - name: reference_xblnr
+    description: Reference Document Number
+  - name: document_posted_previous_period_indicator_xrueb
+    description: 'Indicator: Document Posted in Previous Period'
+  - name: condition_type_kschl
+    description: Condition Type
+  - name: total_valuated_stock_value_salk3
+    description: Total Value of Valuated Stock
+  - name: total_valuated_stock_previous_period_value_vmsal
+    description: Total Value of Stock in Previous Period
+  - name: lifo_fifo_indicator_xlifo
+    description: Lifo/Fifo-Relevant
+  - name: reference_document_number_lfbnr
+    description: Reference Document Number
+  - name: fiscal_year_current_period_lfgja
+    description: Fiscal Year of Current Period
+  - name: reference_document_item_lfpos
+    description: Reference Document Item
+  - name: stock_material_number_matbf
+    description: Material Number for Stock Management
+  - name: quantity_invoiced_po_order_units_rbmng
+    description: Quantity Invoiced in PO Order Units
+  - name: quantity_invoiced_po_price_units_bprbm
+    description: Quantity Invoiced in PO Price Units
+  - name: supplier_error_type_lfehl
+    description: Type of Supplier Error
+  - name: gross_income_tax_activity_code_gricd
+    description: Gross Income Tax Activity Code
+  - name: region_grirg
+    description: Region
+  - name: distribution_type_gityp
+    description: Distribution Type for Employment Tax
+  - name: package_number_service_packno
+    description: Package Number of Service
+  - name: line_number_service_introw
+    description: Line Number of Service
+  - name: correction_indicator_kzmek
+    description: Correction Indicator
+  - name: invoice_item_processed_indicator_mrmok
+    description: 'Indicator: Invoice Item Processed'
+  - name: step_number_stunr
+    description: Step Number
+  - name: condition_counter_zaehk
+    description: Condition Counter
+  - name: stock_posting_incoming_invoice_stock_posting
+    description: Stock Posting of Line From Incoming Invoice
+  - name: stock_posting_previous_period_stock_posting_pp
+    description: Stock Posting Previous Period
+  - name: stock_posting_previous_year_stock_posting_py
+    description: Stock Posting Previous Year
+  - name: clearing_indicator_grir_posting_werec
+    description: 'Clearing Indicator: Goods Receipt/Invoice Receipt Posting'
+  - name: supplier_lifnr
+    description: Supplier Account Number
+  - name: bill_of_lading_frbnr
+    description: Bill of Lading Number
+  - name: update_multiple_account_assignment_xhistma
+    description: Update Multiple Account Assignment
+  - name: complaint_reason_complaint_reason
+    description: Complaints Reason
+  - name: retention_percentage_retpc
+    description: Retention Percentage
+  - name: retention_due_date_retduedt
+    description: Retention Due Date
+  - name: retention_tax_reduction_indicator_xrettaxnet
+    description: Retention Tax Reduction Indicator
+  - name: cash_ledger_account_re_account
+    description: Cash Ledger Account
+  - name: principal_purchase_agreement_number_erp_contract_id
+    description: Outline Agreement Number
+  - name: principal_purchase_agreement_item_number_erp_contract_itm
+    description: Outline Agreement Item Number
+  - name: central_contract_number_srm_contract_id
+    description: Central Contract Number
+  - name: central_contract_item_number_srm_contract_itm
+    description: Central Contract Item Number
+  - name: purchase_order_item_category2_cont_pstyp
+    description: Purchase Order Item Category
+  - name: esoa_key_srvmapkey
+    description: Esoa Key
+  - name: batch_number_charg
+    description: Batch Number
+  - name: invoice_item_origin_inv_itm_origin
+    description: Invoice Item Origin
+  - name: grouping_characteristic_invrel
+    description: Grouping Characteristic
+  - name: invoicing_differential_indicator_xdinv
+    description: 'Indicator: Invoicing Differential'
+  - name: commodity_repricing_indicator_xcprf
+    description: 'Indicator: Commodity Repricing'
+  - name: season_year_fsh_season_year
+    description: Season Year
+  - name: season_fsh_season
+    description: Season
+  - name: fashion_collection_fsh_collection
+    description: Fashion Collection
+  - name: fashion_theme_fsh_theme
+    description: Fashion Theme
+  - name: internal_license_number_licno
+    description: Internal License Number
+  - name: item_number_zeile
+    description: Item Number
+  - name: stock_segment_sgt_scat
+    description: Stock Segment
+  - name: characteristic_value1_wrf_charstc1
+    description: Characteristic Value 1
+  - name: characteristic_value2_wrf_charstc2
+    description: Characteristic Value 2
+  - name: characteristic_value3_wrf_charstc3
+    description: Characteristic Value 3
+  - name: plant_werks
+    description: Plant
+  - name: debit_credit_indicator_shkzg
+    description: Debit/Credit Indicator
+  - name: tax_code_mwskz
+    description: Tax Code
+  - name: tax_jurisdiction_txjcd
+    description: Tax Jurisdiction
+  - name: quantity_menge
+    description: Quantity
+  - name: quantity_po_price_unit_bpmng
+    description: Quantity in PO Price Units
+  - name: base_unit_measure_meins
+    description: Base Unit of Measure
+  - name: blocking_reason_item_amount_spgrs
+    description: 'Blocking Reason: Item Amount'
+  - name: item_text_sgtxt
+    description: Item Text
+  - name: line_item_cash_discount_not_liable_indicator_xskrl
+    description: 'Indicator: Line Item Cash Discount Not Liable'
+  - name: amount_wrbtr
+    description: Amount in Document Currency (Sign-Flipped for Credit Memos)
+  - name: delivery_costs_item_split_bnkan
+    description: Delivery Costs Item Split (Sign-Flipped for Credit Memos)
+  - name: retention_amount_retamt_fc
+    description: Retention Amount in Document Currency
+  - name: difference_amount_diff_amount
+    description: Difference Amount
+  - name: invoice_amount_rbwwr
+    description: Invoice Amount in Document Currency
+  - name: year_of_retention_due_date_retduedt
+    description: Year of Retention Due Date
+  - name: month_of_retention_due_date_retduedt
+    description: Month of Retention Due Date
+  - name: quarter_of_retention_due_date_retduedt
+    description: Quarter of Retention Due Date
+  - name: week_of_retention_due_date_retduedt
+    description: Week of Retention Due Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

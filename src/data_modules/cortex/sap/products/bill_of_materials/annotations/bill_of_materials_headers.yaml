@@ -1,0 +1,83 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Production Planning (PP) module in the Manufacturing
+  domain and provides BOM header details including validity dates, base quantities, and BOM status. The
+  data is captured at the granularity of system default keys, ensuring a unique audit trail for every
+  record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: bill_of_material_category_stlty
+    description: Bill of Material Category, PK
+  - name: bill_of_material_stlnr
+    description: Bill of Material, PK
+  - name: alternative_bill_of_material_stlal
+    description: Alternative Bill of Material, PK
+  - name: counter_stkoz
+    description: Counter, PK
+  - name: valid_from_datuv
+    description: Valid From
+  - name: technical_status_from_techv
+    description: Technical Status From
+  - name: change_number_aennr
+    description: Change Number
+  - name: deletion_indicator_lkenz
+    description: Deletion Indicator
+  - name: deletion_flag_loekz
+    description: Deletion Flag
+  - name: previous_header_counter_vgkzl
+    description: Previous Header Counter
+  - name: created_on_andat
+    description: Created on
+  - name: created_by_annam
+    description: Created by
+  - name: changed_on_aedat
+    description: Changed on
+  - name: changed_by_aenam
+    description: Changed by
+  - name: base_unit_of_measure_bmein
+    description: Base Unit of Measure
+  - name: base_quantity_bmeng
+    description: Base Quantity
+  - name: cad_indicator_cadkz
+    description: Cad Indicator
+  - name: laboratory_office_labor
+    description: Laboratory Or Office
+  - name: long_text_language_ltxsp
+    description: Long Text Language
+  - name: alternative_text_stktx
+    description: Alternative Text
+  - name: bill_of_material_status_stlst
+    description: Bill of Material Status
+  - name: created_in_plant_wrkan
+    description: Created in Plant
+  - name: scheduled_on_dvdat
+    description: Scheduled on
+  - name: date_shifted_by_dvnam
+    description: Date Shifted by
+  - name: work_field_aehlp
+    description: Work Field
+  - name: ale_indicator_alekz
+    description: ALE Indicator
+  - name: id_item_change_status_guidx
+    description: Id Item Change Status
+  - name: valid_to_valid_to
+    description: Valid to
+  - name: change_number_to_ecn_to
+    description: Change Number to
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

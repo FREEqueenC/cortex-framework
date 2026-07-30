@@ -1,0 +1,101 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides Manages vendor confirmation details from EKES. The data is captured at the
+  granularity of Client (System), Purchasing Document, Item, and Sequential Number, ensuring a unique
+  audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purchasing_document_ebeln
+    description: Purchasing Document, PK
+  - name: item_ebelp
+    description: Item, PK
+  - name: sequential_number_etens
+    description: Sequential Number, PK
+  - name: confirm_category_ebtyp
+    description: Confirmation Category
+  - name: delivery_date_eindt
+    description: Delivery Date
+  - name: deliv_date_category_lpein
+    description: Delivery Date Category
+  - name: time_uzeit
+    description: Time
+  - name: creation_date_erdat
+    description: Creation Date
+  - name: creation_time_ezeit
+    description: Creation Time
+  - name: quantity_menge
+    description: Quantity
+  - name: quantity_reduced_mrp_dabmg
+    description: Quantity Reduced (Mrp)
+  - name: creation_indicator_estkz
+    description: Creation Indicator
+  - name: deletion_indicator_loekz
+    description: Deletion Indicator
+  - name: mrp_relevant_kzdis
+    description: Mrp-Relevant
+  - name: reference_xblnr
+    description: Reference
+  - name: delivery_vbeln
+    description: Delivery
+  - name: item_vbelp
+    description: Item
+  - name: mfr_part_profile_mprof
+    description: Manufacturer Part Profile
+  - name: mpn_material_ematn
+    description: Manufacturer Part Number Material
+  - name: number_rem_expediters_mahnz
+    description: Number of Reminders/Expediters
+  - name: batch_charg
+    description: Batch
+  - name: higherlevelitembatch_uecha
+    description: Higher Level Item Batch
+  - name: sequential_number_reference_etens
+    description: Sequential Number
+  - name: in_plant_imwrk
+    description: In Plant
+  - name: delivery_vbeln_st
+    description: Delivery
+  - name: item_vbelp_st
+    description: Item
+  - name: handover_date_handoverdate
+    description: Handover Date
+  - name: handover_time_handovertime
+    description: Handover Time
+  - name: stock_segment_sgt_scat
+    description: Stock Segment
+  - name: utc_timestamp_msgtstmp
+    description: Utc Timestamp
+  - name: cw_quantity_in_order_confirmation_cwm_menge
+    description: Cw Quantity in Order Confirmation
+  - name: cw_mrp_reduced_quantity_cwm_dabmg
+    description: Cw Mrp Goods Receipt Quantity
+  - name: start_date_for_period_of_performance_startdate
+    description: Start Date for Period of Performance
+  - name: end_date_for_period_of_performance_enddate
+    description: End Date for Period of Performance
+  - name: service_performer_serviceperformer
+    description: Service Performer
+  - name: allocated_stock_quantity_fsh_salloc_qty
+    description: Allocated Stock Quantity
+  - name: original_quantity_ormng
+    description: Original Quantity
+  - name: reference_uuid_of_transportation_mgmt_tms_reference_uuid
+    description: Reference Uuid of Transportation Management
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

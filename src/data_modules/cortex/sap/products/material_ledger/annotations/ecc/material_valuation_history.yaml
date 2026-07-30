@@ -1,0 +1,53 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Exposes historical valuation details for ECC. Union of current (MBEW) and historical (MBEWH)
+  valuation tables, limited to core valuation fields.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: material_number_matnr
+    description: Material Number, PK
+  - name: valuation_area_bwkey
+    description: Valuation Area, PK
+  - name: valuation_type_bwtar
+    description: Valuation Type, PK
+  - name: fiscal_year_lfgja
+    description: Fiscal Year, PK
+  - name: posting_period_lfmon
+    description: Posting Period, PK
+  - name: price_unit_peinh
+    description: Price Unit
+  - name: price_control_indicator_vprsv
+    description: Price Control Indicator
+  - name: valuation_class_bklas
+    description: Valuation Class
+  - name: total_stock_lbkum
+    description: Total Valuated Stock Quantity
+  - name: standard_cost_stprs
+    description: Standard Cost / Price of the Material (Shifted)
+  - name: value_of_total_valuated_stock_salk3
+    description: Total Value of Valuated Stock (Shifted)
+  - name: moving_average_price_verpr
+    description: Moving Average Price (Shifted)
+  - name: value_at_moving_average_price_salkv
+    description: Value Based on Moving Average Price (Shifted)
+  - name: total_value_at_sales_price_vksal
+    description: Total Value of Valuated Stock At Sales Price (Shifted)
+  - name: currency_key_waers
+    description: Currency Key
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,70 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Asset Line Items"
+fields:
+- name: "mandt"
+  description: "Client, PK"
+- name: "bukrs"
+  description: "Company Code, PK"
+- name: "anln1"
+  description: "Asset, PK"
+- name: "anln2"
+  description: "Sub-Number, PK"
+- name: "gjahr"
+  description: "Fiscal Year, PK"
+- name: "lnran"
+  description: "Sequence Number, PK"
+- name: "afabe"
+  description: "Depreciation Area, PK"
+- name: "zujhr"
+  description: "Acquisition Year"
+- name: "zucod"
+  description: "Acquisition Code"
+- name: "peraf"
+  description: "Depreciation Period"
+- name: "belnr"
+  description: "Document Number"
+- name: "buzei"
+  description: "Line Item"
+- name: "bzdat"
+  description: "Asset Value Date"
+- name: "bwasl"
+  description: "Transaction Type"
+- name: "xafar"
+  description: "Errors in Deprec"
+- name: "anbtr"
+  description: "Amount Posted"
+- name: "nafab"
+  description: "Ord.Depreciation on Transaction"
+- name: "safab"
+  description: "Spec.Dependent.On Transactions"
+- name: "zinsb"
+  description: "Interest on Transact"
+- name: "xantw"
+  description: "Ind: Prop Values"
+- name: "xawbt"
+  description: "Ind Difference.Amount Entered"
+- name: "lnsan"
+  description: "Lineitemno.Reversal"
+- name: "anupd"
+  description: "Change Type"
+- name: "augln"
+  description: "Clearing Line Item"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

@@ -1,0 +1,131 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+schema: cortex
+name: security_classes
+description: This view is based on SAP S/4HANA or SAP ECC Treasury and Risk Management (TRM) module in
+  the Treasury domain and provides Represents security master data, including names, product types, issuers,
+  and classification details. The data is captured at the granularity of Client (System) and Security
+  Class Id Number, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: security_class_id_number_ranl
+    description: Security Class Id Number, PK
+  - name: product_category_sanlf
+    description: Product Category
+  - name: status_sstati
+    description: Status
+  - name: alternative_number_1_ranlalt1
+    description: Alternative Number 1
+  - name: alternative_number_2_ranlalt2
+    description: Alternative Number 2
+  - name: product_type_gsart
+    description: Product Type
+  - name: industry_sbrsch
+    description: Industry
+  - name: security_type_swerttyp
+    description: Security Type
+  - name: listed_sboernot
+    description: Listed
+  - name: eligible_as_collat_wlomb
+    description: Eligible As Collateral
+  - name: hedge_fund_jdeck
+    description: Hedge Fund
+  - name: pledgeable_wpfan
+    description: Pledgeable
+  - name: tax_treatment_sstbe
+    description: Tax Treatment
+  - name: deletion_indicator_loevm
+    description: Deletion Indicator
+  - name: joint_partner_vote_jabmi
+    description: Joint Partner Vote
+  - name: short_name_xalkz
+    description: Short Name
+  - name: long_name_xallb
+    description: Long Name
+  - name: issuer_repke
+    description: Issuer
+  - name: issue_price_bempreis
+    description: Issue Price
+  - name: issue_currency_rewhr
+    description: Issue Currency
+  - name: issue_rate_pemkurs
+    description: Issue Rate
+  - name: quotation_snoti
+    description: Quotation
+  - name: price_deviation_in_pkuab
+    description: Price Deviation in %
+  - name: abs_price_deviation_bkuab
+    description: Absolute Price Deviation
+  - name: oblig_to_offer_until_dandpfl
+    description: Obligation to Offer Until
+  - name: right_to_offer_until_dandre
+    description: Right to Offer Until
+  - name: object_key_sobjekt
+    description: Object Key
+  - name: entered_by_rerf
+    description: Entered by
+  - name: first_entered_on_derf
+    description: First Entered on
+  - name: time_of_creation_terf
+    description: Time of Creation
+  - name: initial_entry_source_reher
+    description: Initial Entry Source
+  - name: last_changed_by_rbear
+    description: Last Changed by
+  - name: last_edited_on_dbear
+    description: Last Edited on
+  - name: last_edited_at_tbear
+    description: Last Edited At
+  - name: editing_source_rbher
+    description: Editing Source
+  - name: security_classification_srolext
+    description: Security Classification
+  - name: deletion_indicator_vvsloekz
+    description: Deletion Indicator
+  - name: eligible_jmuendel
+    description: Eligible
+  - name: poss_custody_type_smoverw
+    description: Possible Custody Type
+  - name: component_of_the_version_number_siherk
+    description: Component of the Version Number
+  - name: issue_price_kbempreis
+    description: Issue Price
+  - name: securities_account_statistics_key_sdepostat
+    description: Securities Account Statistics Key
+  - name: funded_sfundi
+    description: Funded
+  - name: reporting_oblig_stl_swphgmpf
+    description: Reporting Obligation Stl
+  - name: internat_id_no_risin
+    description: International Id Number
+  - name: credit_standing_institute_institute
+    description: Credit Standing Institute
+  - name: rating_rating
+    description: Rating
+  - name: name_of_price_index_price_index
+    description: Name of Price Index
+  - name: price_index_base_date_price_idx_bdate
+    description: Price Index Base Date
+  - name: ci_code_coicode
+    description: Ci Code
+  - name: ci_country_coiland
+    description: Ci Country
+  - name: cash_flow_calculation_sfimamethod
+    description: Cash Flow Calculation
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

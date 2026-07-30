@@ -1,0 +1,37 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: SAP Inventory and Special Stocks
+description: This data product includes information about SAP inventory and special stocks from the Materials Management
+  (MM), Sales and Distribution (SD) module in the Supply Chain, Sales domain in SAP
+  ECC. The Inventory & Special Stocks data product provides detailed
+  insights into specialized stock types and customer/vendor allocations within the
+  supply chain. It consolidates sales order stock, customer-consigned/special stocks,
+  and vendor-managed special stocks.
+category: source_aligned_product
+type: inventory_and_special_stocks
+dependencies:
+  sapModule:
+    supportedVersions:
+    - ecc
+    tables:
+      ecc:
+      - mska
+      - msfd
+      - mkol
+      - mslb
+      - t148t
+      - msku
+    modulePath: cortex.sap.foundations.sap
+builder: sap_product

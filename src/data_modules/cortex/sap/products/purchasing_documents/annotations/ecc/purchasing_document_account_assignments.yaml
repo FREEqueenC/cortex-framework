@@ -1,0 +1,157 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides the account assignments for purchasing document items from EKKN. The data
+  is captured at the granularity of Client (System), Purchasing Document, Item, and Sequence Number Of
+  Account Assgt, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purchasing_document_ebeln
+    description: Purchasing Document, PK
+  - name: item_ebelp
+    description: Item, PK
+  - name: sequence_number_of_account_assignment_zekkn
+    description: Sequence Number of Account Assignment, PK
+  - name: deletion_indicator_loekz
+    description: Deletion Indicator
+  - name: created_on_aedat
+    description: Created on
+  - name: quantity_menge
+    description: Quantity
+  - name: distribution_vproz
+    description: Distribution (%)
+  - name: net_order_value_netwr
+    description: Net Order Value
+  - name: general_ledger_account_sakto
+    description: General Ledger Account
+  - name: business_area_gsber
+    description: Business Area
+  - name: cost_center_kostl
+    description: Cost Center
+  - name: sales_document_vbeln
+    description: Sales Document
+  - name: sales_document_item_vbelp
+    description: Sales Document Item
+  - name: schedule_line_number_veten
+    description: Schedule Line Number
+  - name: gross_requirements_ind_kzbrb
+    description: Gross Requirements Indicator
+  - name: asset_anln1
+    description: Asset
+  - name: sub_number_anln2
+    description: Sub-Number
+  - name: order_aufnr
+    description: Order
+  - name: goods_recipient_wempf
+    description: Goods Recipient
+  - name: unloading_point_ablad
+    description: Unloading Point
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: posting_to_cost_center_xbkst
+    description: Posting to Cost Center
+  - name: post_to_order_xbauf
+    description: Post to Order
+  - name: post_to_project_xbpro
+    description: Post to Project
+  - name: final_invoice_erekz
+    description: Final Invoice
+  - name: cost_object_kstrg
+    description: Cost Object
+  - name: profitability_segment_number_paobjnr
+    description: Profitability Segment Number
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: wbs_element_ps_psp_pnr
+    description: WBS Element
+  - name: network_nplnr
+    description: Network
+  - name: opertn_task_list_number_aufpl
+    description: Operation Task List Number
+  - name: real_estate_key_imkey
+    description: Real Estate Key
+  - name: counter_aplzl
+    description: Counter
+  - name: partner_vptnr
+    description: Partner
+  - name: commitment_item_fipos
+    description: Commitment Item
+  - name: recovery_indicator_recid
+    description: Recovery Indicator
+  - name: funds_center_fistl
+    description: Funds Center
+  - name: fund_geber
+    description: Fund
+  - name: functional_area_fkber
+    description: Functional Area
+  - name: reference_date_dabrz
+    description: Reference Date
+  - name: operation_task_list_number_aufpl_ord
+    description: Operation Task List Number
+  - name: counter_aplzl_ord
+    description: Counter
+  - name: tax_code_mwskz
+    description: Tax Code
+  - name: tax_jurisdiction_txjcd
+    description: Tax Jurisdiction
+  - name: non_deductible_navnw
+    description: Non-Deductible
+  - name: earmarked_funds_kblnr
+    description: Earmarked Funds
+  - name: document_item_kblpos
+    description: Document Item
+  - name: activity_type_lstar
+    description: Activity Type
+  - name: business_process_prznr
+    description: Business Process
+  - name: grant_grant_nbr
+    description: Grant
+  - name: budget_period_budget_pd
+    description: Budget Period
+  - name: distribution_batch_number_fm_split_batch
+    description: Distribution Batch Number
+  - name: authorization_group_fm_split_begru
+    description: Authorization Group
+  - name: final_account_assignment_aa_final_ind
+    description: Final Account Assignment
+  - name: final_account_assignment_reason_aa_final_reason
+    description: Final Account Assignment Reason
+  - name: final_account_assignment_quantity_aa_final_qty
+    description: Final Account Assignment Quantity
+  - name: final_account_assignment_quantity_float_number_aa_final_quantity_f
+    description: Final Account Assignment Quantity (Floating Point Number)
+  - name: quantity_float_number_menge_f
+    description: Quantity (Floating Point Number)
+  - name: us_government_fields_fmfgus_key
+    description: U.S Government Fields
+  - name: equity_group_egrup
+    description: Equity Group
+  - name: joint_venture_vname
+    description: Joint Venture
+  - name: object_number_tcobjnr
+    description: Object Number
+  - name: date_of_service_dateofservice
+    description: Date of Service
+  - name: do_not_correct_notaxcorr
+    description: Do Not Correct
+  - name: option_rate_diffoptrate
+    description: Option Rate
+  - name: use_diff_option_rate_hasdiffoptrate
+    description: Use Difference.Option Rate
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

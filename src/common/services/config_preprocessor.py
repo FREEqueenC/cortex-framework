@@ -16,6 +16,8 @@ import os
 from string import Template
 from typing import Any
 
+from common.errors import CortexConfigError
+
 
 class ConfigPreprocessor:
     """Preprocessing Service for Configuration Interpolation."""
@@ -29,7 +31,14 @@ class ConfigPreprocessor:
         try:
             return Template(value).substitute(combined)
         except KeyError as e:
-            raise ValueError(f"Unresolved configuration variable: {e.args[0]}") from e
+            missing_var = e.args[0]
+            raise CortexConfigError(
+                f"Unresolved configuration variable: {missing_var}",
+                hint=(
+                    f"Ensure the environment variable '{missing_var}' is set in your "
+                    "shell or provided in the execution context."
+                ),
+            ) from e
 
     def process(self, data: Any) -> Any:
         # Recursively resolves variables in dictionaries and lists.

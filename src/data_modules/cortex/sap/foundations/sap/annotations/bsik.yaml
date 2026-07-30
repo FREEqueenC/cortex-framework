@@ -1,0 +1,438 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Accounting: Secondary Index for Vendors'
+fields:
+- name: mandt
+  description: Client
+- name: bukrs
+  description: Company Code
+- name: lifnr
+  description: Vendor
+- name: umsks
+  description: Sp. G/L Trans.Type
+- name: umskz
+  description: Special G/L Ind.
+- name: augdt
+  description: Clearing Date
+- name: augbl
+  description: Clearing Document
+- name: zuonr
+  description: Assignment
+- name: gjahr
+  description: Fiscal Year
+- name: belnr
+  description: Document Number
+- name: buzei
+  description: Line item
+- name: budat
+  description: Posting Date
+- name: bldat
+  description: Document Date
+- name: cpudt
+  description: Entry Date
+- name: waers
+  description: Currency
+- name: xblnr
+  description: Reference
+- name: blart
+  description: Document Type
+- name: monat
+  description: Posting period
+- name: bschl
+  description: Posting Key
+- name: zumsk
+  description: Target Sp.G/L Ind.
+- name: shkzg
+  description: Debit/Credit ind
+- name: gsber
+  description: Business Area
+- name: tax_country
+  description: Tax Country
+- name: mwskz
+  description: Tax Code
+- name: txdat_from
+  description: Tax Rate Valid-From
+- name: dmbtr
+  description: Amt.in loc.cur.
+- name: wrbtr
+  description: Amount
+- name: mwsts
+  description: LC Tax Amount
+- name: wmwst
+  description: Tax Amount
+- name: lwsts
+  description: Tax in Country Crcy
+- name: bdiff
+  description: Valuation Difference
+- name: bdif2
+  description: Valuation Difference 2
+- name: sgtxt
+  description: Text
+- name: projn
+  description: not in use
+- name: aufnr
+  description: Order
+- name: anln1
+  description: Asset
+- name: anln2
+  description: Sub-number
+- name: ebeln
+  description: Purchasing Document
+- name: ebelp
+  description: Item
+- name: saknr
+  description: G/L Account
+- name: hkont
+  description: G/L Account
+- name: fkont
+  description: Financial Budget
+- name: filkd
+  description: Branch account
+- name: zfbdt
+  description: Baseline Payment Dte
+- name: zterm
+  description: Payment terms
+- name: zbd1t
+  description: Days 1
+- name: zbd2t
+  description: Days 2
+- name: zbd3t
+  description: Days Net
+- name: zbd1p
+  description: Disc.percent 1
+- name: zbd2p
+  description: Disc.percent 2
+- name: skfbt
+  description: CD Base
+- name: sknto
+  description: Cash Discount Amount
+- name: wskto
+  description: CD Amount
+- name: zlsch
+  description: Payment Method
+- name: zlspr
+  description: Payment block
+- name: zbfix
+  description: Fixed
+- name: hbkid
+  description: House Bank
+- name: bvtyp
+  description: Part.bank type
+- name: rebzg
+  description: Invoice Reference
+- name: rebzj
+  description: Fiscal Year
+- name: rebzz
+  description: Item
+- name: samnr
+  description: Collective Invoice
+- name: zollt
+  description: Customs Tariff No.
+- name: zolld
+  description: Cust. Date
+- name: lzbkz
+  description: SCB Indicator
+- name: landl
+  description: Supplying Cntry
+- name: diekz
+  description: Service Indicator
+- name: mansp
+  description: Dunning Block
+- name: mschl
+  description: Dunning Key
+- name: madat
+  description: Last Dunned
+- name: manst
+  description: Dunning Level
+- name: maber
+  description: Dunning Area
+- name: xnetb
+  description: Net document type
+- name: xanet
+  description: 'Indicator: Down Payment in Net Procedure?'
+- name: xcpdd
+  description: Individ. Set
+- name: xesrd
+  description: 'Indicator: Is any ISR data set in the document ?'
+- name: xzahl
+  description: Payment Transaction
+- name: mwsk1
+  description: Tax Code
+- name: txdat_from1
+  description: Tax Rate Valid-From (Tax Backpack)
+- name: tax_country1
+  description: Tax Country for Tax Breakdown
+- name: dmbt1
+  description: Amount
+- name: wrbt1
+  description: Amount
+- name: hist_tax_factor1
+  description: Hist Factor for TaxAmt
+- name: mwsk2
+  description: Tax Code
+- name: txdat_from2
+  description: Tax Rate Valid-From (Tax Backpack)
+- name: tax_country2
+  description: Tax Country for Tax Breakdown
+- name: dmbt2
+  description: Amount
+- name: wrbt2
+  description: Amount
+- name: hist_tax_factor2
+  description: Hist Factor for TaxAmt
+- name: mwsk3
+  description: Tax Code
+- name: txdat_from3
+  description: Tax Rate Valid-From (Tax Backpack)
+- name: tax_country3
+  description: Tax Country for Tax Breakdown
+- name: dmbt3
+  description: Amount
+- name: wrbt3
+  description: Amount
+- name: hist_tax_factor3
+  description: Hist Factor for TaxAmt
+- name: hist_tax_factor
+  description: Hist Factor for TaxAmt
+- name: qsskz
+  description: Withholding Tax Code
+- name: qsshb
+  description: Withholding Tax Base
+- name: qbshb
+  description: Withholding Tax Amt
+- name: bstat
+  description: Document Status
+- name: anfbn
+  description: BoE Payment Request
+- name: anfbj
+  description: Fiscal Year of the Bill of Exchange Payment Request Document
+- name: anfbu
+  description: Company Code
+- name: vbund
+  description: Trading Partner No.
+- name: rebzt
+  description: Follow-On Doc. Type
+- name: stceg
+  description: VAT Registration No.
+- name: egbld
+  description: Destination Country
+- name: eglld
+  description: Supplying Country
+- name: qsznr
+  description: Exemption Number
+- name: qsfbt
+  description: WTax-Exempt Amount
+- name: xinve
+  description: Investment ID
+- name: projk
+  description: WBS Element
+- name: fipos
+  description: Commitment item
+- name: nplnr
+  description: Network
+- name: aufpl
+  description: Task List No. Oper.
+- name: aplzl
+  description: Counter
+- name: xegdr
+  description: EU Triangular Deal
+- name: dmbe2
+  description: LC2 Amount
+- name: dmbe3
+  description: LC3 Amount
+- name: dmb21
+  description: Amount
+- name: dmb22
+  description: Amount
+- name: dmb23
+  description: Amount
+- name: dmb31
+  description: Amount
+- name: dmb32
+  description: Amount
+- name: dmb33
+  description: Amount
+- name: mwst2
+  description: LC2 Tax Amount
+- name: mwst3
+  description: LC3 Tax Amount
+- name: sknt2
+  description: CD Amount in LC2
+- name: sknt3
+  description: CD Amount in LC3
+- name: bdif3
+  description: Valuation Difference 3
+- name: xragl
+  description: Reverse Clearing
+- name: rstgr
+  description: Reason Code
+- name: uzawe
+  description: Pmt Meth. Supplement
+- name: kostl
+  description: Cost Center
+- name: lnran
+  description: Sequence Number
+- name: xstov
+  description: Reversal Flag
+- name: kzbtr
+  description: Orig.Reduction Amt
+- name: xref1
+  description: Reference Key 1
+- name: xref2
+  description: Reference Key 2
+- name: xarch
+  description: Archived
+- name: pswsl
+  description: General Ledger Currency
+- name: pswbt
+  description: General Ledger Amount
+- name: imkey
+  description: Real Estate Key
+- name: zekkn
+  description: Seq. No. of Account Assgt
+- name: fistl
+  description: Funds Center
+- name: geber
+  description: Fund
+- name: dabrz
+  description: Reference date
+- name: xnegp
+  description: Negative Posting
+- name: empfb
+  description: Payee
+- name: prctr
+  description: Profit Center
+- name: xref3
+  description: Reference Key 3
+- name: dtws1
+  description: Instruction Key 1
+- name: dtws2
+  description: Instruction Key 2
+- name: dtws3
+  description: Instruction key 3
+- name: dtws4
+  description: Instruction key 4
+- name: xpypr
+  description: Payment Sent
+- name: kidno
+  description: Payment reference
+- name: pycur
+  description: Pmnt currency
+- name: pyamt
+  description: Pmnt curr. amnt
+- name: bupla
+  description: Business place
+- name: secco
+  description: Section Code
+- name: ppdiff
+  description: Difference Realized
+- name: ppdif2
+  description: Difference Realized
+- name: ppdif3
+  description: Difference Realized
+- name: penlc1
+  description: Penalty Chge in LC
+- name: penlc2
+  description: Pen.Charge in LC2
+- name: penlc3
+  description: Pen.Charge in LC3
+- name: penfc
+  description: Penalty Charge
+- name: pendays
+  description: Days in Arrears
+- name: penrc
+  description: Reason for Late Pmnt
+- name: vertt
+  description: Contract Type
+- name: vertn
+  description: Contract Number
+- name: vbewa
+  description: Flow Type
+- name: kblnr
+  description: Earmarked funds
+- name: kblpos
+  description: Document item
+- name: grant_nbr
+  description: Grant
+- name: gmvkz
+  description: Transfer to Execution
+- name: srtype
+  description: Type of Addtnl Recvabl
+- name: lotkz
+  description: Request Number
+- name: zinkz
+  description: Interest Block
+- name: fkber
+  description: Functional Area
+- name: intreno
+  description: Real estate code
+- name: pprct
+  description: Partner Profit Ctr
+- name: buzid
+  description: Line Item ID
+- name: auggj
+  description: Clearing Fiscal Year
+- name: hktid
+  description: Account ID
+- name: budget_pd
+  description: Budget Period
+- name: bdgt_account
+  description: Budget Account
+- name: re_account
+  description: Expense or Revenue Account in CL
+- name: dataaging
+  description: Data Filter Value for Data Aging
+- name: kontt
+  description: Acct Assignment Cat.
+- name: kontl
+  description: Account assignment
+- name: uebgdat
+  description: Uebgdat
+- name: vname
+  description: Joint venture
+- name: egrup
+  description: Equity group
+- name: btype
+  description: Billing indicator
+- name: propmano
+  description: Mandate Thrd Prty Mgmt
+- name: gkont
+  description: Offsetting Account
+- name: gkart
+  description: Offsetting Account Type
+- name: ghkon
+  description: Offsetting Account in General Ledger
+- name: pernr
+  description: Personnel Number
+- name: vorgn
+  description: G/L Transaction Type
+- name: awtyp
+  description: Reference procedure
+- name: logsystem_sender
+  description: Logical System of the Sender
+- name: bukrs_sender
+  description: Company Code in Sender System
+- name: belnr_sender
+  description: Document No. in Sender System
+- name: gjahr_sender
+  description: Fiscal Year in Sender System
+- name: buzei_sender
+  description: Item in Sender System
+- name: operation_flag
+  description: Operation Flag
+- name: is_deleted
+  description: Is Deleted
+- name: recordstamp
+  description: Record Stamp

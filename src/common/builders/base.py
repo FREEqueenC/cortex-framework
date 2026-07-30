@@ -14,7 +14,7 @@
 
 import abc
 import pathlib
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 from common.schemas import config_schema, manifest_schema
 
@@ -27,7 +27,7 @@ class Source(NamedTuple):
     table: str
 
 
-class BaseBuilder[TConfig: config_schema.BaseModuleConfig](abc.ABC):
+class BaseBuilder[TConfig: config_schema.CortexBaseModel](abc.ABC):
     """Abstract base class for Dataform builder plugins."""
 
     @abc.abstractmethod
@@ -43,6 +43,7 @@ class BaseBuilder[TConfig: config_schema.BaseModuleConfig](abc.ABC):
         output_dir: pathlib.Path,
         module_dir_name: str,
         sources_registry: set[Source],
+        **kwargs: Any,
     ) -> None:
         """Main entry point for generator plugins."""
         pass
@@ -66,6 +67,7 @@ class FoundationBuilder[TConfig: config_schema.BaseModuleConfig](BaseBuilder[TCo
         sources_registry: set[Source],
         table_settings_file: pathlib.Path | None = None,
         required_tables: set[str] | None = None,
+        **kwargs: Any,
     ) -> None:
         """Slightly specialized signature for Foundations."""
         pass
@@ -88,6 +90,7 @@ class ProductBuilder[TConfig: config_schema.BaseModuleConfig](BaseBuilder[TConfi
         module_dir_name: str,
         sources_registry: set[Source],
         table_settings_file: pathlib.Path | None = None,
+        **kwargs: Any,
     ) -> None:
         """Slightly specialized signature for Products."""
         pass

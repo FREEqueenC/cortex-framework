@@ -1,0 +1,74 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Sales Performance reporting view providing insights into sales documents, delivery statuses, customer and product dimensions, and overdue delivery tracking.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: sales_document_number_vbeln
+    description: Sales Document Number, PK
+  - name: sales_document_item_number_posnr
+    description: Sales Document Item Number, PK
+  - name: language_key_spras
+    description: Language Key
+  - name: sales_organization_vkorg
+    description: Sales Organization
+  - name: sales_organization_name_vtext
+    description: Sales Organization Name
+  - name: division_spart
+    description: Division
+  - name: division_name_vtext
+    description: Division Name
+  - name: sold_to_party_kunnr
+    description: Customer Number
+  - name: customer_name_name1
+    description: Customer Name
+  - name: material_number_matnr
+    description: Material Number
+  - name: material_text_maktx
+    description: Material Description
+  - name: net_value_in_document_currency_netwr
+    description: Net Value of the Sales Document Item in Document Currency
+  - name: document_currency_waerk
+    description: Document Currency
+  - name: requested_delivery_date_vdatu
+    description: Requested Delivery Date
+  - name: delivery_block_lifsk
+    description: Delivery Block Reason
+  - name: item_delivery_status_lfsta
+    description: Item Delivery Status
+  - name: overall_item_delivery_status_lfgsa
+    description: Overall Item Delivery Status
+  - name: header_delivery_status_lfstk
+    description: Header Delivery Status
+  - name: overall_header_delivery_status_lfgsk
+    description: Overall Header Delivery Status
+  - name: year_of_sales_document
+    description: Year of Sales Document
+  - name: month_of_sales_document
+    description: Month of Sales Document
+  - name: quarter_of_sales_document
+    description: Quarter of Sales Document
+  - name: year_of_requested_delivery
+    description: Year of Requested Delivery
+  - name: month_of_requested_delivery
+    description: Month of Requested Delivery
+  - name: quarter_of_requested_delivery
+    description: Quarter of Requested Delivery
+  - name: is_delivery_overdue
+    description: Overdue Delivery Indicator
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

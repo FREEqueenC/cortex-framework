@@ -1,0 +1,44 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view calculates the valuated aggregated unrestricted use stock quantity for various plants and storage locations for different materials sources. This view has a granularity of Client(system), material number, plant, storage location and language key."
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "MaterialNumber_MATNR"
+    description: "Material Number, PK"
+  - name: "Plant_WERKS"
+    description: "Plant, PK"
+  - name: "StorageLocation_LGORT"
+    description: "Storage Location, PK"
+  - name: "Language_SPRAS"
+    description: "Language Key, PK"
+  - name: "Plant_Name"
+    description: "Plant Name"
+  - name: "MaterialText_MAKTX"
+    description: "Material Description"
+  - name: "BaseUnitOfMeasure_MEINS"
+    description: "Base Unit of Measure"
+  - name: "MaterialType_MTART"
+    description: "Material Type"
+  - name: "MaterialGroup_MATKL"
+    description: "Material Group"
+  - name: "ProductHierarchy_PRDHA"
+    description: "Product Hierarchy"
+  - name: "Plant_Region"
+    description: "Plant Region (State, Province, County)"
+  - name: "Plant_Country"
+    description: "Plant Country Key"
+  - name: "ValuatedUnrestrictedUseStock"
+    description: "Valuated Unrestricted Use Stock Quantity"

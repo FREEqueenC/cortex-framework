@@ -1,0 +1,196 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides the historical transactions and updates for purchasing documents from EKBE.
+  The data is captured at the granularity of Client (System), Purchasing Document, Item, Seq No Of Account
+  Assgt, Trans Event Type, Material Doc Year, Material Document, and Material Doc Item, ensuring a unique
+  audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purchasing_document_ebeln
+    description: Purchasing Document, PK
+  - name: item_ebelp
+    description: Item, PK
+  - name: seq_number_of_account_assignment_zekkn
+    description: Sequential Number of Account Assignment, PK
+  - name: transaction_event_type_vgabe
+    description: Transaction/Event Type, PK
+  - name: material_document_year_gjahr
+    description: Material Document Year, PK
+  - name: material_document_belnr
+    description: Material Document, PK
+  - name: material_document_item_buzei
+    description: Material Document.Item, PK
+  - name: po_history_category_bewtp
+    description: PO History Category
+  - name: movement_type_bwart
+    description: Movement Type
+  - name: posting_date_budat
+    description: Posting Date
+  - name: quantity_menge
+    description: Quantity
+  - name: quantity_in_opun_bpmng
+    description: Quantity in Order Price Unit
+  - name: amount_in_loc_cur_dmbtr
+    description: Amount in Local Currency
+  - name: amount_wrbtr
+    description: Amount
+  - name: currency_waers
+    description: Currency
+  - name: gr_ir_clearing_value_in_local_currency_arewr
+    description: Goods Receipt/Invoice Receipt Clearing Value in Local Currency
+  - name: gr_blck_stock_in_oun_wesbs
+    description: Goods Receipt Blocked Stock in Order Unit
+  - name: gr_blocked_stck_opun_bpwes
+    description: Goods Receipt Blocked Stock in Order Price Unit
+  - name: debit_credit_ind_shkzg
+    description: Debit/Credit Ind
+  - name: valuation_type_bwtar
+    description: Valuation Type
+  - name: delivery_completed_elikz
+    description: Delivery Completed
+  - name: reference_xblnr
+    description: Reference
+  - name: fisc_year_reference_document_lfgja
+    description: Fiscal Year Reference Document
+  - name: reference_document_lfbnr
+    description: Reference Document
+  - name: reference_document_item_lfpos
+    description: Reference Document Item
+  - name: reason_for_movement_grund
+    description: Reason for Movement
+  - name: entry_date_cpudt
+    description: Entry Date
+  - name: time_of_entry_cputm
+    description: Time of Entry
+  - name: invoice_value_reewr
+    description: Invoice Value
+  - name: compliance_with_shipping_instr_evere
+    description: Compliance with Shipping Instr
+  - name: invoice_value_in_fc_refwr
+    description: Invoice Value in Foreign Currency
+  - name: material_matnr
+    description: Material
+  - name: plant_werks
+    description: Plant
+  - name: revgr_despite_ir_xwsbr
+    description: Revgr Despite Invoice Receipt
+  - name: sequential_number_etens
+    description: Sequential Number
+  - name: document_condition_number_knumv
+    description: Document Condition Number
+  - name: tax_code_mwskz
+    description: Tax Code
+  - name: del_note_quantity_lsmng
+    description: Del Note Quantity
+  - name: delivery_note_unit_lsmeh
+    description: Delivery Note Unit
+  - name: material_ematn
+    description: Material
+  - name: gr_ir_clearing_value_in_fc_areww
+    description: Goods Receipt/Invoice Receipt Clearing Value in Foreign Currency
+  - name: local_currency_hswae
+    description: Local Currency
+  - name: quantity_bamng
+    description: Quantity
+  - name: batch_charg
+    description: Batch
+  - name: document_date_bldat
+    description: Document Date
+  - name: calcn_of_value_open_xwoff
+    description: Calcn of Value Open
+  - name: unplanned_account_assgmt_inv_verification_xunpl
+    description: 'Unplanned Account Assignment: Invoice Verification'
+  - name: created_by_ernam
+    description: Created by
+  - name: service_srvpos
+    description: Service
+  - name: package_number_packno
+    description: Package Number
+  - name: service_line_introw
+    description: Service Line
+  - name: seq_number_of_po_acc_assignment_bekkn
+    description: Sequential Number of PO Account Assignment
+  - name: srv_returns_indicator_lemin
+    description: Service Returns Indicator
+  - name: gr_ir_clearing_value_in_fc_arewb
+    description: Goods Receipt/Invoice Receipt Clearing Value in Foreign Currency
+  - name: fc_invoice_amount_rewrb
+    description: Foreign Currency Invoice Amount
+  - name: sap_release_saprl
+    description: Sap Release
+  - name: quantity_menge_pop
+    description: Quantity
+  - name: quantity_in_opun_bpmng_pop
+    description: Quantity in Order Price Unit
+  - name: amount_in_loc_cur_dmbtr_pop
+    description: Amount in Local Currency
+  - name: amount_wrbtr_pop
+    description: Amount
+  - name: value_gr_blocked_stock_in_oun_wesbb
+    description: Value Goods Receipt Blocked Stock in Order Unit
+  - name: valuated_gr_blocked_stock_in_opun_bpweb
+    description: Valuated Goods Receipt Blocked Stock in Order Price Unit
+  - name: origin_acceptance_weora
+    description: Origin Acceptance
+  - name: gr_ir_clearing_value_in_local_currency_arewr_pop
+    description: Goods Receipt/Invoice Receipt Clearing Value in Local Currency
+  - name: exch_rate_diff_amount_kudif
+    description: Exchange Rate Difference Amount
+  - name: retention_in_document_currency_retamt_fc
+    description: Retention in Document Currency
+  - name: retention_in_company_code_currency_retamt_lc
+    description: Retention in Company Code Currency
+  - name: posted_retention_in_document_currency_retamtp_fc
+    description: Posted Retention in Document Currency
+  - name: posted_security_retention_in_cc_currency_retamtp_lc
+    description: Posted Security Retention in Cc Currency
+  - name: multiple_account_assignment_xmacc
+    description: Multiple Account Assignment
+  - name: exchange_rate_wkurs
+    description: Exchange Rate
+  - name: origin_of_an_invoice_item_inv_item_origin
+    description: Origin of an Invoice Item
+  - name: delivery_vbeln_st
+    description: Delivery
+  - name: item_vbelp_st
+    description: Item
+  - name: stock_segment_sgt_scat
+    description: Stock Segment
+  - name: logical_system_logsy
+    description: Logical System
+  - name: slqupd_et_upd
+    description: Schedule Line Updated
+  - name: die_complete_flag_j_sc_die_comp_f
+    description: Die Complete Flag
+  - name: season_year_fsh_season_year
+    description: Season Year
+  - name: season_fsh_season
+    description: Season
+  - name: collection_fsh_collection
+    description: Collection
+  - name: theme_fsh_theme
+    description: Theme
+  - name: characteristic_value_1_wrf_charstc1
+    description: Characteristic Value 1
+  - name: characteristic_value_2_wrf_charstc2
+    description: Characteristic Value 2
+  - name: characteristic_value_3_wrf_charstc3
+    description: Characteristic Value 3
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

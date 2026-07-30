@@ -1,0 +1,173 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Treasury and Risk Management (TRM) module in
+  the Treasury domain and provides Treasury Financial Transaction Activities The data is captured at the
+  granularity of Client (System), Company Code, Financial Transaction, Activity Rfhazu, Entered On Dcrdat,
+  and Entry Time Tcrtim, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: transaction_rfha
+    description: Transaction, PK
+  - name: activity_rfhazu
+    description: Activity, PK
+  - name: entered_by_cruser
+    description: Entered by
+  - name: entered_on_dcrdat
+    description: Entered on, PK
+  - name: entry_time_tcrtim
+    description: Entry Time, PK
+  - name: last_changed_by_upuser
+    description: Last Changed by
+  - name: changed_on_dupdat
+    description: Changed on
+  - name: time_changed_tuptim
+    description: Time Changed
+  - name: product_type_sgsart
+    description: Product Type
+  - name: transaction_type_sfhaart
+    description: Transaction Type
+  - name: activity_category_sfgzustt
+    description: Activity Category
+  - name: transition_function_sfunktv
+    description: Transition Function
+  - name: last_function_sfunktl
+    description: Last Function
+  - name: previous_activity_rofhazu
+    description: Previous Activity
+  - name: supplemented_activ_rfhazux
+    description: Supplemented Activ
+  - name: active_status_saktiv
+    description: Active Status
+  - name: reason_for_reversal_sstogrd
+    description: Reason for Reversal
+  - name: trader_rdealer
+    description: Trader
+  - name: contract_date_dvtrab
+    description: Contract Date
+  - name: contract_concl_time_tvtrab
+    description: Contract.Concl.Time
+  - name: contact_person_gsppart
+    description: Contact Person
+  - name: file_number_xakt
+    description: File Number
+  - name: external_reference_nordext
+    description: External Reference
+  - name: term_start_dblfz
+    description: Term Start
+  - name: term_end_delfz
+    description: Term End
+  - name: fixing_date_dfix
+    description: Fixing Date
+  - name: fixing_reference_id_fixing_ref_id
+    description: Fixing Reference Id
+  - name: term_end_inclusive_sincle
+    description: Term End Inclusive
+  - name: activity_transition_dzstnd
+    description: Activity Transition
+  - name: interest_rollover_sznspro
+    description: Interest/Rollover
+  - name: defer_int_payment_date_dznsstd
+    description: Defer.Internalpmnt Date
+  - name: transaction_rate_kkurs
+    description: Transaction Rate
+  - name: spot_rate_kkassa
+    description: Spot Rate
+  - name: swap_rate_kswap
+    description: Swap Rate
+  - name: leading_currency_wlwaers
+    description: Leading Currency
+  - name: following_currency_wfwaers
+    description: Following Currency
+  - name: limit_type_limitart
+    description: Limit Type
+  - name: limit_date_limitdat
+    description: Limit Date
+  - name: direction_rkondgr
+    description: Direction
+  - name: reference_currency_liwaers
+    description: Reference Currency
+  - name: liquidity_effect_kwliqui
+    description: Liquidity Effect
+  - name: confirmation_status_sconfirm
+    description: Confirmation Status
+  - name: confirmation_date_dexdat
+    description: Confirmation Date
+  - name: user_uexnam
+    description: User
+  - name: counterconfirmation_sreconfirm
+    description: Counterconfirmation
+  - name: counterconfirm_date_dredat
+    description: Counterconfirm Date
+  - name: user_urenam
+    description: User
+  - name: order_date_dorder
+    description: Order Date
+  - name: reservation_date_danst
+    description: Reservation Date
+  - name: order_time_tanst
+    description: Order Time
+  - name: reservation_reason_sanst
+    description: Reservation Reason
+  - name: expenses_key_sspesen
+    description: Expenses Key
+  - name: limit_price_buprclim
+    description: Limit Price
+  - name: currency_unit_srunitlim
+    description: Currency Unit
+  - name: limit_price_bpprclim
+    description: Limit Price
+  - name: sale_6b_jverk6b
+    description: "Sale \xA76B"
+  - name: effect_interest_rate_peffzins
+    description: Effect.Interest Rate
+  - name: given_effective_ir_peffzins_given
+    description: Given Effective Invoice Receipt
+  - name: eff_ir_termination_peffzcall
+    description: Eff Invoice Receipt Termination
+  - name: effect_int_method_seffmeth
+    description: Effect Internal Method
+  - name: notice_date
+    description: Notice Date
+  - name: rounding_rule
+    description: Rounding Rule
+  - name: spot_rate_maturity_bpprc_spot2
+    description: Spot Rate Maturity
+  - name: spot_1_bpprc_spot1
+    description: Spot 1
+  - name: margin_rate_bpprc_marg
+    description: Margin Rate
+  - name: int_rate_cost_cryfwd_coc_rate
+    description: Internalrate Cost Cryfwd
+  - name: forward_date
+    description: Forward Date
+  - name: not_delivered_snotdelivered
+    description: Not Delivered
+  - name: yield_to_worst_peffz_worst
+    description: Yield to Worst
+  - name: yield_to_worst_end_date_peffz_worst_dt
+    description: Yield to Worst End Date
+  - name: time_zone_of_contract_date_and_time_zvtrab
+    description: Time Zone of Contract Date and Time
+  - name: upper_limit_amount_in_payment_currency_nom_up_limit
+    description: Upper Limit Amount in Payment Currency
+  - name: lower_limit_amount_in_payment_currency_nom_low_limit
+    description: Lower Limit Amount in Payment Currency
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

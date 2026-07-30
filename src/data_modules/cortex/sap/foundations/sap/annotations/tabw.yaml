@@ -1,0 +1,82 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Asset Transaction Types"
+fields:
+- name: "mandt"
+  description: "Client (Mandant), PK"
+- name: "bwasl"
+  description: "Asset Transaction Type, PK"
+- name: "bwagrp"
+  description: "Transaction Type Group"
+- name: "xverga"
+  description: "Transaction in Past Allowed"
+- name: "xaktiv"
+  description: "Capitalize Fixed Asset"
+- name: "xdeakt"
+  description: "Deactivate Fixed Asset"
+- name: "xabgmm"
+  description: "Gain/Loss From Asset Retirement"
+- name: "xerlos"
+  description: "Retirement with Revenue"
+- name: "xaverb"
+  description: "Transfer Between Affiliated Companies (Gross)"
+- name: "xabuch"
+  description: "Cannot Be Used Manually"
+- name: "bwakon"
+  description: "Consolidation Transaction Type"
+- name: "xprjkt"
+  description: "Account Assignment to Project"
+- name: "anshkz"
+  description: "Debit/Credit Indicator"
+- name: "bwaslg"
+  description: "Offsetting Transaction Type"
+- name: "blart"
+  description: "Document Type"
+- name: "xabinv"
+  description: "Repay Investment Support"
+- name: "bwasln"
+  description: "Acquisition in Same Year"
+- name: "gittgr"
+  description: "Asset History Sheet Group"
+- name: "xabgwg"
+  description: "Lva Retirement Simulation"
+- name: "xabimm"
+  description: "Retirement Intangibles Simulation"
+- name: "xusbwa"
+  description: "Individual Check Required"
+- name: "xumbhi"
+  description: "Adopt Depreciation Start Date for Transfer"
+- name: "xifrel"
+  description: "Post Gain/Loss to Asset"
+- name: "xcoobj"
+  description: "Budget-Relevant"
+- name: "xcopsp"
+  description: "Xcopsp"
+- name: "xaverbn"
+  description: "Post to Affiliated Company (Net)"
+- name: "xzugbr"
+  description: "Enter Gross Acquisition (Including Depreciation)"
+- name: "xumja"
+  description: "Set Changeover Year"
+- name: "rsn_code"
+  description: "Asset Transaction Category"
+- name: "xobs"
+  description: "Transaction Type Obsolete"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

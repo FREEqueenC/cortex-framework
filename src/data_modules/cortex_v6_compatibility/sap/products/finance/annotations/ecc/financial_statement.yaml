@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "The Financial Statement view presents a comprehensive analysis of a company's financial activities at various levels within the Financial Statement Version(FSV) hierarchy. It presents detailed information on the amounts associated with each node in the FSV hierarchy for specific fiscal years and periods. This view allows users to explore and analyze financial data at the granularity of Client (System), company code, fiscal year, fiscal period, chart of accounts, hierarchy name, business area, ledger, profit center, cost center, and FSV hierarchy node."
+fields:
+  - name: "Client"
+    description: "Client (Mandant), PK"
+  - name: "CompanyCode"
+    description: "Company Code, PK"
+  - name: "FiscalYear"
+    description: "Fiscal Year, PK"
+  - name: "FiscalPeriod"
+    description: "Fiscal Period, PK"
+  - name: "ChartOfAccounts"
+    description: "Chart Of Accounts, PK"
+  - name: "HierarchyName"
+    description: "Hierarchy Name, PK"
+  - name: "BusinessArea"
+    description: "Business Area, PK"
+  - name: "LedgerInGeneralLedgerAccounting"
+    description: "Ledger In General Ledger Accounting, PK"
+  - name: "ProfitCenter"
+    description: "Profit Center, PK"
+  - name: "CostCenter"
+    description: "Cost Center, PK"
+  - name: "Node"
+    description: "Hierarchy Node, PK"
+  - name: "Parent"
+    description: "Parent Node"
+  - name: "FiscalQuarter"
+    description: "Fiscal Quarter"
+  - name: "FinancialStatementItem"
+    description: "Financial Statement Item"
+  - name: "Level"
+    description: "Describes the level at which a particular node exists( Level 1 is root)"
+  - name: "IsLeafNode"
+    description: "Indicator: The last node in the FSV Hierarchy"
+  - name: "BalanceSheetAccountIndicator"
+    description: "Indicator: Account is a Balance Sheet Account?"
+  - name: "PLAccountIndicator"
+    description: "Indicator: Account is a P&L Statement Account?"
+  - name: "CompanyText"
+    description: "Name of Company"
+  - name: "CurrencyKey"
+    description: "Currency Key for the Company"
+  - name: "AmountInLocalCurrency"
+    description: "Amount In Local Currency"
+  - name: "CumulativeAmountInLocalCurrency"
+    description: "Aggregated amount till the given fiscal period in Local Currency"

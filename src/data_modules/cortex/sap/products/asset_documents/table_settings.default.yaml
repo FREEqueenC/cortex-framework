@@ -1,0 +1,122 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+ecc:
+  asset_transaction_types:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+  asset_document_headers:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+  asset_document_items:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+  asset_annual_cumulative_balances:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+s4:
+  asset_transaction_types:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+  asset_documents:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+    filters:
+      asset_account_types: ['A']
+  asset_annual_cumulative_balances:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+    filters:
+      acquisition_and_production_costs: ['07000', '07040']
+      ordinary_depreciation: ['07005', '07025', '07045', '07205']
+      special_depreciation: ['07006', '07026', '07046', '07206']
+      unplanned_depreciation: ['07007', '07027', '07047', '07207']
+  asset_accounting_statistical_line_items:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]
+  planned_depreciations_and_revaluations:
+    materializationType: incremental
+    bigQueryLabels:
+    - key: line_of_business
+      value: finance
+    - key: sap_module
+      value: sap_fi
+    - key: data_class
+      value: transactional
+    dataformTags: [sap, finance, sap_fi, source_aligned_product, transactional, 
+        daily]

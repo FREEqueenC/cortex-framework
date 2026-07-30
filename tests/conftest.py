@@ -19,6 +19,7 @@ import os
 import pathlib
 import shutil
 import subprocess
+from unittest import mock
 from unittest.mock import patch
 
 import pytest
@@ -42,14 +43,24 @@ def generated_workspace(tmp_path_factory):
     try:
         with (
             patch(
-                "data_modules.cortex.data_foundation.sap.metadata_provider.BigQueryMetadataProvider.get_schema_and_keys"
+                "data_modules.cortex.sap.foundations.sap.metadata_provider.BigQueryMetadataProvider.get_schema_and_keys"
             ) as mock_get_schema,
             patch(
-                "data_modules.cortex.data_foundation.sap.metadata_provider.BigQueryMetadataProvider.fetch"
+                "data_modules.cortex.sap.foundations.sap.metadata_provider.BigQueryMetadataProvider.fetch"
             ),
             patch("tools.build.GcpEnvironmentChecker") as mock_checker,
+            patch("common.services.telemetry.telemetry_logger.EventLogger"),
+            patch(
+                "common.services.external_module_provider.BigLakeDeltaSharingClient"
+            ) as mock_lakehouse,
+            patch("common.clients.bq.bigquery.BigQueryManager"),
+            patch("common.clients.resource_manager.ResourceManagerClient"),
+            patch("google.auth.default") as mock_google_auth,
         ):
+            mock_google_auth.return_value = (mock.Mock(), "dummy_project")
             mock_checker.return_value.validate_all.return_value = True
+            mock_lakehouse.return_value.list_schemas.return_value = [{"name": "dummy_schema"}]
+            mock_lakehouse.return_value.list_tables.return_value = [{"name": "dummy_table"}]
             # Provide dummy primary keys so the builder doesn't crash on empty tables
             mock_get_schema.return_value = (
                 ["mandt", "test_key"],
@@ -81,8 +92,8 @@ def generated_workspace(tmp_path_factory):
             logger.info("dataform not found in PATH. Falling back to npx -y @dataform/cli@latest.")
             df_cmd = ["npx", "-y", "@dataform/cli@latest", "compile", "--json", str(test_dist_dir)]
         else:
-            pytest.skip(
-                "Dataform CLI (and npx) not found in PATH. Skipping offline compilation tests."
+            pytest.fail(
+                "Dataform CLI (and npx) not found in PATH. Failed offline compilation tests."
             )
 
     try:
@@ -95,10 +106,40 @@ def generated_workspace(tmp_path_factory):
         with open(test_dist_dir / "manifest.json", "w") as f:
             f.write(result.stdout)
     except FileNotFoundError:
-        pytest.skip("Dataform CLI not found. Skipping offline compilation tests.")
+        pytest.fail("Dataform CLI not found. Failed offline compilation tests.")
     except subprocess.CalledProcessError as e:
-        if "npm" in e.stderr.lower() or "npm" in e.stdout.lower():
-            pytest.skip(f"Dataform CLI missing npm dependency. Skipping: {e.stderr}")
+        error_output = f"{e.stderr}\n{e.stdout}"
+        if "npm error 403" in error_output and "google-artifactregistry-auth" not in error_output:
+            logger.warning(
+                "NPM 403 Forbidden error detected. "
+                "Attempting to refresh Google Artifact Registry auth..."
+            )
+            try:
+                subprocess.run(
+                    [
+                        "npx",
+                        "--yes",
+                        "--registry=https://registry.npmjs.org/",
+                        "google-artifactregistry-auth",
+                    ],
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                )
+                logger.info("Auth refreshed successfully. Retrying compilation...")
+                result = subprocess.run(
+                    df_cmd,
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                )
+                with open(test_dist_dir / "manifest.json", "w") as f:
+                    f.write(result.stdout)
+            except subprocess.CalledProcessError as retry_e:
+                pytest.fail(
+                    "Dataform compile failed globally after refreshing auth: "
+                    f"{retry_e.stderr}\n{retry_e.stdout}"
+                )
         else:
             pytest.fail(f"Dataform compile failed globally: {e.stderr}\n{e.stdout}")
 
@@ -108,19 +149,6 @@ def generated_workspace(tmp_path_factory):
     logger.info("Cleaning up global test workspace at %s", test_dist_dir)
     if test_dist_dir.exists():
         shutil.rmtree(test_dist_dir)
-
-    # Clean up local npx cache to avoid leaving vulnerable packages on disk
-    npx_cache_dir = pathlib.Path.home() / ".npm" / "_npx"
-    if npx_cache_dir.exists():
-        logger.info("Cleaning up npx cache at %s", npx_cache_dir)
-        try:
-            for child in npx_cache_dir.iterdir():
-                if child.is_dir():
-                    shutil.rmtree(child)
-                else:
-                    child.unlink()
-        except Exception as e:
-            logger.warning("Failed to clean up npx cache: %s", e)
 
 
 @pytest.fixture(scope="session")
@@ -200,3 +228,14 @@ def zetasql_validator() -> ZetaSqlValidator:
 def repo_root(request) -> pathlib.Path:
     """Returns the root of the repository using pytest's native rootdir discovery."""
     return pathlib.Path(request.config.rootdir)
+
+
+@pytest.fixture(autouse=True)
+def mock_telemetry_logger(request):
+    """Automatically mock the EventLogger for all tests to prevent real HTTP calls."""
+    if "test_telemetry_logger" in request.node.nodeid:
+        yield
+        return
+
+    with patch("common.services.telemetry.telemetry_logger.EventLogger") as mock_logger:
+        yield mock_logger

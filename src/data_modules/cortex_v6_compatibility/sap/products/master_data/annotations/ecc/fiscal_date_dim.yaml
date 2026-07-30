@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view maps calendar dates to fiscal periods and provides all information required for defining and managing fiscal year periods. The granularity of this table is at Client(System), Fiscal Year Variant (periv), and date."
+fields:
+  - name: "mandt"
+    description: "Client (Mandant), PK"
+  - name: "periv"
+    description: "Fiscal Year Variant, PK"
+  - name: "Date"
+    description: "Date in Date type, PK"
+  - name: "DateInt"
+    description: "Date in INT64 type"
+  - name: "DateStr"
+    description: "Date in String type"
+  - name: "FiscalPeriod"
+    description: "Fiscal Period(e.g.,'001')"
+  - name: "FiscalYear"
+    description: "Fiscal Year(e.g.,'2024')"
+  - name: "FiscalYearPeriod"
+    description: "Fiscal Year Period(e.g.,'2024001')"
+  - name: "FiscalYearFirstDay"
+    description: "First day of fiscal year(e.g.,'2024-04-01')"
+  - name: "FiscalYearLastDay"
+    description: "Last day of fiscal year(e.g.,'2025-03-31')"
+  - name: "FiscalSemester"
+    description: "Fiscal Semester in INT64 type(e.g.,'1')"
+  - name: "FiscalSemesterStr"
+    description: "Fiscal Semester in String type(e.g.,'01')"
+  - name: "FiscalSemesterStr2"
+    description: "Fiscal Semester in String type(e.g.,'1st Semester')"
+  - name: "FiscalQuarter"
+    description: "Fiscal Quarter in INT64 type(e.g.,'1')"
+  - name: "FiscalQuarterStr"
+    description: "Fiscal Quarter in String type(e.g.,'01')"
+  - name: "FiscalQuarterStr2"
+    description: "Fiscal Quarter in String type(e.g.,'Q1')"
+  - name: "FiscalWeek"
+    description: "Fiscal Week in INT64 type(e.g.,'1')"
+  - name: "FiscalWeekStr"
+    description: "Fiscal Week in String type(e.g.,'01')"
+  - name: "WeekStartDate"
+    description: "Start date of fiscal week(e.g.,'2024-04-28')"
+  - name: "WeekEndDate"
+    description: "End date of fiscal week(e.g.,'2024-05-04')"
+  - name: "DayNameLong"
+    description: "Day of the fiscal week(e.g.,'Saturday')"
+  - name: "DayNameShort"
+    description: "Day of the fiscal week(e.g.,'Sat')"

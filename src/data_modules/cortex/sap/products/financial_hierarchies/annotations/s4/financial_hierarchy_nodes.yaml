@@ -1,0 +1,53 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI), Controlling (CO)
+  module in the Finance domain and provides Nodes of the financial hierarchies. Joined view of `hrrp_node`
+  and `hrrp_nodet`. The data is captured at the granularity of system default keys, ensuring a unique
+  audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: hierarchy_id_hryid
+    description: Hierarchy Id, PK
+  - name: hierarchy_version_hryver
+    description: Hierarchy Version, PK
+  - name: node_class_nodecls
+    description: Node Class, PK
+  - name: hierarchy_node_hrynode
+    description: Hierarchy Node, PK
+  - name: parent_node_parnode
+    description: Hierarchy Parent Node, PK
+  - name: valid_to_hryvalto
+    description: Valid to, PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: valid_from_hryvalfrom
+    description: Valid From
+  - name: balance_indicator_balind
+    description: Balance Indicator
+  - name: node_type_nodetype
+    description: Hierarchy Node Type
+  - name: node_value_nodevalue
+    description: Node Value
+  - name: sequence_number_hryseqnbr
+    description: Hierarchy Sequence Number
+  - name: hierarchy_level_hrylevel
+    description: Hierarchy Level
+  - name: node_text_nodetxt
+    description: Node Description
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

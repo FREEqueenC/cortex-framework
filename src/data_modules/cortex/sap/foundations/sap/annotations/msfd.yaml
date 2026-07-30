@@ -1,0 +1,70 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Sales Order Stock with Vendor"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "matnr"
+  description: "Material"
+- name: "werks"
+  description: "Plant"
+- name: "charg"
+  description: "Batch"
+- name: "sobkz"
+  description: "Special Stock"
+- name: "lifnr"
+  description: "Vendor"
+- name: "vbeln"
+  description: "Sales Document"
+- name: "posnr"
+  description: "Item (Sd)"
+- name: "lfgja"
+  description: "Year Current Period"
+- name: "lfmon"
+  description: "Current Period"
+- name: "fdspr"
+  description: "Phys Invoice Block"
+- name: "fdlab"
+  description: "Unrestricted"
+- name: "fdins"
+  description: "In Quality Insp"
+- name: "fdvla"
+  description: "Unrestr.-Use Stock"
+- name: "fdvin"
+  description: "In Quality Insp"
+- name: "fdill"
+  description: "Warehouse Stock Cy"
+- name: "fdilq"
+  description: "Qual Insp Stock Cy"
+- name: "fdvll"
+  description: "Warehouse Stock Py"
+- name: "fdvlq"
+  description: "Qualinspstock Prv.Pd"
+- name: "fdfll"
+  description: "Warehouse Stock Fy"
+- name: "fdflq"
+  description: "Qualinspectstock Fy"
+- name: "fddll"
+  description: "Date of Last Count"
+- name: "fdein"
+  description: "Restricted-Use Stock"
+- name: "fdvei"
+  description: "Restricted-Use Stock"
+- name: "ersda"
+  description: "Created on"
+- name: "fdjin"
+  description: "Fdjin"
+- name: "fdrue"
+  description: "Fdrue"

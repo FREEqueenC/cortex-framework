@@ -1,0 +1,74 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Ccs: Detailed Statement for Settlement"
+fields:
+- name: "mandt"
+  description: "Client"
+- name: "num"
+  description: "Condition Contract"
+- name: "wbeln"
+  description: "Document"
+- name: "posnr"
+  description: "Document Item"
+- name: "doc_type"
+  description: "Document Type Business Volume"
+- name: "doc_id"
+  description: "Document Id Business Volume"
+- name: "doc_id2"
+  description: "Document Id Business Volume 2"
+- name: "doc_id3"
+  description: "Document Id Business Volume 3"
+- name: "doc_item"
+  description: "Document Item Business Volume"
+- name: "bv_date"
+  description: "Date for Settlement"
+- name: "menge"
+  description: "Quantity"
+- name: "meina"
+  description: "Unit of Measure"
+- name: "waers"
+  description: "Currency"
+- name: "ntgew"
+  description: "Net Weight"
+- name: "brgew"
+  description: "Gross Weight"
+- name: "gewei"
+  description: "Weight Unit"
+- name: "volum"
+  description: "Volume"
+- name: "voleh"
+  description: "Volume Unit"
+- name: "anzpu"
+  description: "Points"
+- name: "punei"
+  description: "Points Unit"
+- name: "settl_doc_type"
+  description: "Settlement Document Type"
+- name: "busvol_1"
+  description: "Business Volume 1"
+- name: "busvol_2"
+  description: "Business Volume 2"
+- name: "busvol_3"
+  description: "Business Volume 3"
+- name: "busvol_4"
+  description: "Business Volume 4"
+- name: "dummy1"
+  description: "Dummy Function in Length 1"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

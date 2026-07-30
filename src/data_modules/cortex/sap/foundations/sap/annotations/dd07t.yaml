@@ -1,0 +1,40 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Dd: Texts for Domain Fixed Values (Language-Dependent)"
+fields:
+- name: "domname"
+  description: "Domain Name"
+- name: "ddlanguage"
+  description: "Lang"
+- name: "as4local"
+  description: "Activation Status"
+- name: "valpos"
+  description: "Value Key"
+- name: "as4vers"
+  description: "Version"
+- name: "ddtext"
+  description: "Short Description"
+- name: "domval_ld"
+  description: "Lower Limit"
+- name: "domval_hd"
+  description: "Upper Limit"
+- name: "domvalue_l"
+  description: "Dom Lower Value"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

@@ -1,0 +1,52 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Material Groups"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "matkl"
+  description: "Material Group"
+- name: "spart"
+  description: "Division"
+- name: "lref3"
+  description: "Logist.Reference"
+- name: "wwgda"
+  description: "Mg Reference Material"
+- name: "wwgpa"
+  description: "Mg Material"
+- name: "abtnr"
+  description: "Department"
+- name: "begru"
+  description: "Authorization Group"
+- name: "gewei"
+  description: "Default Unit of Wt"
+- name: "j_1bnbm"
+  description: "Ncm Code"
+- name: "bklas"
+  description: "Valuation Class"
+- name: "ekwsl"
+  description: "Purchasing Value Key"
+- name: "anlkl"
+  description: "Asset Class"
+- name: "def_schdsc"
+  description: "Scenario"
+- name: "price_group"
+  description: "Price Level Group"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

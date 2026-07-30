@@ -1,0 +1,68 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Supplier Spend Analysis reporting view providing instant visibility into supplier spend position across materials, vendors, and purchasing organizations to maximize procurement value.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purchasing_document_number_ebeln
+    description: Purchasing Document Number, PK
+  - name: item_number_of_purchasing_document_ebelp
+    description: Purchasing Document Item Number, PK
+  - name: vendor_account_number_lifnr
+    description: Vendor Account Number
+  - name: vendor_name_name1
+    description: Vendor Name
+  - name: country_key_land1
+    description: Country Key
+  - name: material_number_matnr
+    description: Material Number
+  - name: material_text_maktx
+    description: Material Description
+  - name: material_type_mtart
+    description: Material Type
+  - name: material_group_matkl
+    description: Material Group
+  - name: purchasing_organization_ekorg
+    description: Purchasing Organization
+  - name: purchasing_organization_text_ekotx
+    description: Purchasing Organization Description
+  - name: purchasing_document_date_bedat
+    description: Purchasing Document Date
+  - name: purchasing_document_quantity_menge
+    description: Purchasing Document Order Quantity
+  - name: purchasing_document_net_value_in_document_currency_netwr
+    description: Net Order Value in Purchasing Currency
+  - name: purchasing_document_gross_value_in_document_currency_brtwr
+    description: Gross Order Value in Purchasing Currency
+  - name: spend_in_document_currency
+    description: Spend Amount in Purchasing Document Currency
+  - name: active_vendor_indicator
+    description: Active Vendor Indicator
+  - name: delivery_completed_flag_elikz
+    description: Delivery Completed Indicator
+  - name: open_purchasing_document_net_amount
+    description: Open Purchasing Document Net Amount
+  - name: is_overdue
+    description: Overdue Purchasing Document Indicator
+  - name: average_spend_per_unit
+    description: Average Spend Per Unit
+  - name: gross_net_variance
+    description: Gross Net Variance
+  - name: line_item_count
+    description: Line Item Count
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

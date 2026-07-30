@@ -1,0 +1,68 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Units of Measurement"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "msehi"
+  description: "Internal Measure Unit"
+- name: "kzex3"
+  description: "3-Characteristic External Unit"
+- name: "kzex6"
+  description: "6-Characteristic.External Unit"
+- name: "andec"
+  description: "Decimal Rounding"
+- name: "kzkeh"
+  description: "Commercial Measure.Unit"
+- name: "kzwob"
+  description: "Value-Based Commt"
+- name: "kz1eh"
+  description: "(1) Unit"
+- name: "kz2eh"
+  description: "(2) Unit"
+- name: "dimid"
+  description: "Dimension"
+- name: "zaehl"
+  description: "Numerator"
+- name: "nennr"
+  description: "Denominator"
+- name: "exp10"
+  description: "Exponent"
+- name: "addko"
+  description: "Additive Constant"
+- name: "expon"
+  description: "Exp 10 Floating Pt"
+- name: "decan"
+  description: "Decimal Places"
+- name: "isocode"
+  description: "Iso Code"
+- name: "primary"
+  description: "Primary Code"
+- name: "temp_value"
+  description: "Temperature"
+- name: "temp_unit"
+  description: "Temperature Unit"
+- name: "famunit"
+  description: "Unit of Measure.Family"
+- name: "press_val"
+  description: "Pressure Value"
+- name: "press_unit"
+  description: "Unit of Pressure"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

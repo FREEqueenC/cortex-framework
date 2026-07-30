@@ -1,0 +1,52 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Material Valuation: History"
+fields:
+- name: "mandt"
+  description: "Client (Mandant)"
+- name: "matnr"
+  description: "Material"
+- name: "bwkey"
+  description: "Valuation Area"
+- name: "bwtar"
+  description: "Valuation Type"
+- name: "lfgja"
+  description: "Year Current Period"
+- name: "lfmon"
+  description: "Current Period"
+- name: "lbkum"
+  description: "Total Stock"
+- name: "salk3"
+  description: "Total Value"
+- name: "vprsv"
+  description: "Price Control"
+- name: "verpr"
+  description: "Moving Price"
+- name: "stprs"
+  description: "Standard Price"
+- name: "peinh"
+  description: "Price Unit"
+- name: "bklas"
+  description: "Valuation Class"
+- name: "salkv"
+  description: "Value/Mov Av Price"
+- name: "vksal"
+  description: "Total Value At Sp"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

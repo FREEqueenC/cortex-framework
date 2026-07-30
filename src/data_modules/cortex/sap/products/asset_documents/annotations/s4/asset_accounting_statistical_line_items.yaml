@@ -1,0 +1,107 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI) module in the Finance
+  domain and provides Asset Accounting Statistical Line Items (S/4HANA) - Captures statistical line items
+  for asset postings from the SAP S/4HANA FAAT_DOC_IT table, including asset number, depreciation area,
+  transaction type, posted amounts in company code and global currencies, and document metadata, enriched
+  with calendar date dimensions. The data is captured at the granularity of system default keys, ensuring
+  a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset Number, PK
+  - name: asset_subnumber_anln2
+    description: Asset Subnumber, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: reference_procedure_awtyp
+    description: Reference Procedure, PK
+  - name: reference_document_awref
+    description: Reference Document Number, PK
+  - name: reference_org_unit_aworg
+    description: Reference Organizational Unit, PK
+  - name: logical_system_source_awsys
+    description: Logical System of Source Document, PK
+  - name: sub_transaction_subta
+    description: Sub Transaction, PK
+  - name: depreciation_area_afabe
+    description: Depreciation Area, PK
+  - name: sla_line_item_type_slalittype
+    description: Subledger Accounting Line Item Type, PK
+  - name: debit_credit_indicator_drcrk
+    description: Debit/Credit Indicator, PK
+  - name: reference_document_line_item_awitem
+    description: Reference Document Line Item
+  - name: ledger_group_ldgrp
+    description: Ledger Group
+  - name: gl_transaction_type_vorgn
+    description: Transaction Type for Gl
+  - name: posting_date_budat
+    description: Posting Date in the Document
+  - name: asset_value_date_bzdat
+    description: Asset Value Date
+  - name: posting_period_poper
+    description: Posting Period
+  - name: transaction_type_bwasl
+    description: Asset Transaction Type
+  - name: transaction_type_category_movcat
+    description: Transaction Type Category
+  - name: amount_posted_in_company_code_currency_hsl
+    description: Amount Posted in Company Code Currency
+  - name: amount_posted_in_global_currency_ksl
+    description: Amount Posted in Global Currency
+  - name: company_code_currency_rhcur
+    description: Company Code Currency Key
+  - name: global_currency_rkcur
+    description: Global Currency Key
+  - name: document_date_bldat
+    description: Document Date in Document
+  - name: entry_date_cpudt
+    description: Day on Which Accounting Document Was Entered
+  - name: entry_time_cputm
+    description: Time of Entry
+  - name: user_name_usnam
+    description: User Name
+  - name: transaction_code_tcode
+    description: Transaction Code
+  - name: text_sgtxt
+    description: Item Text
+  - name: reference_document_number_xblnr
+    description: Reference Document Number
+  - name: assignment_number_zuonr
+    description: Assignment Number
+  - name: year_of_document_date_bldat
+    description: Calendar Year of Document Date
+  - name: month_of_document_date_bldat
+    description: Calendar Month of Document Date
+  - name: quarter_of_document_date_bldat
+    description: Calendar Quarter of Document Date
+  - name: week_of_document_date_bldat
+    description: Calendar Week of Document Date
+  - name: year_of_posting_date_budat
+    description: Calendar Year of Posting Date
+  - name: month_of_posting_date_budat
+    description: Calendar Month of Posting Date
+  - name: quarter_of_posting_date_budat
+    description: Calendar Quarter of Posting Date
+  - name: week_of_posting_date_budat
+    description: Calendar Week of Posting Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

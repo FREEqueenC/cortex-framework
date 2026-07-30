@@ -1,0 +1,42 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: SAP Fixed Assets
+description: This data product includes information about SAP fixed assets from the
+  Financial Accounting (FI) module in the Finance domain in SAP S/4HANA or SAP ECC.
+  It unifies asset master records, hierarchical assignments, and lifecycle details
+  across the enterprise. It supports compliance auditing, CAPEX (Capital Expenditure)
+  tracking, and strategic asset depreciation modeling.
+category: source_aligned_product
+type: fixed_assets
+dependencies:
+  sapModule:
+    supportedVersions:
+    - ecc
+    - s4
+    tables:
+      common:
+      - anla
+      - anlh
+      - ankt
+      - anlb
+      - t093b
+      - t093t
+      - t090nat
+      - t093c
+      - anlz
+      - t095t
+      - t098t
+    modulePath: cortex.sap.foundations.sap
+builder: sap_product

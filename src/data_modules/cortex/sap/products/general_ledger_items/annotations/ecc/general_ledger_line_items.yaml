@@ -1,0 +1,125 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides General Ledger Actual Line Items The data is captured at the granularity of Client
+  (System), Ledger, Company Code, Fiscal Year, Document Number, and Line Item, ensuring a unique audit
+  trail for every record.
+fields:
+  - name: client_rclnt
+    description: Client, PK
+  - name: fiscal_year_ryear
+    description: Fiscal Year, PK
+  - name: document_number_docnr
+    description: Document Number, PK
+  - name: ledger_rldnr
+    description: Ledger, PK
+  - name: company_code_rbukrs
+    description: Company Code, PK
+  - name: line_item_docln
+    description: Line Item, PK
+  - name: transaction_activ
+    description: Transaction
+  - name: transaction_type_rmvct
+    description: Transaction Type
+  - name: transaction_currency_rtcur
+    description: Transaction Currency
+  - name: base_unit_of_measure_runit
+    description: Base Unit of Measure
+  - name: reference_procedure_awtyp
+    description: Reference Procedure
+  - name: record_type_rrcty
+    description: Record Type
+  - name: version_rvers
+    description: Version
+  - name: logical_system_logsys
+    description: Logical System
+  - name: account_number_racct
+    description: Account Number
+  - name: cost_element_cost_elem
+    description: Cost Element
+  - name: cost_center_rcntr
+    description: Cost Center
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: functional_area_rfarea
+    description: Functional Area
+  - name: business_area_rbusa
+    description: Business Area
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: segment_segment
+    description: Segment
+  - name: sender_cost_center_scntr
+    description: Sender Cost Center
+  - name: partner_profit_ctr_pprctr
+    description: Partner Profit Center
+  - name: partner_func_area_sfarea
+    description: Partner Functional Area
+  - name: trading_part_ba_sbusa
+    description: Trading Partner Business Area
+  - name: trading_partner_rassc
+    description: Trading Partner
+  - name: partner_segment_psegment
+    description: Partner Segment
+  - name: amount_in_transaction_currency_tsl
+    description: Amount in Transaction Currency
+  - name: amount_in_local_currency_hsl
+    description: Amount in Local Currency
+  - name: amount_in_group_currency_ksl
+    description: Amount in Group Currency
+  - name: amount_in_another_currency_osl
+    description: Amount in Another Currency
+  - name: quantity_msl
+    description: Quantity
+  - name: amount_in_original_transaction_currency_wsl
+    description: Amount in Original Transaction Currency
+  - name: debit_credit_indicator_drcrk
+    description: Debit/Credit Indicator
+  - name: posting_period_poper
+    description: Posting Period
+  - name: original_transaction_currency_rwcur
+    description: Original Transaction Currency
+  - name: fiscal_year_gjahr
+    description: Fiscal Year
+  - name: posting_date_budat
+    description: Posting Date
+  - name: document_number_belnr
+    description: Document Number
+  - name: line_item_buzei
+    description: Line Item
+  - name: posting_key_bschl
+    description: Posting Key
+  - name: document_status_bstat
+    description: Document Status
+  - name: item_category_linetype
+    description: Item Category
+  - name: changed_document_splitting_xsplitmod
+    description: Changed (Document Splitting)
+  - name: user_name_usnam
+    description: User Name
+  - name: timestamp_timestamp
+    description: Time Stamp
+  - name: year_of_posting_date_budat
+    description: Year of Posting Date
+  - name: month_of_posting_date_budat
+    description: Month of Posting Date
+  - name: quarter_of_posting_date_budat
+    description: Quarter of Posting Date
+  - name: week_of_posting_date_budat
+    description: Week of Posting Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

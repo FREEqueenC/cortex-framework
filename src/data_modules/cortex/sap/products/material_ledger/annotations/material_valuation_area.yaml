@@ -1,0 +1,67 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Lists valuation area configurations (from T001K, T001W, T001), including the company code
+  name, plant name, and indicating if Material Ledger is active.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: valuation_area_bwkey
+    description: Valuation Area, PK
+  - name: plant_name_name1
+    description: Plant Name
+  - name: company_code_bukrs
+    description: Company Code
+  - name: company_text_butxt
+    description: Company Code Name
+  - name: valuation_grouping_code_bwmod
+    description: Valuation Grouping Code
+  - name: negative_stocks_allowed_xbkng
+    description: Negative Stocks Allowed in Valuation Area
+  - name: material_ledger_active_mlbwa
+    description: Material Ledger Active
+  - name: material_ledger_active_compulsory_mlbwv
+    description: Material Ledger Active (Compulsory)
+  - name: sales_price_valuation_xvkbw
+    description: Sales Price Valuation
+  - name: explanation_facility_for_material_ledger_active_erklaerkom
+    description: Explanation Facility for Material Ledger Active
+  - name: retail_revaluation_profile_uprof
+    description: Retail Revaluation Profile
+  - name: value_based_inventory_management_profile_wbpro
+    description: Value Based Inventory Management Profile
+  - name: material_price_determination_control_mlast
+    description: 'Material Price Determination: Control'
+  - name: price_determination_is_binding_in_valuation_area_mlasv
+    description: Price Determination Is Binding in Valuation Area
+  - name: stock_correction_tolerance_bdifp
+    description: Stock Correction Tolerance
+  - name: price_difference_posting_in_goods_receipt_for_subcontract_order_xlbpd
+    description: Price Differences At Goods Receipt for Subcontracts
+  - name: post_purchase_account_with_receipt_value_xewrx
+    description: Post Purchase Account with Receipt Value
+  - name: two_fi_documents_with_purchase_account_x2fdo
+    description: Two FI Documents for Goods Transfer Between Plants
+  - name: price_release_prsfr
+    description: Price Release
+  - name: actual_cost_component_split_active_mlccs
+    description: Actual Cost Component Split Active
+  - name: delivery_costs_to_price_difference_account_xefre
+    description: Delivery Costs to Price Difference Account
+  - name: start_of_validity_period_for_delivery_costs_in_price_difference_account_efrej
+    description: Start of Validity Period for Delivery Costs in Price Difference Account
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

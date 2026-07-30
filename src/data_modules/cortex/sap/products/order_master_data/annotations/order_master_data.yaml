@@ -1,0 +1,245 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Production Planning (PP), Controlling (CO) module
+  in the Manufacturing, Finance domain and provides Enriched master records for all SAP system orders
+  The data is captured at the granularity of Client (System) and Order Number, ensuring a unique audit
+  trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: order_number_aufnr
+    description: Order Number, PK
+  - name: order_type_auart
+    description: Order Type
+  - name: order_category_autyp
+    description: Order Category
+  - name: reference_order_refnr
+    description: Reference Order
+  - name: entered_by_ernam
+    description: Entered by
+  - name: created_on_erdat
+    description: Created on
+  - name: year_of_created_on_erdat
+    description: Year of Creation Date
+  - name: month_of_created_on_erdat
+    description: Month of Creation Date
+  - name: quarter_of_created_on_erdat
+    description: Quarter of Creation Date
+  - name: week_of_created_on_erdat
+    description: Week of Creation Date
+  - name: last_changed_by_aenam
+    description: Last Changed by
+  - name: change_date_aedat
+    description: Change Date for Order Master
+  - name: description_ktext
+    description: Description
+  - name: long_text_exists_ltext
+    description: Long Text Exists
+  - name: company_code_bukrs
+    description: Company Code
+  - name: plant_werks
+    description: Plant
+  - name: business_area_gsber
+    description: Business Area
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: cost_collector_key_cckey
+    description: Cost Collector Key
+  - name: responsible_cost_center_kostv
+    description: Responsible Cost Center
+  - name: location_plant_stort
+    description: Location Plant
+  - name: location_plant_sowrk
+    description: Location Plant Details
+  - name: statistical_order_astkz
+    description: Statistical Indicator
+  - name: currency_key_waers
+    description: Currency Key
+  - name: order_status_astnr
+    description: Order Status
+  - name: status_change_stdat
+    description: Status Change Date
+  - name: reached_status_estnr
+    description: Reached Status
+  - name: created_phas0
+    description: Created Phase Indicator
+  - name: released_phas1
+    description: Released Phase Indicator
+  - name: completed_phas2
+    description: Completed Phase Indicator
+  - name: closed_phas3
+    description: Closed Phase Indicator
+  - name: planned_release_pdat1
+    description: Planned Release Date
+  - name: planned_completion_pdat2
+    description: Planned Completion Date
+  - name: planned_closing_date_pdat3
+    description: Planned Closing Date
+  - name: release_date_idat1
+    description: Actual Release Date
+  - name: technical_completion_idat2
+    description: Technical Completion Date
+  - name: close_idat3
+    description: Actual Closing Date
+  - name: object_id_objid
+    description: Object Id
+  - name: disallowed_trans_grp_vogrp
+    description: Disallowed Transaction Group
+  - name: deletion_flag_loekz
+    description: Deletion Flag
+  - name: plan_line_items_plgkz
+    description: Plan Line Items Indicator
+  - name: usage_kvewe
+    description: Usage Key
+  - name: application_kappl
+    description: Application Key
+  - name: costing_sheet_kalsm
+    description: Costing Sheet
+  - name: overhead_key_zschl
+    description: Overhead Key
+  - name: processing_group_abkrs
+    description: Processing Group
+  - name: settlement_cost_elem_kstar
+    description: Settlement Cost Element
+  - name: cost_center_kostl
+    description: Cost Center
+  - name: gl_account_saknr
+    description: General Ledger Account
+  - name: allocation_set_setnm
+    description: Allocation Set
+  - name: cost_center_true_postings_cycle
+    description: Cost Center True Postings Cycle
+  - name: start_date_sdate
+    description: Start Date
+  - name: sequence_number_seqnr
+    description: Sequence Number
+  - name: applicant_user0
+    description: Applicant Name
+  - name: telephone_user1
+    description: Telephone Number
+  - name: person_responsible_user2
+    description: Person Responsible
+  - name: telephone_user3
+    description: Secondary Telephone Number
+  - name: estimated_costs_user4
+    description: Estimated Costs
+  - name: application_date_user5
+    description: Application Date
+  - name: department_user6
+    description: Department Name
+  - name: work_start_user7
+    description: Work Start Date
+  - name: end_of_work_user8
+    description: End of Work Date
+  - name: work_approval_user9
+    description: Work Approval Indicator
+  - name: object_number_objnr
+    description: Object Number
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: wbs_element_pspel
+    description: WBS Element
+  - name: variance_key_awsls
+    description: Variance Key
+  - name: results_analysis_key_abgsl
+    description: Results Analysis Key
+  - name: tax_jurisdiction_txjcd
+    description: Tax Jurisdiction
+  - name: functional_area_func_area
+    description: Functional Area
+  - name: object_class_scope
+    description: Object Class
+  - name: integrated_planning_plint
+    description: Integrated Planning Indicator
+  - name: sales_order_kdauf
+    description: Sales Order
+  - name: sales_order_item_kdpos
+    description: Sales Order Item
+  - name: external_order_no_aufex
+    description: External Order Number
+  - name: investment_profile_ivpro
+    description: Investment Profile
+  - name: logical_system_logsystem
+    description: Logical System
+  - name: multiple_items_flg_mltps
+    description: Multiple Items Indicator
+  - name: requesting_co_code_abukr
+    description: Requesting Company Code
+  - name: request_cost_center_akstl
+    description: Requesting Cost Center
+  - name: scale_sizecl
+    description: Scale Size Class
+  - name: investment_reason_izwek
+    description: Investment Reason
+  - name: envir_investment_umwkz
+    description: Environmental Investment Reason
+  - name: cost_collector_kstempf
+    description: Cost Collector
+  - name: interest_profile_zschm
+    description: Interest Profile
+  - name: cost_collector_pkosa
+    description: Cost Collector Product Key
+  - name: requesting_order_anfaufnr
+    description: Requesting Order Number
+  - name: production_process_no_procnr
+    description: Production Process Number
+  - name: process_category_proty
+    description: Process Category
+  - name: refurbishment_order_rsord
+    description: Refurbishment Order Indicator
+  - name: accounting_indicator_bemot
+    description: Accounting Indicator
+  - name: address_number_adrnra
+    description: Address Number
+  - name: time_created_erfzeit
+    description: Time Created
+  - name: changed_at_aezeit
+    description: Changed At Time
+  - name: costing_variant_cstg_vrnt
+    description: Costing Variant
+  - name: cost_estimate_number_costestnr
+    description: Cost Estimate Number
+  - name: person_responsible_veraa_user
+    description: Person Responsible User Id
+  - name: joint_venture_vname
+    description: Joint Venture Name
+  - name: recovery_indicator_recid
+    description: Recovery Indicator
+  - name: equity_type_etype
+    description: Equity Type
+  - name: joint_venture_object_type_otype
+    description: Joint Venture Object Type
+  - name: jib_jibe_class_jv_jibcl
+    description: Jib/Jibe Class
+  - name: jib_jibe_subclass_a_jv_jibsa
+    description: Jib/Jibe Subclass a
+  - name: orig_cost_object_jv_oco
+    description: Original Cost Object
+  - name: main_work_center_vaplz
+    description: Main Work Center
+  - name: plant_for_workcenter_wawrk
+    description: Plant for Work Center
+  - name: regulatory_indicator_ferc_ind
+    description: Regulatory Indicator
+  - name: claim_creation_control_indicator_claim_control
+    description: Claim Creation Control Indicator
+  - name: claim_inconsistent_with_order_update_needed
+    description: Claim Inconsistent with Order
+  - name: claim_update_trigger_update_control
+    description: Claim Update Trigger
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

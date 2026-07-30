@@ -1,0 +1,332 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides SAP fixed asset master data from ANLA, ANLH, and ANKT, combining core asset details,
+  main asset numbers, and class descriptions to enable lifecycle and ownership reporting. The data is
+  captured at the granularity of Client (System), Company Code, Asset Number, Asset Subnumber, and Language
+  Key, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset, PK
+  - name: asset_subnumber_anln2
+    description: Sub-Number, PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: last_sno_assigned_luntn
+    description: Last Sno.Assigned
+  - name: last_line_item_no__lanep
+    description: Last Line Item Number
+  - name: change_type_of_asset_main_number_anupd
+    description: Change Type
+  - name: first_sub_no_assignd_funtn
+    description: First Sub-Numberassignd
+  - name: asset_main_no_text_anlhtxt
+    description: Asset Main Number Text
+  - name: asset_class_anlkl
+    description: Asset Class
+  - name: short_text_txk20
+    description: Short Text
+  - name: description_txk50
+    description: Description
+  - name: asset_class_description_txt50
+    description: Description
+  - name: asset_class_description_txa50
+    description: Description
+  - name: long_text_exists_of_asset_class_xltxid
+    description: Long Text Exists
+  - name: tech_asset_gegst
+    description: Tech.Asset
+  - name: asset_type_anlar
+    description: Asset Type
+  - name: created_by_ernam
+    description: Created by
+  - name: created_on_erdat
+    description: Created on
+  - name: changed_by_aenam
+    description: Changed by
+  - name: changed_on_aedat
+    description: Changed on
+  - name: mark_for_deletion_xloev
+    description: Mark for Deletion
+  - name: locked_to_acquis__xspeb
+    description: Locked to Acquis
+  - name: screen_layout_rule_felei
+    description: Screen Layout Rule
+  - name: acct_determination_ktogr
+    description: Account Determination
+  - name: line_item_settlement_xopvw
+    description: Line Item Settlement
+  - name: asset_category_anltp
+    description: Asset Category
+  - name: acquisition_year_zujhr
+    description: Acquisition Year
+  - name: first_acquis_period_zuper
+    description: First Acquis.Period
+  - name: first_acquisition_on_zugdt
+    description: First Acquisition on
+  - name: capitalized_on_aktiv
+    description: Capitalized on
+  - name: last_retmt_on_abgdt
+    description: Last Retmt on
+  - name: deactivation_on_deakt
+    description: Deactivation on
+  - name: plnd_retirement_on_gplab
+    description: Plnd Retirement on
+  - name: ordered_on_bstdt
+    description: Ordered on
+  - name: evaluation_group_1_ord41
+    description: Evaluation Group 1
+  - name: evaluation_group_2_ord42
+    description: Evaluation Group 2
+  - name: evaluation_group_3_ord43
+    description: Evaluation Group 3
+  - name: evaluation_group_4_ord44
+    description: Evaluation Group 4
+  - name: asset_super_number_anlue
+    description: Asset Super Number
+  - name: sort_key_zuawa
+    description: Sort Key
+  - name: manage_historically_aneqk
+    description: Manage Historically
+  - name: compl_ind__aneqs
+    description: Compl.Ind
+  - name: vendor_lifnr
+    description: Vendor
+  - name: country_of_origin_land1
+    description: Country of Origin
+  - name: supplier_name_liefe
+    description: Supplier Name
+  - name: manufacturer_herst
+    description: Manufacturer
+  - name: property_indicator_eigkz
+    description: Property Indicator
+  - name: original_asset_aibn1
+    description: Original Asset
+  - name: asset_subnumber_auc_aibn2
+    description: Asset Subnumber Auc
+  - name: acq_orig_asset_on_aibdt
+    description: Acq Orig Asset on
+  - name: org_acquisition_year_urjhr
+    description: Organizational.Acquisition Year
+  - name: original_value_urwrt
+    description: Original Value
+  - name: in_house_prod_perc__antei
+    description: In-House Prod.Percentage
+  - name: not_in_use_projn
+    description: Not in Use
+  - name: investment_order_eaufn
+    description: Investment Order
+  - name: base_unit_of_measure_meins
+    description: Base Unit of Measure
+  - name: quantity_menge
+    description: Quantity
+  - name: type_name_typbz
+    description: Type Name
+  - name: investment_reason_izwek
+    description: Investment Reason
+  - name: include_asset_inken
+    description: Include Asset
+  - name: last_inventory_on_ivdat
+    description: Last Inventory on
+  - name: inventory_note_invzu
+    description: Inventory Note
+  - name: classification_key_vmgli
+    description: Classification Key
+  - name: manual_net_worth_val_xvrmw
+    description: Manual Net Worth Value
+  - name: man_net_wrth_val__wrtma
+    description: Man.Net Wrth Value
+  - name: assessed_val_ehwrt
+    description: Assessed Value
+  - name: conveyance_on_aufla
+    description: Conveyance on
+  - name: notice_on_ehwzu
+    description: Notice on
+  - name: assmt_notice_tax_no__ehwnr
+    description: Assmt Notice Tax Number
+  - name: land_register_of_gruvo
+    description: Land Register of
+  - name: entry_by_grein
+    description: Entry by
+  - name: vol_page_ser_no_grbnd
+    description: Vol./Page/Ser.Number
+  - name: land_register_page_grblt
+    description: Land Register Page
+  - name: landregentry_seqno__grlfd
+    description: Landregentry Seqno
+  - name: ld_reg_map_plot_flurk
+    description: Ld.Reg.Map/Plot
+  - name: plot_number_flurn
+    description: Plot Number
+  - name: tax_office_fiamt
+    description: Tax Office
+  - name: municipality_stadt
+    description: Municipality
+  - name: reason_for_man_val__grund
+    description: Reason for Man Value
+  - name: area_unit_feins
+    description: Area Unit
+  - name: area_grufl
+    description: Area
+  - name: inventory_number_invnr
+    description: Inventory Number
+  - name: trading_partner_vbund
+    description: Trading Partner
+  - name: language_key_of_asset_master_spras
+    description: Language Key
+  - name: description_of_asset_master_txt50
+    description: Description
+  - name: additional_description_of_asset_master_txaa50
+    description: Additional Description
+  - name: long_text_exists_of_asset_master_xltxid
+    description: Long Text Exists
+  - name: long_text_exists_xverid
+    description: Long Text Exists
+  - name: techn_view_long_text_xtchid
+    description: Techn.View Long Text
+  - name: longtxt_c_acc_view_xkalid
+    description: Longtxt.:C-Accountview
+  - name: long_text_exists_xherid
+    description: Long Text Exists
+  - name: long_text_exists_xleaid
+    description: Long Text Exists
+  - name: leasing_company_leafi
+    description: Leasing Company
+  - name: agreement_date_lvdat
+    description: Agreement Date
+  - name: notice_date_lkdat
+    description: Notice Date
+  - name: lease_start_date_leabg
+    description: Lease Start Date
+  - name: lease_length_lejar
+    description: Lease Length
+  - name: lease_in_periods_leper
+    description: Lease in Periods
+  - name: payment_cycle_lryth
+    description: Payment Cycle
+  - name: lease_payment_legeb
+    description: Lease Payment
+  - name: base_value_as_new_lbasw
+    description: Base Value As New
+  - name: purchase_price_lkauf
+    description: Purchase Price
+  - name: monthly_int_rate_lmzin
+    description: Monthly Internal Rate
+  - name: annual_interest_rate_lzins
+    description: Annual Interest Rate
+  - name: last_posting_date_ltzbw
+    description: Last Posting Date
+  - name: posted_payments_lkuza
+    description: Posted Payments
+  - name: interest_posted_lkuzi
+    description: Interest Posted
+  - name: long_term_liability_llavb
+    description: Long-Term Liability
+  - name: no_lease_payments_leanz
+    description: Number Lease Payments
+  - name: agreement_number_lvtnr
+    description: Agreement Number
+  - name: supplementary_text_letxt
+    description: Supplementary Text
+  - name: capitalize_fixed_asset_xaktiv
+    description: Capitalize Fixed Asset
+  - name: change_type_of_asset_master_anupd
+    description: Change Type
+  - name: last_document_number_lblnr
+    description: Last Document Number
+  - name: maintain_date_view0_xv0dt
+    description: Maintain Date View0
+  - name: view0_changed_by_xv0nm
+    description: View0 Changed by
+  - name: maintain_date_v1_xv1dt
+    description: Maintain Date V1
+  - name: v1_changed_by_xv1nm
+    description: V1 Changed by
+  - name: maintain_date_v2_xv2dt
+    description: Maintain Date V2
+  - name: view2_changed_by_xv2nm
+    description: View2 Changed by
+  - name: maintain_date_v3_xv3dt
+    description: Maintain Date V3
+  - name: view3_changed_by_xv3nm
+    description: View3 Changed by
+  - name: maintain_date_view4_xv4dt
+    description: Maintain Date View4
+  - name: view4_changed_by_xv4nm
+    description: View4 Changed by
+  - name: maintain_date_v5_xv5dt
+    description: Maintain Date V5
+  - name: view5_changed_by_xv5nm
+    description: View5 Changed by
+  - name: maintain_date_v6_xv6dt
+    description: Maintain Date V6
+  - name: view6_changed_by_xv6nm
+    description: View6 Changed by
+  - name: connection_to_sap_real_estate_managment_aimmo
+    description: Connection to Sap Real Estate Managment
+  - name: object_number_objnr
+    description: Object Number
+  - name: type_leart
+    description: Type
+  - name: advance_payments_lvors
+    description: Advance Payments
+  - name: evaluation_group_5_gdlgrp
+    description: Evaluation Group 5
+  - name: wbs_element_posnr
+    description: WBS Element
+  - name: do_not_take_memo_value_into_account_xerwrt
+    description: Do Not Take Memo Value Into Account
+  - name: purchased_used_xafabch
+    description: Purchased Used
+  - name: group_asset_xanlgr
+    description: Group Asset
+  - name: description_mcoa1
+    description: Description
+  - name: investment_measure_xinvm
+    description: Investment Measure
+  - name: serial_number_sernr
+    description: Serial Number
+  - name: envir_investment_umwkz
+    description: Envir Investment
+  - name: last_reval_on_lrvdat
+    description: Last Reval on
+  - name: change_asset_master_record_from_equipmen_act_change_pm
+    description: Change Asset Master Record From Equipmen
+  - name: time_dependent_parameters_exist_has_tddp
+    description: Time-Dependent Parameters Exist
+  - name: reorganization_date_last_reorg_date
+    description: Reorganization Date
+  - name: internal_code
+    description: Internal Code
+  - name: approval_document_number_approval_number
+    description: Approval Document Number
+  - name: approval_version
+    description: Approval Version
+  - name: investment_asset_number_bogus_anln1
+    description: Investment Asset Number
+  - name: asset_version
+    description: Asset Version
+  - name: account_determination_description_ktgrtx
+    description: Account Determination Description
+  - name: reason_for_manual_valuation_description_grdtx
+    description: Reason for Manual Valuation Description
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,48 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides Asset Annual Cumulative Balances - Tracks cumulative asset values (APC, ordinary,
+  special, and unplanned depreciation) along with expired useful life attributes by fiscal year and depreciation
+  area. The data is captured at the granularity of system default keys, ensuring a unique audit trail
+  for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset Number, PK
+  - name: asset_subnumber_anln2
+    description: Asset Subnumber, PK
+  - name: depreciation_area_afabe
+    description: Depreciation Area, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: expired_useful_life_ndabj
+    description: Expired Useful Life (Years)
+  - name: expired_ul_periods_ndabp
+    description: Expired Useful Life (Periods)
+  - name: cum_acq_production_costs_kansw
+    description: Cumulative Acquisition and Production Costs
+  - name: cum_ordinary_depreciation_knafa
+    description: Cumulative Ordinary Depreciation
+  - name: cum_special_depreciation_ksafa
+    description: Cumulative Special Depreciation
+  - name: cum_unplanned_depreciation_kaafa
+    description: Cumulative Unplanned Depreciation
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

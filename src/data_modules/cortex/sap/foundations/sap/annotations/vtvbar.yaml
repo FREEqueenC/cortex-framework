@@ -1,0 +1,78 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Npvs of Otc Transactions (Vtvbar)"
+fields:
+- name: "mandt"
+  description: "Client"
+- name: "rantyp"
+  description: "Contract Type"
+- name: "bukrs"
+  description: "Company Code"
+- name: "rfha"
+  description: "Transaction"
+- name: "ranlvd"
+  description: "Contract Number"
+- name: "okuart"
+  description: "Price/Npv Type"
+- name: "databs"
+  description: "Effective From"
+- name: "barwert"
+  description: "Net Present Value"
+- name: "wbarwert"
+  description: "Currency of Npv"
+- name: "intrinsic_value"
+  description: "Intrinsic Value in Distribution Center"
+- name: "time_value"
+  description: "Time Value in Display Currency"
+- name: "clean_price"
+  description: "Clean Price in Display Currency"
+- name: "barwert_in"
+  description: "Npv of Incoming Side"
+- name: "barwert_out"
+  description: "Npv of Outgoing Side"
+- name: "barwert_rf"
+  description: "Risk-Free Npv"
+- name: "cva"
+  description: "Credit Value Adjustment"
+- name: "dva"
+  description: "Debit Value Adjustment"
+- name: "cva_type"
+  description: "Credit and Debit Value Adjustment Type"
+- name: "create_name"
+  description: "Entered by"
+- name: "create_date"
+  description: "First Entered on"
+- name: "create_time"
+  description: "Time of Creation"
+- name: "create_tcode"
+  description: "Transaction Code"
+- name: "change_name"
+  description: "Last Changed by"
+- name: "change_date"
+  description: "Last Edited on"
+- name: "change_time"
+  description: "Last Edited At"
+- name: "change_tcode"
+  description: "Transaction Code"
+- name: "log_guid"
+  description: "Guid of Log"
+- name: "check_sum"
+  description: "Hash Value (160 Bits)"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

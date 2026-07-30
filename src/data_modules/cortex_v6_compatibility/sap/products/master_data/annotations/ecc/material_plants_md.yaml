@@ -1,0 +1,36 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "MaterialPlantsMD view contains material plant master data which shows information for each plant along with their different indicators and statuses like Safety stock, valuation category/area, etc. at the granularity of Client(System), Material Number and Plant"
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "MaterialNumber_MATNR"
+    description: "Material Number, PK"
+  - name: "Plant_WERKS"
+    description: "Plant, PK"
+  - name: "MaintainanceStatus_PSTAT"
+    description: "Maintenance Status"
+  - name: "FlagMaterialForDeletionAtPlantLevel_LVORM"
+    description: "Flag Material for Deletion at Plant Level"
+  - name: "ValuationCategory_BWTTY"
+    description: "Valuation Category"
+  - name: "BatchManagementIndicator_XCHAR"
+    description: "Batch Management Indicator (internal)"
+  - name: "PlantSpecificMaterialStatus_MMSTA"
+    description: "Plant-Specific Material Status"
+  - name: "DateFromWhichThePlantsSpecificMaterialStatusIsValid_MMSTD"
+    description: "Date from which the plant-specific material status is valid"
+  - name: "SafetyStock_EISBE"
+    description: "Safety Stock"

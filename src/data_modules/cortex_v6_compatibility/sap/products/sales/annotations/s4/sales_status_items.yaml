@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view gives insights on the Sales order items, statuses related to their delivery, as well as delivery and billing quantities. The granularity is at Client(System), Sales Order Document number, item number, delivery number, invoice document number, invoice item number and language key."
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "SalesOrder_VBELV"
+    description: "Sales Order Document Number, PK"
+  - name: "SalesItem_POSNV"
+    description: "Item Number of Sales Document, PK"
+  - name: "DeliveryNumber_VBELV"
+    description: "Delivery Number, PK"
+  - name: "DeliveryItem_POSNV"
+    description: "Delivery Item, PK"
+  - name: "InvoiceNumber_VBELN"
+    description: "Invoice Document Number, PK"
+  - name: "InvoiceItem_POSNN"
+    description: "Item Number of Invoice Document, PK"
+  - name: "Language_SPRAS"
+    description: "Language Key, PK"
+  - name: "Delivery_Status"
+    description: "Delivery Status (Calculates how much the Delivery for the Sales Order item is processed)"
+  - name: "SalesQty"
+    description: "Cumulative Order Quantity in Sales Unit"
+  - name: "SalesUnit_VRKME"
+    description: "Sales Unit"
+  - name: "NetPrice_NETWR"
+    description: "Net Value of the Sales Order in Document Currency"
+  - name: "Currency_WAERK"
+    description: "Sales and Delivery Document Currency"
+  - name: "DeliveredQty_RFMNG"
+    description: "Delivered Quantity"
+  - name: "DeliveredUoM_MEINS"
+    description: "Base Unit of Measure for Delivered Items"
+  - name: "InvoiceQty_RFMNG"
+    description: "Actual Billed Quantity"
+  - name: "InvoiceUoM_MEINS"
+    description: "Base Unit of Measure for billed items"
+  - name: "InvoiceValue_RFWRT"
+    description: "Amount in Local Currency for Billed Item"
+  - name: "InvoiceCurrency_WAERS"
+    description: "Statistics currency"
+  - name: "MaterialNumber_MATNR"
+    description: "Material Number"
+  - name: "MaterialText_MAKTX"
+    description: "Material Description"
+  - name: "ProductHierarchy_PRODH"
+    description: "Product Hierarchy"

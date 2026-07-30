@@ -1,0 +1,81 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: Cortex V6 Compatibility Master Data
+description: Backward-compatible Master Data data product from Cortex V6.
+type: master_data
+category: source_aligned_product
+dependencies:
+  sapModule:
+    modulePath: cortex.sap.foundations.sap
+    supportedVersions:
+      - ecc
+      - s4
+    tables:
+      common:
+        - lfa1
+        - mara
+        - makt
+        - kna1
+        - t001
+        - t024e
+        - t024
+        - t134
+        - t009
+        - t009b
+        - t009
+        - t023
+        - t023t
+        - mch1
+        - tvarvc
+        - mbew
+        - t001k
+        - marc
+        - t134t
+        - t001w
+        - t001l
+        - tcurc
+        - tcurt
+        - adrc
+        - adr6
+        - adrct
+        - tvfst
+        - t005
+        - t005t
+        - tvlst
+        - tvtw
+        - tvtwt
+        - tspa
+        - tspat
+        - tvko
+        - tvkot
+        - but000
+        - t179
+        - t179t
+        - csks
+        - cskt
+        - cepc
+        - cepct
+        - setheadert
+        - but020
+        - ska1
+        - skat
+        - t002
+        - tcurr
+        - tcurx
+      s4:
+        - ckmlcr
+        - ckmlhd
+builder: sap_product
+

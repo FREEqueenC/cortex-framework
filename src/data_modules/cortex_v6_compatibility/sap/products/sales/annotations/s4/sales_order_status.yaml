@@ -1,0 +1,78 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "This view provides information related to the statuses of the Sales Orders, including its delivery, rejection, quantities yet to be delivered, etc. This view has granularity of Sales Document Number, Sales Document Item, Delivery Number and Delivery Item."
+fields:
+  - name: "SalesDocument_VBELN"
+    description: "Sales Document, PK"
+  - name: "Item_POSNR"
+    description: "Sales Document Item, PK"
+  - name: "Delivery_VBELN"
+    description: "Delivery, PK"
+  - name: "DeliveryItem_POSNR"
+    description: "Delivery Item, PK"
+  - name: "MaterialNumber_MATNR"
+    description: "Material Number"
+  - name: "SalesDocumentType_AUART"
+    description: "Sales Document Type"
+  - name: "Reason_AUGRU"
+    description: "Order Reason (Reason for the Business Transaction)"
+  - name: "CustomerGroup1_KVGR1"
+    description: "Customer Group 1"
+  - name: "CustomerGroup2_KVGR2"
+    description: "Customer Group 2"
+  - name: "CustomerGroup3_KVGR3"
+    description: "Customer Group 3"
+  - name: "CustomerGroup4_KVGR4"
+    description: "Customer Group 4"
+  - name: "CustomerGroup5_KVGR5"
+    description: "Customer Group 5"
+  - name: "DeliveryBlock_LIFSK"
+    description: "Delivery Block (Document Header)"
+  - name: "PlanningPlant_VPWRK"
+    description: "Planning Plant"
+  - name: "StorageLocation_LGORT"
+    description: "Storage Location"
+  - name: "BatchNumber_CHARG"
+    description: "Batch Number"
+  - name: "CumulativeOrderQuantity_KWMENG"
+    description: "Cumulative Order Quantity in Sales Units"
+  - name: "ReferenceDocument_VGBEL"
+    description: "Document Number of the Reference Document"
+  - name: "ReferenceItem_VGPOS"
+    description: "Item Number of the Reference Item"
+  - name: "ActualQuantityDelivered_LFIMG"
+    description: "Actual Quantity Delivered (in sales units)"
+  - name: "DocumentCategory_VGTYP"
+    description: "Document Category of Preceding SD Document"
+  - name: "SerialNumberProfile_SERAIL"
+    description: "Serial Number Profile"
+  - name: "NumberOfSerialNumbers_ANZSN"
+    description: "Number Of Serial Numbers"
+  - name: "HeaderRejectionStatus_ABSTK"
+    description: "Rejection Status (All Items)"
+  - name: "HeaderDeliveryStatus_LFGSK"
+    description: "Overall Delivery Status (All Items)"
+  - name: "GoodsMovementStatus_WBSTA"
+    description: "Goods Movement Status"
+  - name: "CreationDate_ERDAT"
+    description: "Date on which the record was created"
+  - name: "CreationTime_ERZET"
+    description: "Entry Time"
+  - name: "RequestedDeliveryDate_VDATU"
+    description: "Requested Delivery Date"
+  - name: "CompleteDeliveryFlag_AUTLF"
+    description: "Complete Delivery Defined for Each Sales Order"
+  - name: "OPENQTY"
+    description: "Open Quantity, calculated as the difference between Ordered Quantity and Delivered Quantity."

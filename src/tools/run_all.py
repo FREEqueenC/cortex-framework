@@ -19,11 +19,16 @@ import logging
 import pathlib
 import sys
 
-from common.schemas.config_schema import GlobalConfig
-from common.services.config_preprocessor import ConfigPreprocessor
-from common.services.config_validator import ConfigValidator
+from common.errors import (
+    CortexBuildError,
+    CortexConfigError,
+    CortexDeployError,
+    CortexError,
+)
+from common.services.config_loader import ConfigLoader
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
-from common.utils.file_utils import load_yaml
+from common.services.telemetry.consent_manager import TelemetryConsentManager
+from common.services.telemetry.telemetry_logger import EventLogger
 from common.utils.logging import setup_logging
 from tools.build import DataformBuilder
 from tools.deploy import DeploymentOrchestrator
@@ -52,6 +57,12 @@ def main(args=None):
         help="Enable missing APIs without prompting",
     )
     parser.add_argument(
+        "--disable-telemetry",
+        action="store_true",
+        default=False,
+        help="Disable telemetry event logging",
+    )
+    parser.add_argument(
         "--create-datasets",
         action="store_true",
         help="Create missing datasets without prompting",
@@ -63,64 +74,77 @@ def main(args=None):
     )
     args = parser.parse_args(args)
 
-    config_file = args.config
+    try:
+        config_file = args.config
+        TelemetryConsentManager.setup(args.disable_telemetry)
 
-    if not config_file.exists():
-        logger.error("Config file not found at %s", config_file)
+        if not config_file.exists():
+            raise CortexConfigError(
+                f"Config file not found at {config_file}",
+                hint="Please check that the file path is correct and that the file exists.",
+            )
+
+        global_config, validation_errors = ConfigLoader.load_and_validate(config_file)
+        if not global_config:
+            errors_str = "\n".join(f"  - {err}" for err in validation_errors)
+            raise CortexConfigError(
+                f"Configuration validation failed with the following errors:\n{errors_str}",
+                hint="Correct the issues in config.yaml according to the validation rules.",
+            )
+
+        checker = GcpEnvironmentChecker(
+            global_config,
+            enable_apis=args.enable_apis,
+            create_datasets=args.create_datasets,
+        )
+        checker.validate_all()
+
+        output_dir = args.output_dir
+        if not output_dir.is_absolute():
+            output_dir = pathlib.Path.cwd() / output_dir
+
+        # Build Dataform
+        logger.info("Running Dataform build...")
+        builder = DataformBuilder(
+            global_config=global_config,
+            output_dir=output_dir,
+            config_dir=config_file.parent,
+            assertions_path=args.assertions,
+        )
+        if not builder.build():
+            raise CortexBuildError(
+                "Dataform build failed.",
+                hint=(
+                    "Check the log files or console output above to identify which "
+                    "builder module failed and check its settings."
+                ),
+            )
+
+        # Deploy
+        logger.info("Running deployment...")
+        orchestrator = DeploymentOrchestrator(
+            global_config=global_config,
+            output_dir=output_dir,
+            enable_apis=args.enable_apis,
+            create_datasets=args.create_datasets,
+        )
+        if not orchestrator.execute_deployments():
+            raise CortexDeployError(
+                "Deployment failed.",
+                hint=(
+                    "Verify target deployment logs or console output above to identify "
+                    "details about the target errors."
+                ),
+            )
+
+        logger.info("All workflow steps completed successfully.")
+        EventLogger.wait_for_telemetry()
+    except CortexError as e:
+        logger.error(str(e))
         sys.exit(1)
-
-    is_valid, validation_errors = ConfigValidator.validate(config_file)
-    if not is_valid:
-        logger.error("Configuration validation failed with the following errors:")
-        for err in validation_errors:
-            logger.error("  - %s", err)
+    except Exception:
+        logger.exception("An unexpected error occurred:")
         sys.exit(1)
-
-    global_config_dict = load_yaml(config_file)
-    global_config_dict = ConfigPreprocessor().process(global_config_dict)
-
-    global_config = GlobalConfig.model_validate(
-        global_config_dict, context={"config_dir": config_file.parent}
-    )
-
-    checker = GcpEnvironmentChecker(
-        global_config,
-        enable_apis=args.enable_apis,
-        create_datasets=args.create_datasets,
-    )
-    if not checker.validate_all():
-        logger.error("GCP Environment checks failed. Aborting execution.")
-        sys.exit(1)
-
-    output_dir = args.output_dir
-    if not output_dir.is_absolute():
-        output_dir = pathlib.Path.cwd() / output_dir
-
-    # Build Dataform
-    logger.info("Running Dataform build...")
-    builder = DataformBuilder(
-        global_config=global_config,
-        output_dir=output_dir,
-        config_dir=config_file.parent,
-        assertions_path=args.assertions,
-    )
-    if not builder.build():
-        logger.error("Dataform build failed.")
-        sys.exit(1)
-
-    # Deploy
-    logger.info("Running deployment...")
-    orchestrator = DeploymentOrchestrator(
-        global_config=global_config,
-        output_dir=output_dir,
-        enable_apis=args.enable_apis,
-        create_datasets=args.create_datasets,
-    )
-    if not orchestrator.execute_deployments():
-        logger.error("Deployment failed.")
-        sys.exit(1)
-
-    logger.info("All workflow steps completed successfully.")
 
 
 if __name__ == "__main__":

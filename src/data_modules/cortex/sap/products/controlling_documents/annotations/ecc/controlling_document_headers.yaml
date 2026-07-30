@@ -1,0 +1,104 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Controlling Object: Document Header'
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: controlling_area_kokrs
+    description: Controlling Area, PK
+  - name: document_number_belnr
+    description: Document Number, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year
+  - name: version_versn
+    description: Version
+  - name: business_transaction_vrgng
+    description: Business Transaction
+  - name: time_created_timestmp
+    description: Time Created
+  - name: from_period_perab
+    description: From Period
+  - name: to_period_perbi
+    description: To Period
+  - name: document_date_bldat
+    description: Document Date
+  - name: posting_date_budat
+    description: Posting Date
+  - name: created_on_cpudt
+    description: Created on
+  - name: user_name_usnam
+    description: User Name
+  - name: document_header_text_bltxt
+    description: Document Header Text
+  - name: reversal_document_stflg
+    description: Reversal Document
+  - name: reversed_stokz
+    description: Reversed
+  - name: reference_document_type_refbt
+    description: Reference Document Type
+  - name: reference_document_number_refbn
+    description: Reference Document Number
+  - name: reference_company_code_refbk
+    description: Reference Company Code
+  - name: reference_fiscal_year_refgj
+    description: Reference Fiscal Year
+  - name: document_type_blart
+    description: Document Type
+  - name: original_business_transaction_orgvg
+    description: Original Business Transaction
+  - name: line_item_total_sumbz
+    description: Line Item Total
+  - name: deleted_line_items_delbz
+    description: Deleted Line Items
+  - name: value_date_wsdat
+    description: Value Date
+  - name: exchange_rate_type_kurst
+    description: Exchange Rate Type
+  - name: screen_variant_varnr
+    description: Screen Variant
+  - name: controlling_area_currency_kwaer
+    description: Controlling Area Currency
+  - name: currency_type_1_ctyp1
+    description: Currency Type 1
+  - name: currency_type_2_ctyp2
+    description: Currency Type 2
+  - name: currency_type_3_ctyp3
+    description: Currency Type 3
+  - name: currency_type_4_ctyp4
+    description: Currency Type 4
+  - name: reference_procedure_awtyp
+    description: Reference Procedure
+  - name: reference_organizational_unit_aworg
+    description: Reference Organizational Unit
+  - name: logical_system_logsystem
+    description: Logical System
+  - name: time_of_entry_cputm
+    description: Time of Entry
+  - name: posting_rows_external_alebz
+    description: Posting Rows External
+  - name: ale_original_document_number_alebn
+    description: 'Ale: Original Document Number'
+  - name: logical_system_source_awsys
+    description: Logical System Source
+  - name: reversal_reference_number_awref_rev
+    description: Reversal Reference Number
+  - name: reversal_organization_aworg_rev
+    description: Reversal Organization
+  - name: valuation_date_valdt
+    description: Valuation Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

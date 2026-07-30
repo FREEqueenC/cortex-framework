@@ -1,0 +1,1008 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI) module in the Finance
+  domain and provides a unified view of accounts payable from the SAP S/4HANA universal ledger journal
+  entries (ACDOCA, BKPF, BSEG), filtered by Vendor account type to support cash-flow analytics and liability
+  tracking. The data is captured at the granularity of Client (System), Company Code, Accounting Document
+  Number, Fiscal Year, and Ledger G L Line Item, ensuring a unique audit trail for every record.
+fields:
+  - name: client_rclnt
+    description: Client, PK
+  - name: ledger_rldnr
+    description: Ledger in General Ledger Accounting, PK
+  - name: company_code_rbukrs
+    description: Company Code, PK
+  - name: fiscal_year_gjahr
+    description: Fiscal Year, PK
+  - name: document_number_belnr
+    description: Accounting Document Number, PK
+  - name: line_item_docln
+    description: Six-Character Posting Item for Ledger, PK
+  - name: gl_fiscal_year_ryear
+    description: General Ledger Fiscal Year
+  - name: ledger_specific_document_number_docnr_ld
+    description: Ledger Specific Accounting Document Number
+  - name: record_type_rrcty
+    description: Record Type
+  - name: transaction_type_rmvct
+    description: Transaction Type
+  - name: gl_transaction_type_vorgn
+    description: Transaction Type for General Ledger
+  - name: business_transaction_vrgng
+    description: Controlling Business Transaction
+  - name: bus_transac_type_bttype
+    description: Business Transaction Type
+  - name: business_transaction_type_cbttype
+    description: Custom Business Transaction Type (Not Used Yet)
+  - name: reference_procedure_awtyp
+    description: Reference Procedure
+  - name: log_system_source_awsys
+    description: Logical System of Source Document
+  - name: reference_org_unit_aworg
+    description: Reference Organizational Units
+  - name: reference_document_awref
+    description: Reference Document Number
+  - name: ref_document_line_item_awitem
+    description: Reference Document Line Item
+  - name: ref_document_item_group_awitgrp
+    description: Group of Reference Document Line Items
+  - name: sub_transaction_subta
+    description: Partial Document to Be Balanced to Zero
+  - name: is_reversing_another_item_xreversing
+    description: 'Indicator: Item Is Reversing Another Item'
+  - name: is_reversed_xreversed
+    description: 'Indicator: Item Is Reversed'
+  - name: is_true_reversal_xtruerev
+    description: 'Indicator: True Reversal (I.E Cancellation)'
+  - name: reversal_reference_transaction_awtyp_rev
+    description: 'Reversal: Reference Transaction of Document to Be Reversed'
+  - name: reversal_organizational_aworg_rev
+    description: 'Reversal: Reference Organizations of Document to Be Reversed'
+  - name: reversal_reference_awref_rev
+    description: 'Reversal: Reference Document Number of Document to Be Reversed'
+  - name: reversal_reference_document_line_item_awitem_rev
+    description: 'Reversal: Reference Document Line Itm of Document to Be Reversed'
+  - name: reversal_sub_transaction_subta_rev
+    description: 'Reversal: Partial Document to Be Balanced to Zero'
+  - name: is_settling_transferring_another_item_xsettling
+    description: 'Indicator: Item Is Settling Or Transferring Another Item'
+  - name: is_settled_transferred_xsettled
+    description: 'Indicator: Line Item Is Settled Or Transferred'
+  - name: preceding_reftransact_prec_awtyp
+    description: Preceding Document Reference Transaction
+  - name: preceding_reflogsystem_prec_awsys
+    description: Logical System of Preceding Reference Document
+  - name: preceding_reforgunit_prec_aworg
+    description: Preceding Document Reference Organizational Units
+  - name: preceding_ref_document_prec_awref
+    description: Preceding Reference Document Number
+  - name: preceding_ref_document_line_item_prec_awitem
+    description: Preceding Reference Document Line Item
+  - name: preceding_sub_transaction_prec_subta
+    description: Preceding Partial Document to Be Balanced to Zero
+  - name: multiple_precref_id_prec_awmult
+    description: Id of Multiple Preceding Document References
+  - name: preceding_je_company_code_prec_bukrs
+    description: Preceding Journal Entry Company Code
+  - name: preceding_je_year_prec_gjahr
+    description: Preceding Journal Entry Fiscal Year
+  - name: preceding_je_document_number_prec_belnr
+    description: Preceding Journal Entry Document Number
+  - name: preceding_journal_entry_line_item_prec_docln
+    description: Preceding Journal Entry Line Item
+  - name: secondary_journal_entry_xsecondary
+    description: Secondary Journal Entry
+  - name: uuid_of_financial_closing_run_closing_run_id
+    description: Uuid of Financial Closing Run
+  - name: organizational_change_orgl_change
+    description: Organizational Change
+  - name: source_document_type_src_awtyp
+    description: Source Document Type
+  - name: source_document_system_src_awsys
+    description: Source Document System
+  - name: source_document_org_unit_src_aworg
+    description: Organizational Unit of Source Document
+  - name: source_document_number_src_awref
+    description: Source Document Number
+  - name: source_document_line_item_src_awitem
+    description: Line Item in Source Document
+  - name: source_document_subitem_src_awsubit
+    description: Subitem in Source Document
+  - name: commitment_xcommitment
+    description: 'Indicator: Commitment'
+  - name: reason_why_this_item_is_obsolete_obs_reason
+    description: Reason Why This Item Is Obsolete
+  - name: balance_transaction_currency_rtcur
+    description: Balance Transaction Currency
+  - name: transaction_currency_rwcur
+    description: Transaction Currency
+  - name: company_code_currency_rhcur
+    description: Company Code Currency
+  - name: global_currency_rkcur
+    description: Global Currency
+  - name: freely_defined_currency_1_rocur
+    description: Freely Defined Currency 1
+  - name: freely_defined_currency_2_rvcur
+    description: Freely Defined Currency 2
+  - name: freely_defined_currency_3_rbcur
+    description: Freely Defined Currency 3
+  - name: freely_defined_currency_4_rccur
+    description: Freely Defined Currency 4
+  - name: freely_defined_currency_5_rdcur
+    description: Freely Defined Currency 5
+  - name: freely_defined_currency_6_recur
+    description: Freely Defined Currency 6
+  - name: freely_defined_currency_7_rfcur
+    description: Freely Defined Currency 7
+  - name: freely_defined_currency_8_rgcur
+    description: Freely Defined Currency 8
+  - name: co_object_currency_rco_ocur
+    description: Controlling Object Currency
+  - name: grant_currency_rgm_ocur
+    description: Grant Currency
+  - name: base_unit_of_measure_runit
+    description: Base Unit of Measure
+  - name: valunit_of_measure_rvunit
+    description: Unit of Measure for Valuation Quantity
+  - name: refunit_of_measure_rrunit
+    description: Unit of Measure for Reference Quantity
+  - name: reference_quantity_type_rmsl_type
+    description: Quantity Type Code of the Reference Quantity
+  - name: inventory_unit_of_measure_riunit
+    description: Unit of Measure for Inventory Quantity
+  - name: add_unit_of_measure1_qunit1
+    description: Additional Unit of Measure 1
+  - name: add_unit_of_measure2_qunit2
+    description: Additional Unit of Measure 2
+  - name: add_unit_of_measure3_qunit3
+    description: Additional Unit of Measure 3
+  - name: uom_co_valuation_quantity_co_meinh
+    description: Unit of Measure for Controlling Valuation Quantity
+  - name: account_number_racct
+    description: Account Number
+  - name: cost_center_rcntr
+    description: Cost Center
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: functional_area_rfarea
+    description: Functional Area
+  - name: business_area_rbusa
+    description: Business Area
+  - name: controlling_area_kokrs
+    description: Controlling Area
+  - name: segment
+    description: Segment for Segmental Reporting
+  - name: sender_cost_center_scntr
+    description: Sender Cost Center
+  - name: partner_profit_center_pprctr
+    description: Partner Profit Center
+  - name: partner_func_area_sfarea
+    description: Partner Functional Area
+  - name: trading_part_ba_sbusa
+    description: Trading Partner'S Business Area
+  - name: trading_partner_number_rassc
+    description: Company Id of Trading Partner
+  - name: partner_segment_psegment
+    description: Partner Segment for Segmental Reporting
+  - name: amount_in_balance_transaction_currency_tsl
+    description: Amount in Balance Transaction Currency
+  - name: amount_in_transaction_currency_wsl
+    description: Amount in Transaction Currency
+  - name: group_valuation_amnt_in_transaction_crcy_wsl2
+    description: Group Valuation Amount in Transaction Currency
+  - name: prctr_valuation_amnt_in_transaction_crcy_wsl3
+    description: Profit-Center Valuation Amount in Transaction Currency
+  - name: amount_in_company_code_currency_hsl
+    description: Amount in Company Code Currency
+  - name: amount_in_global_currency_ksl
+    description: Amount in Global Currency
+  - name: amount_in_freely_defined_currency_1_osl
+    description: Amount in Freely Defined Currency 1
+  - name: amount_in_freely_defined_currency_2_vsl
+    description: Amount in Freely Defined Currency 2
+  - name: amount_in_freely_defined_currency_3_bsl
+    description: Amount in Freely Defined Currency 3
+  - name: amount_in_freely_defined_currency_4_csl
+    description: Amount in Freely Defined Currency 4
+  - name: amount_in_freely_defined_currency_5_dsl
+    description: Amount in Freely Defined Currency 5
+  - name: amount_in_freely_defined_currency_6_esl
+    description: Amount in Freely Defined Currency 6
+  - name: amount_in_freely_defined_currency_7_fsl
+    description: Amount in Freely Defined Currency 7
+  - name: amount_in_freely_defined_currency_8_gsl
+    description: Amount in Freely Defined Currency 8
+  - name: fixed_amount_in_global_currency_kfsl
+    description: Fixed Amount in Global Currency
+  - name: group_valuation_fixed_amount_in_global_crcy_kfsl2
+    description: Group Valuation Fixed Amount in Global Currency
+  - name: prctr_valuation_fixed_amount_in_global_crcy_kfsl3
+    description: Prctr Valuation Fixed Amount in Global Currency
+  - name: total_price_variance_in_global_crcy_psl
+    description: Total Price Variance in Global Currency
+  - name: group_valuation_total_price_var_in_global_crcy_psl2
+    description: Group Valuation Total Price Variance in Global Currency
+  - name: prctr_valuation_total_price_var_in_global_crcy_psl3
+    description: Prctr Valuation Total Price Variance in Global Currency
+  - name: fixed_price_variance_in_global_crcy_pfsl
+    description: Fixed Price Variance in Global Currency
+  - name: group_valfixed_price_var_in_global_crcy_pfsl2
+    description: Group Valuation Fixed Price Variance in Global Currency
+  - name: prctr_valuation_fixed_price_var_in_global_crcy_pfsl3
+    description: Prctr Valuation Fixed Price Variance in Global Currency
+  - name: amount_in_co_object_currency_co_osl
+    description: Amount in Controlling Object Currency
+  - name: amount_in_grant_currency_gm_osl
+    description: Grant Amount in Grant Currency
+  - name: altvalue_local_crcy_hslalt
+    description: Alternative Value in Local Currency
+  - name: altvalue_in_grpcrcy_kslalt
+    description: Alternative Value in Group Currency
+  - name: alt_value_in_freely_defined_currency_1_oslalt
+    description: Alternative Value in Freely Defined Currency 1
+  - name: alt_value_in_freely_defined_currency_2_vslalt
+    description: Alternative Value in Freely Defined Currency 2
+  - name: alt_value_in_freely_defined_currency_3_bslalt
+    description: Alternative Value in Freely Defined Currency 3
+  - name: alt_value_in_freely_defined_currency_4_cslalt
+    description: Alternative Value in Freely Defined Currency 4
+  - name: alt_value_in_freely_defined_currency_5_dslalt
+    description: Alternative Value in Freely Defined Currency 5
+  - name: alt_value_in_freely_defined_currency_6_eslalt
+    description: Alternative Value in Freely Defined Currency 6
+  - name: alt_value_in_freely_defined_currency_7_fslalt
+    description: Alternative Value in Freely Defined Currency 7
+  - name: alt_value_in_freely_defined_currency_8_gslalt
+    description: Alternative Value in Freely Defined Currency 8
+  - name: extvalue_local_crcy_hslext
+    description: External Value in Local Currency
+  - name: extvalue_in_grpcrcy_kslext
+    description: External Value in Group Currency
+  - name: ext_value_in_freely_defined_currency_1_oslext
+    description: External Value in Freely Defined Currency 1
+  - name: ext_value_in_freely_defined_currency_2_vslext
+    description: External Value in Freely Defined Currency 2
+  - name: ext_value_in_freely_defined_currency_3_bslext
+    description: External Value in Freely Defined Currency 3
+  - name: ext_value_in_freely_defined_currency_4_cslext
+    description: External Value in Freely Defined Currency 4
+  - name: ext_value_in_freely_defined_currency_5_dslext
+    description: External Value in Freely Defined Currency 5
+  - name: ext_value_in_freely_defined_currency_6_eslext
+    description: External Value in Freely Defined Currency 6
+  - name: ext_value_in_freely_defined_currency_7_fslext
+    description: External Value in Freely Defined Currency 7
+  - name: ext_value_in_freely_defined_currency_8_gslext
+    description: External Value in Freely Defined Currency 8
+  - name: value_special_localcrcy_hvkwrt
+    description: Value At Sales Price in Local Currency
+  - name: quantity_msl
+    description: Quantity
+  - name: fixed_quantity_mfsl
+    description: Fixed Quantity
+  - name: valuation_quantity_vmsl
+    description: Valuation Quantity
+  - name: fixed_valuation_qty_vmfsl
+    description: Fixed Valuation Quantity
+  - name: reference_quantity_rmsl
+    description: Reference Quantity
+  - name: add_quantity_1_quant1
+    description: Additional Quantity 1
+  - name: add_quantity_2_quant2
+    description: Additional Quantity 2
+  - name: add_quantity_3_quant3
+    description: Additional Quantity 3
+  - name: co_valuation_quantity_co_megbtr
+    description: Controlling Valuation Quantity
+  - name: co_valuation_quantity_fix_co_mefbtr
+    description: Controlling Valuation Quantity Fix
+  - name: invvalue_localcrcy_hsalk3
+    description: Inventory Value in Local Currency
+  - name: invvalue_groupcrcy_ksalk3
+    description: Inventory Value in Group Currency
+  - name: invvalue_freely_defined_currency_1_osalk3
+    description: Inventory Value in Freely Defined Currency 1
+  - name: invvalue_freely_defined_currency_2_vsalk3
+    description: Inventory Value in Freely Defined Currency 2
+  - name: altinvvalue_local_currency_hsalkv
+    description: Alternative Inventory Value in Local Currency
+  - name: altinvvalue_grpcrcy_ksalkv
+    description: Alternative Inventory Value in Group Currency
+  - name: altvalue_freely_defined_currency_1_osalkv
+    description: Alternative Inventory Value in Freely Defined Currency 1
+  - name: altvalue_freely_defined_currency_2_vsalkv
+    description: Alternative Inventory Value in Freely Defined Currency 2
+  - name: mvavgprice_localcrcy_hpvprs
+    description: Moving Average Price in Local Currency
+  - name: mvavgprice_groupcrcy_kpvprs
+    description: Moving Average Price in Group Currency
+  - name: map_anothercrcy_opvprs
+    description: Moving Average Price in Another Currency
+  - name: map_4crcy_vpvprs
+    description: Moving Average Price in Fourth Currency
+  - name: stdprice_localcrcy_hstprs
+    description: Standard Price in Local Currency
+  - name: stdprice_groupcrcy_kstprs
+    description: Standard Price in Group Currency
+  - name: stdprice_anothercrcy_ostprs
+    description: Standard Price in Another Currency
+  - name: stdprice_4crcy_vstprs
+    description: Standard Price in Fourth Currency
+  - name: invval_special_localcrcy_hvksal
+    description: Inventory Value At Sales Price in Local Currency
+  - name: inventory_quantity_lbkum
+    description: Inventory Quantity
+  - name: debit_credit_indicator_drcrk
+    description: Debit/Credit Indicator
+  - name: posting_period_poper
+    description: Posting Period
+  - name: fiscal_year_variant_periv
+    description: Fiscal Year Variant
+  - name: period_year_fiscyearper
+    description: Period/Year
+  - name: posting_date_budat
+    description: Posting Date in the Document
+  - name: document_date_bldat
+    description: Document Date in Document
+  - name: document_type_blart
+    description: Document Type
+  - name: line_item_buzei
+    description: Number of Line Item Within Accounting Document
+  - name: assignment_zuonr
+    description: Assignment Number
+  - name: posting_key_bschl
+    description: Posting Key
+  - name: document_status_bstat
+    description: Document Status
+  - name: item_category_linetype
+    description: Item Category
+  - name: transaction_ktosl
+    description: Transaction Key
+  - name: sla_line_item_type_slalittype
+    description: Subledger-Specific Line Item Type
+  - name: changed_document_split_xsplitmod
+    description: Item Changed by Document Splitting
+  - name: user_name_usnam
+    description: User Name
+  - name: time_stamp_timestamp
+    description: Utc Time Stamp in Short Form (Yyyymmddhhmmss)
+  - name: elimination_prctr_eprctr
+    description: Partner Profit Center for Elimination of Internal Business
+  - name: origin_object_rhoart
+    description: Type of Origin Object (Ec-Pca)
+  - name: gl_account_type_glaccount_type
+    description: Type of a General Ledger Account
+  - name: chart_of_accounts_ktopl
+    description: Chart of Accounts
+  - name: alternative_account_number_lokkt
+    description: Alternative Account Number in Company Code
+  - name: country_chart_accts_ktop2
+    description: Chart of Accounts According to Country Legislation
+  - name: invoice_reference_rebzg
+    description: Document Number of the Invoice to Which the Transaction Belongs
+  - name: fiscal_year_rebzj
+    description: Fiscal Year of the Relevant Invoice (For Credit Memo)
+  - name: line_item_rebzz
+    description: Line Item in the Relevant Invoice
+  - name: follow_on_document_type_rebzt
+    description: Follow-On Document Type
+  - name: po_category_rbest
+    description: Category of Reference Purchase Order
+  - name: logical_system_of_purchasing_document_ebeln_logsys
+    description: Logical System of Purchasing Document
+  - name: purchasing_document_ebeln
+    description: Purchasing Document Number
+  - name: item_ebelp
+    description: Item Number of Purchasing Document
+  - name: seq_number_of_account_assgt_zekkn
+    description: Sequential Number of Account Assignment
+  - name: text_sgtxt
+    description: Item Text
+  - name: sales_order_kdauf
+    description: Sales Order Number
+  - name: sales_order_item_kdpos
+    description: Item Number in Sales Order
+  - name: material_matnr
+    description: Material Number
+  - name: plant_werks
+    description: Plant
+  - name: vendor_lifnr
+    description: Account Number of Vendor Or Creditor
+  - name: customer_kunnr
+    description: Customer Number
+  - name: serv_rendered_date_fbuda
+    description: Date on Which Services Are Rendered
+  - name: billing_period_of_performance_start_date_perop_beg
+    description: Billing Period of Performance Start Date
+  - name: billing_period_of_performance_end_date_perop_end
+    description: Billing Period of Performance End Date
+  - name: condition_contract_coco_number
+    description: Condition Contract
+  - name: translation_date_wwert
+    description: Translation Date
+  - name: profit_center_drvtn_srce_type_prctr_drvtn_source_type
+    description: Profit Center Derivation Source Type
+  - name: account_type_koart
+    description: Account Type
+  - name: special_gl_indicator_umskz
+    description: Special G/L Indicator
+  - name: tax_country
+    description: Tax Reporting Country
+  - name: tax_code_mwskz
+    description: Tax on Sales/Purchases Code
+  - name: house_bank_hbkid
+    description: Short Key for a House Bank
+  - name: account_id_hktid
+    description: Id for Account Details
+  - name: value_date_valut
+    description: Value Date
+  - name: open_item_management_xopvw
+    description: 'Indicator: Open Item Management?'
+  - name: clearing_date_augdt
+    description: Clearing Date
+  - name: clearing_document_augbl
+    description: Document Number of the Clearing Document
+  - name: clearing_fiscal_year_auggj
+    description: Fiscal Year of Clearing Document
+  - name: depreciation_area_afabe
+    description: Depreciation Area Real Or Derived
+  - name: asset_anln1
+    description: Main Asset Number
+  - name: sub_number_anln2
+    description: Asset Subnumber
+  - name: asset_value_date_bzdat
+    description: Asset Value Date
+  - name: asset_transaction_type_anbwa
+    description: Asset Transaction Type
+  - name: transaction_type_category_movcat
+    description: Transaction Type Category
+  - name: depreciation_period_depr_period
+    description: Posting Period of Depreciation
+  - name: group_asset_anlgr
+    description: Group Asset
+  - name: subnumber_anlgr2
+    description: Subnumber of Group Asset
+  - name: distrib_rule_group_settlement_rule
+    description: Distribution Rule Group
+  - name: asset_class_anlkl
+    description: Asset Class
+  - name: account_determination_ktogr
+    description: Account Determination
+  - name: partner_asset_panl1
+    description: Main Number Partner Asset (Transfer)
+  - name: partner_subnumber_panl2
+    description: Partner Asset Subnumber (Transfer)
+  - name: orig_valuation_date_ubzdt_pn
+    description: Original Value Date of Transaction
+  - name: complete_retirement_xvabg_pn
+    description: 'Indicator: Post Complete Retirement'
+  - name: percentage_rate_prozs_pn
+    description: 'Asset Retirement: Percentage Rate'
+  - name: manual_proportional_values_xmanpropval_pn
+    description: Indicator Proportional Values Entered Manually
+  - name: cost_estimate_number_kalnr
+    description: Cost Estimate Number for Cost Est W/O Quantity Structure
+  - name: price_control_vprsv
+    description: Price Control Indicator
+  - name: material_price_determination_control_mlast
+    description: 'Material Price Determination: Control'
+  - name: spec_stk_valuation_kzbws
+    description: Valuation of Special Stock
+  - name: vendor_stock_valuation_xobew
+    description: Vendor Stock Valuation Indicator
+  - name: special_stock_sobkz
+    description: Special Stock Indicator
+  - name: valuation_time_stamp_vtstamp
+    description: Valuation Time Stamp
+  - name: sd_document_of_inventory_mat_kdauf
+    description: Sales Document Number of Valuated Special Inventory
+  - name: sd_item_of_inventory_mat_kdpos
+    description: Sales Document Item Number of Valuated Special Inventory
+  - name: wbselem_of_inventory_mat_pspnr
+    description: WBS Element (Internal) of Valuated Special Inventory
+  - name: wbselem_of_inventory_mat_ps_posid
+    description: WBS Element (External) of Valuated Special Inventory
+  - name: vendor_of_inventory_mat_lifnr
+    description: Supplier of Valuated Special Inventory
+  - name: valuation_type_bwtar
+    description: Valuation Type
+  - name: valuation_area_bwkey
+    description: Valuation Area
+  - name: price_unit_localcrcy_hpeinh
+    description: Price Unit in Local Currency
+  - name: price_unit_groupcrcy_kpeinh
+    description: Price Unit in Group Currency
+  - name: price_unit_acrcy_opeinh
+    description: Price Unit in Another Currency
+  - name: price_unit_4crcy_vpeinh
+    description: Price Unit in Fourth Currency
+  - name: orig_process_catego_mlptyp
+    description: Original Process Category
+  - name: category_mlcateg
+    description: Category in Material Update Structure
+  - name: procure_alt_process_qsbvalt
+    description: Procurement Alternative/Process
+  - name: production_process_number_qsprocess
+    description: Production Process
+  - name: period_type_perart
+    description: Type of Period
+  - name: item_mlposnr
+    description: Item in Material Ledger Document
+  - name: inventory_movement_category_invoice_mov_categ
+    description: 'Balance Sheet Valuation: Inventory Movement Category'
+  - name: company_code_in_sender_system_bukrs_sender
+    description: Company Code in Sender System
+  - name: sender_general_ledger_account_racct_sender
+    description: Sender General Ledger Account
+  - name: sender_account_assignment_accas_sender
+    description: Account Assignment in Sender System
+  - name: sender_account_assignment_type_accasty_sender
+    description: Account Assignment Type in Sender System
+  - name: object_number_objnr
+    description: Object Number
+  - name: co_subkey_hrkft
+    description: Controlling Key Subnumber
+  - name: origin_group_hkgrp
+    description: Origin Group As Subdivision of Cost Element
+  - name: partner_object_parob1
+    description: Partner Object (Always Filled)
+  - name: partner_obj_source_parobsrc
+    description: 'Source of Parob: Parob1 Or Type of Partner Object'
+  - name: source_object_uspob
+    description: Source Object (Cost Center/Activity Type)
+  - name: dr_cr_indicator_co_belkz
+    description: Controlling Debit/Credit Indicator
+  - name: dr_cr_indicator_origin_co_beknz
+    description: Debit/Credit Indicator (Origin)
+  - name: debit_type_beltp
+    description: Debit Type
+  - name: quantity_is_incomplete_muvflg
+    description: 'Indicator: Quantity Is Incomplete'
+  - name: offsetting_account_gkont
+    description: Offsetting Account Number
+  - name: offsetting_account_type_gkoar
+    description: Offsetting Account Type
+  - name: completion_indicator_erlkz
+    description: Completion Indicator for Line Item
+  - name: personnel_number_pernr
+    description: Personnel Number
+  - name: profitab_segmt_number_paobjnr
+    description: Profitability Segment Number (Controlling-Pa)
+  - name: paobjnr_relevant_for_co_compatibility_xpaobjnr_co_rel
+    description: 'Indicator: Profitability Segm Relevant for Controlling Compatibility'
+  - name: object_class_scope
+    description: Object Class
+  - name: logical_system_logsyso
+    description: Logical System of Object
+  - name: partner_company_code_pbukrs
+    description: Company Code of Partner
+  - name: partner_object_class_pscope
+    description: Partner Object Class
+  - name: logical_system_logsysp
+    description: Logical System of Partner Object
+  - name: valuation_strategy_bwstrat
+    description: Strategy for Determining an Allocation Price
+  - name: origin_object_objnr_hk
+    description: Object Number of Origin Object
+  - name: origin_order_number_aufnr_org
+    description: Origin Order Number
+  - name: origin_cctr_ukostl
+    description: Origin Cost Center
+  - name: origin_activity_ulstar
+    description: Origin Activity
+  - name: source_bus_process_uprznr
+    description: 'Source: Business Process'
+  - name: origin_profit_center_uprctr
+    description: Origin Profit Center
+  - name: origin_material_umatnr
+    description: Origin Material Number
+  - name: variance_origin_account_varc_uacct
+    description: Origin G/L Account of a Variance
+  - name: account_assignment_accas
+    description: Account Assignment
+  - name: object_type_accasty
+    description: Object Type
+  - name: activity_type_lstar
+    description: Activity Type
+  - name: order_aufnr
+    description: Order Number
+  - name: order_category_autyp
+    description: Order Category
+  - name: wbs_element_ps_psp_pnr
+    description: Work Breakdown Structure Element (Wbs Element)
+  - name: wbs_element_ps_posid
+    description: Work Breakdown Structure Element (Wbs Element)
+  - name: project_definition_ps_prj_pnr
+    description: Project (Internal)
+  - name: project_definition_ps_pspid
+    description: Project Definition
+  - name: network_nplnr
+    description: Network Number for Account Assignment
+  - name: network_activity_nplnr_vorgn
+    description: Network Activity
+  - name: business_process_prznr
+    description: Business Process
+  - name: cost_object_kstrg
+    description: Cost Object
+  - name: accounting_indicator_bemot
+    description: Accounting Indicator
+  - name: resource_rsrce
+    description: Resource
+  - name: notification_qmnum
+    description: Notification Number
+  - name: service_document_type_service_document_type
+    description: Service Document Type
+  - name: service_document_service_document_id
+    description: Service Document Id
+  - name: service_document_item_service_document_item_id
+    description: Service Document Item Id
+  - name: service_contract_type
+    description: Service Contract Type
+  - name: service_contract_service_contract_id
+    description: Service Contract Id
+  - name: service_contract_item_service_contract_item_id
+    description: Service Contract Item Id
+  - name: solution_order_solution_order_id
+    description: Solution Order Id
+  - name: solution_order_item_solution_order_item_id
+    description: Solution Order Item Id
+  - name: operating_concern_erkrs
+    description: Operating Concern
+  - name: partner_account_assignment_paccas
+    description: Partner Account Assignment
+  - name: partner_object_type_paccasty
+    description: Partner Object Type
+  - name: paractivity_plstar
+    description: Partner Activity
+  - name: partner_order_number_paufnr
+    description: Partner Order Number
+  - name: partner_order_category_pautyp
+    description: Partner Order Category
+  - name: partner_wbs_element_internal_id_pps_psp_pnr
+    description: Partner Work Breakdown Structure Element (Internal Id)
+  - name: partner_work_breakdown_structure_element_pps_posid
+    description: Partner Work Breakdown Structure Element
+  - name: partner_project_definition_internal_id_pps_prj_pnr
+    description: Partner Project (Internal Id)
+  - name: partner_project_def_pps_pspid
+    description: Partner Project
+  - name: partner_sales_order_number_pkdauf
+    description: Number of Partner Sales Order
+  - name: partner_sales_order_item_pkdpos
+    description: Partner Sales Order Item
+  - name: partner_prof_segment_ppaobjnr
+    description: Partner Profitability Segment Number (Controlling-Pa)
+  - name: partner_project_network_pnplnr
+    description: Partner Project Network
+  - name: part_project_network_activity_pnplnr_vorgn
+    description: Partner Project Network Activity
+  - name: partner_business_process_pprznr
+    description: Partner Business Process
+  - name: partner_cost_object_pkstrg
+    description: Partner Cost Object
+  - name: partner_service_document_type_pservice_document_type
+    description: Partner Service Document Type
+  - name: partner_service_document_pservice_document_id
+    description: Partner Service Document Id
+  - name: partner_service_document_item_pservice_document_item_id
+    description: Partner Service Document Item Id
+  - name: statistical_account_assignment_type_1_co_accasty_n1
+    description: Type of First Statistical Account Assignment
+  - name: statistical_account_assignment_type_2_co_accasty_n2
+    description: Type of Second Statistical Account Assignment
+  - name: statistical_account_assignment_type_3_co_accasty_n3
+    description: Type of Third Statistical Account Assignment
+  - name: document_item_co_zlenr
+    description: Document Item Number
+  - name: document_number_co_belnr
+    description: Document Number
+  - name: posting_row_co_buzei
+    description: Posting Row
+  - name: co_posting_row_1_co_buzei1
+    description: Posting Row of Controlling Item in First Additional Valuation
+  - name: co_posting_row_2_co_buzei2
+    description: Posting Row of Controlling Item in Second Additional Valuation
+  - name: co_posting_row_5_co_buzei5
+    description: Posting Row of Controlling Item in Valuation View 5
+  - name: co_posting_row_6_co_buzei6
+    description: Posting Row of Controlling Item in Valuation View 6
+  - name: co_posting_row_7_co_buzei7
+    description: Posting Row of Controlling Item in Valuation View 7
+  - name: posting_row_co_refbz
+    description: Posting Row of Reference Document
+  - name: refdoc_posting_row_1_co_refbz1
+    description: Posting Row of Reference Document in First Add'L Valuation
+  - name: refdoc_posting_row_2_co_refbz2
+    description: Posting Row of Reference Document in Second Add'L Valuation
+  - name: refdoc_posting_row_5_co_refbz5
+    description: Posting Row of Reference Document in Valuation View 5
+  - name: refdoc_posting_row_6_co_refbz6
+    description: Posting Row of Reference Document in Valuation View 6
+  - name: refdoc_posting_row_7_co_refbz7
+    description: Posting Row of Reference Document in Valuation View 7
+  - name: overtime_category_overtimecat
+    description: Overtime Category
+  - name: work_item_id
+    description: Work Item Id
+  - name: object_id_arbid
+    description: Object Id of the Resource
+  - name: activity_vornr
+    description: Operation/Activity Number
+  - name: order_item_number_aufps
+    description: Order Item Number
+  - name: suboperation_uvorn
+    description: Suboperation
+  - name: equipment_equnr
+    description: Equipment Number
+  - name: functional_location_tplnr
+    description: Functional Location
+  - name: assembly_istru
+    description: Assembly
+  - name: maintactivitytype_ilart
+    description: Maintenance Activity Type
+  - name: order_planning_indicator_plknz
+    description: Maintenance Order Planning Indicator
+  - name: priority_type_artpr
+    description: Priority Type
+  - name: priority_priok
+    description: Priority
+  - name: superior_order_maufnr
+    description: Number of Superior Order
+  - name: material_group_matkl_mm
+    description: Material Group
+  - name: partner_order_item_number_paufps
+    description: Partner Order Item Number
+  - name: planned_parts_work
+    description: Planned Parts/Work
+  - name: billing_type_fkart
+    description: Billing Type
+  - name: sales_organization_vkorg
+    description: Sales Organization
+  - name: distribution_channel_vtweg
+    description: Distribution Channel
+  - name: division_spart
+    description: Division
+  - name: product_sold_matnr_copa
+    description: Product Sold
+  - name: product_sold_group_matkl
+    description: Product Sold Group
+  - name: customer_group_kdgrp
+    description: Customer Group
+  - name: country_land1
+    description: Country Key
+  - name: industry_brsch
+    description: Industry Key
+  - name: sales_district_bzirk
+    description: Sales District
+  - name: bill_to_party_kunre
+    description: Bill-To Party
+  - name: ship_to_party_kunwe
+    description: Ship-To Party
+  - name: group_key_konzs
+    description: Group Key
+  - name: dummy_function_in_length_1_acdoc_copa_eew_dummy_pa
+    description: Dummy Function in Length 1
+  - name: brand_kmbrnd_pa
+    description: Brand
+  - name: business_field_kmcatg_pa
+    description: Business Field
+  - name: customer_group_kmkdgr_pa
+    description: Customer Group
+  - name: country_kmland_pa
+    description: Country Key
+  - name: material_group_kmmakl_pa
+    description: Material Group
+  - name: sales_office_kmvkbu_pa
+    description: Sales Office
+  - name: procurement_type_beskz_pa
+    description: Procurement Type
+  - name: sales_employee_kmvtnr_pa
+    description: Sales Employee
+  - name: prod_hierarchy01_1_paph1_pa
+    description: Prod.Hierarchy01-1
+  - name: prod_hierarchy01_2_paph2_pa
+    description: Prod.Hierarchy01-2
+  - name: prod_hierarchy01_3_paph3_pa
+    description: Prod.Hierarchy01-3
+  - name: sales_office_vkbur_pa
+    description: Sales Office
+  - name: dummy_mrkt_sgmnt_eew_ps
+    description: 'Custom Fields: Dummy for Use in Extension Includes'
+  - name: cash_origin_company_code_re_bukrs
+    description: Cash Origin Company Code
+  - name: cash_origin_account_re_account
+    description: Cash Origin Account
+  - name: fm_area_fikrs
+    description: Financial Management Area
+  - name: commitment_item_fipex
+    description: Commitment Item
+  - name: funds_center_fistl
+    description: Funds Center
+  - name: funded_program_measure
+    description: Funded Program
+  - name: fund_rfund
+    description: Fund
+  - name: grant_rgrant_nbr
+    description: Grant
+  - name: budget_period_budget_pd
+    description: Budget Period
+  - name: partner_fund_sfund
+    description: Partner Fund
+  - name: partner_grant_sgrant_nbr
+    description: Partner Grant
+  - name: par_budget_per_sbudget_pd
+    description: 'Fm: Partner Budget Period'
+  - name: budget_account_bdgt_account
+    description: Budget Account
+  - name: company_code_for_budget_account_bdgt_account_company_code
+    description: Budget Account Company Code
+  - name: budget_consumption_date_bdgt_cnsmpn_date
+    description: Budget Consumption Date
+  - name: posting_period_for_budget_consumption_bdgt_cnsmpn_period
+    description: Cc Fiscal Period for Budget Consumption Date
+  - name: year_of_budget_consumption_bdgt_cnsmpn_year
+    description: Cc Fiscal Year for Budget Consumption Date
+  - name: budget_relevant_bdgt_relevant
+    description: Budget-Relevant Indicator
+  - name: budget_consumption_type_bdgt_cnsmpn_type
+    description: Budget Consumption Type
+  - name: amount_type_for_budget_consumption_bdgt_cnsmpn_amount_type
+    description: Budget Consumption Amount Type
+  - name: sponsored_program_rsponsored_prog
+    description: Sponsored Program
+  - name: sponsored_class_rsponsored_class
+    description: Sponsored Class
+  - name: budget_validity_number_rbdgt_vldty_nbr
+    description: Budget Validity Number
+  - name: earmarked_funds_kblnr
+    description: Document Number for Earmarked Funds
+  - name: document_item_kblpos
+    description: 'Earmarked Funds: Document Item'
+  - name: joint_venture_vname
+    description: Joint Venture
+  - name: equity_group_egrup
+    description: Equity Group
+  - name: recovery_indicator_recid
+    description: Recovery Indicator
+  - name: partner_vptnr
+    description: Partner Account Number
+  - name: billing_indicator_btype
+    description: Payroll Type
+  - name: equity_type_etype
+    description: Equity Type
+  - name: production_month_prodper
+    description: Production Month (Date to Find Period and Year)
+  - name: billing_month_billm
+    description: Billing Month
+  - name: proc_operational_month_pom
+    description: Processing Operational Month
+  - name: cutback_run_id_jva_cbrunid
+    description: Cutback Run Id (Joint Venture Accounting)
+  - name: jva_activity_joint_venture_accounting_jvactivity
+    description: Jva Activity (Joint Venture Accounting)
+  - name: partner_venture_jva_pvname
+    description: Partner Venture (Joint Venture Accounting)
+  - name: partner_equity_group_jva_pegrup
+    description: Partner Equity Group (Joint Venture Accounting)
+  - name: sender_rec_indicator_s_recind
+    description: 'Allocation: Sender Credit Recovery Indicator'
+  - name: cutback_account_jva_cbracct
+    description: Cutback Account (Joint Venture Accounting)
+  - name: cutback_cost_object_jva_cbobjnr
+    description: Cutback Cost Object (Joint Venture Accounting)
+  - name: business_entity_swenr
+    description: Business Entity Number
+  - name: building_sgenr
+    description: Number of Building
+  - name: land_sgrnr
+    description: Number of Land
+  - name: rental_object_smenr
+    description: Number of Rental Object
+  - name: contract_recnnr
+    description: Contract Number
+  - name: service_charge_key_snksl
+    description: Service Charge Key
+  - name: settlement_unit_sempsl
+    description: Settlement Unit
+  - name: reference_date_dabrz
+    description: Reference Date for Settlement
+  - name: partner_business_entity_pswenr
+    description: Partner Business Entity Number
+  - name: partner_building_psgenr
+    description: Partner Building Number
+  - name: partner_land_psgrnr
+    description: Partner Land Number
+  - name: partner_rent_unit_psmenr
+    description: Number of Partner Rental Unit
+  - name: partner_contract_number_precnnr
+    description: Partner Contract Number
+  - name: partner_servic_charge_key_psnksl
+    description: Partner Service Charge Key
+  - name: partner_settlement_unit_psempsl
+    description: Partner Settlement Unit
+  - name: partner_reference_date_pdabrz
+    description: Partner Reference Date for Settlement
+  - name: accrual_object_type_acrobjtype
+    description: Type of the Accrual Object
+  - name: logical_system_of_accrual_object_acrlogsys
+    description: Logical System of the Accrual Object
+  - name: accrual_object_acrobj_id
+    description: Identifier of the Accrual Object
+  - name: accrual_subobject_acrsobj_id
+    description: Identifier of the Accrual Subobject
+  - name: accrual_item_type_acritmtype
+    description: Type of the Item of the Accrual Subobject
+  - name: accrual_value_date_acrvaldat
+    description: Accrual Value Date
+  - name: type_of_the_financial_valuation_object_valobjtype
+    description: Type of the Financial Valuation Object
+  - name: financial_valuation_object_valobj_id
+    description: Identifier of the Financial Valuation Object
+  - name: financial_valuation_subobject_valsobj_id
+    description: Identifier of the Financial Valuation Subobject
+  - name: net_due_date_netdt
+    description: Net Due Date
+  - name: risk_class
+    description: Risk Class
+  - name: dummy_acdoc_eew_dummy
+    description: 'Custom Fields: Dummy for Use in Extension Includes'
+  - name: dummy_incl_eew_cobl
+    description: 'Custom Fields: Dummy for Use in Extension Includes'
+  - name: follow_up_action_fup_action
+    description: Follow-Up Action for This Universal Journal Entry Line Item
+  - name: sdm_versioning_sdm_version
+    description: 'Sdm: Version Field for Acdoca'
+  - name: migration_source_mig_source
+    description: Source of a Migrated Journal Entry Item
+  - name: migrated_line_item_id_mig_docln
+    description: Item Id of Migrated G/L Line Item
+  - name: baseline_payment_date_zfbdt
+    description: Baseline Date for Due Date Calculation
+  - name: terms_of_payment_zterm
+    description: Terms of Payment Key
+  - name: days_1_zbd1t
+    description: Cash Discount Days 1
+  - name: days_2_zbd2t
+    description: Cash Discount Days 2
+  - name: days_net_zbd3t
+    description: Net Payment Terms Period
+  - name: cash_discount_percent_1_zbd1p
+    description: Cash Discount Percentage 1
+  - name: cash_discount_percent_2_zbd2p
+    description: Cash Discount Percentage 2
+  - name: payment_method_zlsch
+    description: Payment Method
+  - name: payment_block_zlspr
+    description: Payment Block Key
+  - name: service_indicator_diekz
+    description: Service Indicator (Foreign Payment)
+  - name: dunning_block_mansp
+    description: Dunning Block
+  - name: dunning_key_mschl
+    description: Dunning Key
+  - name: last_dunned_madat
+    description: Date of Last Dunning Notice
+  - name: dunning_level_manst
+    description: Dunning Level
+  - name: dunning_area_maber
+    description: Dunning Area
+  - name: withholding_tax_base_qsshb
+    description: Withholding Tax Base Amount
+  - name: withholding_tax_amnt_qbshb
+    description: Withholding Tax Amount (In Document Currency)
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

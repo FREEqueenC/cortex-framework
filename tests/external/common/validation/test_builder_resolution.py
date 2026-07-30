@@ -40,7 +40,6 @@ def test_builder_resolution_integrity(repo_root: pathlib.Path):
 
     for manifest_path in src_dir.rglob("manifest.yaml"):
         module_dir = manifest_path.parent
-        category = module_dir.parent.name
 
         with open(manifest_path) as f:
             manifest_data = yaml.safe_load(f) or {}
@@ -57,7 +56,8 @@ def test_builder_resolution_integrity(repo_root: pathlib.Path):
         # Check Local Builder Implementations
         local_builder_path = module_dir / "builder.py"
         if local_builder_path.exists():
-            local_module_path = f"data_modules.cortex.{category}.{module_dir.name}.builder"
+            rel_path = module_dir.relative_to(src_dir)
+            local_module_path = f"{str(rel_path).replace('/', '.')}.builder"
             try:
                 # Dynamically import the local builder module
                 module = importlib.import_module(local_module_path)

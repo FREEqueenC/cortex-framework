@@ -1,0 +1,276 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides administrative and commercial terms of SAP purchase orders, scheduling agreements,
+  and contracts from EKKO, maintaining transaction dates, vendors, currencies, and payment terms. The
+  data is captured at the granularity of Client (System) and Purchasing Document Number, ensuring a unique
+  audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purchasing_document_number_ebeln
+    description: Purchasing Document Number, PK
+  - name: deletion_flag_loekz
+    description: Deletion Indicator in Purchasing Document
+  - name: company_code_bukrs
+    description: Company Code
+  - name: document_category_bstyp
+    description: Purchasing Document Category
+  - name: document_type_bsart
+    description: Purchasing Document Type
+  - name: control_flag_bsakz
+    description: Control Indicator for Purchasing Document Type
+  - name: deletion_flag_hdr_loekz
+    description: Deletion Indicator in Purchasing Document
+  - name: status_statu
+    description: Status of Purchasing Document
+  - name: created_on_aedat
+    description: Date on Which Record Was Created
+  - name: created_by_ernam
+    description: Name of Person Who Created the Object
+  - name: item_number_interval_pincr
+    description: Item Number Interval
+  - name: last_item_number_lponr
+    description: Last Item Number
+  - name: vendor_account_number_lifnr
+    description: Account Number of Vendor Or Creditor
+  - name: language_spras
+    description: Language Key
+  - name: terms_payment_key_zterm
+    description: Terms of Payment Key
+  - name: discount_days1_zbd1_t
+    description: Cash (Prompt Payment) Discount Days
+  - name: discount_days2_zbd2_t
+    description: Cash (Prompt Payment) Discount Days
+  - name: discount_days3_zbd3_t
+    description: Cash (Prompt Payment) Discount Days
+  - name: cash_discount_percentage1_zbd1_p
+    description: Cash Discount Percentage 1
+  - name: cash_discount_percentage2_zbd2_p
+    description: Cash Discount Percentage 2
+  - name: purchasing_organization_ekorg
+    description: Purchasing Organization
+  - name: purchasing_group_ekgrp
+    description: Purchasing Group
+  - name: currency_key_waers
+    description: Currency Key
+  - name: exchange_rate_wkurs
+    description: Exchange Rate
+  - name: flag_fixing_exchange_rate_kufix
+    description: 'Indicator: Fixing of Exchange Rate'
+  - name: purchasing_document_date_bedat
+    description: Purchasing Document Date
+  - name: start_validity_period_kdatb
+    description: Start of Validity Period
+  - name: end_validity_period_kdate
+    description: End of Validity Period
+  - name: closing_datefor_applications_bwbdt
+    description: Closing Date for Applications
+  - name: deadline_angdt
+    description: Deadline for Submission of Bid/Quotation
+  - name: binding_periodfor_quotation_bnddt
+    description: Binding Period for Quotation
+  - name: warranty_date_gwldt
+    description: Warranty Date
+  - name: bid_invitation_number_ausnr
+    description: Bid Invitation Number
+  - name: quotation_number_angnr
+    description: Quotation Number
+  - name: quotation_submission_date_ihran
+    description: Quotation Submission Date
+  - name: your_reference_ihrez
+    description: Your Reference
+  - name: vendor_salesperson_verkf
+    description: Responsible Salesperson At Vendor'S Office
+  - name: vendor_telephone_telf1
+    description: Vendor'S Telephone Number
+  - name: supplying_vendor_llief
+    description: Supplying Vendor
+  - name: customer_kunnr
+    description: Customer Number
+  - name: principal_purchase_agreement_konnr
+    description: Number of Principal Purchase Agreement
+  - name: complete_delivery_stipulated_autlf
+    description: Complete Delivery Stipulated for Each Purchase Order
+  - name: goods_receipt_msg_flag_weakt
+    description: 'Indicator: Goods Receipt Message'
+  - name: supply_transport_orders_reswk
+    description: Supplying (Issuing) Plant in Stock Transport Order
+  - name: area_per_distribution_value_ktwrt
+    description: Target Value for Header Area Per Distribution
+  - name: collective_number_submi
+    description: Collective Number
+  - name: number_of_the_document_condition_knumv
+    description: Number of the Document Condition
+  - name: procedure_kalsm
+    description: Procedure (Pricing, Output Control, Account Det., Costing,...)
+  - name: update_group_statistics_stafo
+    description: Update Group for Statistics Update
+  - name: different_invoicing_party_lifre
+    description: Different Invoicing Party
+  - name: foreign_trade_document_exnum
+    description: Number of Foreign Trade Data in MM and SD Documents
+  - name: our_reference_unsez
+    description: Our Reference
+  - name: logical_system_logsy
+    description: Logical System
+  - name: item_number_interval_upinc
+    description: Item Number Interval for Subitems
+  - name: time_dependent_conditions_stako
+    description: Document with Time-Dependent Conditions
+  - name: release_group_frggr
+    description: Release Group
+  - name: release_strategy_frgsx
+    description: Release Strategy
+  - name: purchasing_document_release_frgke
+    description: 'Release Indicator: Purchasing Document'
+  - name: release_status_frgzu
+    description: Release State
+  - name: release_incomplete_frgrl
+    description: Release Not Yet Completely Effected
+  - name: country_for_tax_return_lands
+    description: Country for Taxreturn
+  - name: scheduling_agreement_lphis
+    description: Indicator for Scheduling Agreement Release Documentation
+  - name: address_adrnr
+    description: Address Number
+  - name: country_sales_tax_id_number_stceg_l
+    description: Country of Sales Tax Id Number
+  - name: vat_registration_number_stceg
+    description: VAT Registration Number
+  - name: reason_for_cancellation_absgr
+    description: Reason for Cancellation
+  - name: additional_document_addnr
+    description: Document Number for Additional
+  - name: correction_misc_provisions_kornr
+    description: Correction of Miscellaneous Provisions
+  - name: incomplete_flag_memory
+    description: Purchase Order Not Yet Complete
+  - name: processing_state_procstat
+    description: Purchasing Document Processing State
+  - name: value_at_release_rlwrt
+    description: Total Value At Time of Release
+  - name: version_number_in_purchasing_revno
+    description: Version Number in Purchasing
+  - name: scm_process_scmproc
+    description: Scm Process That Created the Purchase Order
+  - name: goods_receipt_reason_reason_code
+    description: Goods Receipt Reason Code
+  - name: category_incompleteness_memorytype
+    description: Category of Incompleteness
+  - name: retention_flag_rettp
+    description: Retention Indicator
+  - name: process_identification_number_msr_id
+    description: Process Identification Number
+  - name: parta_contract_hierarchy_hierarchy_exists
+    description: Part of a Contract Hierarchy
+  - name: exchange_threshold_value_threshold_exists
+    description: Threshold Value for Exchange Rates
+  - name: legal_contract_number_legal_contract
+    description: Legal Contract Number
+  - name: contract_name_description
+    description: Contract Name
+  - name: release_date_contract_release_date
+    description: Release Date of Contract
+  - name: physical_handover_handoverloc
+    description: Location for a Physical Handover of Goods
+  - name: internal_key_for_force_element_force_id
+    description: Internal Key for Force Element
+  - name: internal_counter_force_cnt
+    description: Internal (Version) Counter
+  - name: relocation_id_reloc_id
+    description: Relocation Id
+  - name: relocation_step_id_reloc_seq_id
+    description: Relocation Step Id
+  - name: logical_system_source_logsys
+    description: Logical System
+  - name: interest_calculation_flag_vzskz
+    description: Interest Calculation Indicator
+  - name: seasonal_procesing_document_pohf_type
+    description: Document for Seasonal Purchase Order Processing
+  - name: same_delivery_date_eq_eindt
+    description: 'Delivery Date Header: All Items Have Same Delivery Date'
+  - name: same_receiving_plant_eq_werks
+    description: 'Plant Header: All Items Have Same Receiving Plant'
+  - name: firm_deal_flag_fixpo
+    description: Firm Deal Indicator
+  - name: take_account_purch_group_ekgrp_allow
+    description: Take Account of Purchasing Group
+  - name: take_account_plants_werks_allow
+    description: Take Account of Plants
+  - name: take_account_contracts_contract_allow
+    description: Take Account of Contracts
+  - name: take_account_item_categories_pstyp_allow
+    description: Take Account of Item Categories
+  - name: take_account_fixed_date_fixpo_allow
+    description: Take Account of Fixed-Date Purchases Indicator
+  - name: consider_budget_key_id_allow
+    description: Consider Budget
+  - name: take_account_alloc_table_relevance_aurel_allow
+    description: Take Account of Alloc Table Relevance
+  - name: take_account_dlvy_period_delper_allow
+    description: Take Account of Dlvy Period
+  - name: take_account_delivery_date_eindt_allow
+    description: Take Account of Delivery Date
+  - name: include_vendor_subrange_ltsnr_allow
+    description: Include Vendor Subrange
+  - name: otb_check_level_otb_level
+    description: Otb Check Level
+  - name: otb_condition_type_otb_cond_type
+    description: Otb Condition Type
+  - name: unique_number_budget_key_id
+    description: Unique Number of Budget
+  - name: required_budget_otb_value
+    description: Required Budget
+  - name: otb_currency_otb_curr
+    description: Otb Currency
+  - name: reserved_budget_for_otb_otb_res_value
+    description: Reserved Budget for Otb-Relevant Purchasing Document
+  - name: special_release_budget_otb_spec_value
+    description: Special Release Budget
+  - name: budget_type_budg_type
+    description: Budget Type
+  - name: otb_check_status_otb_status
+    description: Otb Check Status
+  - name: reason_flag_for_otb_check_status_otb_reason
+    description: Reason Indicator for Otb Check Status
+  - name: type_otb_check_check_type
+    description: Type of Otb Check
+  - name: otb_relevant_contract_con_otb_req
+    description: Otb-Relevant Contract
+  - name: otb_flag_level_for_contracts_con_prebook_lev
+    description: Otb Indicator Level for Contracts
+  - name: distribution_using_target_value_or_item_data_con_distr_lev
+    description: Distribution Using Target Value Or Item Data
+  - name: year_of_change_date_aedat
+    description: Year of Item Change Date
+  - name: month_of_change_date_aedat
+    description: Month of Item Change Date
+  - name: quarter_of_change_date_aedat
+    description: Quarter of Item Change Date
+  - name: week_of_change_date_aedat
+    description: Week of Item Change Date
+  - name: year_of_purchasing_document_date_bedat
+    description: Year of Purchasing Order Date
+  - name: month_of_purchasing_document_date_bedat
+    description: Month of Purchasing Order Date
+  - name: quarter_of_purchasing_document_date_bedat
+    description: Quarter of Purchasing Order Date
+  - name: week_of_purchasing_document_date_bedat
+    description: Week of Purchasing Order Date
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

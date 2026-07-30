@@ -1,0 +1,172 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides depreciation parameters and useful life settings from ANLB, T093B, and related SAP
+  tables to model fixed asset valuation trends. The data is captured at the granularity of Client (System),
+  Company Code, Asset Number, Asset Subnumber, Depreciation Area, Valid To, and Language Key, ensuring
+  a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset Number, PK
+  - name: asset_subnumber_anln2
+    description: Sub-Number, PK
+  - name: depreciation_area_afabe
+    description: Depreciation Area, PK
+  - name: valid_to_bdatu
+    description: Valid to Date, PK
+  - name: language_key_spras
+    description: Language Key, PK
+  - name: valid_from_adatu
+    description: Valid From Date
+  - name: created_by_ernam
+    description: Created by
+  - name: created_on_erdat
+    description: Created on
+  - name: changed_by_aenam
+    description: Changed by
+  - name: changed_on_aedat
+    description: Changed on
+  - name: mark_for_deletion_xloev
+    description: Mark for Deletion
+  - name: blocked_for_posting_xspeb
+    description: Blocked for Posting
+  - name: screen_layout_rule_felei
+    description: Screen Layout Rule
+  - name: negative_values_allowed_xnega
+    description: Negative Values Allowed
+  - name: low_val_asset_check_xgwgk
+    description: Low-Value Asset Check
+  - name: dep_on_main_asset_number_xunta
+    description: Dependent on Main Asset Number
+  - name: depreciation_calculation_start_date_afabg
+    description: Depreciation Calculation Start Date
+  - name: interest_calculation_zinbg
+    description: Interest Calculation Start Date
+  - name: spec_depreciation_safbg
+    description: Special Depreciation Start Date
+  - name: investment_support_invsl
+    description: Investment Support Key
+  - name: depreciation_key_afasl
+    description: Depreciation Key
+  - name: useful_life_ndjar
+    description: Useful Life (Years)
+  - name: usef_life_in_periods_ndper
+    description: Useful Life (Periods)
+  - name: ord_dep_percent_rate_naprz
+    description: Ordinary Depreciation Percentage Rate
+  - name: spec_dep_perc_rate_saprz
+    description: Special Depreciation Percentage Rate
+  - name: index_series_wbind
+    description: Index Series for Revaluation
+  - name: age_dependent_index_alind
+    description: Age-Dependent Index Series
+  - name: variable_dep_portion_aprop
+    description: Variable Depreciation Portion
+  - name: changeover_year_umjar
+    description: Changeover Year
+  - name: original_useful_life_ndurj
+    description: Original Useful Life (Years)
+  - name: orig_life_in_periods_ndurp
+    description: Original Useful Life (Periods)
+  - name: scrap_value_schrw
+    description: Scrap Value
+  - name: last_fiscal_year_lgjan
+    description: Last Fiscal Year for Useful Life
+  - name: period_scaling_perfy
+    description: Period Scaling Factor
+  - name: change_type_anupd
+    description: Change Type
+  - name: revaluation_aufwtg
+    description: Revaluation Key
+  - name: dep_area_deactivated_xafbe
+    description: Depreciation Area Deactivated
+  - name: group_asset_anlgr
+    description: Group Asset Number
+  - name: subnumber_anlgr2
+    description: Group Asset Sub-Number
+  - name: acquis_year_vyear
+    description: Acquisition Year
+  - name: acquis_month_vmnth
+    description: Acquisition Month
+  - name: operating_readiness_inbda
+    description: Operating Readiness Date
+  - name: last_retmt_on_abgdat_b
+    description: Last Retirement Date
+  - name: deactivation_on_deakt_b
+    description: Deactivation Date
+  - name: revaluation_key_j_1aarvkey
+    description: Inflation Revaluation Key
+  - name: last_revaluation_date_j_1aaltdat
+    description: Last Inflation Revaluation Date
+  - name: last_index_used_j_1aaltidx
+    description: Last Inflation Index Used
+  - name: scrap_value_percent_schrw_proz
+    description: Scrap Value Percentage
+  - name: changeover_period_umper
+    description: Changeover Period
+  - name: currency_waers
+    description: Currency Code
+  - name: rounding_nbv_runden
+    description: Rounding Places for Net Book Value
+  - name: memo_value_erwert
+    description: Memo Value
+  - name: max_lva_amount_posting_gwgwrt
+    description: Maximum Lva Amount for Posting
+  - name: net_book_value_dep_change_umrwrt
+    description: Net Book Value for Depreciation Changeover
+  - name: max_lva_amount_purch_ord_gwgbst
+    description: Maximum Lva Amount for Purchase Orders
+  - name: calc_dep_half_periods_filler
+    description: Calculate Depreciation in Half Periods
+  - name: rounding_rv_rndahk
+    description: Rounding Places for Replacement Value
+  - name: closed_fiscal_year_abgja
+    description: Closed Fiscal Year
+  - name: dep_posting_cycle_afrhy
+    description: Depreciation Posting Cycle
+  - name: capitalize_auc_flag_xanzum
+    description: Capitalize Assets Under Construction Without Down Payments
+  - name: fs_version_versn_011
+    description: Financial Statement Version
+  - name: dist_depreciation_weeks_x445r
+    description: Distribute Depreciation by Weeks
+  - name: manage_group_assets_xakpl
+    description: Manage Group Assets
+  - name: rounding_basis_basrnd
+    description: Rounding Basis
+  - name: rounding_method_metrnd
+    description: Rounding Method
+  - name: fiscal_year_variant_periv
+    description: Fiscal Year Variant
+  - name: tolerance_amount_toleranz
+    description: Tolerance Amount for Depreciation
+  - name: post_nbv_retirement_flag_kzrbwb_afabe
+    description: Post Net Book Value for Asset Retirement
+  - name: short_name_dep_area_afbktx
+    description: Short Name of Depreciation Area
+  - name: dep_area_name_afbtxt
+    description: Description of Depreciation Area
+  - name: depreciation_key_description_afatxt
+    description: Description of Depreciation Key
+  - name: chart_of_dep_afapl
+    description: Chart of Depreciation
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

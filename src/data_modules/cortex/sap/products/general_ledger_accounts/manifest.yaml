@@ -1,0 +1,33 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+displayName: SAP General Ledger Accounts
+description: This data product includes information about SAP general ledger accounts
+  from the Financial Accounting (FI) module in the Finance domain in SAP S/4HANA or
+  SAP ECC. It centralizes Chart of Accounts master records alongside multilingual
+  operational definitions. Critical for financial consolidation, it ensures strict
+  compliance auditing, trial balance reporting, and unified general ledger analytics.
+category: source_aligned_product
+type: general_ledger_accounts
+dependencies:
+  sapModule:
+    supportedVersions:
+    - ecc
+    - s4
+    tables:
+      common:
+      - ska1
+      - skat
+    modulePath: cortex.sap.foundations.sap
+builder: sap_product

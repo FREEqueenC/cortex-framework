@@ -1,0 +1,97 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Financial Accounting (FI) module in the Finance
+  domain and provides cost center, profit center, plant, and other time-varying organizational allocations
+  for fixed assets from SAP ANLZ. The data is captured at the granularity of Client (System), Company
+  Code, Asset Number, Asset Subnumber, and Valid To, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: asset_number_anln1
+    description: Asset Number, PK
+  - name: asset_subnumber_anln2
+    description: Sub-Number, PK
+  - name: valid_to_bdatu
+    description: Valid to Date, PK
+  - name: valid_from_adatu
+    description: Valid From Date
+  - name: cost_center_kostl
+    description: Cost Center
+  - name: plant_werks
+    description: Plant
+  - name: business_area_gsber
+    description: Business Area
+  - name: activity_type_lstar
+    description: Activity Type
+  - name: shift_factor_msfak
+    description: Shift Factor
+  - name: asset_shutdown_xstil
+    description: Asset Shutdown Flag
+  - name: location_stort
+    description: Asset Location
+  - name: internal_order_caufn
+    description: Internal Order
+  - name: room_raumn
+    description: Room Number
+  - name: maintenance_order_iaufn
+    description: Maintenance Order
+  - name: functional_location_tplnr
+    description: Functional Location
+  - name: change_type_anupd
+    description: Change Type
+  - name: tax_jurisdiction_txjcd
+    description: Tax Jurisdiction Code
+  - name: wbs_element_maint_ipsnr
+    description: WBS Element for Maintenance
+  - name: license_plate_number_kfzkz
+    description: License Plate Number
+  - name: personnel_number_pernr
+    description: Personnel Number
+  - name: resp_cost_center_kostlv
+    description: Responsible Cost Center
+  - name: funds_center_fistl
+    description: Funds Center
+  - name: fund_geber
+    description: Fund
+  - name: functional_area_fkber
+    description: Functional Area
+  - name: grant_grant_nbr
+    description: Grant
+  - name: fund_geber2
+    description: Fund
+  - name: functional_area_fkber2
+    description: Functional Area
+  - name: grant_grant_nbr2
+    description: Grant
+  - name: funds_center_fistl2
+    description: Funds Center
+  - name: real_estate_key_imkey
+    description: Real Estate Key
+  - name: wbs_element_costs_ps_psp_pnr2
+    description: WBS Element for Costs
+  - name: budget_period_budget_pd
+    description: Budget Period
+  - name: budget_period_budget_pd2
+    description: Budget Period
+  - name: segment_segment
+    description: Segment
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -19,11 +19,24 @@ from typing import Any
 
 import yaml
 
+from common.errors import CortexConfigError
+
+try:
+    from yaml import CSafeLoader as SafeLoader
+except ImportError:
+    from yaml import SafeLoader  # type: ignore[assignment]
+
 
 def load_yaml(filepath: pathlib.Path | str) -> dict[str, Any]:
     """Loads a YAML file and returns its parsed contents."""
     try:
         with open(filepath, encoding="utf-8") as f:
-            return yaml.safe_load(f) or {}
+            return yaml.load(f, Loader=SafeLoader) or {}
     except FileNotFoundError:
-        raise ValueError(f"File not found: {filepath}") from None
+        raise CortexConfigError(
+            f"File not found: '{filepath}'",
+            hint=(
+                "Verify that the file exists at the specified path and that the "
+                "path is spelled correctly."
+            ),
+        ) from None

@@ -1,0 +1,100 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: Company Code Settings for Ledger
+fields:
+- name: mandt
+  description: Client (Mandant)
+- name: rldnr
+  description: Ledger
+- name: bukrs
+  description: Company Code
+- name: curtph
+  description: Currency Type (Header)
+- name: mlrelindh
+  description: Material Ledger Relevant Indicator (Header)
+- name: curtpk
+  description: Currency Type K
+- name: curposk
+  description: Currency Position K
+- name: mlrelindk
+  description: Material Ledger Relevant Indicator K
+- name: curtpo
+  description: Currency Type O
+- name: curposo
+  description: Currency Position O
+- name: mlrelindo
+  description: Material Ledger Relevant Indicator O
+- name: curtpv
+  description: Currency Type V
+- name: curposv
+  description: Currency Position V
+- name: mlrelindv
+  description: Material Ledger Relevant Indicator V
+- name: curtpb
+  description: Currency Type B
+- name: curposb
+  description: Currency Position B
+- name: mlrelindb
+  description: Material Ledger Relevant Indicator B
+- name: curtpc
+  description: Currency Type C
+- name: curposc
+  description: Currency Position C
+- name: mlrelindc
+  description: Material Ledger Relevant Indicator C
+- name: curtpd
+  description: Currency Type D
+- name: curposd
+  description: Currency Position D
+- name: mlrelindd
+  description: Material Ledger Relevant Indicator D
+- name: curtpe
+  description: Currency Type E
+- name: curpose
+  description: Currency Position E
+- name: mlrelinde
+  description: Material Ledger Relevant Indicator E
+- name: curtpf
+  description: Currency Type F
+- name: curposf
+  description: Currency Position F
+- name: mlrelindf
+  description: Material Ledger Relevant Indicator F
+- name: curtpg
+  description: Currency Type G
+- name: curposg
+  description: Currency Position G
+- name: mlrelindg
+  description: Material Ledger Relevant Indicator G
+- name: periv
+  description: Fiscal Year Variant, PK
+- name: parglaccts
+  description: Parallel General Ledger Accounts
+- name: opvar
+  description: Pstng Period Variant
+- name: toyear
+  description: To Year
+- name: write_docnr_ld
+  description: Write Document Number Ledger
+- name: acc_principle
+  description: Account Principle
+- name: functional_currency
+  description: Functional Currency
+- name: operation_flag
+  description: Operation Flag
+- name: is_deleted
+  description: Is Deleted
+- name: recordstamp
+  description: Recordstamp

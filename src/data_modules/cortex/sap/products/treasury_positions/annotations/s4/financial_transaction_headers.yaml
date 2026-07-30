@@ -1,0 +1,191 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Treasury and Risk Management (TRM) module in
+  the Treasury domain and provides Treasury Financial Transaction Headers The data is captured at the
+  granularity of Client (System), Company Code, and Financial Transaction, ensuring a unique audit trail
+  for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: company_code_bukrs
+    description: Company Code, PK
+  - name: transaction_rfha
+    description: Transaction, PK
+  - name: entered_by_cruser
+    description: Entered by
+  - name: entered_on_dcrdat
+    description: Entered on
+  - name: entry_time_tcrtim
+    description: Entry Time
+  - name: last_changed_by_upuser
+    description: Last Changed by
+  - name: changed_on_dupdat
+    description: Changed on
+  - name: time_changed_tuptim
+    description: Time Changed
+  - name: contract_type_rantyp
+    description: Contract Type
+  - name: product_category_sanlf
+    description: Product Category
+  - name: transaction_category_sfgtyp
+    description: Transaction Category
+  - name: product_type_sgsart
+    description: Product Type
+  - name: transaction_type_sfhaart
+    description: Transaction Type
+  - name: class_rgatt
+    description: Class
+  - name: master_agreement_rmaid
+    description: Master Agreement
+  - name: activity_number_status_rfhazunr
+    description: Activity Number Status
+  - name: active_activity_rfhazul
+    description: Active Activity
+  - name: active_status_saktiv
+    description: Active Status
+  - name: business_partner_kontrh
+    description: Business Partner
+  - name: three_byte_field_srolext
+    description: 3-Byte Field
+  - name: guarantor_rgarant
+    description: Guarantor
+  - name: account_assignment_reference_rrefkont
+    description: Account Assignment Reference
+  - name: account_assignment_reference_rrefkont2
+    description: Account Assignment Reference
+  - name: portfolio_rportb
+    description: Portfolio
+  - name: transaction_currency_wgschft
+    description: Transaction Currency
+  - name: outgoing_currency_wgschft1
+    description: Outgoing Currency
+  - name: incoming_currency_wgschft2
+    description: Incoming Currency
+  - name: traded_amount_indicator_amtinput
+    description: Traded Amount Indicator
+  - name: term_start_dblfz
+    description: Term Start
+  - name: calendar_skalid
+    description: Calendar
+  - name: calendar_skalid2
+    description: Calendar
+  - name: limit_indicator_jlimit
+    description: Limit Indicator
+  - name: period_of_notice_akuend
+    description: Period of Notice
+  - name: unit_skuend
+    description: Unit
+  - name: object_number_objnr
+    description: Object Number
+  - name: securities_account_rldepo
+    description: Securities Account
+  - name: finance_project_zuonr
+    description: Finance Project
+  - name: term_end_delfz
+    description: Term End
+  - name: processing_category_abwtyp
+    description: Processing Category
+  - name: authorization_group_tbegru
+    description: Authorization Group
+  - name: reference_transaction_vrfha
+    description: Reference Transact
+  - name: end_inclusive_sinclbe
+    description: End Inclusive
+  - name: npv_calculation_snpvcal
+    description: Npv Calculation
+  - name: round_srndng
+    description: Round
+  - name: assignment_zuond
+    description: Assignment
+  - name: internal_reference_refer
+    description: Internal Reference
+  - name: characteristics_merkm
+    description: Characteristics
+  - name: release_status_sfrgzust
+    description: Release Status
+  - name: sec_class_id_number_ranl
+    description: Security Class Id Number
+  - name: general_valuation_class_rcomvalcl
+    description: Gen Valn Class
+  - name: facility_facilitynr
+    description: Facility
+  - name: company_code_of_facility_facilitybukrs
+    description: Company Code of Facility
+  - name: futures_account_posacc
+    description: Futures Account
+  - name: general_valuation_class_rcomvalcl2
+    description: Gen Valn Class
+  - name: fund
+    description: Fund
+  - name: grant_grant_nbr
+    description: Grant
+  - name: time_stamp_timestamp_deal
+    description: Time Stamp
+  - name: portfolio_rportb2
+    description: Portfolio
+  - name: clearing_option
+    description: Clearing Option
+  - name: clearing_status
+    description: Clearing Status
+  - name: planned_clearing_date
+    description: Planned Clearing Date
+  - name: external_account_ext_account
+    description: External Account
+  - name: actual_clearing_date_clear_date_act
+    description: Actual Clearing Date
+  - name: financial_transaction_is_based_on_a_condition_scondition
+    description: Financial Transaction Is Based on a Condition
+  - name: risk_mitigation_risk_mitigating
+    description: Risk Mitigation
+  - name: cash_flow_calculation_fima_calculation
+    description: Cash Flow Calculation
+  - name: trustee_number_trustee
+    description: Trustee Number
+  - name: profit_center_prctr
+    description: Profit Center
+  - name: cost_center_rcntr
+    description: Cost Center
+  - name: wbs_element_ps_posid
+    description: WBS Element
+  - name: business_area_rbusa
+    description: Business Area
+  - name: hedging_classification_hedge_class
+    description: Hedging Classification
+  - name: initial_stage_init_classifier
+    description: Initial Stage
+  - name: country_region_key_country
+    description: Country/Region Key
+  - name: segment_fb_segment
+    description: Segment
+  - name: on_behalf_of_company_code_behalf_of_company
+    description: On Behalf of Company Code
+  - name: traded_currency
+    description: Traded Currency
+  - name: hedge_request_id
+    description: Hedge Request Id
+  - name: cfi_code
+    description: Cfi Code
+  - name: security_id_isin
+    description: Security Id (Isin)
+  - name: market_identifier_code_mic
+    description: Market Identifier Code
+  - name: contract_timestamp_utc
+    description: Contract Timestamp Utc
+  - name: business_place_bupla
+    description: Business Place
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

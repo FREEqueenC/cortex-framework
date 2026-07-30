@@ -1,0 +1,50 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Relationship Definitions"
+fields:
+- name: "tabname"
+  description: "Table Name Containing the Foreign Key"
+- name: "fieldname"
+  description: "Name of the Foreign Key Field to Be Checked"
+- name: "as4local"
+  description: "Activation Status of Repository Object"
+- name: "as4vers"
+  description: "Version of the Entry"
+- name: "checktable"
+  description: "Check Table Name of the Foreign Key"
+- name: "frkart"
+  description: "Dependency Factor for Semantic Foreign Keys"
+- name: "clasfield"
+  description: "Internal Classification of Foreign Keys: Partial, Etc"
+- name: "clasvalue"
+  description: "Values for Classification Field of Clas Relationship Type"
+- name: "cardleft"
+  description: "Left-Hand Cardinality of the Relationship"
+- name: "card"
+  description: "Cardinality (Right Side) of the Relationship"
+- name: "checkflag"
+  description: "Number Check in Screen Painter / Check Option for Foreign Key"
+- name: "arbgb"
+  description: "Application Area (Message Class) Linked to Foreign Key Validation"
+- name: "msgnr"
+  description: "Message Number for Foreign Key Validation Error"
+- name: "noinherit"
+  description: "Flag Whether Inheritance Is Switched Off for the Foreign Key"
+- name: "operation_flag"
+  description: "Operation Flag"
+- name: "is_deleted"
+  description: "Is Deleted"
+- name: "recordstamp"
+  description: "Recordstamp"

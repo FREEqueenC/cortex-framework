@@ -1,0 +1,57 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI), Controlling (CO)
+  module in the Finance domain and provides a master list of ledgers defined in S/4HANA from FINSC_LEDGER,
+  enriched with multi-lingual text descriptions from FINSC_LEDGER_T. The data is captured at the granularity
+  of Client (System), Ledger, and Language, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: ledger_rldnr
+    description: Ledger, PK
+  - name: language_langu
+    description: Language, PK
+  - name: ledger_name_name
+    description: Ledger Name
+  - name: ledger_type_ledger_type
+    description: Ledger Type
+  - name: extension_ledger_type_ext_ledger_type
+    description: Extension Ledger Type
+  - name: owner_application_appl
+    description: Owner Application
+  - name: sub_application_subappl
+    description: Sub Application
+  - name: leading_ledger_indicator_xleading
+    description: Leading Ledger Indicator
+  - name: underlying_ledger_core
+    description: Underlying Ledger
+  - name: valuation_type_valutyp
+    description: Valuation Type
+  - name: valuation_subtype_valusubtyp
+    description: Valuation Subtype
+  - name: manual_postings_not_allowed_man_post_not_allwd
+    description: Manual Postings Not Allowed
+  - name: accounting_principle_acc_principle
+    description: Corporate Accounting Principle
+  - name: fallback_ledger_fallback_ledger
+    description: Fallback Ledger
+  - name: technical_ledger_tech_ledger
+    description: Technical Ledger
+  - name: cash_ledger_indicator_xcash_ledger
+    description: Cash Ledger Indicator
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

@@ -1,0 +1,128 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: 'Asset Master Record: View'
+fields:
+- name: mandt
+  description: Client
+- name: ranl
+  description: Sec. Class ID Number
+- name: sanlf
+  description: Product Category
+- name: sstati
+  description: Status
+- name: ranlalt1
+  description: Alternative no. 1
+- name: ranlalt2
+  description: Alternative no. 2
+- name: gsart
+  description: Product Type
+- name: sbrsch
+  description: Industry
+- name: swerttyp
+  description: Security Type
+- name: sboernot
+  description: Listed
+- name: wlomb
+  description: Eligible as collat.
+- name: jdeck
+  description: Hedge fund
+- name: wpfan
+  description: Pledgeable
+- name: sstbe
+  description: Tax Treatment
+- name: loevm
+  description: Deletion Indicator
+- name: jabmi
+  description: Joint partner vote
+- name: xalkz
+  description: Short Name
+- name: xallb
+  description: Long Name
+- name: repke
+  description: Issuer
+- name: bempreis
+  description: Issue Price
+- name: rewhr
+  description: Issue Currency
+- name: pemkurs
+  description: Issue rate
+- name: snoti
+  description: Quotation
+- name: pkuab
+  description: Price deviation in %
+- name: bkuab
+  description: Abs.price deviation
+- name: dandpfl
+  description: Oblig.to offer until
+- name: dandre
+  description: Right to offer until
+- name: sobjekt
+  description: Object key
+- name: rerf
+  description: Entered By
+- name: derf
+  description: First Entered On
+- name: terf
+  description: Time of Creation
+- name: reher
+  description: Initial Entry Source
+- name: rbear
+  description: Last Changed By
+- name: dbear
+  description: Last Edited On
+- name: tbear
+  description: Last Edited At
+- name: rbher
+  description: Editing Source
+- name: srolext
+  description: Sec. Classification
+- name: vvsloekz
+  description: Deletion indicator
+- name: jmuendel
+  description: Eligible
+- name: smoverw
+  description: Poss. custody type
+- name: siherk
+  description: Component of the Version Number
+- name: kbempreis
+  description: Issue Price
+- name: sdepostat
+  description: Securities account statistics key
+- name: sfundi
+  description: Funded
+- name: swphgmpf
+  description: Reporting oblig. STL
+- name: risin
+  description: Internat. ID no.
+- name: institute
+  description: Credit Standing Institute
+- name: rating
+  description: Rating
+- name: price_index
+  description: Name of Price Index
+- name: price_idx_bdate
+  description: Price Index Base Date
+- name: coicode
+  description: CI code
+- name: coiland
+  description: CI Country
+- name: sfimamethod
+  description: Cash Flow Calculation
+- name: operation_flag
+  description: Operation Flag
+- name: is_deleted
+  description: Is Deleted
+- name: recordstamp
+  description: Recordstamp

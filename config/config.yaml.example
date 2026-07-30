@@ -26,46 +26,39 @@ data:
   # Multiple namespace entries can be registered to support modular architectures.
   # ============================================================================
   namespaces:
-    - name: cortex # Type: string. Purpose: Unique logical name identifying the namespace.
-      path: cortex # Type: string. Purpose: Relative directory path where namespace modules are located.
+    - name: cortex # Type: string. Purpose: Namespace name 
+      path: ../src/data_modules/cortex # Type: string. Purpose: Relative directory path from `config` folder to the parent folder of where namespace modules are located.
+    - name: cortex_samples # Type: string. Purpose: Namespace name 
+      path: ../src/data_modules/cortex_samples # Type: string. Purpose: Relative directory path from `config` folder to the parent folder of where namespace modules are located.
+    - name: cortex_v6_compatibility
+      path: ../src/data_modules/cortex_v6_compatibility
     # Additional namespace entry example:
     # - name: custom_domain # Type: string. Purpose: Unique logical name identifying the namespace.
-    #   path: custom_domain # Type: string. Purpose: Relative directory path where namespace modules are located.
+    #   path: ../src/data_modules/custom_domain/modules # Type: string. Purpose: Relative directory path from `config` folder where namespace modules are located.
 
   # ============================================================================
-  # SUBSECTION: data.sources
-  # Sources establish the inbound raw data connection points for the framework.
-  # Each source registers a unique identifier mapped to a specific Google Cloud
-  # project and BigQuery dataset containing landed raw data (e.g., raw SAP tables).
-  # Multiple sources can be configured to integrate data from diverse systems.
   # ============================================================================
-  sources:
-    - id: sap_raw # Type: string. Purpose: Unique identifier for the raw data source.
-      projectId: YOUR_SOURCE_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the source dataset.
-      datasetId: cortex_sap_raw # Type: string. Purpose: BigQuery dataset ID containing the raw source tables.
-    # Additional source entry example:
-    # - id: crm_raw # Type: string. Purpose: Unique identifier for the raw data source.
-    #   projectId: YOUR_CRM_SOURCE_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the source dataset.
-    #   datasetId: cortex_crm_raw # Type: string. Purpose: BigQuery dataset ID containing the raw source tables.
-
+  # SUBSECTION: data.datasets
+  # Datasets establish the inbound raw data connection points and outbound storage
+  # locations for the framework. Each dataset registers a unique identifier mapped
+  # to a specific Google Cloud project and BigQuery dataset.
   # ============================================================================
-  # SUBSECTION: data.targets
-  # Targets define the destination BigQuery datasets where transformed data layers,
-  # enriched foundational models, and finalized analytics data products are stored.
-  # Defining explicit target identifiers allows decoupling transformation logic
-  # from physical storage locations and facilitates multi-project deployments.
-  # ============================================================================
-  targets:
-    - id: sap_foundation # Type: string. Purpose: Unique identifier for the target destination.
-      projectId: YOUR_TARGET_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the target dataset.
-      datasetId: cortex7_sap_data_foundation # Type: string. Purpose: BigQuery dataset ID where target tables will be created.
+  datasets:
+    - id: sap_raw # Type: string. Purpose: Unique identifier for the dataset.
+      projectId: YOUR_SOURCE_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the dataset.
+      datasetId: cortex_sap_raw # Type: string. Purpose: BigQuery dataset ID.
+    - id: sap_foundation
+      projectId: YOUR_TARGET_PROJECT_ID
+      datasetId: cortex7_sap_data_foundation
     - id: product_target
       projectId: YOUR_TARGET_PROJECT_ID
       datasetId: cortex7_data_products
-    # Additional target entry example:
-    # - id: custom_target # Type: string. Purpose: Unique identifier for the target destination.
-    #   projectId: YOUR_CUSTOM_TARGET_PROJECT_ID # Type: string. Purpose: Google Cloud Project ID hosting the target dataset.
-    #   datasetId: cortex7_custom_data_products # Type: string. Purpose: BigQuery dataset ID where target tables will be created.
+    - id: samples_target
+      projectId: YOUR_TARGET_PROJECT_ID
+      datasetId: cortex7_samples
+    - id: cortex_v6_compatibility_target
+      projectId: YOUR_TARGET_PROJECT_ID
+      datasetId: cortex_v6_compatibility
 
   # ============================================================================
   # SUBSECTION: data.modules
@@ -83,13 +76,13 @@ data:
     # which downstream data products are built. 
     # Table settings and enablement flags are optional.
     # ==========================================================================
-    foundation:
+    foundations:
       - moduleId: erp # Type: string. Purpose: Unique identifier for the foundation module instance.
-        type: cortex.sap # Type: string. Purpose: Type identifier of the module (namespaced).
-        dataSourceId: sap_raw # Type: string. Purpose: Reference to the source dataset ID defined in data.sources.
-        dataTargetId: sap_foundation # Type: string. Purpose: Reference to the target dataset ID defined in data.targets.
+        modulePath: cortex.sap.foundations.sap # Type: string. Purpose: Type identifier of the module (namespaced).
+        dataSourceId: sap_raw # Type: string. Purpose: Reference to the source dataset ID defined in data.datasets.
+        dataTargetId: sap_foundation # Type: string. Purpose: Reference to the target dataset ID defined in data.datasets.
         moduleSettings: # Type: map. Purpose: Module-specific configuration properties and parameters.
-          sapVersion: ecc # Type: string. Purpose: Specific SAP version being ingested (e.g., ecc, s4).
+          sapVersion: s4 # Type: string. Purpose: Specific SAP version being ingested (e.g., ecc, s4).
           mandt: "100" # Type: string. Purpose: SAP client number (mandt) used in table extraction.
         # Optional fields for foundation modules:
         # enabled: true # Type: boolean. Purpose: Whether this module instance is enabled during build execution. Defaults to true.
@@ -97,196 +90,419 @@ data:
         # tableSettings: "custom_table_settings.yaml" # Type: string. Purpose: Path to custom table settings configuration relative to this config file. If omitted, defaults to src/data_modules/cortex/data_foundation/sap/table_settings.default.yaml. To customize, copy the default file to this config directory and reference it here.
 
       # Additional foundation module entry example:
-      # - moduleId: s4_erp # Type: string. Purpose: Unique identifier for the foundation module instance.
-      #   type: cortex.sap # Type: string. Purpose: Type identifier of the module (namespaced).
-      #   dataSourceId: sap_s4_raw # Type: string. Purpose: Reference to the source dataset ID defined in data.sources.
-      #   dataTargetId: sap_s4_foundation # Type: string. Purpose: Reference to the target dataset ID defined in data.targets.
+      # - moduleId: ecc_erp # Type: string. Purpose: Unique identifier for the foundation module instance.
+      #   modulePath: cortex.sap.foundations.sap # Type: string. Purpose: Type identifier of the module (namespaced).
+      #   dataSourceId: sap_ecc_raw # Type: string. Purpose: Reference to the source dataset ID defined in data.datasets.
+      #   dataTargetId: sap_ecc_foundation # Type: string. Purpose: Reference to the target dataset ID defined in data.datasets.
       #   moduleSettings: # Type: map. Purpose: Module-specific configuration properties and parameters.
-      #     sapVersion: s4 # Type: string. Purpose: Specific SAP version being ingested (e.g., ecc, s4).
+      #     sapVersion: ecc # Type: string. Purpose: Specific SAP version being ingested (e.g., ecc, s4).
       #     mandt: "100" # Type: string. Purpose: SAP client number (mandt) used in table extraction.
+
+    # ==========================================================================
+    # SUBSECTION: data.modules.catalogs
+    # External lakehouse catalogs allow Cortex Framework to ingest external
+    # tables from BigLake Delta Sharing catalogs and shares without physical manifests.
+    # ==========================================================================
+    #catalogs:
+    #  - id: sap_bdc_test_catalog # Type: string. Purpose: Config internal alias ID for referencing the catalog.
+    #    type: lakehouse_delta_share # Type: string. Purpose: Type of the catalog (lakehouse_delta_share).
+    #    bindsNamespaces: [sap_bdc] # Type: list of strings. Purpose: Logical namespace prefixes (e.g. [sap_bdc]) provided by this catalog.
+    #    enabled: true # Type: boolean. Purpose: Whether this catalog is enabled during build execution. Defaults to true.
+    #    connectionSettings:
+    #      catalogId: sap_bdc_catalog # Type: string. Purpose: Physical BigLake catalog ID on GCP.
+    #      projectId: sap_bdc_delta_share # Type: string. Purpose: GCP Project ID hosting the catalog.
+    #      location: europe-west3 # Type: string. Purpose: GCP location for the catalog.
+    #      shares:
+    #        - shareId: sap_bdc_prod_2299 # Type: string. Purpose: Unique identifier for the catalog share.
 
     # ==========================================================================
     # SUBSECTION: data.modules.product
     # Data product modules transform foundational data models into specialized,
     # business-ready analytical data assets and reporting marts. Each product module
-    # establishes explicit dependencies on foundation modules and deploys to a
+    # establishes explicit dependencies on foundation or data product modules and deploys to a
     # specified target dataset. Table settings and enablement flags are optional.
     # ==========================================================================
-    product:
+    products:
       # Unique identifier for the data product instance.
-      - moduleId: sap_addresses
-        type: cortex.addresses
-        dependsOn:
-          sapModule: erp
+      - moduleId: sap_accounting_documents
+        modulePath: cortex.sap.products.accounting_documents
         dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
         # Optional fields for product modules (shown once for illustrative purposes):
         # enabled: true # Type: boolean. Purpose: Whether this data product is enabled. Defaults to true.
+        # syncToKc: true # Type: boolean. Purpose: Whether this data product is synced to the Knowledge Catalog. Defaults to true.
         # tableSettings: "custom_table_settings.yaml" # Type: string. Purpose: Path to custom table settings configuration relative to this config file. If omitted, defaults to src/data_modules/cortex/data_product/addresses/table_settings.default.yaml. To customize, copy the default file to this config directory and reference it here.
+      - moduleId: sap_accounts_payable
+        modulePath: cortex.sap.products.accounts_payable
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_accounts_receivable
+        modulePath: cortex.sap.products.accounts_receivable
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_addresses
+        modulePath: cortex.sap.products.addresses
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
       - moduleId: sap_agency_settlement_documents
-        type: cortex.agency_settlement_documents
-        dependsOn:
+        modulePath: cortex.sap.products.agency_settlement_documents
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_asset_documents
+        modulePath: cortex.sap.products.asset_documents
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
+      - moduleId: sap_bill_of_materials
+        modulePath: cortex.sap.products.bill_of_materials
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_billing_documents
+        modulePath: cortex.sap.products.billing_documents
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_budget_allocations
+        modulePath: cortex.sap.products.budget_allocations
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target        
+      - moduleId: sap_business_partners
+        modulePath: cortex.sap.products.business_partners
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_cash_and_liquidity_management
+        modulePath: cortex.sap.products.cash_and_liquidity_management
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_condition_contracts
+        modulePath: cortex.sap.products.condition_contracts
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
       - moduleId: sap_controlling_areas_and_cost_elements
-        type: cortex.controlling_areas_and_cost_elements
-        dependsOn:
+        modulePath: cortex.sap.products.controlling_areas_and_cost_elements
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_controlling_documents
+        modulePath: cortex.sap.products.controlling_documents
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp        
+      - moduleId: sap_cost_and_profit_centers
+        modulePath: cortex.sap.products.cost_and_profit_centers
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_currency_conversion
+        modulePath: cortex.sap.products.currency_conversion
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_customers
+        modulePath: cortex.sap.products.customers
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_delivery_documents
+        modulePath: cortex.sap.products.delivery_documents
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_financial_hierarchies
+        modulePath: cortex.sap.products.financial_hierarchies
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_financial_statement_structure_versions
+        modulePath: cortex.sap.products.financial_statement_structure_versions
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_fiscal_year_variants
+        modulePath: cortex.sap.products.fiscal_year_variants
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_fixed_assets
+        modulePath: cortex.sap.products.fixed_assets
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_general_ledger_accounts
+        modulePath: cortex.sap.products.general_ledger_accounts
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      # Include only if sap version is ecc
+      - moduleId: sap_general_ledger_items
+        modulePath: cortex.sap.products.general_ledger_items
+        dataTargetId: product_target
+        enabled: false
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_global_settings
+        modulePath: cortex.sap.products.global_settings
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      # Include only if sap version is ecc
+      - moduleId: sap_inventory_and_special_stocks
+        enabled: false
+        modulePath: cortex.sap.products.inventory_and_special_stocks
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_ledger_master
+        modulePath: cortex.sap.products.ledger_master
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_material_batches
+        modulePath: cortex.sap.products.material_batches
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_material_ledger
+        modulePath: cortex.sap.products.material_ledger
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_materials
+        modulePath: cortex.sap.products.materials
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_materials_movement
+        modulePath: cortex.sap.products.materials_movement
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_object_statuses
+        modulePath: cortex.sap.products.object_statuses
+        dependencyBindings:
+          sapModule: erp
+        dataTargetId: product_target
+      - moduleId: sap_order_master_data
+        modulePath: cortex.sap.products.order_master_data
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
       - moduleId: sap_plants_and_storage
-        type: cortex.plants_and_storage
-        dependsOn:
+        modulePath: cortex.sap.products.plants_and_storage
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_product_hierarchies
+        modulePath: cortex.sap.products.product_hierarchies
+        dataTargetId: product_target
+        dependencyBindings:
+          sapModule: erp
+      - moduleId: sap_production_orders
+        modulePath: cortex.sap.products.production_orders
+        dependencyBindings:
           sapModule: erp
         dataTargetId: product_target
-      - moduleId: sap_purchasing_organizational_structure
-        type: cortex.purchasing_organizational_structure
+      - moduleId: sap_project_structure
+        modulePath: cortex.sap.products.project_structure
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
       - moduleId: sap_purchasing_documents
-        type: cortex.purchasing_documents
+        modulePath: cortex.sap.products.purchasing_documents
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_vendor_invoices
-        type: cortex.vendor_invoices
+      - moduleId: sap_purchasing_organizational_structure
+        modulePath: cortex.sap.products.purchasing_organizational_structure
         dataTargetId: product_target
-        dependsOn:
-          sapModule: erp
-      - moduleId: sap_vendors
-        type: cortex.vendors
-        dataTargetId: product_target
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-      - moduleId: sap_business_partners
-        type: cortex.business_partners
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
-        # enabled: true
-      - moduleId: sap_customers
-        type: cortex.customers
-        dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
       - moduleId: sap_sales_documents
-        type: cortex.sales_documents
+        modulePath: cortex.sap.products.sales_documents
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
       - moduleId: sap_sales_organizational_structure
-        type: cortex.sales_organizational_structure
+        modulePath: cortex.sap.products.sales_organizational_structure
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_delivery_documents
-        type: cortex.delivery_documents
+      - moduleId: sap_sales_pricing_conditions
+        modulePath: cortex.sap.products.sales_pricing_conditions
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_billing_documents
-        type: cortex.billing_documents
+      - moduleId: sap_treasury_market_data
+        modulePath: cortex.sap.products.treasury_market_data
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_materials
-        type: cortex.materials
+      - moduleId: sap_treasury_positions
+        modulePath: cortex.sap.products.treasury_positions
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_material_batches
-        type: cortex.material_batches
-        dataTargetId: product_target
-        dependsOn:
-          sapModule: erp
-      - moduleId: sap_materials_movement
-        type: cortex.materials_movement
-        dataTargetId: product_target
-        dependsOn:
-          sapModule: erp
-      - moduleId: sap_global_settings
-        type: cortex.global_settings
-        dataTargetId: product_target
-        dependsOn:
-          sapModule: erp
-      - moduleId: sap_currency_conversion
-        type: cortex.currency_conversion
-        dataTargetId: product_target
-        dependsOn:
-          sapModule: erp
-      # Include only if sap version is s4
-      #- moduleId: sap_universal_journal
-      #  type: cortex.universal_journal
-      #  dataTargetId: product_target
-      #  dependsOn:
-      #    sapModule: erp
       - moduleId: sap_units_of_measurement
-        type: cortex.units_of_measurement
+        modulePath: cortex.sap.products.units_of_measurement
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-        dataTargetId: product_target
         # enabled: true
-      - moduleId: sap_accounting_documents
-        type: cortex.accounting_documents
-        dependsOn:
+      # Include only if sap version is s4
+      - moduleId: sap_universal_journal
+        enabled: true
+        modulePath: cortex.sap.products.universal_journal
+        dataTargetId: product_target
+        dependencyBindings:
           sapModule: erp
+      - moduleId: sap_vendor_invoices
+        modulePath: cortex.sap.products.vendor_invoices
         dataTargetId: product_target
-        # enabled: true
-      - moduleId: sap_fiscal_year_variants
-        type: cortex.fiscal_year_variants
-        dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_project_structure
-        type: cortex.project_structure
+      - moduleId: sap_vendors
+        modulePath: cortex.sap.products.vendors
         dataTargetId: product_target
-        dependsOn:
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_accounts_payable
-        type: cortex.accounts_payable
-        dataTargetId: product_target
-        dependsOn:
+      # --- Cortex Samples ---
+      # Samples of consumption products composed with multiple source-aligned data products
+      # Note: Uncomment or enable the `enabled: true` flag if you want to deploy the solution samples
+      - moduleId: sap_sales_performance
+        enabled: false
+        modulePath: cortex_samples.sap.products.sales_performance
+        dependencyBindings:
+          sapCustomers: sap_customers
+          sapMaterials: sap_materials
+          sapSalesOrganizationalStructure: sap_sales_organizational_structure
+          sapSalesDocuments: sap_sales_documents
+          sapDeliveryDocuments: sap_delivery_documents
+        dataTargetId: samples_target
+      - moduleId: sap_supplier_spend_analysis
+        enabled: false
+        modulePath: cortex_samples.sap.products.supplier_spend_analysis
+        dependencyBindings:
+          sapMaterials: sap_materials
+          sapPurchasingDocuments: sap_purchasing_documents
+          sapPurchasingOrganizationalStructure: sap_purchasing_organizational_structure
+          sapVendors: sap_vendors
+        dataTargetId: samples_target           
+      # --- Cortex 6 Compatibility Products ---
+      # Each module type has optional moduleSettings to parameterize the queries.
+      # Enable the module by setting enabled: true when porting from Cortex v6 to Cortex v7.
+      - moduleId: sap_cortex_v6_compatibility_accounts_payable
+        modulePath: cortex_v6_compatibility.sap.products.accounts_payable
+        enabled: false
+        syncToKc: false
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_accounts_receivable
-        type: cortex.accounts_receivable
-        dataTargetId: product_target
-        dependsOn:
+          sapMasterData: sap_cortex_v6_compatibility_master_data
+          sapFinance: sap_cortex_v6_compatibility_finance
+          sapPurchasing: sap_cortex_v6_compatibility_purchasing
+        dataTargetId: cortex_v6_compatibility_target
+        moduleSettings:
+          # Target currencies for AP reporting. (Default: ['USD'])
+          targetCurrencies: ['USD']
+          # Exchange rate type. (Default: 'M')
+          rateType: 'M'
+          # SAP Document Types (BLART) classified as payment documents. (Default: ['KZ', 'ZP'])
+          paymentDocTypes: ['KZ', 'ZP']
+          # Transaction key (KTOSL) for cash discounts. (Default: 'SKE')
+          cashDiscountTransactionKey: 'SKE'
+      - moduleId: sap_cortex_v6_compatibility_finance
+        modulePath: cortex_v6_compatibility.sap.products.finance
+        enabled: false
+        syncToKc: false
+        dependencyBindings:
           sapModule: erp
-      - moduleId: sap_fixed_assets
-        type: cortex.fixed_assets
-        dependsOn:
+          sapMasterData: sap_cortex_v6_compatibility_master_data
+        dataTargetId: cortex_v6_compatibility_target
+        moduleSettings:
+          # Target currencies for financial statements. (Default: ['USD'])
+          targetCurrencies: ['USD']
+          # Exchange rate type. (Default: 'M')
+          rateType: 'M'
+          # Financial Statement Version (FSV) Hierarchy Name (hiername). (Default: 'FPA1')
+          fsvHierarchyName: 'FPA1'
+          # Chart of Accounts used in FSV mapping (chartofaccounts). (Default: 'YCOA')
+          fsvChartOfAccounts: 'YCOA'
+          # Controlling Area subclass used for Profit Center hierarchy mapping. (Default: 'A000')
+          profitCenterHierarchySubclass: 'A000'
+          # Controlling Area subclass used for Cost Center hierarchy mapping. (Default: 'A000')
+          costCenterHierarchySubclass: 'A000'
+      - moduleId: sap_cortex_v6_compatibility_inventory
+        modulePath: cortex_v6_compatibility.sap.products.inventory
+        enabled: false
+        syncToKc: false
+        dependencyBindings:
           sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_general_ledger_accounts
-        type: cortex.general_ledger_accounts
-        dataTargetId: product_target
-        dependsOn:
+          sapMasterData: sap_cortex_v6_compatibility_master_data
+          sapSales: sap_cortex_v6_compatibility_sales
+        dataTargetId: cortex_v6_compatibility_target
+        moduleSettings:
+          # Target currencies for inventory valuation. (Default: ['USD'])
+          targetCurrencies: ['USD']
+          # Exchange rate type. (Default: 'M')
+          rateType: 'M'
+      - moduleId: sap_cortex_v6_compatibility_master_data
+        modulePath: cortex_v6_compatibility.sap.products.master_data
+        enabled: false
+        syncToKc: false
+        dependencyBindings:
           sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_cost_and_profit_centers
-        type: cortex.cost_and_profit_centers
-        dependsOn:
+        dataTargetId: cortex_v6_compatibility_target
+        moduleSettings:
+          # Target currencies for currency conversion MD views. (Default: ['USD'])
+          targetCurrencies: ['USD']
+          # Exchange rate type. (Default: 'M')
+          rateType: 'M'
+          # Supported language keys for text description joins (e.g. 'E' for English, 'S' for Spanish). (Default: ['E'])
+          languages: ['E', 'S']
+      - moduleId: sap_cortex_v6_compatibility_purchasing
+        modulePath: cortex_v6_compatibility.sap.products.purchasing
+        enabled: false
+        syncToKc: false
+        dependencyBindings:
           sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_condition_contracts
-        type: cortex.condition_contracts
-        dependsOn:
+          sapMasterData: sap_cortex_v6_compatibility_master_data
+        dataTargetId: cortex_v6_compatibility_target
+        moduleSettings:
+          # List of target currencies for exchange rate conversions. (Default: ['USD'])
+          targetCurrencies: ['USD']
+          # Exchange rate type. (Default: 'M')
+          rateType: 'M'
+      - moduleId: sap_cortex_v6_compatibility_sales
+        modulePath: cortex_v6_compatibility.sap.products.sales
+        enabled: false
+        syncToKc: false
+        dependencyBindings:
           sapModule: erp
-        dataTargetId: product_target
-      - moduleId: sap_financial_statement_structure_versions
-        type: cortex.financial_statement_structure_versions
-        dependsOn:
-          sapModule: erp
-        dataTargetId: product_target
+          sapMasterData: sap_cortex_v6_compatibility_master_data
+        dataTargetId: cortex_v6_compatibility_target
+        moduleSettings:
+          # Target currencies for sales KPIs. (Default: ['USD'])
+          targetCurrencies: ['USD']
+          # Exchange rate type. (Default: 'M')
+          rateType: 'M'
+
 # Deployment configuration.
+
       # Additional data product module entry example:
       # - moduleId: custom_sales_analytics # Type: string. Purpose: Unique identifier for the data product instance.
-      #   type: cortex.custom_sales # Type: string. Purpose: Type identifier of the data product (namespaced).
-      #   dataTargetId: product_target # Type: string. Purpose: Reference to the target dataset ID defined in data.targets.
-      #   dependsOn: # Type: map. Purpose: Mapping of required module dependencies.
-      #     sapModule: erp # Type: string. Purpose: Foundation module moduleId satisfying this dependency.
+      #   modulePath: cortex.sap.products.custom_sales # Type: string. Purpose: Type identifier of the data product (namespaced).
+      #   dataTargetId: product_target # Type: string. Purpose: Reference to the target dataset ID defined in data.datasets.
+      #   dependencyBindings: # Type: map. Purpose: Mapping of required module dependencies.
+      #     sapModule: erp # Type: string. Purpose: Module moduleId (foundation or data product) satisfying this dependency.
 
 # ==============================================================================
 # SECTION: deployment

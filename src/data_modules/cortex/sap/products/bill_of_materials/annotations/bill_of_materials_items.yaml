@@ -1,0 +1,287 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Production Planning (PP) module in the Manufacturing
+  domain and provides BOM item/component details, including component quantities, scrap percentages, and
+  item categories. The data is captured at the granularity of system default keys, ensuring a unique audit
+  trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: bill_of_material_category_stlty
+    description: Bill of Material Category, PK
+  - name: bill_of_material_stlnr
+    description: Bill of Material, PK
+  - name: item_node_stlkn
+    description: Item Node, PK
+  - name: counter_stpoz
+    description: Counter, PK
+  - name: valid_from_datuv
+    description: Valid From
+  - name: technical_status_from_techv
+    description: Technical Status From
+  - name: change_number_aennr
+    description: Change Number
+  - name: deletion_indicator_lkenz
+    description: Deletion Indicator
+  - name: predecessor_node_vgknt
+    description: Predecessor Node
+  - name: previous_item_counter_vgpzl
+    description: Previous Item Counter
+  - name: created_on_andat
+    description: Created on
+  - name: created_by_annam
+    description: Created by
+  - name: changed_on_aedat
+    description: Changed on
+  - name: changed_by_aenam
+    description: Changed by
+  - name: component_idnrk
+    description: Component
+  - name: issuing_plant_pswrk
+    description: Issuing Plant
+  - name: item_category_postp
+    description: Item Category
+  - name: item_number_posnr
+    description: Item Number
+  - name: sort_string_sortf
+    description: Sort String
+  - name: component_unit_meins
+    description: Component Unit
+  - name: component_quantity_menge
+    description: Component Quantity
+  - name: fixed_quantity_fmeng
+    description: Fixed Quantity
+  - name: component_scrap_percent_ausch
+    description: Component Scrap (%)
+  - name: operation_scrap_percent_avoau
+    description: Operation Scrap in %
+  - name: net_indicator_netau
+    description: Net Indicator
+  - name: bulk_material_schgt
+    description: Bulk Material
+  - name: material_provision_indicator_beikz
+    description: Material Provision Indicator
+  - name: spare_part_indicator_erskz
+    description: Spare Part Indicator
+  - name: relevant_to_sales_rvrel
+    description: Relevant to Sales
+  - name: production_relevant_sanfe
+    description: Production Relevant
+  - name: plant_maintenance_sanin
+    description: Plant Maintenance
+  - name: relevancy_to_costing_sanka
+    description: Relevancy to Costing
+  - name: engineering_design_sanko
+    description: Engineering Or Design
+  - name: hl_configuration_sanvs
+    description: High-Level Configuration
+  - name: pm_assembly_stkkz
+    description: PM Assembly
+  - name: recursive_rekri
+    description: Recursive
+  - name: recurs_allowed_rekrs
+    description: Recursion Allowed
+  - name: cad_indicator_cadpo
+    description: Cad Indicator
+  - name: follow_up_material_nfmat
+    description: Follow-Up Material
+  - name: lead_time_offset_nlfzt
+    description: Lead-Time Offset
+  - name: distribution_key_verti
+    description: Distribution Key
+  - name: alternative_item_alpos
+    description: Alternative Item
+  - name: usage_probability_ewahr
+    description: Usage Probability
+  - name: purchasing_group_ekgrp
+    description: Purchasing Group
+  - name: delivery_time_days_lifzt
+    description: Delivery Time (Days)
+  - name: vendor_lifnr
+    description: Vendor
+  - name: price_preis
+    description: Price
+  - name: price_unit_peinh
+    description: Price Unit
+  - name: currency_waers
+    description: Currency
+  - name: cost_element_sakto
+    description: Cost Element
+  - name: number_of_variable_size_items_roanz
+    description: Number of Variable-Size Items
+  - name: size_1_roms1
+    description: Size 1
+  - name: size_2_roms2
+    description: Size 2
+  - name: size_3_roms3
+    description: Size 3
+  - name: size_unit_romei
+    description: Size Unit
+  - name: quantity_of_variable_size_item_romen
+    description: Quantity of Variable-Size Item
+  - name: formula_key_rform
+    description: Formula Key
+  - name: sub_item_indicator_upskz
+    description: Sub-Item Indicator
+  - name: alternative_id_valkz
+    description: Alternative Id
+  - name: long_text_language_ltxsp
+    description: Long Text Language
+  - name: item_text_potx1
+    description: Item Text
+  - name: item_text_2_potx2
+    description: Item Text 2
+  - name: object_type_objty
+    description: Object Type
+  - name: material_group_matkl
+    description: Material Group
+  - name: goods_receipt_processing_time_webaz
+    description: Goods Receipt Processing Time
+  - name: document_type_dokar
+    description: Document Type
+  - name: document_doknr
+    description: Document
+  - name: document_version_dokvr
+    description: Document Version
+  - name: document_part_doktl
+    description: Document Part
+  - name: material_purity_percent_csstr
+    description: Material Purity in %
+  - name: class_class
+    description: Class
+  - name: class_type_klart
+    description: Class Type
+  - name: reservation_item_category_potpr
+    description: Reservation Item Category
+  - name: selection_indicator_awakz
+    description: Selection Indicator
+  - name: instance_inskz
+    description: Instance
+  - name: do_not_distribute_in_configuration_vcekz
+    description: Do Not Distribute Class Item in Configuration
+  - name: do_not_distribute_in_document_structure_vstkz
+    description: Do Not Distribute Class Item in Document Structure
+  - name: do_not_distribute_in_order_vackz
+    description: Do Not Distribute Class Item in Order
+  - name: purchasing_organization_ekorg
+    description: Purchasing Organization
+  - name: required_component_clobk
+    description: Required Component
+  - name: multiple_selection_clmul
+    description: Multiple Selection
+  - name: alternative_display_clalt
+    description: Alternative Display
+  - name: organizational_area_cview
+    description: Organizational Area
+  - name: assignment_number_knobj
+    description: Assignment Number
+  - name: production_storage_location_lgort
+    description: Production Storage Location
+  - name: co_product_kzkup
+    description: Controlling-Product
+  - name: intra_material_intrm
+    description: Intra Material
+  - name: restrictions_exist_tpekz
+    description: Restrictions Exist
+  - name: item_node_stvkn
+    description: Item Node
+  - name: scheduled_on_dvdat
+    description: Scheduled on
+  - name: date_shifted_by_dvnam
+    description: Date Shifted by
+  - name: explosion_type_dspst
+    description: Explosion Type
+  - name: strategy_alpst
+    description: Strategy
+  - name: priority_alprf
+    description: Priority
+  - name: alternative_item_group_alpgr
+    description: Alternative Item Group
+  - name: follow_up_item_kznfp
+    description: Follow-Up Item
+  - name: follow_up_group_nfgrp
+    description: Follow-Up Group
+  - name: discontinuation_group_nfeag
+    description: Discontinuation Group
+  - name: manual_change_indicator_kndvb
+    description: Manual Change Indicator
+  - name: object_dependency_change_kndbz
+    description: Object Dependency Change
+  - name: bill_of_material_category_kstty
+    description: Bill of Material Category
+  - name: bill_of_material_kstnr
+    description: Bill of Material
+  - name: item_node_kstkn
+    description: Item Node
+  - name: counter_kstpz
+    description: Counter
+  - name: classification_clszu
+    description: Classification
+  - name: classification_as_selection_condition_kzclb
+    description: Classification As Selection Condition
+  - name: work_field_aehlp
+    description: Work Field
+  - name: production_supply_area_prvbe
+    description: Production Supply Area
+  - name: operation_lead_time_offset_nlfzv
+    description: Operation Lead-Time Offset
+  - name: operation_lead_time_offset_unit_nlfmv
+    description: Operation Lead-Time Offset Unit
+  - name: item_group_idpos
+    description: Item Group
+  - name: history_counter_idhis
+    description: History Counter
+  - name: component_variant_idvar
+    description: Component Variant
+  - name: ale_indicator_alekz
+    description: ALE Indicator
+  - name: item_identification_itmid
+    description: Item Identification
+  - name: special_procurement_itsob
+    description: Special Procurement
+  - name: reference_point_rfpnt
+    description: Reference Point
+  - name: id_item_change_status_guidx
+    description: Id Item Change Status
+  - name: segment_maintained_sgt_cmkz
+    description: Segment Maintained
+  - name: segmentation_value_sgt_catv
+    description: Segmentation Value
+  - name: valid_to_valid_to
+    description: Valid to
+  - name: change_number_to_ecn_to
+    description: Change Number to
+  - name: unloading_point_ablad
+    description: Unloading Point
+  - name: goods_recipient_wempf
+    description: Goods Recipient
+  - name: number_of_cu_instances_cufactor
+    description: Number of Configuration Unit Instances
+  - name: deviation_values_fsh_vmkz
+    description: Deviation Values
+  - name: quantity_distribution_profile_fsh_pgqr
+    description: Quantity Distribution Profile
+  - name: quantity_distribution_profile_reference_fsh_pgqrrf
+    description: Quantity Distribution Profile Reference
+  - name: critical_component_fsh_critical_comp
+    description: Critical Component
+  - name: critical_level_fsh_critical_level
+    description: Critical Level
+  - name: function_identifier_funcid
+    description: Function Identifier
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

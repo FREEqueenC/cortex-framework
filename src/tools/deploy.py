@@ -23,13 +23,14 @@ import pathlib
 import sys
 from collections.abc import Sequence
 
-from common.clients.bigquery import BigQueryManager
+from common.clients.bq.bigquery import BigQueryManager
 from common.deployers.actions import PostDeploymentAction
-from common.schemas.config_schema import GlobalConfig
-from common.services.config_preprocessor import ConfigPreprocessor
-from common.services.config_validator import ConfigValidator
+from common.errors import CortexConfigError, CortexDeployError, CortexError
+from common.schemas.config_schema import DataformDeploymentTargetConfig, GlobalConfig
+from common.services.config_loader import ConfigLoader
 from common.services.gcp_environment_checker import GcpEnvironmentChecker
-from common.utils.file_utils import load_yaml
+from common.services.telemetry import constants, telemetry_logger
+from common.services.telemetry.consent_manager import TelemetryConsentManager
 from common.utils.logging import setup_logging
 
 logger = logging.getLogger(__name__)
@@ -100,35 +101,79 @@ class DeploymentOrchestrator:
                 all_successful = False
                 continue
 
+            telemetry_logger_instance = None
+            if isinstance(target, DataformDeploymentTargetConfig):
+                telemetry_logger_instance = telemetry_logger.EventLogger.for_dataform_repository(
+                    project_id=target.target_settings.repository_project_id,
+                    location=target.target_settings.repository_region,
+                    repository_id=target.target_settings.repository_name,
+                    component=constants.TelemetryComponent.PLATFORM,
+                    type=constants.TelemetryPlatformTool.DEPLOYER,
+                    variant=target_type,
+                )
+
+            enabled_modules_types: list[str] = [
+                module.module_path
+                for module in self.global_config.data.modules.foundation
+                if module.enabled
+            ]
+            enabled_modules_types += [
+                module.module_path
+                for module in self.global_config.data.modules.product
+                if module.enabled
+            ]
+
             logger.info("Executing plugin deployer for target type: %s", target_type)
             try:
                 deployer = self._get_deployer(target_type)
                 if not deployer:
-                    all_successful = False
-                    continue
+                    raise CortexDeployError(
+                        f"Deployer plugin for '{target_type}' is missing from deployer_registry.",
+                        hint=(
+                            "Verify that you have correctly defined and registered the "
+                            f"deployer for target type '{target_type}'."
+                        ),
+                    )
 
                 result = deployer.deploy(self.global_config, target, self.output_dir)
                 if not result:
-                    logger.error("Deployer plugin '%s' reported a failure status.", target_type)
-                    all_successful = False
-                    continue
+                    raise CortexDeployError(
+                        f"Deployer plugin '{target_type}' reported a failure status.",
+                        hint=(
+                            "Check the target settings in config.yaml and verify that "
+                            "the target environment has enough permissions."
+                        ),
+                    )
 
+                if telemetry_logger_instance:
+                    telemetry_logger_instance.log_batch_deployed_status(
+                        optional_extensions=enabled_modules_types
+                    )
                 for action in self.post_actions:
                     logger.info("Executing post-deployment action: %s", action.__class__.__name__)
                     if not action.execute(self.global_config, target, self.output_dir):
-                        logger.error("Post-deployment action failed.")
-                        all_successful = False
-                        break
+                        raise CortexDeployError(
+                            f"Post-deployment action failed for target '{target_type}'.",
+                            hint=(
+                                "Check the logs for post-deployment action details and "
+                                "check your target resources."
+                            ),
+                        )
 
+                    if telemetry_logger_instance:
+                        telemetry_logger_instance.log_batch_post_deploy_success_status(
+                            optional_extensions=enabled_modules_types
+                        )
+
+            except CortexError:
+                raise
             except Exception as e:
-                logger.error(
-                    "Deployer logic for %s failed unexpectedly: %s",
-                    target_type,
-                    e,
-                    exc_info=True,
-                )
-                all_successful = False
-                continue
+                raise CortexDeployError(
+                    f"Deployer logic for '{target_type}' failed unexpectedly: {e}",
+                    hint=(
+                        "Check the traceback in logs or contact the Cortex Framework team for help."
+                    ),
+                ) from e
 
         return all_successful
 
@@ -154,6 +199,12 @@ def main(args=None):
         help="Enable required APIs without prompting",
     )
     parser.add_argument(
+        "--disable-telemetry",
+        action="store_true",
+        default=False,
+        help="Disable telemetry event logging",
+    )
+    parser.add_argument(
         "--create-datasets",
         action="store_true",
         help="Create missing datasets without prompting",
@@ -165,50 +216,58 @@ def main(args=None):
     )
     args = parser.parse_args(args)
 
-    config_file = args.config
+    try:
+        config_file = args.config
+        TelemetryConsentManager.setup(args.disable_telemetry)
 
-    if not config_file.exists():
-        logger.error("Config file not found at %s", config_file)
+        if not config_file.exists():
+            raise CortexConfigError(
+                f"Config file not found at {config_file}",
+                hint="Please check that the file path is correct and that the file exists.",
+            )
+
+        global_config, validation_errors = ConfigLoader.load_and_validate(config_file)
+        if not global_config:
+            errors_str = "\n".join(f"  - {err}" for err in validation_errors)
+            raise CortexConfigError(
+                f"Configuration validation failed with the following errors:\n{errors_str}",
+                hint="Correct the issues in config.yaml according to the validation rules.",
+            )
+
+        checker = GcpEnvironmentChecker(
+            global_config, enable_apis=args.enable_apis, create_datasets=args.create_datasets
+        )
+        checker.validate_all()
+
+        output_dir = args.output_dir
+        if not output_dir.is_absolute():
+            output_dir = pathlib.Path.cwd() / output_dir
+
+        orchestrator = DeploymentOrchestrator(
+            global_config,
+            output_dir,
+            enable_apis=args.enable_apis,
+            create_datasets=args.create_datasets,
+        )
+        success = orchestrator.execute_deployments()
+
+        if not success:
+            raise CortexDeployError(
+                "Deployment completed with errors.",
+                hint=(
+                    "Verify target deployment logs or console output above to identify "
+                    "details about the target errors."
+                ),
+            )
+
+        logger.info("Deployment completed successfully.")
+        telemetry_logger.EventLogger.wait_for_telemetry()
+    except CortexError as e:
+        logger.error(str(e))
         sys.exit(1)
-
-    is_valid, validation_errors = ConfigValidator.validate(config_file)
-    if not is_valid:
-        logger.error("Configuration validation failed with the following errors:")
-        for err in validation_errors:
-            logger.error("  - %s", err)
+    except Exception:
+        logger.exception("An unexpected error occurred:")
         sys.exit(1)
-
-    global_config_dict = load_yaml(config_file)
-    global_config_dict = ConfigPreprocessor().process(global_config_dict)
-
-    global_config = GlobalConfig.model_validate(
-        global_config_dict, context={"config_dir": config_file.parent}
-    )
-
-    checker = GcpEnvironmentChecker(
-        global_config, enable_apis=args.enable_apis, create_datasets=args.create_datasets
-    )
-    if not checker.validate_all():
-        logger.error("GCP Environment checks failed. Aborting execution.")
-        sys.exit(1)
-
-    output_dir = args.output_dir
-    if not output_dir.is_absolute():
-        output_dir = pathlib.Path.cwd() / output_dir
-
-    orchestrator = DeploymentOrchestrator(
-        global_config,
-        output_dir,
-        enable_apis=args.enable_apis,
-        create_datasets=args.create_datasets,
-    )
-    success = orchestrator.execute_deployments()
-
-    if not success:
-        logger.error("Deployment completed with errors.")
-        sys.exit(1)
-
-    logger.info("Deployment completed successfully.")
 
 
 if __name__ == "__main__":

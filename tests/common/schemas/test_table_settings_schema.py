@@ -16,7 +16,7 @@ import pytest
 from pydantic import ValidationError
 
 from common.schemas.enums import PartitionType
-from common.schemas.table_settings_schema import ClusterDetails, PartitionDetails
+from common.schemas.table_settings_schema import ClusterDetails, PartitionDetails, ProductTableItem
 
 
 def test_partition_details_valid_column():
@@ -42,3 +42,13 @@ def test_cluster_details_valid_columns():
 def test_cluster_details_invalid_columns():
     with pytest.raises(ValidationError):
         ClusterDetails(columns=["col1", "col2; DROP TABLE x;"])
+
+
+def test_product_table_item_enabled_default():
+    item = ProductTableItem()
+    assert item.enabled is True
+
+
+def test_product_table_item_enabled_override():
+    item = ProductTableItem(enabled=False)
+    assert item.enabled is False

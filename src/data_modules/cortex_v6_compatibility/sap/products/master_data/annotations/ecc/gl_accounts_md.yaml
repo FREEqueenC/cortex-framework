@@ -1,0 +1,60 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: "Master data is the fundamental business data in an enterprise and defines the business objects and classifications. GLAccountsMD gives information about the G/L Account records maintained for each Chart of Accounts at the Granularity of Client(System), chart of accounts, G/L Account number and language key."
+fields:
+  - name: "Client_MANDT"
+    description: "Client (Mandant), PK"
+  - name: "ChartOfAccounts_KTOPL"
+    description: "Chart of Accounts, PK"
+  - name: "GlAccountNumber_SAKNR"
+    description: "G/L Account Number, PK"
+  - name: "Indicator_AccountIsABalanceSheetAccount_XBILK"
+    description: "Indicator: Account is a balance sheet account?"
+  - name: "GlAccountNumber_SignificantLength_SAKAN"
+    description: "G/L Account Number, Significant Length"
+  - name: "GroupAccountNumber_BILKT"
+    description: "Group Account Number"
+  - name: "DateOnWhichTheRecordWasCreated_ERDAT"
+    description: "Date on which the Record Was Created"
+  - name: "NameOfPersonWhoCreatedTheObject_ERNAM"
+    description: "Name of Person who Created the Object"
+  - name: "PlStatementAccountType_GVTYP"
+    description: "P&L Statement Account Type"
+  - name: "GlAccountGroup_KTOKS"
+    description: "G/L Account Group"
+  - name: "NumberOfTheSampleAccount_MUSTR"
+    description: "Number of the Sample Account"
+  - name: "CompanyIdOfTradingPartner_VBUND"
+    description: "Company ID of Trading Partner"
+  - name: "Indicator_AccountMarkedForDeletion_XLOEV"
+    description: "Indicator: Account Marked for Deletion?"
+  - name: "Indicator_AccountIsBlockedForCreation_XSPEA"
+    description: "Indicator: Account Is Blocked for Creation?"
+  - name: "Indicator_IsAccountBlockedForPosting_XSPEB"
+    description: "Indicator: Account Is Blocked for Posting?"
+  - name: "Indicator_AccountBlockedForPlanning_XSPEP"
+    description: "Indicator: Account Is Blocked for Planning?"
+  - name: "SearchTermForUsingMatchcode_MCOD1"
+    description: "Search Term for Using Matchcode"
+  - name: "FunctionalArea_FUNC_AREA"
+    description: "Functional Area"
+  - name: "Language_SPRAS"
+    description: "Language Key, PK"
+  - name: "GlAccountShortText_TXT20"
+    description: "G/L Account Short Text"
+  - name: "GlAccountLongText_TXT50"
+    description: "G/L Account Long Text"
+  - name: "SearchTermForMatchcodeSearch_MCOD1"
+    description: "Search Term for Matchcode Search"

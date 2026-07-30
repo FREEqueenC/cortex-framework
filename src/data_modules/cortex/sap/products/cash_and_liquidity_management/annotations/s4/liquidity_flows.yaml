@@ -1,0 +1,379 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA Financial Accounting (FI), Financial Supply
+  Chain Management (FSCM) module in the Finance domain and provides granular, real-time liquidity flows
+  from the S/4HANA One Exposure from Operations (FQM_FLOW) table. The data is captured at the granularity
+  of system default keys, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: flow_id_flow_id
+    description: Flow Id, PK
+  - name: time_stamp_valid_from
+    description: Time Stamp, PK
+  - name: time_stamp_valid_to
+    description: Time Stamp
+  - name: software_version_software_version
+    description: Software Version
+  - name: indicator_flg_actual
+    description: Indicator
+  - name: transaction_id_transaction_id
+    description: Transaction Id
+  - name: parent_transaction_id_parent_transaction_id
+    description: Parent Transaction Id
+  - name: parent_flow_id_parent_flow_id
+    description: Parent Flow Id
+  - name: flow_id_root_id
+    description: Flow Id
+  - name: deleted_deleted
+    description: Deleted
+  - name: status_process_status
+    description: Status
+  - name: cleared_cleared
+    description: Cleared
+  - name: flow_id_clearing_flow_id
+    description: Flow Id
+  - name: user_name_create_user
+    description: User Name
+  - name: user_name_last_update_user
+    description: User Name
+  - name: time_stamp_create_timestamp
+    description: Time Stamp
+  - name: time_stamp_last_update_timestamp
+    description: Time Stamp
+  - name: logical_system_origin_system
+    description: Logical System
+  - name: source_application_origin_application
+    description: Source Application
+  - name: source_document_id_origin_document_id
+    description: Source Document Id
+  - name: source_transaction_id_origin_transaction_id
+    description: Source Transaction Id
+  - name: source_transaction_qualifier_origin_trans_qualifier
+    description: Source Transaction Qualifier
+  - name: source_flow_id_origin_flow_id
+    description: Source Flow Id
+  - name: logical_system_origin_system_rl
+    description: Logical System
+  - name: source_application_origin_application_rl
+    description: Source Application
+  - name: source_document_id_origin_document_id_rl
+    description: Source Document Id
+  - name: source_transaction_id_origin_transaction_id_rl
+    description: Source Transaction Id
+  - name: source_transaction_qualifier_origin_trans_qualifier_rl
+    description: Source Transaction Qualifier
+  - name: source_flow_id_origin_flow_id_rl
+    description: Source Flow Id
+  - name: certainty_level_certainty_level
+    description: Certainty Level
+  - name: transaction_owner_owner
+    description: Transaction Owner
+  - name: transaction_date_transaction_date
+    description: Transaction Date
+  - name: transaction_category_transaction_category
+    description: Transaction Category
+  - name: flow_category_flow_category
+    description: Flow Category
+  - name: flow_type_flow_type
+    description: Flow Type
+  - name: release_status_rel_status
+    description: Release Status
+  - name: payment_date_payment_date
+    description: Payment Date
+  - name: currency_payment_currency
+    description: Currency
+  - name: document_date_document_date
+    description: Document Date
+  - name: baseline_date_baseline_date
+    description: Baseline Date
+  - name: days_until_due_date_days_due
+    description: Days Until Due Date
+  - name: days_for_cash_discount_term_1_cash_discount_days1
+    description: Days for Cash Discount Term 1
+  - name: percentage_for_1st_term_cash_discount_percent1
+    description: Percentage for 1St Term
+  - name: days_for_cash_discount_term_2_cash_discount_days2
+    description: Days for Cash Discount Term 2
+  - name: percentage_for_2nd_term_cash_discount_percent2
+    description: Percentage for 2Nd Term
+  - name: payment_method_payment_method
+    description: Payment Method
+  - name: payment_block_payment_block
+    description: Payment Block
+  - name: payment_mode_payment_mode
+    description: Payment Mode
+  - name: fund_fund
+    description: Fund
+  - name: grant_grant_nbr
+    description: Grant
+  - name: document_number_fi_document_number
+    description: Document Number
+  - name: line_item_fi_document_line_item
+    description: Line Item
+  - name: fiscal_year_fi_fiscal_year
+    description: Fiscal Year
+  - name: posting_period_fi_fiscal_period
+    description: Posting Period
+  - name: debit_credit_ind_fi_credit_debit_indicator
+    description: Debit/Credit Ind
+  - name: invoice_reference_fi_invoice_reference
+    description: Invoice Reference
+  - name: fiscal_year_fi_invoice_fiscal_year_ref
+    description: Fiscal Year
+  - name: item_fi_invoice_item_ref
+    description: Item
+  - name: clearing_document_fi_clearing_document
+    description: Clearing Document
+  - name: clearing_item_fi_clearing_item
+    description: Clearing Item
+  - name: type_of_clearing_in_table_ausz_clr_fi_clearing_type
+    description: Type of Clearing in Table Ausz_Clr
+  - name: posting_date_fi_post_date
+    description: Posting Date
+  - name: baseline_payment_dte_fi_baseline_date
+    description: Baseline Payment Dte
+  - name: document_type_fi_document_type
+    description: Document Type
+  - name: account_type_fi_account_type
+    description: Account Type
+  - name: g_l_account_fi_account
+    description: G/L Account
+  - name: value_date_fi_value_date
+    description: Value Date
+  - name: net_due_date_fi_due_date
+    description: Net Due Date
+  - name: clearing_date_fi_clearing_date
+    description: Clearing Date
+  - name: purchasing_document_fi_purchse_document_number
+    description: Purchasing Document
+  - name: item_fi_purchse_line_item
+    description: Item
+  - name: seq_no_of_account_assgt_fi_sequential_number
+    description: Sequential Number of Account Assignment
+  - name: reversed_with_fi_reverse_document_number
+    description: Reversed with
+  - name: text_fi_item_text
+    description: Text
+  - name: entry_date_fi_entry_date
+    description: Entry Date
+  - name: time_of_entry_fi_entry_time
+    description: Time of Entry
+  - name: days_net_fi_payment_term
+    description: Days Net
+  - name: order_type_mm_order_type
+    description: Order Type
+  - name: purch_doc_category_mm_document_category
+    description: Purchasing Document Category
+  - name: item_category_mm_document_item_category
+    description: Item Category
+  - name: final_invoice_mm_final_inv_indicator
+    description: Final Invoice
+  - name: invoice_value_tc_mm_invoice_amount
+    description: Invoice Value / Tc
+  - name: invoice_value_lc_mm_invoice_base_amount
+    description: Invoice Value Lc
+  - name: discount_amount1_lp_disc_amount1
+    description: Discount Amount1
+  - name: discount_amount2_lp_disc_amount2
+    description: Discount Amount2
+  - name: planned_payment_date1_lp_planed_payment_date1
+    description: Planned Payment Date1
+  - name: planned_payment_date2_lp_planed_payment_date2
+    description: Planned Payment Date2
+  - name: amount_base_amount
+    description: Amount
+  - name: currency_base_currency
+    description: Currency
+  - name: amount_amount
+    description: Amount
+  - name: currency_currency
+    description: Currency
+  - name: quantity_quantity
+    description: Quantity
+  - name: unit_unit_of_measure
+    description: Unit
+  - name: product_type_trm_product_type
+    description: Product Type
+  - name: transaction_type_trm_transaction_type
+    description: Transaction Type
+  - name: activity_category_trm_activity_category
+    description: Activity Category
+  - name: sec_class_id_number_trm_security_id
+    description: Security Class Id Number
+  - name: securities_account_trm_security_account
+    description: Securities Account
+  - name: portfolio_trm_portfolio
+    description: Portfolio
+  - name: house_bank_house_bank
+    description: House Bank
+  - name: account_id_house_bank_account
+    description: Account Id
+  - name: technical_id_bank_account_id
+    description: Technical Id
+  - name: company_code_company_code
+    description: Company Code
+  - name: customer_customer_number
+    description: Customer
+  - name: vendor_vendor_number
+    description: Vendor
+  - name: business_partner_partner
+    description: Business Partner
+  - name: material_material
+    description: Material
+  - name: business_area_business_area
+    description: Business Area
+  - name: profit_center_profit_center
+    description: Profit Center
+  - name: wbs_element_project
+    description: WBS Element
+  - name: cost_center_cost_center
+    description: Cost Center
+  - name: trading_partner_no_trading_partner
+    description: Trading Partner Number
+  - name: liquidity_item_liquidity_item
+    description: Liquidity Item
+  - name: segment_segment
+    description: Segment
+  - name: planning_level_planning_level
+    description: Planning Level
+  - name: planning_group_planning_group
+    description: Planning Group
+  - name: contract_number_contract_number
+    description: Contract Number
+  - name: contract_type_contract_type
+    description: Contract Type
+  - name: company_code_assigned_company_code
+    description: Company Code
+  - name: internal_reference_internal_reference
+    description: Internal Reference
+  - name: characteristics_characteristics
+    description: Characteristics
+  - name: assignment_assignment
+    description: Assignment
+  - name: interest_rate_cmm_interest_rate
+    description: Interest Rate
+  - name: calendar_type_cmm_calendar_type
+    description: Calendar Type
+  - name: state_for_cmr_cmm_state
+    description: State for Cmr
+  - name: exchange_rate_type_cmm_exchange_rate_type
+    description: Exchange Rate Type
+  - name: inverted_rate_entry_cmm_inverted_rate_type
+    description: Inverted Rate Entry
+  - name: offsetting_account_cmm_offset_account
+    description: Offsetting Account
+  - name: offsetting_bank_account_cmm_offset_accid
+    description: Offsetting Bank Account
+  - name: transaction_type_cmm_transaction_type
+    description: Transaction Type
+  - name: statistics_indicator_cmm_statistics_indicator
+    description: Statistics Indicator
+  - name: id_number_cmm_payment_group
+    description: Id Number (Group)
+  - name: cm_pairing_cmm_reason
+    description: Cm Pairing
+  - name: authorization_and_release_flag_cmm_auth_rel
+    description: Authorization and Release Flag
+  - name: memo_record_number_cmm_bs_num_eb
+    description: Memo Record Number
+  - name: account_number_cmm_offset_bank_account_number
+    description: Account Number
+  - name: house_bank_cmm_offset_housebank
+    description: House Bank
+  - name: account_id_cmm_offset_housebankaccount
+    description: Account Id
+  - name: cash_request_id_cashrequest_id
+    description: Cash Request Id
+  - name: cash_request_status_cashrequest_status
+    description: Cash Request Status
+  - name: instrument_category_instrument_category
+    description: Instrument Category
+  - name: following_currency_following_currency
+    description: Following Currency
+  - name: amount_amount_in_folcur
+    description: Amount
+  - name: buy_sell_buy_sell_indicator
+    description: Buy/Sell
+  - name: technical_id_following_account
+    description: Technical Id
+  - name: checkbox_flag_document
+    description: Checkbox
+  - name: assignment_cq_assignment
+    description: Assignment
+  - name: internal_reference_cq_internal_reference
+    description: Internal Reference
+  - name: characteristics_cq_characteristics
+    description: Characteristics
+  - name: company_code_following_companycode
+    description: Company Code
+  - name: bank_details_id_following_bankdetail
+    description: Bank Details Id
+  - name: house_bank_following_housebank
+    description: House Bank
+  - name: account_id_following_housebankaccount
+    description: Account Id
+  - name: value_date_mmk_term_from_date
+    description: Value Date
+  - name: value_date_mmk_term_to_date
+    description: Value Date
+  - name: invest_or_borrow_mmk_invest_borrow
+    description: Invest Or Borrow
+  - name: value_date_mmk_max_term_from_date
+    description: Value Date
+  - name: value_date_mmk_max_term_to_date
+    description: Value Date
+  - name: flag_mmk_offset_flag
+    description: Flag
+  - name: submitted_by_cashrequest_subimitted_by
+    description: Submitted by
+  - name: value_date_term_from_date
+    description: Value Date
+  - name: value_date_term_to_date
+    description: Value Date
+  - name: amount_amount_requested
+    description: Amount
+  - name: currency_currency_requested
+    description: Currency
+  - name: invest_or_borrow_invest_borrow
+    description: Invest Or Borrow
+  - name: value_date_max_term_from_date
+    description: Value Date
+  - name: value_date_max_term_to_date
+    description: Value Date
+  - name: business_partner_fca_bp
+    description: Business Partner
+  - name: contract_account_fca_account_number
+    description: Contract Account
+  - name: document_number_fca_doc_number
+    description: Document Number
+  - name: item_fca_docitem_number
+    description: Item
+  - name: clearing_reason_fca_clearing_reason
+    description: Clearing Reason
+  - name: origin_fca_origin_key
+    description: Origin
+  - name: bus_transac_type_fca_bt_category
+    description: Bus Transac Type
+  - name: amount_fca_tax_amt
+    description: Amount
+  - name: link_type_ltype
+    description: Link Type
+  - name: link_id_lnkid
+    description: Link Id
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

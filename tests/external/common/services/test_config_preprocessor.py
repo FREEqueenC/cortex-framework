@@ -16,6 +16,7 @@
 
 import pytest
 
+from common.errors import CortexConfigError
 from common.services.config_preprocessor import ConfigPreprocessor
 
 
@@ -51,5 +52,5 @@ def test_config_preprocessor_process_list():
 def test_config_preprocessor_unresolved_error():
     """Test ConfigPreprocessor raises error for unresolved variables without fallback."""
     preprocessor = ConfigPreprocessor({})
-    with pytest.raises(ValueError, match="Unresolved configuration variable"):
+    with pytest.raises(CortexConfigError, match="Unresolved configuration variable"):
         preprocessor.process({"key": "${UNRESOLVED_VAR}"})

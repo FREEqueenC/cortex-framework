@@ -1,0 +1,33 @@
+# Copyright 2026 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+description: This view is based on SAP S/4HANA or SAP ECC Materials Management (MM) module in the Supply
+  Chain domain and provides Defines purchasing groups master data from SAP T024, mapping individual purchasing
+  groups to their names, phone numbers, and emails. The data is captured at the granularity of Client
+  (System) and Purchasing Group, ensuring a unique audit trail for every record.
+fields:
+  - name: client_mandt
+    description: Client (Mandant), PK
+  - name: purchasing_group_ekgrp
+    description: Purchasing Group, PK
+  - name: purchasing_group_name_eknam
+    description: Description of Purchasing Group
+  - name: purchasing_group_telephone_ektel
+    description: Telephone Number of Purchasing Group
+  - name: email_address_smtp_addr
+    description: E-Mail Address
+  - name: source_last_updated_at
+    description: Source Last Updated At
+  - name: bq_loaded_at
+    description: Bigquery Loaded At

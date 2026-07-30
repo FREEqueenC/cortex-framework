@@ -22,10 +22,47 @@ from typing import Any
 import yaml
 
 from common.builders.base import ProductBuilder, Source
+from common.errors import CortexConfigError
 from common.registry import builder_registry
 from common.schemas import annotation_schema, config_schema, manifest_schema, table_settings_schema
+from common.schemas.enums import SapVersion
+from common.utils import labels as labels_util
 
 logger = logging.getLogger(__name__)
+
+
+def _resolve_sap_version(
+    module_config: config_schema.BaseModuleConfig,
+    global_config: config_schema.GlobalConfig,
+    visited: set[str] | None = None,
+) -> SapVersion | None:
+    """Recursively resolves the SAP version of a module by inspecting its dependencies."""
+    if visited is None:
+        visited = set()
+
+    if module_config.module_id in visited:
+        return None
+    visited.add(module_config.module_id)
+
+    # If this is directly an SAP foundation module, return its version
+    if isinstance(module_config, config_schema.SAPModuleConfig):
+        if module_config.enabled and module_config.module_settings:
+            return module_config.module_settings.sap_version
+        return None
+
+    # If it is any other module, check its dependencies
+    search_modules = global_config.data.modules.foundation + global_config.data.modules.product
+    for dep_module_id in module_config.dependency_bindings.values():
+        dep_config = next(
+            (m for m in search_modules if m.module_id == dep_module_id),
+            None,
+        )
+        if dep_config:
+            version = _resolve_sap_version(dep_config, global_config, visited)
+            if version:
+                return version
+
+    return None
 
 
 @builder_registry.register("sap_product")
@@ -130,6 +167,7 @@ class SapProductBuilder(ProductBuilder[config_schema.DataProductModuleConfig]):
         module_dir_name: str,
         sources_registry: set[Source],
         table_settings_file: pathlib.Path | None = None,
+        **kwargs: Any,
     ):
         """Main entry point for the SAP Data Product generator plugin.
 
@@ -157,41 +195,32 @@ class SapProductBuilder(ProductBuilder[config_schema.DataProductModuleConfig]):
 
         for dep_key, dep_info in manifest.dependencies.items():
             # Get the actual module ID the user configured for this dependency
-            configured_dep_id = module_config.depends_on.get(dep_key)
+            configured_dep_id = module_config.dependency_bindings.get(dep_key)
 
             if not configured_dep_id:
-                logger.error(
-                    "Module %s is missing required dependency '%s' defined in manifest.",
-                    module_id,
-                    dep_key,
+                raise CortexConfigError(
+                    f"Module {module_id} is missing required dependency '{dep_key}' "
+                    f"defined in manifest."
                 )
-                return
 
-            # Locate the dependency in the global registry (both foundation and product)
+            search_modules = (
+                global_config.data.modules.foundation + global_config.data.modules.product
+            )
             dep_config = next(
-                (
-                    m
-                    for m in (
-                        global_config.data.modules.foundation + global_config.data.modules.product
-                    )
-                    if m.module_id == configured_dep_id
-                ),
+                (m for m in search_modules if m.module_id == configured_dep_id),
                 None,
             )
 
             if not dep_config:
-                logger.error(
-                    "Module %s depends on '%s' (for '%s'), but it was not "
-                    "found in the global foundation configuration.",
-                    module_id,
-                    configured_dep_id,
-                    dep_key,
+                raise CortexConfigError(
+                    f"Module {module_id} depends on '{configured_dep_id}' (for '{dep_key}'), "
+                    f"but it was not found in the global foundation configuration."
                 )
-                return
 
             # Validate that the configured module's type matches what the manifest expects
-            configured_type = dep_config.type
-            if configured_type != dep_info.type:
+            configured_type = dep_config.module_path
+            expected_type = dep_info.module_path
+            if configured_type != expected_type:
                 logger.warning(
                     "Module %s configured dependency '%s' to point to '%s' "
                     "(type: %s), but manifest expects type '%s'.",
@@ -199,35 +228,26 @@ class SapProductBuilder(ProductBuilder[config_schema.DataProductModuleConfig]):
                     dep_key,
                     configured_dep_id,
                     configured_type,
-                    dep_info.type,
+                    expected_type,
                 )
 
-            # Extract the sap_version from the configuration if available
-            settings = (
-                dep_config.module_settings
-                if isinstance(dep_config, config_schema.SAPModuleConfig)
-                else None
-            )
-            if dep_config.enabled and isinstance(settings, config_schema.SAPModuleSettings):
-                resolved_version = settings.sap_version
+            # Recursively extract the sap_version from the dependency configuration
+            resolved_version = _resolve_sap_version(dep_config, global_config)
+            if resolved_version:
                 if sap_version and sap_version != resolved_version:
-                    logger.error(
-                        "Module %s has conflicting SAP version dependencies: %s vs %s.",
-                        module_id,
-                        sap_version,
-                        resolved_version,
+                    raise CortexConfigError(
+                        f"Module {module_id} has conflicting SAP version dependencies: "
+                        f"{sap_version} vs {resolved_version}."
                     )
-                    return
                 sap_version = resolved_version
 
             # We continue validating other dependencies
 
         if not sap_version:
-            logger.error(
-                "Module %s depends on SAP, but SAP module is not enabled or version not found.",
-                module_id,
+            raise CortexConfigError(
+                f"Module {module_id} depends on SAP, but SAP module is not enabled "
+                f"or version not found."
             )
-            return
 
         logger.info(
             "Resolved dependent SAP version to '%s' for %s",
@@ -248,7 +268,14 @@ class SapProductBuilder(ProductBuilder[config_schema.DataProductModuleConfig]):
             validated_settings = table_settings_schema.ProductTableSettings(**table_settings)
         except Exception as e:
             logger.error("Failed to validate table settings for %s: %s", module_id, e)
-            raise ValueError(f"Invalid table settings format for {module_id}") from e
+            raise CortexConfigError(
+                f"Invalid table settings format for module '{module_id}'",
+                hint=(
+                    "Check the format and structure of your table settings YAML file. "
+                    "Ensure it conforms to the expected schema for product table settings, "
+                    "with all required fields present and correctly typed."
+                ),
+            ) from e
 
         # Clean dictionary merging for table configs
         common_cfg = validated_settings.common or {}
@@ -281,38 +308,57 @@ class SapProductBuilder(ProductBuilder[config_schema.DataProductModuleConfig]):
                         files_to_process[source_file.name] = source_file
 
         if not files_to_process:
-            logger.error(
-                "No definition files found for sap_version %s in %s or %s",
-                sap_version,
-                definitions_dir,
-                parent_definitions_dir,
+            raise CortexConfigError(
+                f"No definition files found for sap_version {sap_version} in "
+                f"{definitions_dir} or {parent_definitions_dir}"
             )
-            return
 
         for file_path in files_to_process.values():
             table_name = file_path.stem
-            content = file_path.read_text(encoding="utf-8")
-
-            table_config: dict[str, Any] = {"tableName": table_name}
 
             # Look for a config specific to this table
-            for config_table_name, t_config in table_configs.items():
+            t_config = None
+            for config_table_name, tc in table_configs.items():
                 if config_table_name.lower() == table_name.lower():
-                    if t_config.tags:
-                        table_config["tags"] = t_config.tags
-                    if t_config.materialization_type:
-                        table_config["materializationType"] = t_config.materialization_type
-
-                    if t_config.model_extra:
-                        for k_extra, v_extra in t_config.model_extra.items():
-                            table_config[k_extra] = v_extra
-
-                    bigquery_config = self._get_partition_config(t_config, table_name)
-                    bigquery_config.update(self._get_cluster_config(t_config))
-
-                    if bigquery_config:
-                        table_config["bigquery"] = bigquery_config
+                    t_config = tc
                     break
+
+            if t_config and not t_config.enabled:
+                logger.info("Table %s is disabled in settings. Skipping.", table_name)
+                continue
+
+            content = file_path.read_text(encoding="utf-8")
+            table_config: dict[str, Any] = {"tableName": table_name}
+
+            labels = labels_util.get_module_labels(
+                module_id=module_id,
+                namespaced_type=module_config.namespaced_type,
+                module_category=manifest.category.value if manifest.category else None,
+                module_type=manifest.type,
+            )
+
+            bigquery_config = {}
+            if t_config:
+                if t_config.dataform_tags:
+                    table_config["tags"] = t_config.dataform_tags
+                if t_config.materialization_type:
+                    table_config["materializationType"] = t_config.materialization_type
+
+                if t_config.model_extra:
+                    for k_extra, v_extra in t_config.model_extra.items():
+                        table_config[k_extra] = v_extra
+
+                bigquery_config = self._get_partition_config(t_config, table_name)
+                bigquery_config.update(self._get_cluster_config(t_config))
+                if t_config.big_query_labels:
+                    labels_dict = {label.key: label.value for label in t_config.big_query_labels}
+                    labels.update(labels_dict)
+
+            if labels:
+                bigquery_config["labels"] = labels
+
+            if bigquery_config:
+                table_config["bigquery"] = bigquery_config
 
             module_context = {"moduleId": module_id}
 
