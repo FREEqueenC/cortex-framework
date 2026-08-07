@@ -116,3 +116,16 @@ def test_verify_local_file_new(reconciler, tmp_path):
     assert res[0] == "a.sql"
     assert res[1] is True
     assert res[2] is not None
+
+
+def test_verify_local_file_remote_read_exception_returns_none(reconciler, client, tmp_path):
+    local_file = tmp_path / "a.sql"
+    local_file.write_text("content")
+    remote_files = {"a.sql"}
+
+    client.read_file = MagicMock(side_effect=Exception("Unexpected API error"))
+
+    res = reconciler.verify_local_file(
+        PROJECT, REGION, REPO, WORKSPACE, tmp_path, remote_files, "a.sql"
+    )
+    assert res is None

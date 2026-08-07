@@ -816,7 +816,8 @@ class DataformBuilder:
 
         try:
             ns_path = module_meta.get("ns_path")
-            rel_dir_str = str(module_meta.get("rel_dir", "")).replace("/", ".")
+            rel_dir = module_meta.get("rel_dir")
+            rel_dir_str = rel_dir.as_posix().replace("/", ".") if rel_dir else ""
             local_module_path = f"data_modules.{ns_path}.{rel_dir_str}.builder"
             builder_path = module_src_dir / "builder.py"
 

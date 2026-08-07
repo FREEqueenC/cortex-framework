@@ -59,23 +59,31 @@ class DataformWorkspaceReconciler:
             logger.error("Failed to read %s: %s", local_path, e)
             return None
 
-        if rel_path in remote_files:
-            remote_content = self.client.read_file(
-                project=project, region=region, repo=repo, workspace=workspace, rel_path=rel_path
-            )
-            if remote_content is not None:
-                if file_content_bytes == remote_content:
-                    logger.info("  -> File unchanged: %s (skipping)", rel_path)
-                    return (rel_path, False, None)
-            else:
-                logger.warning(
-                    "  -> Could not verify remote content for %s. Proceeding to overwrite.",
-                    rel_path,
+        try:
+            if rel_path in remote_files:
+                remote_content = self.client.read_file(
+                    project=project,
+                    region=region,
+                    repo=repo,
+                    workspace=workspace,
+                    rel_path=rel_path,
                 )
-            return (rel_path, True, b64_content)
-        else:
-            logger.info("  -> File new: %s (queuing for upload)", rel_path)
-            return (rel_path, True, b64_content)
+                if remote_content is not None:
+                    if file_content_bytes == remote_content:
+                        logger.info("  -> File unchanged: %s (skipping)", rel_path)
+                        return (rel_path, False, None)
+                else:
+                    logger.warning(
+                        "  -> Could not verify remote content for %s. Proceeding to overwrite.",
+                        rel_path,
+                    )
+                return (rel_path, True, b64_content)
+            else:
+                logger.info("  -> File new: %s (queuing for upload)", rel_path)
+                return (rel_path, True, b64_content)
+        except Exception as e:
+            logger.error("Failed to verify remote file '%s': %s", rel_path, e)
+            return None
 
     def get_remote_files(
         self, project: str, region: str, repo: str, workspace: str

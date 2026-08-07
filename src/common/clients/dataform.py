@@ -12,23 +12,103 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""Provider for Google Cloud Dataform interactions."""
-
 import base64
+import functools
 import logging
+import random
+import time
 
 from google.api_core import exceptions
+from google.api_core.exceptions import (
+    Aborted,
+    BadGateway,
+    DeadlineExceeded,
+    GatewayTimeout,
+    InternalServerError,
+    ResourceExhausted,
+    ServiceUnavailable,
+    TooManyRequests,
+)
 from google.cloud import dataform_v1beta1
 from google.protobuf import field_mask_pb2
 
+from common.utils.rate_limiter import TokenRateLimiter
+
 logger = logging.getLogger(__name__)
+
+# Standard transient / retryable Google Cloud API exceptions
+DEFAULT_RETRYABLE_EXCEPTIONS = (
+    ResourceExhausted,
+    TooManyRequests,
+    ServiceUnavailable,
+    DeadlineExceeded,
+    BadGateway,
+    GatewayTimeout,
+    InternalServerError,
+    Aborted,
+    ConnectionError,
+    TimeoutError,
+)
+
+_NO_FALLBACK = object()
+
+
+def retry_with_backoff(
+    max_retries: int = 5,
+    initial_delay: float = 1.5,
+    backoff_factor: float = 2.0,
+    retryable_exceptions: tuple[type[Exception], ...] = DEFAULT_RETRYABLE_EXCEPTIONS,
+    fallback: object = _NO_FALLBACK,
+):
+    """Decorator for retrying transient API errors with exponential backoff and jitter."""
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            delay = initial_delay
+            for attempt in range(1, max_retries + 1):
+                try:
+                    return func(*args, **kwargs)
+                except retryable_exceptions as e:
+                    if attempt == max_retries:
+                        logger.error(
+                            "Exceeded max retries (%d) during %s: %s",
+                            max_retries,
+                            func.__name__,
+                            e,
+                        )
+                        if fallback is not _NO_FALLBACK:
+                            return fallback
+                        raise
+                    jitter = random.uniform(0.1, 0.5)
+                    sleep_time = delay + jitter
+                    logger.warning(
+                        "Transient error (%s) encountered during %s "
+                        "(attempt %d/%d). Retrying in %.2fs...",
+                        type(e).__name__,
+                        func.__name__,
+                        attempt,
+                        max_retries,
+                        sleep_time,
+                    )
+                    time.sleep(sleep_time)
+                    delay *= backoff_factor
+
+        return wrapper
+
+    return decorator
 
 
 class DataformClient:
     """Encapsulates Dataform client interactions."""
 
-    def __init__(self, client: dataform_v1beta1.DataformClient | None = None):
+    def __init__(
+        self,
+        client: dataform_v1beta1.DataformClient | None = None,
+        rate_limiter: TokenRateLimiter | None = None,
+    ):
         self.client = client or dataform_v1beta1.DataformClient()
+        self.rate_limiter = rate_limiter or TokenRateLimiter(rate=4.5, capacity=5.0)
 
     def get_repository(self, name: str) -> dataform_v1beta1.Repository | None:
         """Gets a repository."""
@@ -149,6 +229,7 @@ class DataformClient:
             logger.error("Failed to delete workspace '%s': %s", workspace, e)
             return False
 
+    @retry_with_backoff(fallback=False)
     def write_file(
         self,
         *,
@@ -160,6 +241,7 @@ class DataformClient:
         b64_content: str,
     ) -> bool:
         """Writes a file to the workspace."""
+        self.rate_limiter.acquire(1.0)
         logger.info("  -> Writing file: %s", rel_path)
         request = dataform_v1beta1.WriteFileRequest(
             workspace=self.client.workspace_path(project, region, repo, workspace),
@@ -169,14 +251,18 @@ class DataformClient:
         try:
             self.client.write_file(request=request)
             return True
+        except DEFAULT_RETRYABLE_EXCEPTIONS:
+            raise
         except Exception as e:
             logger.error("Failed to write file '%s': %s", rel_path, e)
             return False
 
+    @retry_with_backoff(fallback=False)
     def delete_file(
         self, *, project: str, region: str, repo: str, workspace: str, filepath: str
     ) -> bool:
         """Deletes a file from the workspace."""
+        self.rate_limiter.acquire(1.0)
         logger.debug("  -> Deleting file: %s", filepath)
         request = dataform_v1beta1.RemoveFileRequest(
             workspace=self.client.workspace_path(project, region, repo, workspace), path=filepath
@@ -184,14 +270,18 @@ class DataformClient:
         try:
             self.client.remove_file(request=request)
             return True
+        except DEFAULT_RETRYABLE_EXCEPTIONS:
+            raise
         except Exception as e:
             logger.error("Failed to delete file '%s': %s", filepath, e)
             return False
 
+    @retry_with_backoff(fallback=False)
     def delete_directory(
         self, *, project: str, region: str, repo: str, workspace: str, dirpath: str
     ) -> bool:
         """Deletes a directory from the workspace."""
+        self.rate_limiter.acquire(1.0)
         logger.debug("  -> Deleting directory: %s", dirpath)
         request = dataform_v1beta1.RemoveDirectoryRequest(
             workspace=self.client.workspace_path(project, region, repo, workspace), path=dirpath
@@ -199,14 +289,18 @@ class DataformClient:
         try:
             self.client.remove_directory(request=request)
             return True
+        except DEFAULT_RETRYABLE_EXCEPTIONS:
+            raise
         except Exception as e:
             logger.error("Failed to delete directory '%s': %s", dirpath, e)
             return False
 
+    @retry_with_backoff(fallback=None)
     def read_file(
         self, *, project: str, region: str, repo: str, workspace: str, rel_path: str
     ) -> bytes | None:
         """Reads a file from the workspace."""
+        self.rate_limiter.acquire(1.0)
         try:
             request = dataform_v1beta1.ReadFileRequest(
                 workspace=self.client.workspace_path(project, region, repo, workspace),
@@ -216,14 +310,18 @@ class DataformClient:
             return response.file_contents
         except exceptions.NotFound:
             return None
+        except DEFAULT_RETRYABLE_EXCEPTIONS:
+            raise
         except Exception as e:
             logger.error("Failed to read file '%s': %s", rel_path, e)
             return None
 
+    @retry_with_backoff()
     def query_directory_contents(
         self, *, project: str, region: str, repo: str, workspace: str, current_path: str
     ) -> list[dataform_v1beta1.DirectoryEntry]:
         """Queries directory contents."""
+        self.rate_limiter.acquire(1.0)
         workspace_path = self.client.workspace_path(project, region, repo, workspace)
         entries = []
         page_token = None
@@ -243,6 +341,8 @@ class DataformClient:
         except exceptions.NotFound:
             logger.warning(f"Directory not found, skipping: {current_path}")
             return []
+        except DEFAULT_RETRYABLE_EXCEPTIONS:
+            raise
         except Exception as e:
             logger.error("Failed to query directory contents for '%s': %s", current_path, e)
             raise

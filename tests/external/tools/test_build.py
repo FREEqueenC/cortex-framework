@@ -722,3 +722,61 @@ def test_generate_config_js_content_catalog_dependency(
         collected_vars["cortex_catalogs_sap_catalog_bdc_test_sapBdcSalesOrder_datasetId"]
         == "sap_bdc_catalog.salesorder_v1.salesorder"
     )
+
+
+def test_get_module_context_windows_paths(tmp_path, mock_config_content):
+    """Verify that _get_module_context correctly resolves Windows paths.
+
+    This ensures that backslashes in Windows paths are correctly converted
+    to dots in Python module paths.
+    """
+    import pathlib
+    from unittest.mock import MagicMock, patch
+
+    from common.schemas.config_schema import GlobalConfig
+    from tools.build import DataformBuilder
+
+    # Use PureWindowsPath to simulate Windows path structure
+    rel_dir_win = pathlib.PureWindowsPath("sap/foundations/sap")
+
+    # Mock GlobalConfig setup
+    global_config = GlobalConfig(**mock_config_content)
+
+    builder = DataformBuilder(
+        global_config=global_config,
+        output_dir=tmp_path / "output",
+        base_dir=tmp_path,
+        config_dir=tmp_path,
+    )
+
+    # Populate module_registry with Windows paths
+    builder.module_registry = {
+        "cortex.sap_foundation": {
+            "physical_dir": tmp_path / "sap" / "foundations" / "sap",
+            "module_dir_name": "sap",
+            "builder_key": None,
+            "category": "data_foundation",
+            "manifest": MagicMock(),
+            "namespace": "cortex",
+            "ns_path": "cortex",
+            "rel_dir": rel_dir_win,
+        }
+    }
+
+    mock_module_config = MagicMock()
+    mock_module_config.module_id = "sap_foundation"
+    mock_module_config.namespaced_type = "cortex.sap_foundation"
+
+    mock_get_builder = MagicMock()
+    builder._get_builder = mock_get_builder
+
+    with patch("tools.build.pathlib.Path.exists", return_value=True):
+        builder._get_module_context(mock_module_config, Category.FOUNDATION)
+
+    # Verify that _get_builder was called with the correct converted local_module_path
+    mock_get_builder.assert_called_once()
+    called_kwargs = mock_get_builder.call_args.kwargs
+
+    # Expected: data_modules.cortex.sap.foundations.sap.builder
+    # (Notice all dots, no backslashes)
+    assert called_kwargs["local_module_path"] == "data_modules.cortex.sap.foundations.sap.builder"

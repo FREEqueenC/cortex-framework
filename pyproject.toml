@@ -14,7 +14,7 @@
 
 [project]
 name = "cortex"
-version = "7.0.0"
+version = "7.0.1"
 description = "Cortex Framework"
 requires-python = ">=3.13,<3.14"
 dependencies = [

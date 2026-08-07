@@ -682,3 +682,259 @@ def test_create_workflow_invocation_with_sa(provider, mock_client):
     args, kwargs = mock_client.create_workflow_invocation.call_args
     request = kwargs.get("request") or args[0]
     assert request.workflow_invocation.invocation_config.service_account == "test-sa@example.com"
+
+
+def test_retry_with_backoff_decorator_success_after_retries():
+    """Verifies that retry_with_backoff retries transient exceptions and returns result."""
+    from common.clients.dataform import retry_with_backoff
+
+    attempts = 0
+
+    @retry_with_backoff(max_retries=3, initial_delay=0.01, backoff_factor=1.0)
+    def flaky_function():
+        nonlocal attempts
+        attempts += 1
+        if attempts < 3:
+            raise exceptions.ResourceExhausted("Rate limited")
+        return "success"
+
+    result = flaky_function()
+    assert result == "success"
+    assert attempts == 3
+
+
+def test_retry_with_backoff_decorator_exhausts_max_retries():
+    """Verifies that retry_with_backoff raises after exceeding max_retries."""
+    from common.clients.dataform import retry_with_backoff
+
+    attempts = 0
+
+    @retry_with_backoff(max_retries=3, initial_delay=0.01, backoff_factor=1.0)
+    def always_failing_function():
+        nonlocal attempts
+        attempts += 1
+        raise exceptions.ServiceUnavailable("Backend down")
+
+    with pytest.raises(exceptions.ServiceUnavailable, match="Backend down"):
+        always_failing_function()
+
+    assert attempts == 3
+
+
+def test_retry_with_backoff_non_retryable_exception():
+    """Verifies that non-retryable exceptions are raised immediately without retry."""
+    from common.clients.dataform import retry_with_backoff
+
+    attempts = 0
+
+    @retry_with_backoff(max_retries=3, initial_delay=0.01)
+    def bad_arg_function():
+        nonlocal attempts
+        attempts += 1
+        raise exceptions.InvalidArgument("Bad argument")
+
+    with pytest.raises(exceptions.InvalidArgument, match="Bad argument"):
+        bad_arg_function()
+
+    assert attempts == 1
+
+
+def test_write_file_rate_limited(mock_client):
+    """Verifies write_file acquires a token from the rate limiter."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    b64_content = base64.b64encode(b"test content").decode("utf-8")
+    client.write_file(
+        project=PROJECT,
+        region=REGION,
+        repo=REPO,
+        workspace=WORKSPACE,
+        rel_path="file.sqlx",
+        b64_content=b64_content,
+    )
+
+    mock_rate_limiter.acquire.assert_called_once_with(1.0)
+    mock_client.write_file.assert_called_once()
+
+
+def test_read_file_rate_limited(mock_client):
+    """Verifies read_file acquires a token from the rate limiter."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    client.read_file(
+        project=PROJECT,
+        region=REGION,
+        repo=REPO,
+        workspace=WORKSPACE,
+        rel_path="file.sqlx",
+    )
+
+    mock_rate_limiter.acquire.assert_called_once_with(1.0)
+    mock_client.read_file.assert_called_once()
+
+
+def test_write_file_retry_on_429(mock_client):
+    """Verifies write_file retries and succeeds when hitting temporary 429 ResourceExhausted."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    # First call fails with 429, second call succeeds
+    mock_client.write_file.side_effect = [
+        exceptions.ResourceExhausted("Rate limited"),
+        MagicMock(),
+    ]
+
+    with patch("time.sleep", return_value=None):
+        b64_content = base64.b64encode(b"test content").decode("utf-8")
+        success = client.write_file(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            workspace=WORKSPACE,
+            rel_path="file.sqlx",
+            b64_content=b64_content,
+        )
+
+    assert success is True
+    assert mock_client.write_file.call_count == 2
+
+
+def test_retry_with_backoff_fallback_when_retries_exhausted():
+    """Verifies that fallback is returned when retries are exhausted."""
+    from common.clients.dataform import retry_with_backoff
+
+    attempts = 0
+
+    @retry_with_backoff(
+        max_retries=3, initial_delay=0.01, backoff_factor=1.0, fallback="fallback_value"
+    )
+    def always_failing_with_fallback():
+        nonlocal attempts
+        attempts += 1
+        raise exceptions.ServiceUnavailable("Service Down")
+
+    with patch("time.sleep", return_value=None):
+        result = always_failing_with_fallback()
+
+    assert result == "fallback_value"
+    assert attempts == 3
+
+
+@pytest.mark.parametrize(
+    "transient_exc",
+    [
+        exceptions.BadGateway("502 Bad Gateway"),
+        exceptions.GatewayTimeout("504 Gateway Timeout"),
+    ],
+    ids=["bad_gateway", "gateway_timeout"],
+)
+def test_retry_with_backoff_proxy_transient_exceptions(transient_exc):
+    """Verifies that BadGateway (502) and GatewayTimeout (504) are retried."""
+    from common.clients.dataform import retry_with_backoff
+
+    attempts = 0
+
+    @retry_with_backoff(max_retries=3, initial_delay=0.01, backoff_factor=1.0)
+    def flaky_proxy_call():
+        nonlocal attempts
+        attempts += 1
+        if attempts < 2:
+            raise transient_exc
+        return "recovered"
+
+    with patch("time.sleep", return_value=None):
+        result = flaky_proxy_call()
+
+    assert result == "recovered"
+    assert attempts == 2
+
+
+def test_write_file_exhausts_retries_returns_false(mock_client):
+    """Verifies write_file returns False when retries are exhausted."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    mock_client.write_file.side_effect = exceptions.ResourceExhausted("Rate limited")
+
+    with patch("time.sleep", return_value=None):
+        b64_content = base64.b64encode(b"test content").decode("utf-8")
+        success = client.write_file(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            workspace=WORKSPACE,
+            rel_path="file.sqlx",
+            b64_content=b64_content,
+        )
+
+    assert success is False
+    assert mock_client.write_file.call_count == 5
+
+
+def test_read_file_exhausts_retries_returns_none(mock_client):
+    """Verifies read_file returns None when retries are exhausted."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    mock_client.read_file.side_effect = exceptions.BadGateway("Bad Gateway")
+
+    with patch("time.sleep", return_value=None):
+        result = client.read_file(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            workspace=WORKSPACE,
+            rel_path="file.sqlx",
+        )
+
+    assert result is None
+    assert mock_client.read_file.call_count == 5
+
+
+def test_delete_file_exhausts_retries_returns_false(mock_client):
+    """Verifies delete_file returns False when retries are exhausted."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    mock_client.remove_file.side_effect = exceptions.GatewayTimeout("Gateway Timeout")
+
+    with patch("time.sleep", return_value=None):
+        success = client.delete_file(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            workspace=WORKSPACE,
+            filepath="file.sqlx",
+        )
+
+    assert success is False
+    assert mock_client.remove_file.call_count == 5
+
+
+def test_delete_directory_exhausts_retries_returns_false(mock_client):
+    """Verifies delete_directory returns False when retries are exhausted."""
+    mock_client.workspace_path.return_value = WORKSPACE_NAME
+    mock_rate_limiter = MagicMock()
+    client = DataformClient(client=mock_client, rate_limiter=mock_rate_limiter)
+
+    mock_client.remove_directory.side_effect = exceptions.ServiceUnavailable("Service Unavailable")
+
+    with patch("time.sleep", return_value=None):
+        success = client.delete_directory(
+            project=PROJECT,
+            region=REGION,
+            repo=REPO,
+            workspace=WORKSPACE,
+            dirpath="models",
+        )
+
+    assert success is False
+    assert mock_client.remove_directory.call_count == 5
