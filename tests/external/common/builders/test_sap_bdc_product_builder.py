@@ -69,11 +69,9 @@ def test_build_sap_bdc_product_success(
 
     table_settings_file = tmp_path / "table_settings.yaml"
     settings = {
-        "common": {
-            "sales_performance": {
-                "tags": ["bdc_tag"],
-                "materializationType": "view",
-            }
+        "sales_performance": {
+            "dataformTags": ["bdc_tag"],
+            "materializationType": "view",
         }
     }
     with open(table_settings_file, "w", encoding="utf-8") as f:

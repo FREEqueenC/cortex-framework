@@ -100,6 +100,10 @@ class ProductTableSettings(BaseSchemaModel):
     common: dict[str, ProductTableItem] = pydantic.Field(default_factory=dict)
 
 
+class SapBdcProductTableSettings(pydantic.RootModel[dict[str, ProductTableItem]]):
+    """Root configuration schema for SAP BDC and composite data products."""
+
+
 # --- Data Foundation Style ---
 class FoundationSource(BaseSchemaModel):
     table_name: str

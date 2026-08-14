@@ -15,4 +15,4 @@
 supplier_spend_analysis:
   # incremental and table not supported (BDC delta share)
   materializationType: view
-  tags: [sap_bdc, dataproduct, supplier_spend_analysis]
+  dataformTags: [sap_bdc, dataproduct, supplier_spend_analysis]

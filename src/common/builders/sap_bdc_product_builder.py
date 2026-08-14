@@ -176,19 +176,21 @@ class SapBdcProductBuilder(ProductBuilder[config_schema.DataProductModuleConfig]
             return
 
         try:
-            validated_settings = table_settings_schema.ProductTableSettings(**table_settings)
+            validated_settings = table_settings_schema.SapBdcProductTableSettings.model_validate(
+                table_settings
+            )
         except Exception as e:
             logger.error("Failed to validate table settings for %s: %s", module_id, e)
             raise CortexConfigError(
                 f"Invalid table settings format for module '{module_id}'",
                 hint=(
                     "Check the format and structure of your table settings YAML file. "
-                    "Ensure it conforms to the expected schema for product table settings, "
+                    "Ensure it conforms to the expected schema for SAP BDC product table settings, "
                     "with all required fields present and correctly typed."
                 ),
             ) from e
 
-        table_configs = validated_settings.common or {}
+        table_configs = validated_settings.root
 
         logger.info(
             "Loaded %d table configurations for BDC data product %s",

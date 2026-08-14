@@ -1420,3 +1420,26 @@ def test_validate_sap_dependency_version_mismatch(temp_config_path):
     assert any(
         "depends on foundation 'my_sap_found' with SAP version 'ecc'" in err for err in errors
     )
+
+
+def test_get_enabled_tables_from_settings_flat_and_sectioned():
+    """Verify _get_enabled_tables_from_settings extracts tables correctly.
+
+    Checks both flat and sectioned formats.
+    """
+    from common.services.config_validator import _get_enabled_tables_from_settings
+
+    # Sectioned format
+    sectioned_settings = {
+        "common": {"t001": {"enabled": True}, "t002": {"enabled": False}},
+        "ecc": [{"source": {"tableName": "bsik"}}],
+    }
+    assert _get_enabled_tables_from_settings(sectioned_settings) == {"t001", "bsik"}
+
+    # Flat format (SAP BDC / Composite products)
+    flat_settings = {
+        "sales_performance": {"materializationType": "view", "enabled": True},
+        "disabled_view": {"materializationType": "view", "enabled": False},
+        "simple_table": "string_value",
+    }
+    assert _get_enabled_tables_from_settings(flat_settings) == {"sales_performance", "simple_table"}

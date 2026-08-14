@@ -41,25 +41,34 @@ def _get_enabled_tables_from_settings(settings_dict: dict[str, Any]) -> set[str]
         Set of lowercase table names enabled in the settings.
     """
     enabled_tables: set[str] = set()
-    for section in ("ecc", "s4", "common"):
-        items = settings_dict.get(section, [])
-        if isinstance(items, list):
-            for item in items:
-                if isinstance(item, dict):
-                    src = item.get("source", {})
-                    tgt = item.get("target", {})
-                    t_name = (tgt.get("tableName") if isinstance(tgt, dict) else None) or (
-                        src.get("tableName") if isinstance(src, dict) else None
-                    )
-                    if t_name:
+    has_sections = any(k in settings_dict for k in ("ecc", "s4", "common"))
+    if has_sections:
+        for section in ("ecc", "s4", "common"):
+            items = settings_dict.get(section, [])
+            if isinstance(items, list):
+                for item in items:
+                    if isinstance(item, dict):
+                        src = item.get("source", {})
+                        tgt = item.get("target", {})
+                        t_name = (tgt.get("tableName") if isinstance(tgt, dict) else None) or (
+                            src.get("tableName") if isinstance(src, dict) else None
+                        )
+                        if t_name:
+                            enabled_tables.add(t_name.lower())
+            elif isinstance(items, dict):
+                for t_name, item_val in items.items():
+                    if isinstance(item_val, dict):
+                        if item_val.get("enabled", True):
+                            enabled_tables.add(t_name.lower())
+                    else:
                         enabled_tables.add(t_name.lower())
-        elif isinstance(items, dict):
-            for t_name, item_val in items.items():
-                if isinstance(item_val, dict):
-                    if item_val.get("enabled", True):
-                        enabled_tables.add(t_name.lower())
-                else:
+    else:
+        for t_name, item_val in settings_dict.items():
+            if isinstance(item_val, dict):
+                if item_val.get("enabled", True):
                     enabled_tables.add(t_name.lower())
+            else:
+                enabled_tables.add(t_name.lower())
     return enabled_tables
 
 
