@@ -18,6 +18,7 @@ When the user issues any of the following commands, you must immediately load th
 | `/build-and-deploy` | [build_and_deploy_data_product](file:///.agents/skills/build_and_deploy_data_product/SKILL.md) | Syncs environment variables, identifies configuration profiles, builds Dataform models, and deploys data products. |
 | `/query-sap-ddic` | [query_sap_ddic](file:///.agents/skills/query_sap_ddic/SKILL.md) | Inspects and dumps SAP table schemas directly from replicated SAP DDIC tables in BigQuery. |
 | `/generate-er-diagram` | [generate_er_diagram](file:///.agents/skills/generate_er_diagram/SKILL.md) | Extracts schema definitions, automatically infers entity relationships via SAP field suffixes, and generates visual ERDs. |
+| `/create-skill` | [create_skill](file:///.agents/skills/create_skill/SKILL.md) | Evaluates overlap, scaffolds new skills or custom folder overrides, authors instructions, and validates anatomy. |
 
 ---
 
@@ -27,3 +28,7 @@ When the user issues any of the following commands, you must immediately load th
 *   **Data Foundation**: Core core/foundation pipelines reside under `src/data_modules/cortex/<source>/foundations/sap/` and configurations under `config/cortex/<source>/foundations/sap/`.
 *   **Language**: Cortex V7 targets **Dataform**. Data models and tables should be authored as Dataform `.js` or `.sqlx` scripts in their respective directories. Do not write legacy raw SQL formats.
 *   **Relationship Discovery**: When building relationships dynamically, always refer to field names. SAP-replicated tables map primary/foreign key bounds based on raw SAP suffix indicators (like `_lifnr` or `_matnr`), keeping in mind to ignore common client identifiers (`mandt`, `client`), ingestion timestamps, and technical system fields.
+
+## CRITICAL: Skill Customization & Extensibility
+
+Skills may have a `/custom` subdirectory which extends/overrides aspects of the base skill instructions. If they do have files in the folder always read, merge with and follow instructions in there. If the `/custom` directory is empty, then follow the base skill instructions.

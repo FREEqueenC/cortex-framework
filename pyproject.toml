@@ -14,7 +14,7 @@
 
 [project]
 name = "cortex"
-version = "7.0.3"
+version = "7.0.4"
 description = "Cortex Framework"
 requires-python = ">=3.13,<3.14"
 dependencies = [
@@ -26,7 +26,6 @@ dependencies = [
     "google-cloud-service-usage>=1.15.0",
     "jinja2>=3.1.6",
     "google-auth>=2.48.0",
-    "keyrings-google-artifactregistry-auth>=1.1.2",
     "google-cloud-storage>=3.10.1",
     "google-cloud-bigquery-reservation>=1.25.0",
     "google-cloud-dataplex>=2.20.0",
@@ -55,9 +54,7 @@ dev = [
     "mypy>=1.19.1",
     "types-PyYAML>=6.0.2",
     "types-protobuf>=6.32.1.20260221",
-    "pytest-bigquery-mock>=0.1.2",
     "zetasql>=0.1.5",
-    "pandas>=2.2.0",
     "keyrings-google-artifactregistry-auth>=1.1.2",
 ]
 

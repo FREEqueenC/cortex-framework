@@ -49,6 +49,19 @@ To quickly spin up a demo deployment with raw sample data for evaluations:
 
 For detailed instructions on deployment and configuration, please refer to our [public documentation](https://docs.cloud.google.com/cortex/docs/overview). 
 
+## Agentic data product builder
+
+Cortex Framework provides modular developer skills located in `.agents/skills/` that AI coding agents follow to scaffold, update, validate, and deploy data products.
+Invoke these workflows directly in your AI assistant or agent chat.
+
+### Customizing skills
+
+Each agentic data product builder skill directory under `.agents/skills/<skill_name>/` contains a `custom/` subdirectory designed to extend or override default instructions without modifying core skill files. If custom instructions or files are added to this folder, the AI agent automatically reads, merges, and adheres to them; if the `custom/` directory contains only a `.keep` placeholder, the agent follows the standard base skill instructions.
+
+### Adding new skills
+
+To add a new skill, create a dedicated directory under `.agents/skills/<new_skill_name>/` containing a `SKILL.md` file with YAML frontmatter (`name`, `description`), workflow guidelines, and verification quality gates. You can also include supporting directories like `assets/`, `references/`, `scripts/`, and `custom/` (with a `.keep` file), and register any associated slash commands in `.agents/AGENTS.md`.
+
 ## Telemetry
 
 Cortex Framework gathers anonymized usage statistics during deployment to help us analyze and improve the overall framework experience.

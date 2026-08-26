@@ -30,24 +30,24 @@ By default, the utility parses `cortex-framework-core/config/config.yaml` to aut
 To query the schema of any SAP table (e.g., `VBAK` or `BSEG`), run the following script:
 
 ```bash
-cortex-framework-core/.venv/bin/python external-skills/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py <table_name> [--config <path>] [--dataset <project_id>.<dataset_id>] [--format {markdown,json,yaml}]
+cortex-framework-core/.venv/bin/python cortex-framework-core/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py <table_name> [--config <path>] [--dataset <project_id>.<dataset_id>] [--format {markdown,json,yaml}]
 ```
 
 ### **Usage Examples:**
 
 1.  **Query VBAK using your active configuration settings (Default Markdown):**
     ```bash
-    cortex-framework-core/.venv/bin/python external-skills/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py VBAK
+    cortex-framework-core/.venv/bin/python cortex-framework-core/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py VBAK
     ```
 
 2.  **Query BSEG specifying a custom project and raw dataset override:**
     ```bash
-    cortex-framework-core/.venv/bin/python external-skills/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py BSEG --dataset my-gcp-project.raw_sap_dataset
+    cortex-framework-core/.venv/bin/python cortex-framework-core/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py BSEG --dataset my-gcp-project.raw_sap_dataset
     ```
 
 3.  **Dump ACDOCA schema in JSON format:**
     ```bash
-    cortex-framework-core/.venv/bin/python external-skills/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py ACDOCA --format json
+    cortex-framework-core/.venv/bin/python cortex-framework-core/.agents/skills/query_sap_ddic/scripts/query_sap_ddic.py ACDOCA --format json
     ```
 
 ---
