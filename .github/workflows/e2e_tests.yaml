@@ -22,6 +22,7 @@ on:
 
 jobs:
   e2e-demo-test:
+    if: github.repository_owner == 'GoogleCloudPlatform'
     runs-on: self-hosted
     permissions:
       contents: 'read'
