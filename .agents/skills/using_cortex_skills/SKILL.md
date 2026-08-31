@@ -30,6 +30,8 @@ Task arrives
     │
     ├── Asked to generate ER diagrams or data model graphs? ────→ generate-er-diagram
     │
+    ├── Asked to generate data quality/integrity assertions? ──→ dataform-assertion-generator
+    │
     ├── Asked to create/scaffold a new skill or custom rules? ─→ create-skill
     │
     └── Asked to align/review model against business rules? ────→ data-modeling-standards
