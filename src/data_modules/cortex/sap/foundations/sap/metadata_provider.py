@@ -28,7 +28,12 @@ class MetadataProvider:
     """Base class for retrieving database schemas and keys."""
 
     def get_schema_and_keys(
-        self, project_id: str, dataset_id: str, table: str, is_cdc: bool = True
+        self,
+        project_id: str,
+        dataset_id: str,
+        table: str,
+        is_cdc: bool = True,
+        sap_table: str | None = None,
     ) -> tuple[list[str], list[str], dict[str, str]]:
         raise NotImplementedError
 
@@ -40,7 +45,7 @@ class BigQueryMetadataProvider(MetadataProvider):
         self,
         project_id: str,
         dataset_id: str,
-        tables: list[str] | None = None,
+        tables: list[str] | dict[str, str] | list[tuple[str, str]] | None = None,
         client: bigquery.Client | None = None,
     ):
         if client:
@@ -49,7 +54,33 @@ class BigQueryMetadataProvider(MetadataProvider):
             self.client = bigquery.Client()
         self.project_id = project_id
         self.dataset_id = dataset_id
-        self.tables = tables
+
+        self.physical_tables: list[str] = []
+        self.sap_tables: list[str] = []
+        self.physical_to_sap: dict[str, str] = {}
+
+        if tables:
+            if isinstance(tables, dict):
+                for phys, sap in tables.items():
+                    p_upper = phys.upper()
+                    s_upper = (sap or phys).upper()
+                    self.physical_tables.append(p_upper)
+                    self.sap_tables.append(s_upper)
+                    self.physical_to_sap[p_upper] = s_upper
+            elif isinstance(tables, list):
+                for item in tables:
+                    if isinstance(item, (tuple, list)) and len(item) == 2:
+                        phys, sap = item
+                        p_upper = phys.upper()
+                        s_upper = (sap or phys).upper()
+                        self.physical_tables.append(p_upper)
+                        self.sap_tables.append(s_upper)
+                        self.physical_to_sap[p_upper] = s_upper
+                    elif isinstance(item, str):
+                        t_upper = item.upper()
+                        self.physical_tables.append(t_upper)
+                        self.sap_tables.append(t_upper)
+                        self.physical_to_sap[t_upper] = t_upper
 
         self.table_columns: dict[str, list[str]] = {}
         self.table_column_types: dict[str, dict[str, str]] = {}
@@ -80,10 +111,13 @@ class BigQueryMetadataProvider(MetadataProvider):
         # 1. Fetch Columns and Types
         table_filter = ""
         table_filter_dd03l = ""
-        if self.tables:
-            formatted_tables = ", ".join([f"'{t.upper()}'" for t in self.tables])
+        if self.physical_tables:
+            formatted_tables = ", ".join([f"'{t}'" for t in self.physical_tables])
             table_filter = f" WHERE UPPER(table_name) IN ({formatted_tables})"
-            table_filter_dd03l = f" AND UPPER({bq_table_name}) IN ({formatted_tables})"
+
+        if self.sap_tables:
+            formatted_sap_tables = ", ".join([f"'{t}'" for t in self.sap_tables])
+            table_filter_dd03l = f" AND UPPER({bq_table_name}) IN ({formatted_sap_tables})"
 
         schema_query = f"""
             SELECT table_name, column_name, data_type
@@ -171,13 +205,19 @@ class BigQueryMetadataProvider(MetadataProvider):
         fetch_pks()
 
     def get_schema_and_keys(
-        self, project_id: str, dataset_id: str, table: str, is_cdc: bool = True
+        self,
+        project_id: str,
+        dataset_id: str,
+        table: str,
+        is_cdc: bool = True,
+        sap_table: str | None = None,
     ) -> tuple[list[str], list[str], dict[str, str]]:
         t = table.upper()
+        sap_t = sap_table.upper() if sap_table else self.physical_to_sap.get(t, t)
 
         columns = self.table_columns.get(t, [])
         column_types = self.table_column_types.get(t, {})
-        pks = self.table_pks.get(t, [])
+        pks = self.table_pks.get(sap_t, [])
 
         if not columns:
             columns = ["mandt", "recordstamp", "operation_flag"]
@@ -189,7 +229,8 @@ class BigQueryMetadataProvider(MetadataProvider):
 
         if not pks and is_cdc:
             raise CortexBuildError(
-                f"Could not determine primary keys for table '{t}' in '{project_id}.{dataset_id}'.",
+                f"Could not determine primary keys for table '{sap_t}' in "
+                f"'{project_id}.{dataset_id}'.",
                 hint=(
                     "Ensure DD03L is populated correctly and the table has key fields defined. "
                     "The builder requires primary key metadata from the DD03L table to "

@@ -258,3 +258,77 @@ def test_sap_cdc_js_escapes_bigquery_string():
     assert "function escapeBigQueryString(str)" in content
     assert "escapeBigQueryString(config.table_description)" in content
     assert "escapeBigQueryString(d)" in content
+
+
+def test_build_with_custom_sap_table_name(tmp_path, mock_global_config, mock_module_config):
+    # Setup table settings with custom BQ table and original SAP table name
+    table_settings_file = tmp_path / "table_settings.yaml"
+    settings = {
+        "common": [
+            {
+                "source": {"tableName": "raw_bkpf", "sapTableName": "bkpf"},
+                "target": {"tableName": "bkpf"},
+            }
+        ]
+    }
+    with open(table_settings_file, "w") as f:
+        yaml.dump(settings, f)
+
+    # Create annotation file under SAP table name (bkpf.yaml)
+    ann_dir = tmp_path / "annotations"
+    ann_dir.mkdir()
+    ann_file = ann_dir / "bkpf.yaml"
+    with open(ann_file, "w") as f:
+        yaml.dump({"description": "Accounting Header description"}, f)
+
+    output_dir = tmp_path / "dist"
+    output_dir.mkdir()
+
+    mock_provider = mock.MagicMock()
+    mock_provider.get_schema_and_keys.return_value = (
+        ["mandt", "bukrs", "belnr", "gjahr"],
+        ["mandt", "bukrs", "belnr", "gjahr"],
+        {"mandt": "STRING", "bukrs": "STRING", "belnr": "STRING", "gjahr": "STRING"},
+    )
+
+    builder = SapDataFoundationBuilder()
+    sources_registry: set[Any] = set()
+    mock_manifest = mock.MagicMock()
+    mock_manifest.category = None
+    mock_manifest.type = None
+
+    builder.build(
+        module_id="erp",
+        module_config=mock_module_config,
+        global_config=mock_global_config,
+        manifest=mock_manifest,
+        base_dir=tmp_path,
+        annotations_dir=ann_dir,
+        output_dir=output_dir,
+        module_dir_name="erp",
+        sources_registry=sources_registry,
+        provider=mock_provider,
+        table_settings_file=table_settings_file,
+        required_tables={"bkpf"},
+    )
+
+    # Verify sources_registry has the physical table
+    assert len(sources_registry) == 1
+    assert list(sources_registry)[0].table == "raw_bkpf"
+
+    # Verify provider was called with base_table and sap_table
+    mock_provider.get_schema_and_keys.assert_called_once_with(
+        "source-proj",
+        "source-ds",
+        "raw_bkpf",
+        is_cdc=True,
+        sap_table="bkpf",
+    )
+
+    # Verify generated SQLX
+    sqlx_file = output_dir / "bkpf.sqlx"
+    assert sqlx_file.exists()
+    sqlx_content = sqlx_file.read_text(encoding="utf-8")
+    assert 'name: "bkpf"' in sqlx_content
+    assert 'source_ref: ref(config.foundation["erp"].sourceDatasetId, "raw_bkpf")' in sqlx_content
+    assert '"Accounting Header description"' in sqlx_content
