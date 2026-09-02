@@ -32,6 +32,8 @@ Task arrives
     │
     ├── Asked to generate data quality/integrity assertions? ──→ dataform-assertion-generator
     │
+    ├── Asked to generate Looker LookML views or explores? ────→ lookml-generator
+    │
     ├── Asked to create/scaffold a new skill or custom rules? ─→ create-skill
     │
     └── Asked to align/review model against business rules? ────→ data-modeling-standards
