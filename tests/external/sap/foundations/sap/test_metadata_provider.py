@@ -165,3 +165,45 @@ def test_get_schema_and_keys_allows_missing_pks_when_is_cdc_is_false():
         "test_project", "test_dataset", "MARA", is_cdc=False
     )
     assert pks == []
+
+
+def test_fetch_with_table_mapping_and_sap_table_name():
+    mock_client = mock.MagicMock(spec=bigquery.Client)
+
+    def mock_query_side_effect(query):
+        mock_job = mock.MagicMock()
+        if "INFORMATION_SCHEMA.COLUMNS" in query:
+            assert "'RAW_BKPF'" in query
+            assert "'BKPF'" not in query
+            mock_job.result.return_value = [
+                {"table_name": "RAW_BKPF", "column_name": "mandt", "data_type": "STRING"},
+                {"table_name": "RAW_BKPF", "column_name": "bukrs", "data_type": "STRING"},
+                {"table_name": "RAW_BKPF", "column_name": "belnr", "data_type": "STRING"},
+                {"table_name": "RAW_BKPF", "column_name": "gjahr", "data_type": "STRING"},
+            ]
+        elif "dd03l" in query or "DD03L" in query:
+            assert "'BKPF'" in query
+            mock_job.result.return_value = [
+                {"tabname": "BKPF", "fieldname": "mandt"},
+                {"tabname": "BKPF", "fieldname": "bukrs"},
+                {"tabname": "BKPF", "fieldname": "belnr"},
+                {"tabname": "BKPF", "fieldname": "gjahr"},
+            ]
+        return mock_job
+
+    mock_client.query.side_effect = mock_query_side_effect
+
+    provider = BigQueryMetadataProvider(
+        project_id="test_project",
+        dataset_id="test_dataset",
+        tables=[("raw_bkpf", "bkpf")],
+        client=mock_client,
+    )
+    provider.fetch()
+
+    columns, pks, column_types = provider.get_schema_and_keys(
+        "test_project", "test_dataset", "raw_bkpf"
+    )
+    assert columns == ["mandt", "bukrs", "belnr", "gjahr"]
+    assert pks == ["mandt", "bukrs", "belnr", "gjahr"]
+    assert column_types["mandt"] == "STRING"

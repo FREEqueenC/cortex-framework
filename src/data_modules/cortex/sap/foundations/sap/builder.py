@@ -74,7 +74,7 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
             return
 
         try:
-            validated_settings = table_settings_schema.FoundationTableSettings(**table_settings)
+            validated_settings = table_settings_schema.SapFoundationTableSettings(**table_settings)
         except Exception as e:
             logger.error("Failed to validate table settings for %s: %s", module_id, e)
             raise CortexConfigError(
@@ -96,10 +96,17 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
         if not required_tables:
             tables_to_process = list(raw_tables)
         else:
+            lower_required = {t.lower() for t in required_tables}
             tables_to_process = [
                 item
                 for item in raw_tables
-                if item.deploy_always or item.source.table_name in required_tables
+                if item.deploy_always
+                or (item.target.table_name and item.target.table_name.lower() in lower_required)
+                or (
+                    item.source.sap_table_name
+                    and item.source.sap_table_name.lower() in lower_required
+                )
+                or (item.source.table_name and item.source.table_name.lower() in lower_required)
             ]
 
         if not tables_to_process:
@@ -119,10 +126,13 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
 
         # 3. Register Sources & Gather Base Tables
         base_tables = []
+        table_mappings = []
         for table in tables_to_process:
             base_table = table.source.table_name
+            sap_table = table.source.sap_table_name
             if base_table:
                 base_tables.append(base_table)
+                table_mappings.append((base_table, sap_table))
                 sources_registry.add(
                     Source(
                         project=source_project_id,
@@ -153,7 +163,7 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
                 bq_client = bigquery.Client(project=build_project_id)
 
             bq_provider = metadata_provider.BigQueryMetadataProvider(
-                source_project_id, source_dataset_id, base_tables, client=bq_client
+                source_project_id, source_dataset_id, tables=table_mappings, client=bq_client
             )
             bq_provider.fetch()
             provider = bq_provider
@@ -161,6 +171,7 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
         # 5. Generate SQLX
         for table_config in tables_to_process:
             base_table = table_config.source.table_name
+            sap_table = table_config.source.sap_table_name
             if not base_table:
                 continue
 
@@ -169,12 +180,13 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
                 source_dataset_id,
                 base_table,
                 is_cdc=table_config.source.is_cdc,
+                sap_table=sap_table,
             )
 
             # Read descriptions from YAML annotations (Mirroring Product Builder logic)
-            yaml_path = annotations_dir / sap_version / f"{base_table.lower()}.yaml"
+            yaml_path = annotations_dir / sap_version / f"{sap_table.lower()}.yaml"
             if not yaml_path.exists():
-                yaml_path = annotations_dir / f"{base_table.lower()}.yaml"
+                yaml_path = annotations_dir / f"{sap_table.lower()}.yaml"
 
             annotations = annotation_schema.TableAnnotation()
             if yaml_path.exists():
@@ -200,7 +212,7 @@ class SapDataFoundationBuilder(FoundationBuilder[config_schema.SAPModuleConfig])
             )
 
             target_obj = table_config.target
-            target_name = (target_obj.table_name or base_table).lower()
+            target_name = (target_obj.table_name or sap_table or base_table).lower()
 
             if sqlx_content:
                 out_file = output_dir / f"{target_name}.sqlx"
@@ -254,7 +266,7 @@ js {
 
 def _render_data_foundation_sqlx(
     module_id: str,
-    table_config: table_settings_schema.FoundationTableItem,
+    table_config: table_settings_schema.SapFoundationTableItem,
     columns: list[str],
     keys: list[str],
     column_types: dict[str, str],
@@ -270,7 +282,9 @@ def _render_data_foundation_sqlx(
     target_obj = table_config.target
     tags = target_obj.dataform_tags or []
 
-    target_name = (target_obj.table_name or base_table).lower()
+    target_name = (
+        target_obj.table_name or table_config.source.sap_table_name or base_table
+    ).lower()
 
     partition_details = (
         target_obj.partition_details.model_dump(by_alias=True, exclude_none=True)

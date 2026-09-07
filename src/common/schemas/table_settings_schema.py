@@ -104,14 +104,21 @@ class SapBdcProductTableSettings(pydantic.RootModel[dict[str, ProductTableItem]]
     """Root configuration schema for SAP BDC and composite data products."""
 
 
-# --- Data Foundation Style ---
-class FoundationSource(BaseSchemaModel):
+# --- SAP Data Foundation ---
+class SapFoundationSource(BaseSchemaModel):
     table_name: str
+    sap_table_name: str | None = None
     is_cdc: bool = True
 
+    @pydantic.model_validator(mode="after")
+    def normalize_sap_table_name(self) -> "SapFoundationSource":
+        if not self.sap_table_name:
+            self.sap_table_name = self.table_name
+        return self
 
-class FoundationTarget(BaseSchemaModel):
-    """Publish targeting settings for Data Foundation."""
+
+class SapFoundationTarget(BaseSchemaModel):
+    """Publish targeting settings for SAP Data Foundation."""
 
     dataform_tags: list[str] = pydantic.Field(default_factory=list)
     big_query_labels: list[BigQueryLabel] = pydantic.Field(default_factory=list)
@@ -120,17 +127,30 @@ class FoundationTarget(BaseSchemaModel):
     partition_details: PartitionDetails | None = None
 
 
-class FoundationTableItem(BaseSchemaModel):
-    """Item descriptor schema for Data Foundation mappings block."""
+class SapFoundationTableItem(BaseSchemaModel):
+    """Item descriptor schema for SAP Data Foundation mappings block."""
 
-    source: FoundationSource
-    target: FoundationTarget
+    source: SapFoundationSource
+    target: SapFoundationTarget = pydantic.Field(default_factory=SapFoundationTarget)
     deploy_always: bool = False
 
+    @pydantic.model_validator(mode="after")
+    def normalize_target_table_name(self) -> "SapFoundationTableItem":
+        if not self.target.table_name:
+            self.target.table_name = self.source.sap_table_name
+        return self
 
-class FoundationTableSettings(BaseSchemaModel):
-    """Root configuration loads for Data Foundation."""
 
-    ecc: list[FoundationTableItem] = pydantic.Field(default_factory=list)
-    s4: list[FoundationTableItem] = pydantic.Field(default_factory=list)
-    common: list[FoundationTableItem] = pydantic.Field(default_factory=list)
+class SapFoundationTableSettings(BaseSchemaModel):
+    """Root configuration loads for SAP Data Foundation."""
+
+    ecc: list[SapFoundationTableItem] = pydantic.Field(default_factory=list)
+    s4: list[SapFoundationTableItem] = pydantic.Field(default_factory=list)
+    common: list[SapFoundationTableItem] = pydantic.Field(default_factory=list)
+
+
+# Backward compatibility aliases
+FoundationSource = SapFoundationSource
+FoundationTarget = SapFoundationTarget
+FoundationTableItem = SapFoundationTableItem
+FoundationTableSettings = SapFoundationTableSettings

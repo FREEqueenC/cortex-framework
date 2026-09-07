@@ -268,11 +268,13 @@ class InternalModuleProvider(LocalWorkspaceProvider):
                             if isinstance(item, dict):
                                 src = item.get("source", {})
                                 tgt = item.get("target", {})
-                                t_name = (
-                                    tgt.get("tableName") if isinstance(tgt, dict) else None
-                                ) or (src.get("tableName") if isinstance(src, dict) else None)
-                                if t_name:
-                                    enabled_tables.add(t_name.lower())
+                                for name in [
+                                    tgt.get("tableName") if isinstance(tgt, dict) else None,
+                                    src.get("sapTableName") if isinstance(src, dict) else None,
+                                    src.get("tableName") if isinstance(src, dict) else None,
+                                ]:
+                                    if name:
+                                        enabled_tables.add(name.lower())
                     elif isinstance(items, dict):
                         for t_name, item_val in items.items():
                             if isinstance(item_val, dict):
